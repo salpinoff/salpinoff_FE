@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+get_emoji() {
+    local key=$1
+    case $key in
+        build) echo "💚" ;;
+        chore) echo "📦" ;;
+        ci) echo "🔧" ;;
+        docs) echo "📝" ;;
+        feat) echo "✨" ;;
+        fix) echo "🐛" ;;
+        perf) echo "⚡" ;;
+        refactor) echo "♻️" ;;
+        revert) echo "⏪️" ;;
+        style) echo "🎨" ;;
+        test) echo ":white_check_mark:" ;;
+        *) echo "" ;;
+    esac
+}
+
+readonly type=$(grep -oE '^[a-zA-Z0-9]+' "$1")
+readonly prefix=$(get_emoji "$type")
+
+npx commitlint --edit $1
+
+if [ -n "$prefix" ]; then
+    sed -i ".bak" "1s/^[^[:space:]]*/$prefix &/" "$1"
+fi
