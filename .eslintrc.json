@@ -23,6 +23,7 @@
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
+    "plugin:import/recommended",
     "prettier"
   ],
   "rules": {
@@ -38,6 +39,47 @@
         "varsIgnorePattern": "^_",
         "args": "after-used",
         "argsIgnorePattern": "^_"
+      }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "index",
+          "object",
+          "type",
+          "unknown"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "{next*,next*/**}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "{react*,react*/**}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": ".**",
+            "group": "unknown"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": [],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ]
   }
