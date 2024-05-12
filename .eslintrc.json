@@ -28,6 +28,7 @@
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
     "no-unused-vars": "off",
     "no-useless-catch": "off",
@@ -39,6 +40,14 @@
         "varsIgnorePattern": "^_",
         "args": "after-used",
         "argsIgnorePattern": "^_"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false
       }
     ],
     "import/order": [
@@ -66,6 +75,26 @@
           },
           {
             "pattern": "@components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@utils/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@constant/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@api/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@type/**",
             "group": "internal",
             "position": "before"
           },
