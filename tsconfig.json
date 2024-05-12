@@ -19,7 +19,11 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/app/components/*"],
+      "@constant/*": ["src/app/constant/*"],
+      "@utils/*": ["src/app/utils/*"],
+      "@type/*": ["src/app/types/*"],
+      "@api/*": ["src/app/api/*"]
     }
   },
   "include": [
@@ -27,7 +31,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "postcss.config.mjs"
+    "postcss.config.mjs",
+    "next.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
