@@ -1,6 +1,6 @@
 {
   "source": [
-    "tokens/**/*.json"
+    "tokens/**/!(typography)*.json"
   ],
   "platforms": {
     "css": {
