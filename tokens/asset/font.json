@@ -1,0 +1,14 @@
+{
+    "asset": {
+      "font": {
+        "pretendard": {
+          "name": {
+            "value": "Pretendard Variable"
+          },
+          "woff2": {
+            "value": "assets/fonts/PretendardVariable.woff2"
+          }
+        }
+      }
+    }
+}
