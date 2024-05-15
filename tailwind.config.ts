@@ -1,6 +1,11 @@
 import type { Config } from 'tailwindcss';
 
-import { colors } from './tokens/parsed-tokens';
+import {
+  colors,
+  spacing,
+  boxShadow,
+  borderRadius,
+} from './tokens/parsed-tokens';
 
 const config: Config = {
   content: [
@@ -11,6 +16,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: Object.assign(colors, {}),
+      spacing,
+      boxShadow,
+      borderRadius,
       fontFamily: {
         sans: 'var(--font-family-sans)',
       },
