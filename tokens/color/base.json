@@ -138,12 +138,24 @@
           "value": "#989BA2",
           "type": "color"
         },
+        "70A": {
+          "value": "#989BA229",
+          "type": "color"
+        },
         "80": {
           "value": "#AEB0B6",
           "type": "color"
         },
+        "80A": {
+          "value": "#AEB0B69C",
+          "type": "color"
+        },
         "90": {
           "value": "#C2C4C8",
+          "type": "color"
+        },
+        "90A": {
+          "value": "#C2C4C8E0",
           "type": "color"
         },
         "95": {
