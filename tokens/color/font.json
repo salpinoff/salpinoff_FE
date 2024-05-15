@@ -1,0 +1,84 @@
+{
+  "color": {
+    "text": {
+      "base": {
+        "value": "{color.base.cool-neutral.90A.value}",
+        "type": "color"
+      },
+      "inverse": {
+        "value": "{color.base.common.100.value}",
+        "type": "color"
+      },
+      "brand": {
+        "value": "{color.brand.primary.base.value}"
+      },
+      "success": {
+        "value": "{color.base.green.60.value}"
+      },
+      "danger": {
+        "value": "{color.base.red.60.value}"
+      },
+      "warning": {
+        "value": "{color.base.orange.60.value}"
+      },
+      "info": {
+        "value": "{color.base.blue.60.value}"
+      },
+      "subtle": {
+        "value": "{color.base.cool-neutral.90A.value}"
+      },
+      "subtlest": {
+        "value": "{color.base.cool-neutral.80A.value}"
+      },
+      "accent": {
+        "red": {
+          "value": "{color.base.red.60.value}"
+        },
+        "red-orange": {
+          "value": "{color.base.red-orange.60.value}"
+        },
+        "orange": {
+          "value": "{color.base.orange.60.value}"
+        },
+        "green": {
+          "value": "{color.base.green.60.value}"
+        },
+        "lime": {
+          "value": "{color.base.lime.60.value}"
+        },
+        "cyan": {
+          "value": "{color.base.cyan.60.value}"
+        },
+        "light-blue": {
+          "value": "{color.base.light-blue.60.value}"
+        },
+        "blue": {
+          "value": "{color.base.blue.60.value}"
+        },
+        "violet": {
+          "value": "{color.base.violet.60.value}"
+        },
+        "pink": {
+          "value": "{color.base.pink.60.value}"
+        },
+        "gray": {
+          "value": "{color.base.cool-neutral.60.value}",
+          "type": "color"
+        }
+      },
+      "label": {
+        "normal": {
+          "value": "{color.base.cool-neutral.99.value}",
+          "type": "color"
+        },
+        "strong": {
+          "value": "{color.base.cool-neutral.99.value}",
+          "type": "color"
+        }
+      }
+    },
+    "link": {
+      "value": "{color.base.blue.60.value}"
+    }
+  }
+}
