@@ -34,6 +34,16 @@ const authHandler = ({ request, params }: Props) => {
                 { status: 403 },
               );
         }
+        case 'signout': {
+          const respone = NextResponse.redirect('/signIn', { status: 302 });
+          const cookiesName = ['accessToken', 'refreshToken'];
+
+          cookiesName.map((name) => {
+            return respone.cookies.delete(name);
+          });
+
+          return respone;
+        }
         default:
           return NextResponse.next();
       }
