@@ -1,4 +1,6 @@
-import axiosInstance from '@api/api.config';
+import ROUTER from '@constant/api.router';
+
+import { baseInstance } from '@api/api.config';
 
 import { Providers } from '@type/auth';
 
@@ -11,9 +13,9 @@ type Props = {
 };
 
 const requestSignIn = ({ provider }: Props) => {
-  const path = `/api/auth/signin/${provider}`;
+  const path = ROUTER.AUTH.SIGNIN[provider];
 
-  return axiosInstance.post<Response>(path);
+  return baseInstance.post<Response>(path);
 };
 
 export default requestSignIn;

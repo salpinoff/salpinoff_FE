@@ -1,4 +1,6 @@
-import axiosInstance from '@api/api.config';
+import ROUTER from '@constant/api.router';
+
+import { apiInstance } from '@api/api.config';
 
 import type { Providers } from '@type/auth';
 
@@ -22,9 +24,9 @@ type Props = {
 };
 
 const requestUserToken = ({ code, provider }: Props) => {
-  const path = `/api/v1/members/login/${provider}`;
+  const path = ROUTER.AUTH.TOKEN[provider];
 
-  return axiosInstance.post<Response>(path, { code });
+  return apiInstance.post<Response>(path, { code });
 };
 
 export default requestUserToken;
