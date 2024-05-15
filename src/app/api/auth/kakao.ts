@@ -1,4 +1,4 @@
-import axiosInstance from '@api/api.config';
+import axios from 'axios';
 
 type AuthResponse = {
   token_Type: string;
@@ -19,7 +19,7 @@ const requestAuthentication = async ({
   clientId: string;
   redirectUrl: string;
 }) => {
-  return axiosInstance.post<AuthResponse>(
+  return axios.post<AuthResponse>(
     path,
     {
       code,
@@ -42,7 +42,7 @@ const requestKakaoUserInfo = async ({
   path: string;
   accessToken: string;
 }) => {
-  return axiosInstance.get<{ id: string }>(path, {
+  return axios.get<{ id: string }>(path, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
