@@ -53,12 +53,10 @@ const authHandler = ({ request, params }: Props) => {
             }
 
             const [provider] = providers.filter(({ id }) => id === providerId);
-            await provider.authentication(code);
-
-            const { data } = await requestUserToken({
-              code,
-              provider: providerId,
-            });
+            const [{ data }] = await Promise.all([
+              requestUserToken({ code, provider: providerId }),
+              provider.authentication(code),
+            ]);
 
             return redirectResponse(data);
           } catch (thrownError) {
