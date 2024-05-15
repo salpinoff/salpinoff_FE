@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 
+import { colors } from './tokens/parsed-tokens';
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,6 +10,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: Object.assign(colors, {}),
+      fontFamily: {
+        sans: 'var(--font-family-sans)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
