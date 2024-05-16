@@ -27,14 +27,14 @@ const parseToken = <T extends keyof ThemeConfig>(
  */
 const parseTypographyToken = (
   tokens: DesignTokens,
-  prefix?: string,
+  prefix: string[] = [],
 ): Parameters<PluginAPI['addComponents']>[0] =>
   Object.entries(tokens).reduce(
     (acc, [k, v]) => ({
       ...acc,
       ...(Object.hasOwn(v, 'value')
-        ? { [`.${[prefix, k].join('-')}`]: v.value }
-        : parseTypographyToken(v, k)),
+        ? { [`.${[...prefix, k].join('-')}`]: v.value }
+        : parseTypographyToken(v, [...prefix, k])),
     }),
     {},
   );
