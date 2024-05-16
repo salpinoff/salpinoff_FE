@@ -1,15 +1,16 @@
 {
-  "source": [
-    "tokens/**/!(typography)*.json"
-  ],
+  "source": ["tokens/**/!(typography)*.json"],
   "platforms": {
     "css": {
-      "transformGroup": "css",
+      "transforms": ["attribute/cti", "name/cti/kebab", "color/hex", "size/px"],
       "buildPath": "build/css/",
       "files": [
         {
           "destination": "_variables.css",
-          "format": "css/variables"
+          "format": "css/variables",
+          "options": {
+            "outputReferences": true
+          }
         }
       ]
     }
