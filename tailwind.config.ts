@@ -1,4 +1,14 @@
+import plugin from 'tailwindcss/plugin';
+
 import type { Config } from 'tailwindcss';
+
+import {
+  colors,
+  spacing,
+  boxShadow,
+  borderRadius,
+  typography,
+} from './tokens/parsed-tokens';
 
 const config: Config = {
   content: [
@@ -8,6 +18,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: Object.assign(colors, {}),
+      spacing,
+      boxShadow,
+      borderRadius,
+      fontFamily: {
+        sans: ['var(--font-pretendard)', 'var(--font-family-sans)'],
+        pretendard: 'var(--font-pretendard)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -15,6 +33,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addComponents }) => {
+      addComponents(typography);
+    }, {}),
+  ],
 };
 export default config;
