@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { cx } from 'class-variance-authority';
+
 import ErrorSVG from '@public/icons/error.svg';
 
 import BaseText, { type BaseTextProps } from '@components/common/Text/BaseText';
@@ -18,7 +20,7 @@ export default function FormHelperText<T extends React.ElementType = 'p'>({
 }: FormHelperTextProps<T>) {
   return (
     <BaseText
-      className={className}
+      className={cx('flex items-center gap-4', className)}
       variant="label-2"
       weight="regular"
       align={align}
