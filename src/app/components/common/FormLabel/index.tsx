@@ -1,5 +1,3 @@
-import { PropsWithChildren } from 'react';
-
 import { cva, cx, type VariantProps } from 'class-variance-authority';
 
 import { RequiredByKeys } from '@type/util';
@@ -12,7 +10,7 @@ const label = cva(['label-1-regular'], {
 
 export type FormLabelProps<T extends React.ElementType = 'label'> =
   RequiredByKeys<
-    PropsWithChildren<LabelProps> &
+    React.PropsWithChildren<LabelProps> &
       React.ComponentPropsWithoutRef<T> & {
         required?: boolean;
       },
