@@ -60,16 +60,17 @@ export const badge = cva('truncate', {
     {
       variant: 'string',
       color: 'primary',
-      className: 'text-[--color-text-brand]',
+      className: '!text-[--color-text-brand]',
     },
     {
       variant: 'string',
       color: 'inverse',
-      className: 'text-[--color-text-inverse]',
+      className: '!text-[--color-text-inverse]',
     },
   ],
   defaultVariants: {
     variant: 'string',
+    color: 'primary',
     size: 24,
   },
 });
