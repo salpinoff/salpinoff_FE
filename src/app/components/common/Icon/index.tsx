@@ -1,5 +1,3 @@
-import { ElementType } from 'react';
-
 import { cva, cx, VariantProps } from 'class-variance-authority';
 
 export const icon = cva(['inline-flex', 'items-center', 'justify-center'], {
@@ -43,10 +41,12 @@ export const icon = cva(['inline-flex', 'items-center', 'justify-center'], {
   },
 });
 
-export type IconProps<T extends ElementType = 'span'> = React.PropsWithChildren<
-  VariantProps<typeof icon>
+export type IconProps<T extends React.ElementType = 'span'> = VariantProps<
+  typeof icon
 > &
-  React.ComponentPropsWithoutRef<T>;
+  React.ComponentPropsWithoutRef<T> & {
+    children: React.ReactElement<React.SVGProps<SVGSVGElement>>;
+  };
 
 export default function Icon({ className, children, size, stroke }: IconProps) {
   return (
