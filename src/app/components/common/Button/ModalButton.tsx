@@ -2,7 +2,7 @@ import BaseButton from '@components/common/Button/BaseButton';
 
 import cn from '@utils/cn';
 
-import type { ExtractProps } from '@type/utility';
+import type { ExtractProps } from '@type/util';
 
 type Props = ExtractProps<typeof BaseButton>;
 
