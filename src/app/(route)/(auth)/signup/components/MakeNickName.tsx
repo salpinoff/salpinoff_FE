@@ -2,7 +2,7 @@
 
 import { FormEventHandler, useState } from 'react';
 
-import BaseButton from '@components/buttons/BaseButton';
+import BaseButton from '@components/common/Button/BaseButton';
 import FixedBottom from '@components/FixedBottom';
 import TextInput from '@components/inputs/TextInput';
 
