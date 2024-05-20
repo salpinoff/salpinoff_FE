@@ -1,4 +1,6 @@
-import { cva, cx, type VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
+
+import cn from '@utils/cn';
 
 import { FONT_TYPES, FONT_WEIGHTS } from './Text.constants';
 
@@ -106,7 +108,7 @@ export default function BaseText<T extends React.ElementType = 'p'>({
 
   return (
     <Component
-      className={cx(
+      className={cn(
         className,
         textStyles({
           variant,

@@ -1,4 +1,6 @@
-import { cva, cx, VariantProps } from 'class-variance-authority';
+import { cva, VariantProps } from 'class-variance-authority';
+
+import cn from '@utils/cn';
 
 export const iconStyles = cva(
   ['inline-flex', 'items-center', 'justify-center'],
@@ -62,7 +64,7 @@ export default function Icon<T extends React.ElementType = 'span'>({
   const Component: React.ElementType = component || 'span';
 
   return (
-    <Component className={cx(iconStyles({ size, stroke }), className)}>
+    <Component className={cn(iconStyles({ size, stroke }), className)}>
       {children}
     </Component>
   );

@@ -1,4 +1,6 @@
-import { cva, cx, type VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
+
+import cn from '@utils/cn';
 
 import { RequiredByKeys } from '@type/util';
 
@@ -32,7 +34,7 @@ export default function FormLabel<T extends React.ElementType = 'label'>({
   return (
     <label
       htmlFor={id}
-      className={cx(labelStyle({ required }), className)}
+      className={cn(labelStyle({ required }), className)}
       {...rest}
     >
       {children}

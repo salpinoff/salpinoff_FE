@@ -1,6 +1,8 @@
-import { cva, cx, VariantProps } from 'class-variance-authority';
+import { cva, VariantProps } from 'class-variance-authority';
 
-const badgeWrapper = cva('', {
+import cn from '@utils/cn';
+
+const badgeBoxStyles = cva('', {
   variants: {
     variant: {
       dot: ['relative', 'w-max'],
@@ -19,7 +21,7 @@ const badgeWrapper = cva('', {
   },
 });
 
-export const badge = cva('truncate', {
+export const badgeStyles = cva('truncate', {
   variants: {
     variant: {
       dot: [
@@ -76,7 +78,7 @@ export const badge = cva('truncate', {
 });
 
 export type BadgeProps<T extends React.ElementType> = React.PropsWithChildren<
-  VariantProps<typeof badge>
+  VariantProps<typeof badgeStyles>
 > &
   React.ComponentPropsWithRef<T> & {
     count: number;
@@ -88,9 +90,9 @@ export default function Badge<T extends React.ElementType = 'span'>({
   className,
   children,
   variant,
-  max = 99,
   color,
   count,
+  max = 99,
   showZero = false,
 }: BadgeProps<T>) {
   if (!showZero && count === 0) {
@@ -98,9 +100,9 @@ export default function Badge<T extends React.ElementType = 'span'>({
   }
 
   return (
-    <span className={cx(badgeWrapper({ variant }), className)}>
+    <span className={cn(badgeBoxStyles({ variant }), className)}>
       <span className="shrink-0">{children}</span>
-      <span className={badge({ variant, color })}>
+      <span className={badgeStyles({ variant, color })}>
         {variant !== 'dot' && (count > max ? `${max}+` : count)}
       </span>
     </span>
