@@ -86,7 +86,7 @@ type TextFieldComponent = <T extends React.ElementType = 'input'>(
   },
 ) => React.ReactNode | null;
 
-export const TextField: TextFieldComponent = forwardRef(function TextField<
+const TextField: TextFieldComponent = forwardRef(function TextField<
   T extends React.ElementType,
 >(
   {
@@ -134,3 +134,5 @@ export const TextField: TextFieldComponent = forwardRef(function TextField<
     </div>
   );
 });
+
+export default TextField;
