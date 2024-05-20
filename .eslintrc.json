@@ -1,10 +1,6 @@
 {
   "root": true,
-  "plugins": [
-    "@typescript-eslint",
-    "prettier",
-    "unused-imports"
-  ],
+  "plugins": ["@typescript-eslint", "prettier", "unused-imports"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -12,19 +8,14 @@
       "jsx": true
     },
     "sourceType": "module",
-    "project": [
-      "./tsconfig.json"
-    ]
+    "project": ["./tsconfig.json"]
   },
   "env": {
     "browser": true,
     "node": true,
     "es6": true
   },
-  "ignorePatterns": [
-    "node_modules/",
-    "build/"
-  ],
+  "ignorePatterns": ["node_modules/", "build/"],
   "extends": [
     "airbnb",
     "airbnb-typescript",
@@ -39,16 +30,12 @@
   "rules": {
     "react/button-has-type": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [
-          ".ts",
-          ".tsx"
-        ]
+        "extensions": [".ts", ".tsx"]
       }
     ],
     "no-unused-vars": "off",
