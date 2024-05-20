@@ -1,4 +1,4 @@
-import BaseButton from '@components/buttons/BaseButton';
+import BaseButton from '@components/common/Button/BaseButton';
 
 import cn from '@utils/cn';
 
