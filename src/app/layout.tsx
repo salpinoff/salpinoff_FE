@@ -8,6 +8,7 @@ import './globals.css';
 export const viewport: Viewport = {
   width: 'device-width',
   userScalable: false,
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
