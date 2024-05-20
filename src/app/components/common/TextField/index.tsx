@@ -44,8 +44,7 @@ const inputStyles = cva(
   {
     variants: {
       variant: {
-        filled: '',
-        outlined: ['border border-[#70737C52]'],
+        outlined: ['border border-[#70737C52]', 'focus:border-transparent'],
       },
       error: {
         true: 'text-[--color-text-danger]',
