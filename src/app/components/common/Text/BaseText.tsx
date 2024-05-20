@@ -37,6 +37,14 @@ const textStyles = cva('', {
       overline: 'overline',
       lineTrough: 'line-through',
     },
+    maxRows: {
+      1: 'line-clamp-1',
+      2: 'line-clamp-2',
+      3: 'line-clamp-3',
+      4: 'line-clamp-4',
+      5: 'line-clamp-5',
+      6: 'line-clamp-6',
+    },
     overflow: {
       truncate: 'truncate',
       ellipsis: 'text-ellipsis',
@@ -56,16 +64,20 @@ const textStyles = cva('', {
     },
   },
   // 스타일 처리 조건
-  compoundVariants: generateCompounds<
-    (typeof FONT_TYPES)[number],
-    (typeof FONT_WEIGHTS)[number]
-  >(FONT_TYPES, FONT_WEIGHTS),
-
+  compoundVariants: [
+    ...generateCompounds<
+      (typeof FONT_TYPES)[number],
+      (typeof FONT_WEIGHTS)[number]
+    >(FONT_TYPES, FONT_WEIGHTS),
+    {
+      maxRows: [1, 2, 3, 4, 5, 6],
+      className: 'text-wrap',
+    },
+  ],
   // 기본 스타일
   defaultVariants: {
     variant: 'body-1',
     weight: 'regular',
-    wrap: false,
   },
 });
 
@@ -85,6 +97,7 @@ export default function BaseText<T extends React.ElementType = 'p'>({
   align,
   color,
   decoration,
+  maxRows,
   overflow,
   wrap,
   ...rest
@@ -100,6 +113,7 @@ export default function BaseText<T extends React.ElementType = 'p'>({
           weight,
           align,
           decoration,
+          maxRows,
           overflow,
           wrap,
           color,
