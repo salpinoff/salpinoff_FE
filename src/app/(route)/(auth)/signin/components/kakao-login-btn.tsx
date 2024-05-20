@@ -20,7 +20,7 @@ function KakaoLoginBtn() {
     <button
       type="button"
       onClick={handleLogin}
-      className="bg-white text-black px-2 py-3"
+      className="bg-white px-2 py-3 text-black"
     >
       카카오톡 로그인
     </button>

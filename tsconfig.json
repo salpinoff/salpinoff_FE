@@ -19,6 +19,8 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@token/*": ["tokens/*"],
+      "@public/*": ["public/*"],
       "@components/*": ["src/app/components/*"],
       "@constant/*": ["src/app/constant/*"],
       "@utils/*": ["src/app/utils/*"],

@@ -4,8 +4,14 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --full-height: 100vh;
+  --box-size: border-box;
+
+  @supports (-webkit-touch-callout: none) {
+    /* IOS Safari */
+    --full-height: -webkit-fill-available;
+    --box-size: content-box;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,18 +22,54 @@
   }
 }
 
+/* html,
+body {
+  height: auto;
+  overflow: auto;
+} */
+
+html {
+  min-height: var(--full-height);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: var(--full-height);
+}
+
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: black;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .box-sizing {
+    box-sizing: var(--box-size);
+  }
+
+  .full-height {
+    min-height: var(--full-height);
+  }
+
+  .ellipsis {
+    width: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .multiline-2,
+  .multiline-3 {
+    width: inherit;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
   }
 }

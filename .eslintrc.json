@@ -15,7 +15,7 @@
     "node": true,
     "es6": true
   },
-  "ignorePatterns": ["node_modules/"],
+  "ignorePatterns": ["node_modules/", ".next/**"],
   "extends": [
     "airbnb",
     "airbnb-typescript",
@@ -27,6 +27,8 @@
     "prettier"
   ],
   "rules": {
+    "react/button-has-type": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
@@ -71,6 +73,11 @@
           {
             "pattern": "{react*,react*/**}",
             "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@public/**",
+            "group": "internal",
             "position": "before"
           },
           {
