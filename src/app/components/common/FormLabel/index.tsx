@@ -2,20 +2,25 @@ import { cva, cx, type VariantProps } from 'class-variance-authority';
 
 import { RequiredByKeys } from '@type/util';
 
-export type LabelProps = VariantProps<typeof label>;
-
-const label = cva(['label-1-regular'], {
-  variants: {},
+const labelStyle = cva(['label-1-regular'], {
+  variants: {
+    required: {
+      true: [
+        'after:content-["*"]',
+        'after:text-[--color-text-accent-red]',
+        'after:pl-4',
+      ],
+    },
+  },
 });
 
-export type FormLabelProps<T extends React.ElementType = 'label'> =
-  RequiredByKeys<
-    React.PropsWithChildren<LabelProps> &
-      React.ComponentPropsWithoutRef<T> & {
-        required?: boolean;
-      },
-    'id' | 'children'
-  >;
+export type FormLabelProps<T extends React.ElementType> = RequiredByKeys<
+  React.PropsWithChildren<VariantProps<typeof labelStyle>> &
+    React.ComponentPropsWithoutRef<T> & {
+      required?: boolean;
+    },
+  'id' | 'children'
+>;
 
 export default function FormLabel<T extends React.ElementType = 'label'>({
   id,
@@ -25,13 +30,12 @@ export default function FormLabel<T extends React.ElementType = 'label'>({
   ...rest
 }: FormLabelProps<T>) {
   return (
-    <label htmlFor={id} className={cx(label({}), className)} {...rest}>
-      <div>
-        {children}
-        {required && (
-          <span className="pl-4 text-[--color-text-accent-red]">*</span>
-        )}
-      </div>
+    <label
+      htmlFor={id}
+      className={cx(labelStyle({ required }), className)}
+      {...rest}
+    >
+      {children}
     </label>
   );
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import FormLabel, { type FormLabelProps } from '.';
+import FormLabel from '.';
 
 const meta = {
   title: 'Components/Common/FormLabel',
@@ -22,7 +22,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta<FormLabelProps>;
+} satisfies Meta<typeof FormLabel>;
 
 export default meta;
 
@@ -33,5 +33,6 @@ export const Default: Story = {
     id: '',
     className: '',
     children: 'Form Label',
+    required: false,
   },
 };
