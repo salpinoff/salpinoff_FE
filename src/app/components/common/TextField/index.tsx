@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useEffect } from 'react';
+import { forwardRef } from 'react';
 
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -102,13 +102,10 @@ export const TextField: TextFieldComponent = forwardRef(function TextField<
     disabled = false,
     fullWidth,
     ...rest
-  }: React.PropsWithRef<TextFieldProps<T>>,
+  }: TextFieldProps<T>,
   ref: React.ComponentPropsWithRef<T>['ref'],
 ) {
   const Component: React.ElementType = multiline ? 'textarea' : 'input';
-  // const [isFocus, setIsFocus] = useState(false);
-
-  useEffect(() => {}, []);
 
   return (
     <div className={inputBoxStyles({ fullWidth })}>
