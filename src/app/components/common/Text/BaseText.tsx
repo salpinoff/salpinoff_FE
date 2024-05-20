@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { cva, type VariantProps } from 'class-variance-authority';
-import { twMerge } from 'tailwind-merge';
+import { cva, cx, type VariantProps } from 'class-variance-authority';
 
 import { FONT_TYPES, FONT_WEIGHTS } from './Text.constants';
 
@@ -22,7 +19,7 @@ const generateCompounds = <T extends string, U extends string>(
     })),
   );
 
-const baseText = cva(null, {
+const textStyles = cva('', {
   variants: {
     // 타입 추론용 (스타일 적용 x)
     variant: generateBoolVariants<(typeof FONT_TYPES)[number]>(FONT_TYPES),
@@ -50,11 +47,11 @@ const baseText = cva(null, {
       false: 'text-nowrap',
     },
     color: {
-      info: '',
-      success: '',
-      warning: '',
+      info: 'text-[--color-text-info]',
+      success: 'text-[--color-text-success]',
+      warning: 'text-[--color-text-warning]',
       error: 'text-[--color-text-danger]',
-      primary: '',
+      primary: 'text-[--color-text-brand]',
       secondary: '',
     },
   },
@@ -72,11 +69,12 @@ const baseText = cva(null, {
   },
 });
 
-export type TextBaseProps = VariantProps<typeof baseText>;
-
-export type BaseTextProps<T extends React.ElementType> = TextBaseProps & {
-  component?: T;
-} & React.ComponentPropsWithoutRef<T>;
+export type BaseTextProps<T extends React.ElementType> = VariantProps<
+  typeof textStyles
+> &
+  React.ComponentPropsWithoutRef<T> & {
+    component?: T;
+  };
 
 export default function BaseText<T extends React.ElementType = 'p'>({
   component,
@@ -95,9 +93,17 @@ export default function BaseText<T extends React.ElementType = 'p'>({
 
   return (
     <Component
-      className={twMerge(
+      className={cx(
         className,
-        baseText({ variant, weight, align, decoration, overflow, wrap, color }),
+        textStyles({
+          variant,
+          weight,
+          align,
+          decoration,
+          overflow,
+          wrap,
+          color,
+        }),
       )}
       {...rest}
     >
