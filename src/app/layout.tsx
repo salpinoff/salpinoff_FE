@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
+import QueryProvider from '@components/common/Async/QueryProvider';
+
 import { Pretendard } from './utils/fonts';
 
 import '../../build/css/_variables.css';
@@ -23,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={Pretendard.variable}>
-      <body>{children}</body>
+      <body>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }
