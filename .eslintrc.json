@@ -82,6 +82,11 @@
             "position": "before"
           },
           {
+            "pattern": "@tanstack/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
             "pattern": "@public/**",
             "group": "internal",
             "position": "before"
