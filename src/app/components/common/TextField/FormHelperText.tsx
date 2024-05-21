@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { cx } from 'class-variance-authority';
 
 import ErrorSVG from '@public/icons/error.svg';
@@ -25,7 +23,7 @@ export default function FormHelperText<T extends React.ElementType = 'p'>({
       variant="label-2"
       weight="regular"
       align={align}
-      {...(error ? { color: 'error' } : {})}
+      {...(error ? { color: 'error' } : { color: 'alternative' })}
       {...rest}
     >
       {error && (

@@ -57,12 +57,20 @@ const textStyles = cva('', {
       false: 'text-nowrap',
     },
     color: {
+      // Semantic
       info: 'text-[--color-text-info]',
       success: 'text-[--color-text-success]',
       warning: 'text-[--color-text-warning]',
       error: 'text-[--color-text-danger]',
+      // Brand
       primary: 'text-[--color-text-brand]',
-      secondary: '',
+      // Label
+      normal: 'text-cool-neutral-99',
+      strong: 'text-common-100',
+      neutral: 'text-cool-neutral-90A',
+      alternative: 'text-cool-neutral-80A',
+      assistive: 'text-[#AEB0B647]',
+      disabled: 'text-cool-neutral-70A',
     },
   },
   // 스타일 처리 조건
