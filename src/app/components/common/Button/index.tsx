@@ -56,30 +56,28 @@ export type ButtonProps = React.PropsWithChildren<
 > &
   React.ComponentPropsWithRef<'button'>;
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(
-    { children, className, variant, size, grouped, loading, disabled, ...rest },
-    ref,
-  ) {
-    return (
-      <button
-        ref={ref}
-        disabled={disabled || loading}
-        className={cn(
-          buttonStyles({ variant, size, grouped, disabled }),
-          className,
-        )}
-        {...rest}
-      >
-        {!loading && children}
-        {loading && (
-          <Icon size={24}>
-            <SpinSVG />
-          </Icon>
-        )}
-      </button>
-    );
-  },
-);
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { children, className, variant, size, grouped, loading, disabled, ...rest },
+  ref,
+) {
+  return (
+    <button
+      ref={ref}
+      disabled={disabled || loading}
+      className={cn(
+        buttonStyles({ variant, size, grouped, disabled }),
+        className,
+      )}
+      {...rest}
+    >
+      {!loading && children}
+      {loading && (
+        <Icon size={24}>
+          <SpinSVG />
+        </Icon>
+      )}
+    </button>
+  );
+});
 
 export default Button;
