@@ -6,11 +6,11 @@ import qs from '@utils/qs';
 
 import { providers } from '@constant/auth/providers';
 
-import requestUserToken from '@api/auth/token';
+import requestUserToken from '@api/auth/token/get-token';
 
 import { AuthType, Providers } from '@type/auth';
 
-import redirectResponse from './utils';
+import { redirectResponse } from './utils';
 
 type Props = {
   request: NextRequest;
@@ -78,6 +78,14 @@ const authHandler = ({ request, params }: Props) => {
               `${process.env.DOMAIN_NAME}/signin?error=${errorMessage}`,
             );
           }
+        }
+        case 'session': {
+          const accessTokenCookie = request.cookies.get('accessToken');
+
+          return NextResponse.json({
+            status: accessTokenCookie ? 'authenticated' : 'unauthenticated',
+            accessToken: accessTokenCookie ? accessTokenCookie.value : '',
+          });
         }
         default:
           return NextResponse.next();
