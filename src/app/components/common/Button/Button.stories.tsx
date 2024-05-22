@@ -38,9 +38,6 @@ const meta = {
     disabled: {
       control: 'boolean',
     },
-    grouped: {
-      control: 'boolean',
-    },
   },
 } satisfies Meta<typeof Button>;
 
