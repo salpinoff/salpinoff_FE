@@ -8,7 +8,7 @@ import Icon from '@components/common/Icon';
 
 import cn from '@utils/cn';
 
-const buttonStyles = cva('body-2-semibold', {
+const buttonStyles = cva('body-2-semibold h-[55px]', {
   variants: {
     variant: {
       primary: [
@@ -19,16 +19,19 @@ const buttonStyles = cva('body-2-semibold', {
       ghost: ['bg-transparent', 'text-cool-neutral-99'],
     },
     size: {
-      small: ['w-[164px]', 'h-[44px]', 'rounded-8', 'px-12', 'py-[10px]'],
-      medium: ['w-[248px]', 'h-[55px]', 'rounded-12', 'px-16', 'py-[10px]'],
-      large: ['w-[335px]', 'h-[55px]', 'rounded-12', 'px-16', 'py-[10px]'],
+      small: [
+        'label-1-medium',
+        'w-[128px]',
+        'h-[44px]',
+        'rounded-8',
+        'px-12',
+        'py-[10px]',
+      ],
+      medium: ['w-[164px]', 'rounded-12', 'px-16', 'py-[10px]'],
+      large: ['w-[335px]', 'rounded-12', 'px-16', 'py-[10px]'],
     },
     disabled: {
       true: 'text-cool-neutral-70A',
-    },
-    // ! small & grouped => 사이즈 변경 필요
-    grouped: {
-      true: '',
     },
   },
   compoundVariants: [
@@ -36,11 +39,6 @@ const buttonStyles = cva('body-2-semibold', {
       variant: ['primary', 'secondary'],
       disabled: true,
       className: ['bg-cool-neutral-22'],
-    },
-    {
-      size: 'small',
-      grouped: true,
-      className: ['w-[128px]', 'label-1-medium'],
     },
   ],
   defaultVariants: {
@@ -57,17 +55,14 @@ export type ButtonProps = React.PropsWithChildren<
   React.ComponentPropsWithRef<'button'>;
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { children, className, variant, size, grouped, loading, disabled, ...rest },
+  { children, className, variant, size, loading, disabled, ...rest },
   ref,
 ) {
   return (
     <button
       ref={ref}
       disabled={disabled || loading}
-      className={cn(
-        buttonStyles({ variant, size, grouped, disabled }),
-        className,
-      )}
+      className={cn(buttonStyles({ variant, size, disabled }), className)}
       {...rest}
     >
       {!loading && children}
