@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
+import { LayoutGroup } from 'framer-motion';
+
 import Button from '@components/common/Button';
 
 import { useQueryString } from '@hooks/useQueryString';
@@ -47,20 +49,20 @@ export default function SharePage() {
   }
 
   return (
-    <main className="flex h-dvh items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
+    <main className="mx-auto flex h-dvh items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
       <div className="flex h-[573px] flex-col items-center justify-between">
-        <GuidMessage />
-        <MonsterCard
-          name={monster.monsterName}
-          decorations={monster.monsterDecorations}
-        />
-        <footer>
-          <div className="flex flex-col">
-            <Button size="medium">바로 공유하기</Button>
-            <Button size="medium" variant="ghost">
-              다음에 할래요
-            </Button>
-          </div>
+        <LayoutGroup>
+          <GuidMessage />
+          <MonsterCard
+            name={monster.monsterName}
+            // decorations={monster.monsterDecorations}
+          />
+        </LayoutGroup>
+        <footer className="flex flex-col">
+          <Button size="medium">바로 공유하기</Button>
+          <Button size="medium" variant="ghost">
+            다음에 할래요
+          </Button>
         </footer>
       </div>
     </main>
