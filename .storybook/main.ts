@@ -26,5 +26,23 @@ const config: StorybookConfig = {
     },
     skipCompiler: true,
   },
+  webpackFinal: async (config) => {
+    config.module = config.module || {};
+    config.module.rules = config.module.rules || [];
+
+    config.module.rules
+      .filter((rule) => rule?.['test']?.test('.svg'))
+      .forEach((rule) => {
+        if (rule) rule['exclude'] = /\.svg$/;
+      });
+
+    // Configure .svg files to be loaded with @svgr/webpack
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+
+    return config;
+  },
 };
 export default config;
