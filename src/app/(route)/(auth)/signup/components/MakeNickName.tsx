@@ -6,19 +6,25 @@ import BaseButton from '@components/common/Button/BaseButton';
 import FixedBottom from '@components/FixedBottom';
 import TextInput from '@components/inputs/TextInput';
 
+import useAuth from 'src/app/hooks/api/useAuth';
 import useFixedBottom from 'src/app/hooks/useFixedBottom';
+import useWithAuth from 'src/app/hooks/useWithAuth';
 
 function MakeNickName() {
   const [userName, setUserName] = useState('');
   const [bottom, setBottom, toggleTouchAction] = useFixedBottom(0);
 
+  const { status } = useAuth();
+  const withAuth = useWithAuth();
+
   const validateValue = (value: string) => {
     return value.length >= 2 && value.length <= 6;
   };
 
-  const handleSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-  };
+  const handleSubmit = withAuth<FormEventHandler>((e) => {
+    // e.preventDefault();
+    console.log('data fetching', e.target);
+  });
 
   const handleInput: FormEventHandler = (e) => {
     const { value } = e.target as HTMLInputElement;
@@ -36,7 +42,7 @@ function MakeNickName() {
   const error = (!!userName && disabled && message) || '';
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col justify-between">
+    <div className="flex flex-col justify-between">
       <TextInput
         id="nickName"
         label="닉네임"
@@ -53,14 +59,15 @@ function MakeNickName() {
       <FixedBottom className="p-5" style={{ bottom: `${bottom}px` }}>
         <BaseButton
           primary
-          type="submit"
+          type="button"
           className="w-full"
-          disabled={disabled}
+          disabled={disabled || status === 'loading'}
+          onClick={handleSubmit}
         >
           다음으로
         </BaseButton>
       </FixedBottom>
-    </form>
+    </div>
   );
 }
 
