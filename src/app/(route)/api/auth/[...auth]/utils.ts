@@ -35,8 +35,8 @@ const redirectResponse = ({
   refreshToken,
 }: TypeResponse) => {
   const destinationUrl =
-    (code === 100 && `/signUp?code=${code}`) ||
-    (code === 102 && `/signUp?code=${code}&user=${username}`) ||
+    (code === 100 && `/signup?code=${code}`) ||
+    (code === 102 && `/signup?code=${code}&user=${username}`) ||
     '/';
 
   const response = NextResponse.redirect(destinationUrl, { status: 302 });
