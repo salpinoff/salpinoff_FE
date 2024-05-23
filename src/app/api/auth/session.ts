@@ -14,4 +14,10 @@ const getSession = () => {
   return baseInstance.get<Session>(path);
 };
 
-export { getSession };
+const updateSession = () => {
+  const path = '/api/auth/session';
+
+  return baseInstance.post<Response>(path);
+};
+
+export { getSession, updateSession };
