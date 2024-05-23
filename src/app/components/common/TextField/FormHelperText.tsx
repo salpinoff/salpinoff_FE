@@ -8,10 +8,12 @@ import BaseText, { type BaseTextProps } from '@components/common/Text/BaseText';
 export type FormHelperTextProps<T extends React.ElementType = 'p'> =
   React.PropsWithChildren<Pick<BaseTextProps<T>, 'color' | 'align'>> & {
     error?: boolean;
+    component?: T;
   } & React.ComponentPropsWithoutRef<T>;
 
 export default function FormHelperText<T extends React.ElementType = 'p'>({
   children,
+  component,
   className,
   align,
   error,
@@ -19,6 +21,7 @@ export default function FormHelperText<T extends React.ElementType = 'p'>({
 }: FormHelperTextProps<T>) {
   return (
     <BaseText
+      component={component || 'p'}
       className={cx('flex items-center gap-4', className)}
       variant="label-2"
       weight="regular"
