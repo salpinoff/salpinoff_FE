@@ -2,7 +2,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import { useEffect, useState, useCallback } from 'react';
 
-export const useQueryString = <T extends string>(
+const useQueryString = <T extends string>(
   name: string,
   defaultValue?: T,
 ): [string, (v: string) => void] => {
@@ -30,3 +30,5 @@ export const useQueryString = <T extends string>(
 
   return [state ?? '', setQueryString];
 };
+
+export default useQueryString;
