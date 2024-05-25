@@ -1,23 +1,24 @@
 import { useEffect, useId, useCallback } from 'react';
 
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 
-import modalAtom from 'atoms/modal';
+import { modalAtom } from '@store/modalAtom';
 
 const useModal = (component: React.FC) => {
-  const id = useId();
-  const [modals, setModals] = useAtom(modalAtom);
+  const uid = useId();
+  const modals = useAtomValue(modalAtom);
+  const setModals = useSetAtom(modalAtom);
 
-  const isOpen = modals.some((modal) => modal.id === id);
+  const isOpen = modals.findIndex((modal) => modal.uid === uid) !== -1;
 
   const openModal = useCallback(
-    () => setModals((prev) => [...prev, { id, element: component }]),
-    [component, id, setModals],
+    () => setModals((prev) => [...prev, { uid, element: component }]),
+    [component, uid, setModals],
   );
 
   const closeModal = useCallback(
-    () => setModals((prev) => prev.filter((modal) => modal.id !== id)),
-    [id, setModals],
+    () => setModals((prev) => prev.filter((modal) => modal.uid !== uid)),
+    [uid, setModals],
   );
 
   useEffect(() => {
