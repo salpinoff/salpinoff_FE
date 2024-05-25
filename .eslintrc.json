@@ -87,6 +87,11 @@
             "position": "before"
           },
           {
+            "pattern": "@providers/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
             "pattern": "@public/**",
             "group": "internal",
             "position": "before"
