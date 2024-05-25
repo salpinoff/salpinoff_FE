@@ -16,12 +16,15 @@ export function Modal({
   open?: boolean;
 }>) {
   return createPortal(
-    <AnimatePresence initial={false} onExitComplete={() => null}>
+    <AnimatePresence mode="wait" onExitComplete={() => null}>
       {open && (
         <motion.div
           onClick={(e) => e.stopPropagation()}
           variants={{
-            visible: {
+            initial: {
+              opacity: 0,
+            },
+            animate: {
               opacity: 1,
               transition: {
                 duration: 0.1,
@@ -31,8 +34,8 @@ export function Modal({
               opacity: 0,
             },
           }}
-          initial={{ opacity: 0 }}
-          animate="visible"
+          initial="initial"
+          animate="animate"
           exit="exit"
         >
           {children}
