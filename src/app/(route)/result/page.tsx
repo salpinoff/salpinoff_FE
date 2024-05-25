@@ -1,23 +1,34 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useState, useEffect } from 'react';
 
 import { LayoutGroup } from 'framer-motion';
 
 import Button from '@components/common/Button';
 
-import { useQueryString } from '@hooks/useQueryString';
+import useModal from '@hooks/useModal';
+import useQueryString from '@hooks/useQueryString';
 
 import { Monster } from '@api/schema/monster';
 
 import GuidMessage from './components/GuidMessage';
 import MonsterCard from './components/MonsterCard';
+import ShareModal from './components/ShareModal';
 
 type MonsterResultResponse = Omit<Monster, 'rating'>;
 
 export default function SharePage() {
+  const router = useRouter();
   const [monsterId] = useQueryString('monsterId');
   const [monster, setMonster] = useState<MonsterResultResponse>();
+
+  const handleDefer = () => router.push('/');
+
+  const { openModal, closeModal } = useModal(() => (
+    <ShareModal closeModal={closeModal} />
+  ));
 
   useEffect(() => {
     // Temp
@@ -59,8 +70,10 @@ export default function SharePage() {
           />
         </LayoutGroup>
         <footer className="flex flex-col">
-          <Button size="medium">바로 공유하기</Button>
-          <Button size="medium" variant="ghost">
+          <Button size="medium" onClick={openModal}>
+            바로 공유하기
+          </Button>
+          <Button size="medium" variant="ghost" onClick={handleDefer}>
             다음에 할래요
           </Button>
         </footer>
