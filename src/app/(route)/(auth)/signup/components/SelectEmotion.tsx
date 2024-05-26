@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect } from 'react';
 
 import { cva } from 'class-variance-authority';
 
@@ -9,6 +9,7 @@ import FormHelperText from '@components/common/TextField/FormHelperText';
 import cn from '@utils/cn';
 
 import useSignUpContext from '../hooks/useSignUpContext';
+import useUserInfoContext from '../hooks/useUserInfoContext';
 
 const buttonStyle = cva(
   cn(
@@ -33,17 +34,23 @@ const buttonStyle = cva(
 );
 
 function SelectEmotion() {
-  const [selectedId, setSelectedId] = useState('');
+  const {
+    state: { emotion },
+    updater,
+  } = useUserInfoContext();
 
   const { setBtnDisabled } = useSignUpContext();
 
   const handleChange: ChangeEventHandler = (e) => {
     const target = e.target as HTMLInputElement;
-    const { id } = target;
+    const id = target.id as 'depressed' | 'angry';
 
-    setSelectedId(id);
-    setBtnDisabled(false);
+    updater({ payload: { emotion: id } });
   };
+
+  useEffect(() => {
+    setBtnDisabled(emotion === '');
+  }, [emotion]);
 
   return (
     <fieldset className="flex flex-col">
@@ -55,7 +62,7 @@ function SelectEmotion() {
         htmlFor="angry"
         className={buttonStyle({
           variant: 'top',
-          selected: selectedId === 'angry',
+          selected: emotion === 'angry',
         })}
       >
         <span>분노</span>
@@ -72,7 +79,7 @@ function SelectEmotion() {
         htmlFor="depressed"
         className={buttonStyle({
           variant: 'bottom',
-          selected: selectedId === 'depressed',
+          selected: emotion === 'depressed',
         })}
       >
         <span>우울</span>

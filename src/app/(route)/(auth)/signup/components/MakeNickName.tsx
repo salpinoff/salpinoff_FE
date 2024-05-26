@@ -1,13 +1,17 @@
 'use client';
 
-import { FormEventHandler, useEffect, useState } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 
 import TextInput from '@components/inputs/TextInput';
 
 import useSignUpContext from '../hooks/useSignUpContext';
+import useUserInfoContext from '../hooks/useUserInfoContext';
 
 function MakeNickName() {
-  const [userName, setUserName] = useState('');
+  const {
+    state: { nickname: userName },
+    updater,
+  } = useUserInfoContext();
   const { setBtnDisabled } = useSignUpContext();
 
   const validateValue = (value: string) => {
@@ -20,7 +24,7 @@ function MakeNickName() {
 
   const handleInput: FormEventHandler = (e) => {
     const { value } = e.target as HTMLInputElement;
-    setUserName(value);
+    updater({ payload: { nickname: value } });
   };
 
   const message = '닉네임은 2~6자 이내로 입력해주세요';

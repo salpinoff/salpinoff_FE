@@ -1,11 +1,12 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 
 import FormHelperText from '@components/common/TextField/FormHelperText';
 import Slider from '@components/Slider';
 
 import useSignUpContext from '../hooks/useSignUpContext';
+import useUserInfoContext from '../hooks/useUserInfoContext';
 
 const slider = {
   step: 1,
@@ -15,7 +16,10 @@ const slider = {
 
 function SelectStress() {
   const { min, max, step } = slider;
-  const [stress, setStress] = useState(min);
+  const {
+    state: { stress },
+    updater,
+  } = useUserInfoContext();
 
   const { setBtnDisabled } = useSignUpContext();
 
@@ -23,9 +27,12 @@ function SelectStress() {
     const { target } = e;
     const { value } = target;
 
-    setStress(Number(value));
-    setBtnDisabled(false);
+    updater({ payload: { stress: Number(value) } });
   };
+
+  useEffect(() => {
+    setBtnDisabled(false);
+  }, []);
 
   return (
     <div>
@@ -35,6 +42,7 @@ function SelectStress() {
         max={max}
         step={step}
         displayInterval
+        defaultValue={stress}
         className="mb-48"
         onChange={handleChange}
       />

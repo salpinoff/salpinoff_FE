@@ -1,15 +1,19 @@
 'use client';
 
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 
 import TextField from '@components/common/TextField';
 
 import useSignUpContext from '../hooks/useSignUpContext';
+import useUserInfoContext from '../hooks/useUserInfoContext';
 
 const MAX_LENGTH = 500;
 
 function WriteStory() {
-  const [story, setStory] = useState('');
+  const {
+    state: { story },
+    updater,
+  } = useUserInfoContext();
   const { setBtnDisabled } = useSignUpContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +21,7 @@ function WriteStory() {
       target: { value },
     } = e;
 
-    setStory(value);
+    updater({ payload: { story: value } });
   };
 
   useEffect(() => {
