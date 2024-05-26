@@ -13,7 +13,7 @@ import useQueryString from '@hooks/useQueryString';
 
 import { Monster } from '@api/schema/monster';
 
-import GuidMessage from './components/GuidMessage';
+import GuideMessage from './components/GuideMessage';
 import MonsterCard from './components/MonsterCard';
 import ShareModal from './components/ShareModal';
 
@@ -63,7 +63,7 @@ export default function SharePage() {
     <main className="mx-auto flex h-dvh items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
       <div className="flex h-[573px] flex-col items-center justify-between">
         <LayoutGroup>
-          <GuidMessage />
+          <GuideMessage />
           <MonsterCard
             name={monster.monsterName}
             // decorations={monster.monsterDecorations}
