@@ -5,13 +5,15 @@ import dynamic from 'next/dynamic';
 import useFunnel from 'src/app/hooks/useFunnel';
 
 import MakeNickName from './components/MakeNickName';
-import SelectEmotion from './components/SelectEmotion';
-import SignUpLayout from './components/SignUpLayout';
 import { title } from './constant/funnel';
 import { UserInfoProvider } from './context/userInfo.context';
+import SelectEmotion from '../../(monster)/component/SelectEmotion';
+import SelectStress from '../../(monster)/component/SelectStress';
+import SignUpLayout from '../../(monster)/component/SignUpLayout';
 
-const SelectStress = dynamic(() => import('./components/SelectStress'));
-const WriteStory = dynamic(() => import('./components/WriteStory'));
+const WriteStory = dynamic(
+  () => import('../../(monster)/component/WriteStory'),
+);
 
 function SignUp() {
   const { Funnel, setStep } = useFunnel('nickname');
