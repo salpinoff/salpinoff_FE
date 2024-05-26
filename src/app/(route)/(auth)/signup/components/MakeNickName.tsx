@@ -2,7 +2,7 @@
 
 import { FormEventHandler, useEffect } from 'react';
 
-import TextInput from '@components/inputs/TextInput';
+import TextField from '@components/common/TextField';
 
 import useSignUpContext from '../hooks/useSignUpContext';
 import useUserInfoContext from '../hooks/useUserInfoContext';
@@ -29,7 +29,6 @@ function MakeNickName() {
 
   const message = '닉네임은 2~6자 이내로 입력해주세요';
   const disabled = !validateValue(userName);
-  const guide = (!userName && message) || '';
   const error = (!!userName && disabled && message) || '';
 
   useEffect(() => {
@@ -38,15 +37,14 @@ function MakeNickName() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col justify-between">
-      <TextInput
+      <TextField
         id="nickName"
         label="닉네임"
-        guide={guide}
-        error={error}
         value={userName}
         onChange={handleInput}
         placeholder="닉네임을 입력해주세요"
-        className="mt"
+        {...(userName === '' || error ? { helperText: message } : {})}
+        {...(error ? { error: true } : {})}
       />
     </form>
   );
