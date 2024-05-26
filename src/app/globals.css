@@ -22,20 +22,16 @@
   }
 }
 
-/* html,
-body {
-  height: auto;
-  overflow: auto;
-} */
-
 html {
-  min-height: var(--full-height);
+  /* max-height: var(--full-height); */
+  overflow: hidden;
 }
 
 body {
   margin: 0;
-  min-height: 100vh;
-  min-height: var(--full-height);
+  /* max-height: 100vh;
+  max-height: var(--full-height); */
+  overflow: hidden;
 }
 
 body {
@@ -53,7 +49,11 @@ body {
   }
 
   .full-height {
-    min-height: var(--full-height);
+    height: var(--full-height);
+  }
+
+  .height {
+    height: calc(90vh - 40px);
   }
 
   .ellipsis {

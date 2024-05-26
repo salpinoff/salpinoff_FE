@@ -9,7 +9,8 @@ function AuthLayout({ children }: Props) {
     <main
       style={{ touchAction: 'auto' }}
       className={cn(
-        'box-sizing full-height relative flex flex-col bg-black p-20',
+        'full-height',
+        'relative box-border flex flex-col bg-black',
       )}
     >
       {children}
