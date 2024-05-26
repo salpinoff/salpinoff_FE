@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { signUpContext } from 'src/app/(route)/(auth)/signup/context/signup.context';
+import { signUpContext } from '../context/layout.context';
 
 const useSignUpContext = () => {
   const signUpHandler = useContext(signUpContext);
