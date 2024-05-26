@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 
 import useFunnel from 'src/app/hooks/useFunnel';
 
@@ -14,8 +15,12 @@ import SignUpLayout from '../../(monster)/component/SignUpLayout';
 const WriteStory = dynamic(
   () => import('../../(monster)/component/WriteStory'),
 );
+const MonsterName = dynamic(
+  () => import('../../(monster)/component/MosterName'),
+);
 
 function SignUp() {
+  const { replace } = useRouter();
   const { Funnel, setStep } = useFunnel('nickname');
 
   return (
@@ -57,6 +62,26 @@ function SignUp() {
             goNext={() => setStep('monstername')}
           >
             <WriteStory />
+          </SignUpLayout>
+        </Funnel.Step>
+
+        <Funnel.Step name="monstername">
+          <SignUpLayout
+            className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
+            goPrev={() => setStep('story')}
+            goNext={() => setStep('monsterstyle')}
+          >
+            <MonsterName />
+          </SignUpLayout>
+        </Funnel.Step>
+
+        <Funnel.Step name="monsterstyle">
+          <SignUpLayout
+            className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
+            goPrev={() => setStep('monstername')}
+            goNext={() => replace('/result')}
+          >
+            {/* <MonsterName /> */}
           </SignUpLayout>
         </Funnel.Step>
       </Funnel>
