@@ -42,6 +42,23 @@ const config: Config = {
     plugin(({ addComponents }) => {
       addComponents(typography);
     }, {}),
+    plugin(({ addVariant }) => {
+      addVariant('webkit-slider', '&::-webkit-slider-thumb');
+      addVariant('moz-slider', '&::-moz-range-thumb');
+      addVariant('ms-slider', '&::-ms-thumb');
+    }),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.appearance-none': {
+          appearance: 'none',
+          '-webkit-appearance': 'none',
+          '-moz-appearance': 'none',
+        },
+        '.webkit-appearance-none': {
+          '-webkit-appearance': 'none',
+        },
+      });
+    }),
   ],
 };
 export default config;
