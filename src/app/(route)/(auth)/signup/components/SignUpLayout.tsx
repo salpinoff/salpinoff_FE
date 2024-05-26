@@ -9,20 +9,21 @@ import stringToElement from '@utils/string-to-element';
 
 import useFixedBottom from 'src/app/hooks/useFixedBottom';
 
-import { SignUpProvider } from '../context/signup.context';
+import { SignUpProvider } from '../context/layout.context';
 
 type Props = PropsWithChildren<{
-  title: string | string[];
+  title?: string | string[];
   goNext: MouseEventHandler;
   goPrev?: MouseEventHandler;
+  className?: string;
 }>;
 
-function SignUpLayout({ children, title, goPrev, goNext }: Props) {
-  const [bottom, setBottom] = useFixedBottom();
+function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
+  const [bottom] = useFixedBottom();
   const [disabled, setBtnDisabled] = useState(true);
 
   return (
-    <div className="flex flex-1 flex-col p-20">
+    <div className={cn('flex flex-1 flex-col bg-black p-20', className)}>
       <BaseText
         weight="semibold"
         variant="heading-1"
@@ -30,12 +31,10 @@ function SignUpLayout({ children, title, goPrev, goNext }: Props) {
           hidden: !title,
         })}
       >
-        {stringToElement(title)}
+        {title && stringToElement(title)}
       </BaseText>
 
-      <SignUpProvider onBlur={() => setBottom(0)} value={{ setBtnDisabled }}>
-        {children}
-      </SignUpProvider>
+      <SignUpProvider value={{ setBtnDisabled }}>{children}</SignUpProvider>
 
       <FixedBottom
         className="flex touch-none space-x-8 p-5"
