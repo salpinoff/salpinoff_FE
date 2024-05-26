@@ -9,7 +9,7 @@ import stringToElement from '@utils/string-to-element';
 
 import useFixedBottom from 'src/app/hooks/useFixedBottom';
 
-import { SignUpProvider } from '../context/layout.context';
+import { SignUpProvider } from '../../(auth)/signup/context/layout.context';
 
 type Props = PropsWithChildren<{
   title?: string | string[];

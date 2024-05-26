@@ -5,8 +5,8 @@ import { ChangeEvent, useEffect } from 'react';
 import FormHelperText from '@components/common/TextField/FormHelperText';
 import Slider from '@components/Slider';
 
-import useSignUpContext from '../hooks/useSignUpContext';
-import useUserInfoContext from '../hooks/useUserInfoContext';
+import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
+import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 
 const slider = {
   step: 1,

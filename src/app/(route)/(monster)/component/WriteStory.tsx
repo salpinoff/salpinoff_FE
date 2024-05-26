@@ -4,8 +4,8 @@ import { ChangeEvent, useEffect } from 'react';
 
 import TextField from '@components/common/TextField';
 
-import useSignUpContext from '../hooks/useSignUpContext';
-import useUserInfoContext from '../hooks/useUserInfoContext';
+import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
+import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 
 const MAX_LENGTH = 500;
 

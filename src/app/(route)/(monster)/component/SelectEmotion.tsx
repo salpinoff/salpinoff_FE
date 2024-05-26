@@ -8,8 +8,8 @@ import FormHelperText from '@components/common/TextField/FormHelperText';
 
 import cn from '@utils/cn';
 
-import useSignUpContext from '../hooks/useSignUpContext';
-import useUserInfoContext from '../hooks/useUserInfoContext';
+import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
+import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 
 const buttonStyle = cva(
   cn(
