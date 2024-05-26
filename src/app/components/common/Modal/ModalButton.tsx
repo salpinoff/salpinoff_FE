@@ -1,23 +1,23 @@
-import Button, { type ButtonProps } from '@components/common/Button';
+import Button from '@components/common/Button';
 
 import cn from '@utils/cn';
 
-type ModalDiscriptionProps = React.PropsWithChildren<
-  Pick<ButtonProps, 'className' | 'variant' | 'onClick'>
->;
+import { ExtractProps } from '@type/util';
 
 export default function ModalButton({
   className,
   children,
   variant,
   onClick,
-}: ModalDiscriptionProps) {
+  ...rest
+}: ExtractProps<typeof Button>) {
   return (
     <Button
       className={cn(className, 'font-normal')}
       size="small"
       variant={variant}
       onClick={onClick}
+      {...rest}
     >
       {children}
     </Button>
