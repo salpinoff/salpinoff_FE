@@ -29,7 +29,7 @@ function MakeNickName() {
   const error = (!!userName && disabled && message) || '';
 
   useEffect(() => {
-    setBtnDisabled(userName.length === 0 || userName.length > 6);
+    setBtnDisabled(userName.length < 2 || userName.length > 6);
   }, [userName]);
 
   return (
