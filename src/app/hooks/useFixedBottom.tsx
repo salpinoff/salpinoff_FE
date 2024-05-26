@@ -3,22 +3,13 @@ import { useEffect, useState } from 'react';
 const useFixedBottom = (initialBottom?: number) => {
   const [bottom, setBottom] = useState<number>(initialBottom || 0);
 
-  const toggleTouchAction = () => {
-    const main = document.querySelector('main');
-
-    if (main) {
-      const previous = main.style.touchAction;
-      main.style.touchAction = previous === 'auto' ? 'none' : 'auto';
-    }
-  };
-
   useEffect(() => {
     const initialHeight = window.visualViewport?.height || 0;
     const handleResize = () => {
       const resizeHeight = window.visualViewport?.height || 0;
       const gap = initialHeight - resizeHeight;
 
-      setBottom(gap);
+      setBottom(() => (gap < 0 ? 0 : gap));
     };
 
     if (window.visualViewport) {
@@ -32,7 +23,7 @@ const useFixedBottom = (initialBottom?: number) => {
     };
   }, []);
 
-  return [bottom, setBottom, toggleTouchAction] as const;
+  return [bottom, setBottom] as const;
 };
 
 export default useFixedBottom;
