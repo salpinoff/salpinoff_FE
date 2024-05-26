@@ -42,10 +42,18 @@ export default function ShareModal({ monsterId, closeModal }: ShareModalProps) {
           친구에게 나의 퇴사몬과 이야기를 공유하고 답장을 받아보세요
         </Modal.Description>
         <div className="flex gap-8">
-          <Modal.Button variant="secondary" onClick={handleCopyLink}>
+          <Modal.Button
+            variant="secondary"
+            onClick={handleCopyLink}
+            aria-label="공유 링크 복사 버튼"
+          >
             링크 복사
           </Modal.Button>
-          <Modal.Button variant="primary" onClick={handleShareKakao}>
+          <Modal.Button
+            variant="primary"
+            onClick={handleShareKakao}
+            aria-label="카카오톡 공유 보내기 버튼"
+          >
             카카오톡 공유
           </Modal.Button>
         </div>
