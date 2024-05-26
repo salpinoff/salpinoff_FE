@@ -23,6 +23,9 @@
       "@public/*": ["public/*"],
       "@components/*": ["src/app/components/*"],
       "@constant/*": ["src/app/constant/*"],
+      "@hooks/*": ["src/app/hooks/*"],
+      "@providers/*": ["src/app/providers/*"],
+      "@store/*": ["src/app/store/*"],
       "@utils/*": ["src/app/utils/*"],
       "@type/*": ["src/app/types/*"],
       "@api/*": ["src/app/api/*"]
