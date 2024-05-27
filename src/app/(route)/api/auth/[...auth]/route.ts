@@ -14,6 +14,7 @@ const GET = async (request: NextRequest, context: { params: Params }) => {
   return authHandler({
     request,
     params: auth,
+    secret: process.env.AUTH_SECRET,
   });
 };
 
@@ -23,6 +24,7 @@ const POST = async (request: NextRequest, context: { params: Params }) => {
   return authHandler({
     request,
     params: auth,
+    secret: process.env.AUTH_SECRET,
   });
 };
 

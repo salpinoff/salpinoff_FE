@@ -10,6 +10,7 @@ declare global {
       /* AUTH */
       KAKAO_CALLBACK: string;
       KAKAO_CLIENT_ID: string;
+      AUTH_SECRET: string;
     }
   }
 }

@@ -4,6 +4,8 @@ import { FormEventHandler, useEffect } from 'react';
 
 import TextField from '@components/common/TextField';
 
+import useWithAuth from 'src/app/hooks/useWithAuth';
+
 import useSignUpContext from '../hooks/useSignUpContext';
 import useUserInfoContext from '../hooks/useUserInfoContext';
 
@@ -14,13 +16,16 @@ function MakeNickName() {
   } = useUserInfoContext();
   const { setBtnDisabled } = useSignUpContext();
 
+  const withAuth = useWithAuth();
+
   const validateValue = (value: string) => {
     return value.length >= 2 && value.length <= 6;
   };
 
-  const handleSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-  };
+  const handleSubmit = withAuth<FormEventHandler>((e) => {
+    // e.preventDefault();
+    console.log('data fetching', e.target);
+  });
 
   const handleInput: FormEventHandler = (e) => {
     const { value } = e.target as HTMLInputElement;
