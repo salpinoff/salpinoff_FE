@@ -12,7 +12,7 @@ import refreshTokenApi from '@api/auth/token/refresh-token';
 
 import { AuthType, Providers } from '@type/auth';
 
-import { redirectResponse, setCookie } from './utils';
+import { redirectResponse, setCookie } from './utils/redirect';
 
 type Props = {
   request: NextRequest;
