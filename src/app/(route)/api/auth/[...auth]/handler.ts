@@ -2,22 +2,26 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { isAxiosError } from 'axios';
 
+import jwtParse from '@utils/jwt-parse';
 import qs from '@utils/qs';
 
 import { providers } from '@constant/auth/providers';
 
-import requestUserToken from '@api/auth/token';
+import requestUserToken from '@api/auth/token/get-token';
+import refreshTokenApi from '@api/auth/token/refresh-token';
 
 import { AuthType, Providers } from '@type/auth';
 
-import redirectResponse from './utils';
+import { decrypt } from './utils/crypto';
+import { redirectResponse, setCookie } from './utils/redirect';
 
 type Props = {
   request: NextRequest;
   params: [AuthType] | [AuthType, Providers];
+  secret: string;
 };
 
-const authHandler = ({ request, params }: Props) => {
+const authHandler = ({ request, params, secret }: Props) => {
   const { method } = request;
   const [authType, providerId] = params;
 
@@ -35,8 +39,8 @@ const authHandler = ({ request, params }: Props) => {
               );
         }
         case 'signout': {
-          const respone = NextResponse.redirect('/signIn', { status: 302 });
-          const cookiesName = ['accessToken', 'refreshToken'];
+          const respone = NextResponse.redirect('/signin', { status: 302 });
+          const cookiesName = ['__Host-accessToken', '__Host-refreshToken'];
 
           cookiesName.map((name) => {
             return respone.cookies.delete(name);
@@ -44,6 +48,43 @@ const authHandler = ({ request, params }: Props) => {
 
           return respone;
         }
+        case 'session': {
+          try {
+            const refreshCookie = request.cookies.get('__Host-refreshToken');
+            const accessCookie = request.cookies.get('__Host-accessToken');
+
+            if (!refreshCookie || !accessCookie) {
+              throw new Error('Token 이 없습니다.');
+            }
+
+            const { exp } = jwtParse(accessCookie.value);
+            const timeRemaing =
+              exp - (Math.floor(new Date().getTime() / 1000) + 10 * 60);
+
+            if (timeRemaing > 0) {
+              return NextResponse.json({ accessToken: accessCookie.value });
+            }
+
+            const {
+              data: { refreshToken, accessToken },
+            } = await refreshTokenApi(decrypt(refreshCookie.value, secret));
+
+            const response = NextResponse.json({ accessToken });
+            return setCookie(response, { accessToken, refreshToken, secret });
+          } catch (error) {
+            const response = isAxiosError(error)
+              ? NextResponse.json(error.message, { status: 500 })
+              : NextResponse.json(error, { status: 400 });
+
+            const cookiesName = ['__Host-accessToken', '__Host-refreshToken'];
+            cookiesName.map((name) => {
+              return response.cookies.delete(name);
+            });
+
+            return response;
+          }
+        }
+
         default:
           return NextResponse.next();
       }
@@ -62,22 +103,31 @@ const authHandler = ({ request, params }: Props) => {
               throw new Error('지원하지 않는 로그인 방식입니다');
             }
 
-            const [provider] = providers.filter(({ id }) => id === providerId);
-            const [{ data }] = await Promise.all([
-              requestUserToken({ code, provider: providerId }),
-              provider.authentication(code),
-            ]);
+            const { data } = await requestUserToken({
+              code,
+              provider: providerId,
+            });
 
-            return redirectResponse(data);
+            return redirectResponse(data, secret);
           } catch (thrownError) {
             const errorMessage = isAxiosError(thrownError)
               ? thrownError.message
-              : error;
+              : thrownError;
 
             return NextResponse.redirect(
-              `${process.env.DOMAIN_NAME}/signin?error=${errorMessage}`,
+              `${process.env.NEXT_PUBLIC_DOMAIN_NAME}/signin?error=${errorMessage}`,
             );
           }
+        }
+        case 'session': {
+          const accessTokenCookie = request.cookies.get('__Host-accessToken');
+
+          return NextResponse.json({
+            status: accessTokenCookie ? 'authenticated' : 'unauthenticated',
+            accessToken: accessTokenCookie
+              ? decrypt(accessTokenCookie.value, secret)
+              : '',
+          });
         }
         default:
           return NextResponse.next();
