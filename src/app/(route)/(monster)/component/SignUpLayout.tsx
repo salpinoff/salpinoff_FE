@@ -7,8 +7,6 @@ import FixedBottom from '@components/FixedBottom';
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
 
-import useFixedBottom from 'src/app/hooks/useFixedBottom';
-
 import { SignUpProvider } from '../../(auth)/signup/context/layout.context';
 
 type Props = PropsWithChildren<{
@@ -19,15 +17,16 @@ type Props = PropsWithChildren<{
 }>;
 
 function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
-  const [bottom] = useFixedBottom();
   const [disabled, setBtnDisabled] = useState(true);
 
   return (
-    <div className={cn('flex flex-1 flex-col bg-black p-20', className)}>
+    <div
+      className={cn('flex flex-1 flex-col bg-black p-20 pt-[58px]', className)}
+    >
       <BaseText
         weight="semibold"
         variant="heading-1"
-        className={cn('touch-none pb-32 text-white', {
+        className={cn('touch-auto', 'pb-32 text-white', {
           hidden: !title,
         })}
       >
@@ -36,10 +35,7 @@ function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
 
       <SignUpProvider value={{ setBtnDisabled }}>{children}</SignUpProvider>
 
-      <FixedBottom
-        className="flex touch-none space-x-8 p-5"
-        style={{ bottom: `${bottom}px` }}
-      >
+      <FixedBottom className="flex touch-none gap-8 p-5">
         <BaseButton
           className={cn('flex-1', { hidden: !goPrev })}
           onMouseDown={goPrev}

@@ -25,16 +25,10 @@ function SignUpProvider({ value, onFocus, onBlur, children }: Props) {
 
   return (
     <Provider value={value}>
-      <div
-        className="relative flex-1 touch-auto overflow-auto"
-        onFocus={onFocus}
-        onBlur={onBlur}
-      >
+      <div className="relative flex-1" onFocus={onFocus} onBlur={onBlur}>
         {children}
-        <div aria-hidden className="absolute left-0 top-0 h-[105%] w-1" />
       </div>
     </Provider>
   );
 }
-
 export { SignUpProvider, signUpContext };
