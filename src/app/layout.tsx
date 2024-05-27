@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 
-import QueryProvider from '@components/common/Async/QueryProvider';
+import { Provider } from 'jotai';
 
-import { Pretendard } from './utils/fonts';
+import ModalProvider from '@providers/modal-provider';
+import QueryProvider from '@providers/QueryProvider';
+
+import { Pretendard } from '@utils/fonts';
 
 import '../../build/css/_variables.css';
 import './globals.css';
@@ -26,7 +29,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className={Pretendard.variable}>
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <Provider>
+            {children}
+            <ModalProvider />
+          </Provider>
+        </QueryProvider>
       </body>
     </html>
   );
