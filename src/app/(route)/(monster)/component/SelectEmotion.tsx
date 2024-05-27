@@ -4,6 +4,7 @@ import { ChangeEventHandler, useEffect } from 'react';
 
 import { cva } from 'class-variance-authority';
 
+import FormLabel from '@components/common/FormLabel';
 import FormHelperText from '@components/common/TextField/FormHelperText';
 
 import cn from '@utils/cn';
@@ -11,25 +12,38 @@ import cn from '@utils/cn';
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 
+const EMOTIONS = [
+  ['분노', 'angry'],
+  ['우울', 'depression'],
+];
+
+const gridStyles = cva('grid', {
+  variants: {
+    row: {
+      1: 'grid-rows-1',
+      2: 'grid-rows-2',
+    },
+    column: {
+      1: 'grid-cols-1',
+      2: 'grid-cols-2',
+    },
+  },
+});
+
 const buttonStyle = cva(
-  cn(
-    'w-full bg-[#70737C1F] rounded-20 aspect-[335/160] h-auto heading-1-semibold block text-center',
+  [
+    'w-full h-full rounded-20',
     'flex justify-center items-center',
-  ),
+    // default
+    'bg-[#70737C1F] text-cool-neutral-90A',
+    // :has[:checked]
+    'has-[:checked]:bg-blue-60 has-[:checked]:text-white',
+    // important
+    '!heading-1-semibold',
+  ],
   {
-    variants: {
-      variant: {
-        top: 'mb-8',
-        bottom: 'mt-8',
-      },
-      selected: {
-        true: 'text-white bg-blue-60',
-        false: 'text-cool-neutral-90A',
-      },
-    },
-    defaultVariants: {
-      selected: false,
-    },
+    variants: {},
+    defaultVariants: {},
   },
 );
 
@@ -53,44 +67,33 @@ function SelectEmotion() {
   }, [emotion]);
 
   return (
-    <fieldset className="flex flex-col">
+    <fieldset className="flex h-full w-full flex-col">
       <FormHelperText component="legend" className="mb-12">
         나의 감정
       </FormHelperText>
-
-      <label
-        htmlFor="angry"
-        className={buttonStyle({
-          variant: 'top',
-          selected: emotion === 'angry',
-        })}
+      <div
+        className={cn(
+          gridStyles({
+            row: 2,
+            column: 1,
+          }),
+          'full-height h-full w-full gap-8 pb-[86px]',
+        )}
       >
-        <span>분노</span>
-        <input
-          type="radio"
-          id="angry"
-          name="emotion"
-          className="a11yHidden"
-          onChange={handleChange}
-        />
-      </label>
-
-      <label
-        htmlFor="depressed"
-        className={buttonStyle({
-          variant: 'bottom',
-          selected: emotion === 'depressed',
-        })}
-      >
-        <span>우울</span>
-        <input
-          type="radio"
-          id="depressed"
-          name="emotion"
-          className="a11yHidden"
-          onChange={handleChange}
-        />
-      </label>
+        {EMOTIONS.map(([text, id]) => (
+          <FormLabel key={id} id={id} className={buttonStyle()}>
+            {text}
+            <input
+              type="radio"
+              id={id}
+              name="emotion"
+              className="a11yHidden"
+              onChange={handleChange}
+              checked={emotion === id}
+            />
+          </FormLabel>
+        ))}
+      </div>
     </fieldset>
   );
 }
