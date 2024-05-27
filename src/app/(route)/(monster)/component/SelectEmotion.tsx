@@ -32,7 +32,7 @@ const gridStyles = cva('grid', {
 
 const buttonStyle = cva(
   [
-    'w-full h-full rounded-20',
+    'w-full h-[160px] rounded-20',
     'flex justify-center items-center',
     // default
     'bg-[#70737C1F] text-cool-neutral-90A',
@@ -77,7 +77,7 @@ function SelectEmotion() {
             row: 2,
             column: 1,
           }),
-          'full-height h-full w-full gap-8 pb-[86px]',
+          'h-full w-full gap-8',
         )}
       >
         {EMOTIONS.map(([text, id]) => (
