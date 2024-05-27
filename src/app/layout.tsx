@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 
 import { Provider } from 'jotai';
 
@@ -33,6 +34,11 @@ export default function RootLayout({
           <ModalProvider />
         </Provider>
       </body>
+      {/* Kakao SDK for JavaScript - v2.7.2 */}
+      <Script
+        src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+        strategy="afterInteractive"
+      />
     </html>
   );
 }
