@@ -22,6 +22,7 @@ declare global {
       init: (appKey: string) => void;
       isInitialized: () => boolean;
       Share: {
+        cleanup: () => void;
         sendCustom: (settings: {
           templateId: number;
           templateArgs?: object;
