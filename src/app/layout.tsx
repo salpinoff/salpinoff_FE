@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 
-import { Pretendard } from './utils/fonts';
+import { Provider } from 'jotai';
+
+import ModalProvider from '@providers/modal-provider';
+
+import { Pretendard } from '@utils/fonts';
 
 import '../../build/css/_variables.css';
 import './globals.css';
@@ -23,7 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={Pretendard.variable}>
-      <body>{children}</body>
+      <body>
+        <Provider>
+          {children}
+          <ModalProvider />
+        </Provider>
+      </body>
     </html>
   );
 }

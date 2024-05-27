@@ -82,12 +82,27 @@
             "position": "before"
           },
           {
+            "pattern": "{jotai*,jotai*/**}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@providers/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
             "pattern": "@public/**",
             "group": "internal",
             "position": "before"
           },
           {
             "pattern": "@components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@hooks/**",
             "group": "internal",
             "position": "before"
           },
