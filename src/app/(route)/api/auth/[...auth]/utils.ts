@@ -39,7 +39,10 @@ const redirectResponse = ({
     (code === 102 && `/signup?code=${code}&user=${username}`) ||
     '/';
 
-  const response = NextResponse.redirect(destinationUrl, { status: 302 });
+  const response = NextResponse.redirect(
+    `${process.env.NEXT_PUBLIC_DOMAIN_NAME}${destinationUrl}`,
+    { status: 302 },
+  );
   return setCookie(response, { accessToken, refreshToken });
 };
 
