@@ -3,10 +3,12 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 
+import PageNations from '@components/PageNations';
+
 import useFunnel from 'src/app/hooks/useFunnel';
 
 import MakeNickName from './components/MakeNickName';
-import { title } from './constant/funnel';
+import { funnel, title } from './constant/funnel';
 import { UserInfoProvider } from './context/userInfo.context';
 import SelectEmotion from '../../(monster)/component/SelectEmotion';
 import SelectStress from '../../(monster)/component/SelectStress';
@@ -21,10 +23,18 @@ const MonsterName = dynamic(
 
 function SignUp() {
   const { replace } = useRouter();
-  const { Funnel, setStep } = useFunnel('nickname');
+  const { Funnel, setStep, step } = useFunnel('nickname');
+
+  const orderItem = funnel.map((id) => ({ id }));
 
   return (
     <UserInfoProvider>
+      <PageNations
+        activeId={step}
+        className="absolute right-0 mx-20 mt-[28px] w-full"
+        orderItems={orderItem}
+      />
+
       <Funnel>
         <Funnel.Step name="nickname">
           <SignUpLayout
@@ -81,7 +91,7 @@ function SignUp() {
             goPrev={() => setStep('monstername')}
             goNext={() => replace('/result')}
           >
-            {/* <MonsterName /> */}
+            {/* 몬스터 꾸미기 */}
           </SignUpLayout>
         </Funnel.Step>
       </Funnel>
