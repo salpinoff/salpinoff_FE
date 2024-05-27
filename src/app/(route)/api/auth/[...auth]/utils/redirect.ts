@@ -14,11 +14,11 @@ const setCookie = (
 ) => {
   const cookies = [
     {
-      key: 'accessToken',
+      key: '__Host-accessToken',
       value: encrypt(accessToken, secret),
     },
     {
-      key: 'refreshToken',
+      key: '__Host-refreshToken',
       value: encrypt(refreshToken, secret),
     },
   ];
@@ -28,6 +28,8 @@ const setCookie = (
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
+      path: '/',
+      domain: process.env.NEXT_PUBLIC_DOMAIN_NAME,
     });
   });
 
