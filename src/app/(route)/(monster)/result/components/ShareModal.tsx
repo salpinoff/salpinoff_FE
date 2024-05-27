@@ -1,13 +1,14 @@
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import toast from 'react-hot-toast';
 
 import { Modal } from '@components/common/Modal';
 
 import useOutsideClick from '@hooks/useOutsideClick';
 
-import copyToClipboard from '../_lib/copyToClipboard';
-import generateShareUrl from '../_lib/generateShareUrl';
-import isValidURL from '../_lib/isValidURL';
+import copyToClipboard from '../lib/copyToClipboard';
+import generateShareUrl from '../lib/generateShareUrl';
+import isValidURL from '../lib/isValidURL';
+import { shareToKakao } from '../lib/shareToKakao';
 
 type ShareModalProps = {
   monsterId: string;
@@ -16,21 +17,23 @@ type ShareModalProps = {
 
 export default function ShareModal({ monsterId, closeModal }: ShareModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const shareUrl = generateShareUrl('/share', { monsterId });
 
   useOutsideClick(modalRef, () => closeModal(), 'mousedown');
 
-  const handleCopyLink = useCallback(async () => {
-    const shareUrl = generateShareUrl('/share', { monsterId });
-
+  const handleCopyLink = async () => {
     if (shareUrl && isValidURL(shareUrl)) {
       const success = await copyToClipboard(shareUrl);
       toast(success ? '링크를 복사했어요.' : '링크를 복사할 수 없어요.');
       closeModal();
     }
-  }, [monsterId, closeModal]);
+  };
 
   const handleShareKakao = () => {
-    // console.log('shareKakao');
+    if (shareUrl && isValidURL(shareUrl)) {
+      shareToKakao(shareUrl);
+      closeModal();
+    }
   };
 
   return (
