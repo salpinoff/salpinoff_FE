@@ -101,11 +101,10 @@ const authHandler = ({ request, params }: Props) => {
               throw new Error('지원하지 않는 로그인 방식입니다');
             }
 
-            const [provider] = providers.filter(({ id }) => id === providerId);
-            const [{ data }] = await Promise.all([
-              requestUserToken({ code, provider: providerId }),
-              provider.authentication(code),
-            ]);
+            const { data } = await requestUserToken({
+              code,
+              provider: providerId,
+            });
 
             return redirectResponse(data);
           } catch (thrownError) {
