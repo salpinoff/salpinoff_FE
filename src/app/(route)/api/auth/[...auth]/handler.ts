@@ -12,14 +12,16 @@ import refreshTokenApi from '@api/auth/token/refresh-token';
 
 import { AuthType, Providers } from '@type/auth';
 
+import { decrypt } from './utils/crypto';
 import { redirectResponse, setCookie } from './utils/redirect';
 
 type Props = {
   request: NextRequest;
   params: [AuthType] | [AuthType, Providers];
+  secret: string;
 };
 
-const authHandler = ({ request, params }: Props) => {
+const authHandler = ({ request, params, secret }: Props) => {
   const { method } = request;
   const [authType, providerId] = params;
 
@@ -65,10 +67,10 @@ const authHandler = ({ request, params }: Props) => {
 
             const {
               data: { refreshToken, accessToken },
-            } = await refreshTokenApi(refreshCookie.value);
+            } = await refreshTokenApi(decrypt(refreshCookie.value, secret));
 
             const response = NextResponse.json({ accessToken });
-            return setCookie(response, { accessToken, refreshToken });
+            return setCookie(response, { accessToken, refreshToken, secret });
           } catch (error) {
             const response = isAxiosError(error)
               ? NextResponse.json(error.message, { status: 500 })
@@ -106,7 +108,7 @@ const authHandler = ({ request, params }: Props) => {
               provider: providerId,
             });
 
-            return redirectResponse(data);
+            return redirectResponse(data, secret);
           } catch (thrownError) {
             const errorMessage = isAxiosError(thrownError)
               ? thrownError.message
@@ -122,7 +124,9 @@ const authHandler = ({ request, params }: Props) => {
 
           return NextResponse.json({
             status: accessTokenCookie ? 'authenticated' : 'unauthenticated',
-            accessToken: accessTokenCookie ? accessTokenCookie.value : '',
+            accessToken: accessTokenCookie
+              ? decrypt(accessTokenCookie.value, secret)
+              : '',
           });
         }
         default:
