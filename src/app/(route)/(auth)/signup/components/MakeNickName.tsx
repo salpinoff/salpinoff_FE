@@ -1,16 +1,18 @@
 'use client';
 
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 
-import BaseButton from '@components/common/Button/BaseButton';
-import FixedBottom from '@components/FixedBottom';
-import TextInput from '@components/inputs/TextInput';
+import TextField from '@components/common/TextField';
 
-import useFixedBottom from 'src/app/hooks/useFixedBottom';
+import useSignUpContext from '../hooks/useSignUpContext';
+import useUserInfoContext from '../hooks/useUserInfoContext';
 
 function MakeNickName() {
-  const [userName, setUserName] = useState('');
-  const [bottom, setBottom, toggleTouchAction] = useFixedBottom(0);
+  const {
+    state: { nickname: userName },
+    updater,
+  } = useUserInfoContext();
+  const { setBtnDisabled } = useSignUpContext();
 
   const validateValue = (value: string) => {
     return value.length >= 2 && value.length <= 6;
@@ -22,44 +24,28 @@ function MakeNickName() {
 
   const handleInput: FormEventHandler = (e) => {
     const { value } = e.target as HTMLInputElement;
-    setUserName(value);
-  };
-
-  const handleBlur = () => {
-    toggleTouchAction();
-    setBottom(0);
+    updater({ payload: { nickname: value } });
   };
 
   const message = '닉네임은 2~6자 이내로 입력해주세요';
   const disabled = !validateValue(userName);
-  const guide = (!userName && message) || '';
   const error = (!!userName && disabled && message) || '';
+
+  useEffect(() => {
+    setBtnDisabled(userName.length < 2 || userName.length > 6);
+  }, [userName]);
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col justify-between">
-      <TextInput
+      <TextField
         id="nickName"
         label="닉네임"
-        guide={guide}
-        error={error}
         value={userName}
-        onBlur={handleBlur}
-        onFocus={toggleTouchAction}
         onChange={handleInput}
         placeholder="닉네임을 입력해주세요"
-        className="mt"
+        {...(userName === '' || error ? { helperText: message } : {})}
+        {...(error ? { error: true } : {})}
       />
-
-      <FixedBottom className="p-5" style={{ bottom: `${bottom}px` }}>
-        <BaseButton
-          primary
-          type="submit"
-          className="w-full"
-          disabled={disabled}
-        >
-          다음으로
-        </BaseButton>
-      </FixedBottom>
     </form>
   );
 }
