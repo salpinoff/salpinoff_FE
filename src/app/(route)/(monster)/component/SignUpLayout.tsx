@@ -37,7 +37,7 @@ function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
       <SignUpProvider value={{ setBtnDisabled }}>{children}</SignUpProvider>
 
       <FixedBottom
-        className="flex touch-none space-x-8 p-5"
+        className=" flex touch-none gap-8 p-5"
         style={{ bottom: `${bottom}px` }}
       >
         <BaseButton
