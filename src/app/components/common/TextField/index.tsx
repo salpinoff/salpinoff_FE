@@ -54,7 +54,7 @@ const inputStyles = cva(
         false: 'text-[--color-text-label-normal]',
       },
       multiline: {
-        true: 'resize-none',
+        true: 'resize-none overflow-y-scroll',
       },
     },
     compoundVariants: [],
