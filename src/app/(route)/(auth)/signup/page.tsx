@@ -1,18 +1,18 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import PageNations from '@components/PageNations';
 
-import useFunnel from 'src/app/hooks/useFunnel';
+import useFunnel from '@hooks/useFunnel';
 
 import MakeNickName from './components/MakeNickName';
+import SignUpLayout from './components/SignUpLayout';
 import { funnel, title } from './constant/funnel';
 import { UserInfoProvider } from './context/userInfo.context';
 import SelectEmotion from '../../(monster)/component/SelectEmotion';
 import SelectStress from '../../(monster)/component/SelectStress';
-import SignUpLayout from '../../(monster)/component/SignUpLayout';
 
 const WriteStory = dynamic(
   () => import('../../(monster)/component/WriteStory'),
@@ -23,9 +23,13 @@ const MonsterName = dynamic(
 
 function SignUp() {
   const { replace } = useRouter();
-  const { Funnel, setStep, step } = useFunnel('nickname');
+  const searchParams = useSearchParams();
 
   const orderItem = funnel.map((id) => ({ id }));
+  const code = Number(searchParams.get('code')) || 100;
+  const defaultStep = code === 100 ? 'nickname' : 'emotion';
+
+  const { Funnel, setStep, step } = useFunnel(defaultStep);
 
   return (
     <UserInfoProvider>
