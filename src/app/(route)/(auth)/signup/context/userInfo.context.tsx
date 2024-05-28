@@ -1,6 +1,7 @@
 import { Dispatch, PropsWithChildren, createContext, useReducer } from 'react';
 
 type UserInfo = {
+  code: 100 | 101 | 102;
   nickname: string;
   emotion: 'angry' | 'depressed' | '';
   stress: number;
@@ -26,6 +27,7 @@ type UserInfoContext = {
 type Props = PropsWithChildren;
 
 const initialUserInfo: UserInfo = {
+  code: 100,
   nickname: '',
   emotion: '',
   stress: 1,

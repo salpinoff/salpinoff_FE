@@ -1,12 +1,10 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-
 import { FormEventHandler, useEffect } from 'react';
 
 import TextField from '@components/common/TextField';
 
-import { createUserName } from '@api/auth/nickname';
+import { createUserName, modifyUserName } from '@api/auth/nickname';
 
 import useWithAuth from 'src/app/hooks/useWithAuth';
 
@@ -18,13 +16,11 @@ const validateValue = (value: string) => {
 };
 
 function MakeNickName() {
-  const searchParams = useSearchParams();
-  const defaultUserName = searchParams.get('userName') || '';
   const { setBtnDisabled, registerCallback } = useSignUpContext();
 
   const {
     updater,
-    state: { nickname: userName },
+    state: { nickname: userName, code },
   } = useUserInfoContext();
 
   const message = '닉네임은 2~6자 이내로 입력해주세요';
@@ -33,7 +29,9 @@ function MakeNickName() {
 
   const withAuth = useWithAuth();
   const handleClick = withAuth(async () => {
-    return createUserName(userName)
+    const method = code === 100 ? createUserName : modifyUserName;
+
+    return method(userName)
       .then(() => true)
       .catch(() => false);
   });
@@ -46,12 +44,6 @@ function MakeNickName() {
   useEffect(() => {
     setBtnDisabled(userName.length < 2 || userName.length > 6);
   }, [userName]);
-
-  useEffect(() => {
-    if (defaultUserName) {
-      updater({ payload: { nickname: defaultUserName } });
-    }
-  }, [defaultUserName]);
 
   useEffect(() => {
     registerCallback(handleClick);
