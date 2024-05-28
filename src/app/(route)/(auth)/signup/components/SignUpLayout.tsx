@@ -1,4 +1,9 @@
-import { MouseEventHandler, PropsWithChildren, useState } from 'react';
+import {
+  type MouseEventHandler,
+  type PropsWithChildren,
+  type MouseEvent,
+  useState,
+} from 'react';
 
 import BaseButton from '@components/common/Button/BaseButton';
 import BaseText from '@components/common/Text/BaseText';
@@ -7,7 +12,7 @@ import FixedBottom from '@components/FixedBottom';
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
 
-import { SignUpProvider } from '../../(auth)/signup/context/layout.context';
+import { SignUpProvider } from '../context/layout.context';
 
 type Props = PropsWithChildren<{
   title?: string | string[];
@@ -16,11 +21,12 @@ type Props = PropsWithChildren<{
   className?: string;
 }>;
 
-type RegisterCallback = (callback: MouseEventHandler) => void;
+type Callback = (event: MouseEvent<Element>) => Promise<boolean> | void;
+type RegisterCallback = (callback: Callback) => void;
 
 function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
   const [disabled, setBtnDisabled] = useState(true);
-  const [callback, setCallback] = useState<MouseEventHandler>(() => {
+  const [callback, setCallback] = useState<Callback>(() => {
     return () => {};
   });
 
@@ -29,8 +35,9 @@ function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
   };
 
   const handleNext: MouseEventHandler = (e) => {
-    goNext(e);
-    callback(e);
+    callback(e)?.then((status) => {
+      if (status) goNext(e);
+    });
   };
 
   return (
