@@ -1,8 +1,10 @@
+import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextResponse } from 'next/server';
 
 import { type Response as TypeResponse } from '@api/auth/token/get-token';
 
 import { encrypt } from './crypto';
+import tokenPrefix from './token-prefix';
 
 const setCookie = (
   response: NextResponse,
@@ -14,23 +16,28 @@ const setCookie = (
 ) => {
   const cookies = [
     {
-      key: '__Host-accessToken',
+      key: tokenPrefix('accessToken'),
       value: encrypt(accessToken, secret),
     },
     {
-      key: '__Host-refreshToken',
+      key: tokenPrefix('refreshToken'),
       value: encrypt(refreshToken, secret),
     },
   ];
 
   cookies.map(({ key, value }) => {
-    return response.cookies.set(key, value, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-      domain: process.env.NEXT_PUBLIC_DOMAIN_NAME,
-    });
+    const cookieOptions: Partial<ResponseCookie> =
+      process.env.NODE_ENV !== 'development'
+        ? {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'lax',
+            path: '/',
+            domain: process.env.NEXT_PUBLIC_DOMAIN_NAME,
+          }
+        : {};
+
+    return response.cookies.set(key, value, cookieOptions);
   });
 
   return response;
