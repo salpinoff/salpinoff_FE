@@ -57,7 +57,7 @@ function MakeNickName() {
         value={userName}
         onChange={handleInput}
         placeholder="닉네임을 입력해주세요"
-        {...(userName === '' || error ? { helperText: message } : {})}
+        {...{ helperText: message }}
         {...(error ? { error: true } : {})}
       />
     </div>

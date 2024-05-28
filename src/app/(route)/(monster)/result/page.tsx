@@ -27,14 +27,14 @@ export default function SharePage() {
   const handleDefer = () => router.push('/');
 
   const { openModal, closeModal } = useModal(() => (
-    <ShareModal closeModal={closeModal} />
+    <ShareModal monsterId={monsterId} closeModal={closeModal} />
   ));
 
   useEffect(() => {
     // Temp
     if (monsterId) {
       setMonster({
-        monsterId: 1,
+        monsterId: Number(monsterId),
         monsterName: '빡침몬',
         interactionCount: 100,
         currentInteractionCount: 60,
@@ -61,7 +61,7 @@ export default function SharePage() {
 
   return (
     <main className="mx-auto flex h-dvh items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
-      <div className="flex h-[573px] flex-col items-center justify-between">
+      <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
         <LayoutGroup>
           <GuideMessage />
           <MonsterCard

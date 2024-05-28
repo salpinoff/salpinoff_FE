@@ -11,6 +11,10 @@ declare global {
       KAKAO_CALLBACK: string;
       KAKAO_CLIENT_ID: string;
       AUTH_SECRET: string;
+
+      /* KAKAO SHARE */
+      readonly NEXT_PUBLIC_KAKAO_JS_KEY: string;
+      readonly NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID: number;
     }
   }
 }
