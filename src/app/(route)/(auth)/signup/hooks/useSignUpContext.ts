@@ -11,7 +11,7 @@ const useSignUpContext = () => {
     );
   }
 
-  const { setBtnDisabled: makeBtnDisabled } = signUpHandler;
+  const { setBtnDisabled: makeBtnDisabled, registerCallback } = signUpHandler;
 
   const setBtnDisabled = (disable: boolean) => {
     makeBtnDisabled(disable);
@@ -19,6 +19,7 @@ const useSignUpContext = () => {
 
   return {
     setBtnDisabled,
+    registerCallback,
   };
 };
 

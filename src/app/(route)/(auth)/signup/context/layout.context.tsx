@@ -4,10 +4,12 @@ import {
   type SetStateAction,
   createContext,
   FocusEventHandler,
+  MouseEventHandler,
 } from 'react';
 
 type SignUpContext = {
   setBtnDisabled: Dispatch<SetStateAction<boolean>>;
+  registerCallback: (callback: MouseEventHandler) => void;
 };
 
 type Props = PropsWithChildren<{
@@ -18,6 +20,7 @@ type Props = PropsWithChildren<{
 
 const signUpContext = createContext<SignUpContext>({
   setBtnDisabled: () => {},
+  registerCallback: () => {},
 });
 
 function SignUpProvider({ value, onFocus, onBlur, children }: Props) {

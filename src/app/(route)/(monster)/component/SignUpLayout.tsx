@@ -16,8 +16,22 @@ type Props = PropsWithChildren<{
   className?: string;
 }>;
 
+type RegisterCallback = (callback: MouseEventHandler) => void;
+
 function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
   const [disabled, setBtnDisabled] = useState(true);
+  const [callback, setCallback] = useState<MouseEventHandler>(() => {
+    return () => {};
+  });
+
+  const registerCallback: RegisterCallback = (cb) => {
+    setCallback(() => cb);
+  };
+
+  const handleNext: MouseEventHandler = (e) => {
+    goNext(e);
+    callback(e);
+  };
 
   return (
     <div
@@ -33,7 +47,9 @@ function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
         {title && stringToElement(title)}
       </BaseText>
 
-      <SignUpProvider value={{ setBtnDisabled }}>{children}</SignUpProvider>
+      <SignUpProvider value={{ setBtnDisabled, registerCallback }}>
+        {children}
+      </SignUpProvider>
 
       <FixedBottom className="flex touch-none gap-8 p-5">
         <BaseButton
@@ -46,7 +62,7 @@ function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
           primary
           className="flex-1"
           disabled={disabled}
-          onMouseDown={goNext}
+          onMouseDown={handleNext}
         >
           다음으로
         </BaseButton>
