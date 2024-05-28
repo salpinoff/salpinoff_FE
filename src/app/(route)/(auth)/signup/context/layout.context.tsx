@@ -2,14 +2,15 @@ import {
   type Dispatch,
   type PropsWithChildren,
   type SetStateAction,
+  type MouseEvent,
   createContext,
   FocusEventHandler,
-  MouseEventHandler,
 } from 'react';
 
+type Callback = (event: MouseEvent<Element>) => Promise<boolean> | void;
 type SignUpContext = {
   setBtnDisabled: Dispatch<SetStateAction<boolean>>;
-  registerCallback: (callback: MouseEventHandler) => void;
+  registerCallback: (callback: Callback) => Promise<boolean> | void;
 };
 
 type Props = PropsWithChildren<{
