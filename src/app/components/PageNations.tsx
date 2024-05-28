@@ -48,7 +48,11 @@ function PageNations({
               type="button"
               initial={{ width: '6px', originX }}
               animate={{ originX, width: isSelected ? '24px' : '6px' }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              transition={{
+                duration: 0.3,
+                ease: 'easeInOut',
+                delay: isSelected ? 0.02 : 0,
+              }}
               aria-labelledby={id}
               className={cn(
                 'h-6 rounded-circular',
