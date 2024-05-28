@@ -67,7 +67,7 @@ function SelectEmotion() {
   }, [emotion]);
 
   return (
-    <fieldset className="flex h-full w-full flex-col">
+    <fieldset className="flex h-max w-full flex-col">
       <FormHelperText component="legend" className="mb-12">
         나의 감정
       </FormHelperText>
