@@ -14,6 +14,7 @@ import { AuthType, Providers } from '@type/auth';
 
 import { decrypt } from './utils/crypto';
 import { redirectResponse, setCookie } from './utils/redirect';
+import tokenPrefix from './utils/token-prefix';
 
 type Props = {
   request: NextRequest;
@@ -40,7 +41,10 @@ const authHandler = ({ request, params, secret }: Props) => {
         }
         case 'signout': {
           const respone = NextResponse.redirect('/signin', { status: 302 });
-          const cookiesName = ['__Host-accessToken', '__Host-refreshToken'];
+          const cookiesName = [
+            tokenPrefix('accessToken'),
+            tokenPrefix('refreshToken'),
+          ];
 
           cookiesName.map((name) => {
             return respone.cookies.delete(name);
@@ -50,8 +54,12 @@ const authHandler = ({ request, params, secret }: Props) => {
         }
         case 'session': {
           try {
-            const refreshCookie = request.cookies.get('__Host-refreshToken');
-            const accessCookie = request.cookies.get('__Host-accessToken');
+            const refreshCookie = request.cookies.get(
+              tokenPrefix('refreshToken'),
+            );
+            const accessCookie = request.cookies.get(
+              tokenPrefix('accessToken'),
+            );
 
             if (!refreshCookie || !accessCookie) {
               throw new Error('Token 이 없습니다.');
@@ -76,7 +84,10 @@ const authHandler = ({ request, params, secret }: Props) => {
               ? NextResponse.json(error.message, { status: 500 })
               : NextResponse.json(error, { status: 400 });
 
-            const cookiesName = ['__Host-accessToken', '__Host-refreshToken'];
+            const cookiesName = [
+              tokenPrefix('accessToken'),
+              tokenPrefix('refreshToken'),
+            ];
             cookiesName.map((name) => {
               return response.cookies.delete(name);
             });
@@ -120,7 +131,9 @@ const authHandler = ({ request, params, secret }: Props) => {
           }
         }
         case 'session': {
-          const accessTokenCookie = request.cookies.get('__Host-accessToken');
+          const accessTokenCookie = request.cookies.get(
+            tokenPrefix('accessToken'),
+          );
 
           return NextResponse.json({
             status: accessTokenCookie ? 'authenticated' : 'unauthenticated',
