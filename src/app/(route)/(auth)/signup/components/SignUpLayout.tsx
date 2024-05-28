@@ -28,7 +28,9 @@ type RegisterCallback = (callback: Callback) => void;
 function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
   const [disabled, setBtnDisabled] = useState(true);
   const [callback, setCallback] = useState<Callback>(() => {
-    return () => {};
+    return (e: MouseEvent) => {
+      goNext(e);
+    };
   });
 
   const registerCallback: RegisterCallback = (cb) => {
