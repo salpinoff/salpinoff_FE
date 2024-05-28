@@ -12,6 +12,7 @@ import FixedBottom from '@components/FixedBottom';
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
 
+import InitialUserState from './InitialUserState';
 import { SignUpProvider } from '../context/layout.context';
 
 type Props = PropsWithChildren<{
@@ -41,40 +42,45 @@ function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
   };
 
   return (
-    <div
-      className={cn('flex flex-1 flex-col bg-black p-20 pt-[58px]', className)}
-    >
-      <BaseText
-        weight="semibold"
-        variant="heading-1"
-        className={cn('touch-auto', 'pb-32 text-white', {
-          hidden: !title,
-        })}
+    <InitialUserState>
+      <div
+        className={cn(
+          'flex flex-1 flex-col bg-black p-20 pt-[58px]',
+          className,
+        )}
       >
-        {title && stringToElement(title)}
-      </BaseText>
-
-      <SignUpProvider value={{ setBtnDisabled, registerCallback }}>
-        {children}
-      </SignUpProvider>
-
-      <FixedBottom className="flex touch-none gap-8 p-5">
-        <BaseButton
-          className={cn('flex-1', { hidden: !goPrev })}
-          onMouseDown={goPrev}
+        <BaseText
+          weight="semibold"
+          variant="heading-1"
+          className={cn('touch-auto', 'pb-32 text-white', {
+            hidden: !title,
+          })}
         >
-          뒤로가기
-        </BaseButton>
-        <BaseButton
-          primary
-          className="flex-1"
-          disabled={disabled}
-          onMouseDown={handleNext}
-        >
-          다음으로
-        </BaseButton>
-      </FixedBottom>
-    </div>
+          {title && stringToElement(title)}
+        </BaseText>
+
+        <SignUpProvider value={{ setBtnDisabled, registerCallback }}>
+          {children}
+        </SignUpProvider>
+
+        <FixedBottom className="flex touch-none gap-8 p-5">
+          <BaseButton
+            className={cn('flex-1', { hidden: !goPrev })}
+            onMouseDown={goPrev}
+          >
+            뒤로가기
+          </BaseButton>
+          <BaseButton
+            primary
+            className="flex-1"
+            disabled={disabled}
+            onMouseDown={handleNext}
+          >
+            다음으로
+          </BaseButton>
+        </FixedBottom>
+      </div>
+    </InitialUserState>
   );
 }
 
