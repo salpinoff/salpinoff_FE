@@ -1,3 +1,5 @@
+import { ComponentProps } from 'react';
+
 import { type VariantProps, cva } from 'class-variance-authority';
 import { motion } from 'framer-motion';
 
@@ -17,9 +19,8 @@ type OrderItem = {
   id: string;
 };
 
-interface Props extends StyleProps {
+interface Props extends StyleProps, ComponentProps<'ol'> {
   dir?: 'forward' | 'backward';
-  className?: string;
   activeId: string;
   orderItems: OrderItem[];
 }
