@@ -37,6 +37,7 @@ function PageNations({
       {orderItems.map(({ id }) => {
         const isSelected = id === activeId;
         const originX = dir === 'forward' ? 1 : 0;
+        const width = isSelected ? '24px' : '6px';
 
         return (
           <li key={id} role="none" className="flex">
@@ -47,8 +48,8 @@ function PageNations({
               layout
               disabled
               type="button"
-              initial={{ width: '6px', originX }}
-              animate={{ originX, width: isSelected ? '24px' : '6px' }}
+              initial={{ originX, width }}
+              animate={{ originX, width }}
               transition={{
                 duration: 0.3,
                 ease: 'easeInOut',
