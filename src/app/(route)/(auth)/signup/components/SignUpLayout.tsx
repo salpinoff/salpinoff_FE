@@ -5,9 +5,10 @@ import {
   useState,
 } from 'react';
 
-import BaseButton from '@components/common/Button/BaseButton';
+import { motion } from 'framer-motion';
+
+import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
-import FixedBottom from '@components/FixedBottom';
 
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
@@ -15,17 +16,17 @@ import stringToElement from '@utils/string-to-element';
 import InitialUserState from './InitialUserState';
 import { SignUpProvider } from '../context/layout.context';
 
-type Props = PropsWithChildren<{
-  title?: string | string[];
-  goNext: MouseEventHandler;
-  goPrev?: MouseEventHandler;
-  className?: string;
-}>;
+type Props = Omit<React.ComponentProps<'div'>, 'title'> &
+  PropsWithChildren<{
+    title?: string | string[];
+    goNext: MouseEventHandler;
+    goPrev?: MouseEventHandler;
+  }>;
 
 type Callback = (event: MouseEvent<Element>) => Promise<boolean> | void;
 type RegisterCallback = (callback: Callback) => void;
 
-function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
+function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
   const [disabled, setBtnDisabled] = useState(true);
   const [callback, setCallback] = useState<Callback>(() => {
     return (e: MouseEvent) => {
@@ -47,40 +48,47 @@ function SignUpLayout({ children, title, goPrev, goNext, className }: Props) {
     <InitialUserState>
       <div
         className={cn(
-          'flex flex-1 flex-col bg-black p-20 pt-[58px]',
+          'flex w-full flex-1 flex-col justify-between bg-black pt-[30px]',
           className,
         )}
       >
-        <BaseText
-          weight="semibold"
-          variant="heading-1"
-          className={cn('touch-auto', 'pb-32 text-white', {
+        <motion.p
+          className={cn('touch-auto', 'pb-32', {
             hidden: !title,
           })}
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+          }}
         >
-          {title && stringToElement(title)}
-        </BaseText>
+          <BaseText
+            component="span"
+            weight="semibold"
+            variant="heading-1"
+            color="strong"
+          >
+            {title && stringToElement(title)}
+          </BaseText>
+        </motion.p>
 
         <SignUpProvider value={{ setBtnDisabled, registerCallback }}>
           {children}
         </SignUpProvider>
-
-        <FixedBottom className="flex touch-none gap-8 p-5">
-          <BaseButton
-            className={cn('flex-1', { hidden: !goPrev })}
-            onMouseDown={goPrev}
-          >
-            뒤로가기
-          </BaseButton>
-          <BaseButton
-            primary
-            className="flex-1"
-            disabled={disabled}
-            onMouseDown={handleNext}
-          >
-            다음으로
-          </BaseButton>
-        </FixedBottom>
+      </div>
+      <div className="flex w-full touch-none gap-8">
+        <Button
+          className={cn({ hidden: !goPrev })}
+          size="medium"
+          variant="secondary"
+          onMouseDown={goPrev}
+        >
+          이전으로
+        </Button>
+        <Button className="w-full" disabled={disabled} onMouseDown={handleNext}>
+          다음으로
+        </Button>
       </div>
     </InitialUserState>
   );
