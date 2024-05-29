@@ -7,6 +7,7 @@ import PageNations from '@components/PageNations';
 
 import useFunnel from '@hooks/useFunnel';
 
+import CustomizeMonster from './components/CustomizeMonster';
 import MakeNickName from './components/MakeNickName';
 import SignUpLayout from './components/SignUpLayout';
 import { funnel, title } from './constant/funnel';
@@ -21,6 +22,9 @@ const MonsterName = dynamic(
   () => import('../../(monster)/component/MosterName'),
 );
 
+type SignUpPages = (typeof funnel)[number];
+type SignUpFunnelProps = React.PropsWithChildren<{ name: SignUpPages }>;
+
 function SignUp() {
   const { replace } = useRouter();
   const searchParams = useSearchParams();
@@ -29,7 +33,9 @@ function SignUp() {
   const code = Number(searchParams.get('code')) || 100;
   const defaultStep = code === 100 ? 'nickname' : 'emotion';
 
-  const { Funnel, setStep, step } = useFunnel(defaultStep);
+  const { Funnel, setStep, step } = useFunnel<SignUpPages, SignUpFunnelProps>(
+    defaultStep,
+  );
 
   return (
     <UserInfoProvider>
@@ -95,7 +101,7 @@ function SignUp() {
             goPrev={() => setStep('monstername')}
             goNext={() => replace('/result')}
           >
-            {/* 몬스터 꾸미기 */}
+            <CustomizeMonster />
           </SignUpLayout>
         </Funnel.Step>
       </Funnel>
