@@ -1,34 +1,24 @@
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/jsx-no-useless-fragment */
-import {
-  Children,
-  PropsWithChildren,
-  ReactElement,
-  isValidElement,
-  useState,
-} from 'react';
+import { Children, isValidElement, useState } from 'react';
 
-import { funnel } from '../(route)/(auth)/signup/constant/funnel';
-
-type StepKey = (typeof funnel)[number];
-type StepProps = PropsWithChildren<{ name: StepKey }>;
-type FunnelProps = {
-  children: ReactElement<StepProps> | ReactElement<StepProps>[];
-};
-
-const useFunnel = (defaultStep: StepKey) => {
+const useFunnel = <
+  T extends string,
+  U extends {
+    name: T;
+    children?: React.ReactNode;
+  },
+>(
+  defaultStep: T,
+) => {
   const [step, setStep] = useState(defaultStep);
 
-  function Funnel({ children }: FunnelProps): ReactElement {
-    const targetStep = Children.toArray(children)
-      .filter(isValidElement<StepProps>)
+  function Funnel({ children }: Pick<U, 'children'>) {
+    return Children.toArray(children)
+      .filter(isValidElement<U>)
       .find((child) => child.props.name === step);
-
-    return <>{targetStep}</>;
   }
 
-  function Step({ children }: StepProps): ReactElement {
-    return <>{children}</>;
+  function Step({ children }: U) {
+    return children;
   }
 
   Funnel.Step = Step;
