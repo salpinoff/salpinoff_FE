@@ -1,6 +1,6 @@
 'use client';
 
-import BaseButton from '@components/common/Button/BaseButton';
+import Button from '@components/common/Button';
 
 import cn from '@utils/cn';
 
@@ -14,14 +14,13 @@ function KakaoLoginBtn({ className }: Props) {
   const handleLogin = () => signIn('kakao');
 
   return (
-    <BaseButton
-      primary
+    <Button
       type="button"
       onClick={handleLogin}
       className={cn('w-full bg-[#FEE500]', className)}
     >
       카카오톡 로그인
-    </BaseButton>
+    </Button>
   );
 }
 
