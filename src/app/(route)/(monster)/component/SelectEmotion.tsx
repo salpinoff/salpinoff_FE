@@ -9,12 +9,14 @@ import FormHelperText from '@components/common/TextField/FormHelperText';
 
 import cn from '@utils/cn';
 
+import { Emotion } from '@api/schema/monster';
+
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 
 const EMOTIONS = [
-  ['분노', 'angry'],
-  ['우울', 'depression'],
+  ['분노', Emotion.ANGER],
+  ['우울', Emotion.DEPRESSION],
 ];
 
 const gridStyles = cva('grid', {
