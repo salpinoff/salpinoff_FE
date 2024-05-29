@@ -1,7 +1,13 @@
 import { Dispatch, PropsWithChildren, createContext, useReducer } from 'react';
 
+const enum UserStatusCode {
+  New = 100,
+  NameAdded = 101,
+  MonsterCreated = 102,
+}
+
 type UserInfo = {
-  code: 100 | 101 | 102;
+  code: (typeof UserStatusCode)[keyof typeof UserStatusCode];
   nickname: string;
   emotion: 'angry' | 'depressed' | '';
   stress: number;
@@ -27,7 +33,7 @@ type UserInfoContext = {
 type Props = PropsWithChildren;
 
 const initialUserInfo: UserInfo = {
-  code: 100,
+  code: UserStatusCode.New,
   nickname: '',
   emotion: '',
   stress: 1,
