@@ -38,7 +38,7 @@ function PageNations({
         const originX = dir === 'forward' ? 1 : 0;
 
         return (
-          <li key={id} className="flex">
+          <li key={id} role="none" className="flex">
             <span id={id} className="a11yHidden">
               {id}
             </span>
@@ -54,6 +54,7 @@ function PageNations({
                 delay: isSelected ? 0.02 : 0,
               }}
               aria-labelledby={id}
+              aria-current="page"
               className={cn(
                 'h-6 rounded-circular',
                 { 'bg-[#70737C47]': !isSelected },
