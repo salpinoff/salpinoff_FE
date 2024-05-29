@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRouter } from 'next/navigation';
 
 import { PropsOfFn } from '@type/util';
@@ -8,9 +10,9 @@ const useWithAuth = (fallback?: () => unknown) => {
   const router = useRouter();
   const { status } = useAuth();
 
-  return <T extends (props: PropsOfFn<T>) => void>(callback: T) => {
-    return (props: PropsOfFn<T>) => {
-      if (status !== 'authenticated') {
+  return <T extends (props: PropsOfFn<T>) => any>(callback: T) => {
+    return (props: PropsOfFn<T>): ReturnType<T> | void => {
+      if (status === 'unauthenticated') {
         if (fallback) {
           fallback();
         } else {
@@ -20,7 +22,7 @@ const useWithAuth = (fallback?: () => unknown) => {
         return;
       }
 
-      callback(props);
+      return callback(props);
     };
   };
 };

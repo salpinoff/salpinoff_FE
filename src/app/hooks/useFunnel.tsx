@@ -33,7 +33,7 @@ const useFunnel = (defaultStep: StepKey) => {
 
   Funnel.Step = Step;
 
-  return { Funnel, setStep };
+  return { Funnel, setStep, step };
 };
 
 export default useFunnel;

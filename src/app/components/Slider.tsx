@@ -68,8 +68,9 @@ function Slider({
           {Array(11)
             .fill(1)
             .map((interval, idx) => {
+              const key = interval * idx * 10;
               return (
-                <li key={interval}>
+                <li key={key}>
                   <span>{idx === 0 ? interval : interval * idx * 10}</span>
                 </li>
               );

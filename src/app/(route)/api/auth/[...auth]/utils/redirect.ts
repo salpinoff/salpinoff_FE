@@ -49,7 +49,7 @@ const redirectResponse = (
 ) => {
   const destinationUrl =
     (code === 100 && `/signup?code=${code}`) ||
-    (code === 102 && `/signup?code=${code}&user=${username}`) ||
+    (code === 101 && `/signup?code=${code}&user=${username}`) ||
     '/';
 
   const response = NextResponse.redirect(

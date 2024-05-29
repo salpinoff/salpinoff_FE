@@ -1,29 +1,26 @@
 'use client';
 
-import { AxiosError } from 'axios';
+import Button from '@components/common/Button';
 
-import requestSignIn from '@api/auth/signin';
+import cn from '@utils/cn';
 
-function KakaoLoginBtn() {
-  const handleLogin = async () => {
-    requestSignIn({ provider: 'kakao' })
-      .then(({ data: { url } }) => {
-        window.location.href = url;
-      })
-      .catch((error: AxiosError<{ errorMessage: string }>) => {
-        const errorMessage = error.response?.data.errorMessage;
-        console.log(errorMessage);
-      });
-  };
+import signIn from '../utils/signIn';
+
+type Props = {
+  className?: string;
+};
+
+function KakaoLoginBtn({ className }: Props) {
+  const handleLogin = () => signIn('kakao');
 
   return (
-    <button
+    <Button
       type="button"
       onClick={handleLogin}
-      className="bg-white px-2 py-3 text-black"
+      className={cn('w-full bg-[#FEE500]', className)}
     >
       카카오톡 로그인
-    </button>
+    </Button>
   );
 }
 
