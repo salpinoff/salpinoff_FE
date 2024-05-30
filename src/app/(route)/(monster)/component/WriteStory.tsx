@@ -6,14 +6,13 @@ import TextField from '@components/common/TextField';
 
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
+import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
 const MAX_LENGTH = 500;
 
 function WriteStory() {
-  const {
-    state: { story },
-    updater,
-  } = useUserInfoContext();
+  const { story } = useUserInfoContext();
+  const { update } = useUserInfoDispatchContext();
   const { setBtnDisabled } = useSignUpContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +20,7 @@ function WriteStory() {
       target: { value },
     } = e;
 
-    updater({ payload: { story: value } });
+    update({ story: value });
   };
 
   useEffect(() => {
