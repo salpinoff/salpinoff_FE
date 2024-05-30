@@ -10,6 +10,7 @@ import useWithAuth from 'src/app/hooks/useWithAuth';
 
 import useSignUpContext from '../hooks/useSignUpContext';
 import useUserInfoContext from '../hooks/useUserInfoContext';
+import useUserInfoDispatchContext from '../hooks/useUserInfoDispatchContext';
 
 const validateValue = (value: string) => {
   return value.length >= 2 && value.length <= 6;
@@ -17,11 +18,8 @@ const validateValue = (value: string) => {
 
 function MakeNickName() {
   const { setBtnDisabled, registerCallback } = useSignUpContext();
-
-  const {
-    updater,
-    state: { nickname: userName, code },
-  } = useUserInfoContext();
+  const { nickname: userName, code } = useUserInfoContext();
+  const { update } = useUserInfoDispatchContext();
 
   const message = '닉네임은 2~6자 이내로 입력해주세요';
   const disabled = !validateValue(userName);
@@ -31,6 +29,8 @@ function MakeNickName() {
   const handleClick = withAuth(async () => {
     const method = code === 100 ? createUserName : modifyUserName;
 
+    return true;
+
     return method(userName)
       .then(() => true)
       .catch(() => false);
@@ -38,7 +38,7 @@ function MakeNickName() {
 
   const handleInput: FormEventHandler = (e) => {
     const { value } = e.target as HTMLInputElement;
-    updater({ payload: { nickname: value } });
+    update({ nickname: value });
   };
 
   useEffect(() => {

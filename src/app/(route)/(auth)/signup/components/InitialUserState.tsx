@@ -2,19 +2,19 @@ import { useSearchParams } from 'next/navigation';
 
 import { PropsWithChildren, useEffect } from 'react';
 
-import useUserInfoContext from '../hooks/useUserInfoContext';
+import useUserInfoDispatchContext from '../hooks/useUserInfoDispatchContext';
 
 type Props = PropsWithChildren;
 
 function InitialUserState({ children }: Props) {
-  const { updater } = useUserInfoContext();
+  const { update } = useUserInfoDispatchContext();
 
   const searchParams = useSearchParams();
   const code = (Number(searchParams.get('code')) as 100 | 101 | 102) || 100;
   const defaultUserName = searchParams.get('user') || '';
 
   useEffect(() => {
-    updater({ payload: { code, nickname: defaultUserName } });
+    update({ code, nickname: defaultUserName });
   }, [code, defaultUserName]);
 
   return children;
