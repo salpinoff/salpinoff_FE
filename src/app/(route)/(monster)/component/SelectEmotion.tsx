@@ -59,7 +59,7 @@ function SelectEmotion() {
 
   const handleChange: ChangeEventHandler = (e) => {
     const target = e.target as HTMLInputElement;
-    const id = target.id as 'depressed' | 'angry';
+    const id = target.id as keyof typeof Emotion;
 
     updater({ payload: { emotion: id } });
   };
