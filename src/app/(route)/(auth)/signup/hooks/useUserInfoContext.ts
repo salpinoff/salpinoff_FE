@@ -3,17 +3,15 @@ import { useContext } from 'react';
 import { userInfoContext } from '../context/userInfo.context';
 
 const useUserInfoContext = () => {
-  const userInfo = useContext(userInfoContext);
+  const context = useContext(userInfoContext);
 
-  if (!userInfo) {
+  if (!context) {
     throw new Error(
       'Context MisMatch : this hook must be under UserInfoContext.Provider',
     );
   }
 
-  const { userInfo: state, updater } = userInfo;
-
-  return { state, updater };
+  return context;
 };
 
 export default useUserInfoContext;
