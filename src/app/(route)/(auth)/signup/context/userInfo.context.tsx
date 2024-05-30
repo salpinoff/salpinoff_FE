@@ -1,73 +1,77 @@
-import { Dispatch, PropsWithChildren, createContext, useReducer } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-const enum UserStatusCode {
-  New = 100,
-  NameAdded = 101,
-  MonsterCreated = 102,
-}
+import {
+  PropsWithChildren,
+  createContext,
+  useCallback,
+  useMemo,
+  useReducer,
+} from 'react';
 
+import { Member, MemberStatusCode } from '@api/schema/member';
+import { Monster } from '@api/schema/monster';
+
+// Mapped
 type UserInfo = {
-  code: (typeof UserStatusCode)[keyof typeof UserStatusCode];
-  nickname: string;
-  emotion: 'angry' | 'depressed' | '';
-  stress: number;
-  story: string;
+  // Member Info
+  code: (typeof MemberStatusCode)[keyof typeof MemberStatusCode];
+  nickname: Member['username'];
+  // Monster Info
+  // ! 해당 부분은 구조의 논의가 필요할 것 같습니다!
+  emotion: Monster['emotion'] | '';
+  stress: Monster['rating'];
+  story: Monster['content'];
   monster: {
-    name: string;
-    background: string;
+    name: Monster['monsterName'];
+    decorations: Monster['monsterDecorations'];
   };
 };
 
-type Reducer = (
-  state: UserInfo,
-  action: { payload: Partial<UserInfo> },
-) => UserInfo;
-
-type UserInfoContext = {
-  userInfo: UserInfo;
-  updater: Dispatch<{
-    payload: Partial<UserInfo>;
-  }>;
-};
-
-type Props = PropsWithChildren;
+type UserInfoAction = { payload: Partial<UserInfo> };
 
 const initialUserInfo: UserInfo = {
-  code: UserStatusCode.New,
+  code: MemberStatusCode.New,
   nickname: '',
   emotion: '',
   stress: 1,
   story: '',
   monster: {
     name: '',
-    background: 'red',
+    decorations: [],
   },
 };
 
-const userInfoReducer: Reducer = (state, action) => {
+const userInfoReducer = (state: UserInfo, action: UserInfoAction): UserInfo => {
   return { ...state, ...action.payload };
 };
 
-const userInfoContext = createContext<UserInfoContext>({
-  userInfo: initialUserInfo,
-  updater: () => {},
+const userInfoContext = createContext<UserInfo>(initialUserInfo);
+
+const userInfoDispatchContext = createContext({
+  update: (payload: Partial<UserInfo>) => {},
 });
 
-const { Provider } = userInfoContext;
-
-function UserInfoProvider({ children }: Props) {
+function UserInfoProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = useReducer(userInfoReducer, initialUserInfo);
 
+  const update = useCallback(
+    (payload: Partial<UserInfo>) => {
+      return dispatch({
+        payload,
+      });
+    },
+    [dispatch],
+  );
+
+  const memoizedValue = useMemo(() => ({ update }), [update]);
+
   return (
-    <Provider
-      value={{
-        userInfo: state,
-        updater: dispatch,
-      }}
-    >
-      {children}
-    </Provider>
+    <userInfoContext.Provider value={state}>
+      <userInfoDispatchContext.Provider value={memoizedValue}>
+        {children}
+      </userInfoDispatchContext.Provider>
+    </userInfoContext.Provider>
   );
 }
 
-export { UserInfoProvider, userInfoContext };
+export { UserInfoProvider, userInfoContext, userInfoDispatchContext };
