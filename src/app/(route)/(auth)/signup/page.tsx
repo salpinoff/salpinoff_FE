@@ -3,15 +3,17 @@
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { useEffect } from 'react';
+
 import PageNations from '@components/PageNations';
 
 import useFunnel from '@hooks/useFunnel';
 
-import CustomizeMonster from './components/CustomizeMonster';
 import MakeNickName from './components/MakeNickName';
 import SignUpLayout from './components/SignUpLayout';
 import { funnel, title } from './constant/funnel';
 import { UserInfoProvider } from './context/userInfo.context';
+import CustomizeMonster from '../../(monster)/component/CustomizeMonster';
 import SelectEmotion from '../../(monster)/component/SelectEmotion';
 import SelectStress from '../../(monster)/component/SelectStress';
 
@@ -37,15 +39,39 @@ function SignUp() {
     defaultStep,
   );
 
+  /* /signup?step={step} */
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('step', step);
+    window.history.pushState(null, '', `?${params.toString()}`);
+  }, [step, searchParams]);
+
+  /* 브라우저 뒤로가기 */
+  useEffect(() => {
+    const handleBeforePopState = () => {
+      const { search } = document.location;
+      const prev = new URLSearchParams(search)?.get('step');
+
+      if (prev) {
+        setStep(prev as SignUpPages);
+      }
+    };
+
+    window.addEventListener('popstate', handleBeforePopState);
+    return () => window.removeEventListener('popstate', handleBeforePopState);
+  }, [setStep]);
+
   return (
     <UserInfoProvider>
       <PageNations
         activeId={step}
-        className="absolute right-0 mx-20 mt-[28px] w-full"
+        className="absolute right-0 ml-auto px-20"
         orderItems={orderItem}
       />
 
       <Funnel>
+        {/* 닉네임 설정 */}
         <Funnel.Step name="nickname">
           <SignUpLayout
             title={title.nickname}
@@ -55,6 +81,7 @@ function SignUp() {
           </SignUpLayout>
         </Funnel.Step>
 
+        {/* 감정 설정 */}
         <Funnel.Step name="emotion">
           <SignUpLayout
             title={title.emotion}
@@ -65,6 +92,7 @@ function SignUp() {
           </SignUpLayout>
         </Funnel.Step>
 
+        {/* 스트레스 수치 설정 */}
         <Funnel.Step name="stress">
           <SignUpLayout
             title={title.stress}
@@ -75,6 +103,7 @@ function SignUp() {
           </SignUpLayout>
         </Funnel.Step>
 
+        {/* 세부 상황 설정 */}
         <Funnel.Step name="story">
           <SignUpLayout
             title={title.story}
@@ -85,6 +114,7 @@ function SignUp() {
           </SignUpLayout>
         </Funnel.Step>
 
+        {/* 몬스터 닉네임 설정 */}
         <Funnel.Step name="monstername">
           <SignUpLayout
             className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
@@ -95,6 +125,7 @@ function SignUp() {
           </SignUpLayout>
         </Funnel.Step>
 
+        {/* 몬스터 스타일 설정 */}
         <Funnel.Step name="monsterstyle">
           <SignUpLayout
             className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
