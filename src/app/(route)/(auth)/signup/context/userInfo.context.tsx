@@ -9,7 +9,7 @@ import {
 } from 'react';
 
 import { Member, MemberStatusCode } from '@api/schema/member';
-import { Monster } from '@api/schema/monster';
+import { Monster, Decoration } from '@api/schema/monster';
 
 // Mapped
 type UserInfo = {
@@ -23,7 +23,7 @@ type UserInfo = {
   story: Monster['content'];
   monster: {
     name: Monster['monsterName'];
-    decorations: Monster['monsterDecorations'];
+    decorations: Omit<Decoration, 'decorationId'>[];
   };
 };
 
