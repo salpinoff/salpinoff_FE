@@ -13,6 +13,7 @@ import { Emotion } from '@api/schema/monster';
 
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
+import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
 const EMOTIONS = [
   ['분노', Emotion.ANGER],
@@ -50,10 +51,8 @@ const buttonStyle = cva(
 );
 
 function SelectEmotion() {
-  const {
-    state: { emotion },
-    updater,
-  } = useUserInfoContext();
+  const { emotion } = useUserInfoContext();
+  const { update } = useUserInfoDispatchContext();
 
   const { setBtnDisabled } = useSignUpContext();
 
@@ -61,7 +60,7 @@ function SelectEmotion() {
     const target = e.target as HTMLInputElement;
     const id = target.id as keyof typeof Emotion;
 
-    updater({ payload: { emotion: id } });
+    update({ emotion: id });
   };
 
   useEffect(() => {

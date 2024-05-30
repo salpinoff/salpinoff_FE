@@ -6,23 +6,21 @@ import TextField from '@components/common/TextField';
 
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
+import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
 function MonsterName() {
   const { setBtnDisabled } = useSignUpContext();
-  const {
-    state: {
-      monster: { name },
-      story,
-    },
-    updater,
-  } = useUserInfoContext();
+  const { monster, story } = useUserInfoContext();
+  const { update } = useUserInfoDispatchContext();
+
+  const { name } = monster;
 
   const hanleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = e;
 
-    updater({ payload: { monster: { name: value, background: '' } } });
+    update({ monster: { name: value, decorations: [] } });
   };
 
   const handleChangeStory = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +28,7 @@ function MonsterName() {
       target: { value },
     } = e;
 
-    updater({ payload: { story: value } });
+    update({ story: value });
   };
 
   useEffect(() => {

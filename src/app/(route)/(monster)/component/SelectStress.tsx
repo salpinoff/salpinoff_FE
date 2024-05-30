@@ -7,6 +7,7 @@ import Slider from '@components/Slider';
 
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
+import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
 const slider = {
   step: 1,
@@ -16,10 +17,8 @@ const slider = {
 
 function SelectStress() {
   const { min, max, step } = slider;
-  const {
-    state: { stress },
-    updater,
-  } = useUserInfoContext();
+  const { stress } = useUserInfoContext();
+  const { update } = useUserInfoDispatchContext();
 
   const { setBtnDisabled } = useSignUpContext();
 
@@ -27,7 +26,7 @@ function SelectStress() {
     const { target } = e;
     const { value } = target;
 
-    updater({ payload: { stress: Number(value) } });
+    update({ stress: Number(value) });
   };
 
   useEffect(() => {
@@ -47,7 +46,7 @@ function SelectStress() {
         onChange={handleChange}
       />
 
-      <span className="m-auto flex h-[48vw] w-[48vw] items-center justify-center rounded-circular bg-[var(--color-base-cool-neutral-7)]">
+      <span className="m-auto flex h-[180px] w-[180px] items-center justify-center rounded-circular bg-[var(--color-base-cool-neutral-7)]">
         <span className="display-1-bold text-white">{stress}</span>
       </span>
     </div>
