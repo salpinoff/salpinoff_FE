@@ -1,20 +1,22 @@
-import { useSearchParams } from 'next/navigation';
-
 import { PropsWithChildren, useEffect } from 'react';
+
+import useQueryString from '@hooks/useQueryString';
+
+import { MemberStatusCodes } from '@api/schema/member';
 
 import useUserInfoDispatchContext from '../hooks/useUserInfoDispatchContext';
 
-type Props = PropsWithChildren;
-
-function InitialUserState({ children }: Props) {
+function InitialUserState({ children }: PropsWithChildren) {
   const { update } = useUserInfoDispatchContext();
 
-  const searchParams = useSearchParams();
-  const code = (Number(searchParams.get('code')) as 100 | 101 | 102) || 100;
-  const defaultUserName = searchParams.get('userName') || '';
+  const [code] = useQueryString<`${MemberStatusCodes}`>('code', '100');
+  const [defaultUserName] = useQueryString<string>('userName', '');
 
   useEffect(() => {
-    update({ code, nickname: defaultUserName });
+    update({
+      code: Number(code) as MemberStatusCodes,
+      nickname: defaultUserName,
+    });
   }, [code, defaultUserName]);
 
   return children;
