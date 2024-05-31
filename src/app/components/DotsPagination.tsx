@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 import cn from '@utils/cn';
 
-const pageNationStyle = cva('flex h-6 space-x-4', {
+const paginationStyle = cva('flex h-6 space-x-4', {
   variants: {
     position: {
       left: 'justify-start',
@@ -14,7 +14,7 @@ const pageNationStyle = cva('flex h-6 space-x-4', {
   },
 });
 
-type StyleProps = VariantProps<typeof pageNationStyle>;
+type StyleProps = VariantProps<typeof paginationStyle>;
 type OrderItem = {
   id: string;
 };
@@ -25,7 +25,7 @@ interface Props extends StyleProps, ComponentProps<'ol'> {
   orderItems: OrderItem[];
 }
 
-function PageNations({
+function DotsPagination({
   activeId,
   orderItems,
   className,
@@ -33,7 +33,7 @@ function PageNations({
   dir = 'forward',
 }: Props) {
   return (
-    <ol className={cn(pageNationStyle({ position }), className)}>
+    <ol className={cn(paginationStyle({ position }), className)}>
       {orderItems.map(({ id }) => {
         const isSelected = id === activeId;
         const originX = dir === 'forward' ? 1 : 0;
@@ -70,4 +70,4 @@ function PageNations({
   );
 }
 
-export default PageNations;
+export default DotsPagination;

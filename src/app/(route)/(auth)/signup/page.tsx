@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useEffect } from 'react';
 
-import PageNations from '@components/PageNations';
+import DotsPagination from '@components/DotsPagination';
 
 import useFunnel from '@hooks/useFunnel';
 
@@ -64,7 +64,7 @@ function SignUp() {
 
   return (
     <UserInfoProvider>
-      <PageNations
+      <DotsPagination
         activeId={step}
         className="absolute right-0 ml-auto px-20"
         orderItems={orderItem}
