@@ -29,8 +29,6 @@ function MakeNickName() {
   const handleClick = withAuth(async () => {
     const method = code === 100 ? createUserName : modifyUserName;
 
-    return true;
-
     return method(userName)
       .then(() => true)
       .catch(() => false);
