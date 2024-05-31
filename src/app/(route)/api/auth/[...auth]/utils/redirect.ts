@@ -1,7 +1,7 @@
 import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextResponse } from 'next/server';
 
-import { type Response as TypeResponse } from '@api/auth/token/get-token';
+import type { TokenResponse } from '@api/schema/token';
 
 import { encrypt } from './crypto';
 import tokenPrefix from './token-prefix';
@@ -44,7 +44,7 @@ const setCookie = (
 };
 
 const redirectResponse = (
-  { code, username, accessToken, refreshToken }: TypeResponse,
+  { code, username, accessToken, refreshToken }: TokenResponse,
   secret: string,
 ) => {
   const destinationUrl =
@@ -56,6 +56,7 @@ const redirectResponse = (
     `${process.env.NEXT_PUBLIC_DOMAIN_NAME}${destinationUrl}`,
     { status: 302 },
   );
+
   return setCookie(response, { accessToken, refreshToken, secret });
 };
 
