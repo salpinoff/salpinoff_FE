@@ -8,5 +8,5 @@ export default withAuthentification(
 );
 
 export const config = {
-  matcher: '/signup',
+  matcher: ['/signup', '/signin'],
 };
