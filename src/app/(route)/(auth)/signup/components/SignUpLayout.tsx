@@ -1,9 +1,4 @@
-import {
-  type MouseEventHandler,
-  type PropsWithChildren,
-  type MouseEvent,
-  useState,
-} from 'react';
+import { useState, type MouseEvent, type MouseEventHandler } from 'react';
 
 import { motion } from 'framer-motion';
 
@@ -16,12 +11,11 @@ import stringToElement from '@utils/string-to-element';
 import InitialUserState from './InitialUserState';
 import { SignUpProvider } from '../context/layout.context';
 
-type Props = Omit<React.ComponentProps<'div'>, 'title'> &
-  PropsWithChildren<{
-    title?: string | string[];
-    goNext: MouseEventHandler;
-    goPrev?: MouseEventHandler;
-  }>;
+interface Props extends Omit<React.ComponentProps<'div'>, 'title'> {
+  title?: string | string[];
+  goNext: MouseEventHandler;
+  goPrev?: MouseEventHandler;
+}
 
 type Callback = (event: MouseEvent<Element>) => Promise<boolean> | void;
 type RegisterCallback = (callback: Callback) => void;
