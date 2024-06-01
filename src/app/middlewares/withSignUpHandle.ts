@@ -64,7 +64,11 @@ function withSignUpHandle(middleware: NextMiddleware) {
         (code === 101 && `code=${code}&user=${username}`) ||
         '/';
 
-      const response = NextResponse.rewrite(rewriteUrl);
+      const response =
+        url === rewriteUrl.href
+          ? NextResponse.next()
+          : NextResponse.redirect(rewriteUrl);
+
       return setCookie(
         [
           {
