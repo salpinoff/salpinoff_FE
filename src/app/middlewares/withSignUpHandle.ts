@@ -7,9 +7,43 @@ import {
 
 import { TokenResponse } from '@api/schema/token';
 
-import { decrypt } from '../(route)/api/auth/[...auth]/utils/crypto';
-import { setCookie } from '../(route)/api/auth/[...auth]/utils/redirect';
+import {
+  deleteCookie,
+  getCookie,
+  setCookie,
+} from '../(route)/api/auth/[...auth]/utils/cookie';
+import { decrypt, encrypt } from '../(route)/api/auth/[...auth]/utils/crypto';
 import tokenPrefix from '../(route)/api/auth/[...auth]/utils/token-prefix';
+
+const refreshUserToken = async (request: NextRequest, secret: string) => {
+  const { accessToken: access, refreshToken: refresh } = getCookie(
+    [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
+    request,
+  );
+
+  if (!access || !refresh) {
+    throw new Error('토큰이 없습니다.');
+  }
+
+  const oldAccessToken = decrypt(access, secret);
+  const oldRefreshToken = decrypt(refresh, secret);
+
+  const { accessToken, refreshToken, code, username } = await fetch(
+    `${process.env.NEXT_PUBLIC_API_DOMAIN_NAME}/api/v1/members/token/refresh`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${oldAccessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        refreshToken: oldRefreshToken,
+      }),
+    },
+  ).then((res) => res.json() as Promise<TokenResponse>);
+
+  return { accessToken, refreshToken, code, username };
+};
 
 function withSignUpHandle(middleware: NextMiddleware) {
   return async (request: NextRequest, event: NextFetchEvent) => {
@@ -20,26 +54,9 @@ function withSignUpHandle(middleware: NextMiddleware) {
     }
 
     try {
-      const refreshCookie = request.cookies.get(tokenPrefix('refreshToken'))!;
-      const accessCookie = request.cookies.get(tokenPrefix('accessToken'))!;
-
       const secret = process.env.AUTH_SECRET;
-      const oldAccessToken = decrypt(accessCookie.value, secret);
-      const oldRefreshToken = decrypt(refreshCookie.value, secret);
-
-      const { accessToken, refreshToken, code, username } = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DOMAIN_NAME}/api/v1/members/token/refresh`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${oldAccessToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            refreshToken: oldRefreshToken,
-          }),
-        },
-      ).then((res) => res.json() as Promise<TokenResponse>);
+      const { accessToken, refreshToken, code, username } =
+        await refreshUserToken(request, secret);
 
       const rewriteUrl = request.nextUrl.clone();
       rewriteUrl.search =
@@ -48,22 +65,30 @@ function withSignUpHandle(middleware: NextMiddleware) {
         '/';
 
       const response = NextResponse.rewrite(rewriteUrl);
-      return setCookie(response, {
-        secret: process.env.AUTH_SECRET,
-        accessToken,
-        refreshToken,
-      });
+      return setCookie(
+        [
+          {
+            key: tokenPrefix('accessToken'),
+            value: encrypt(accessToken, secret),
+            proteced: true,
+          },
+          {
+            key: tokenPrefix('refreshToken'),
+            value: encrypt(refreshToken, secret),
+            proteced: true,
+          },
+        ],
+        response,
+      );
     } catch (err) {
-      const respone = NextResponse.redirect(
+      const response = NextResponse.redirect(
         `${process.env.NEXT_PUBLIC_DOMAIN_NAME}/signin`,
       );
 
-      const cookies = [tokenPrefix('accessToken'), tokenPrefix('refreshToken')];
-      cookies.map((cookie) => {
-        return respone.cookies.delete(cookie);
-      });
-
-      return respone;
+      return deleteCookie(
+        [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
+        response,
+      );
     }
   };
 }

@@ -1,47 +1,10 @@
-import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextResponse } from 'next/server';
 
 import type { TokenResponse } from '@api/schema/token';
 
+import { setCookie } from './cookie';
 import { encrypt } from './crypto';
 import tokenPrefix from './token-prefix';
-
-const setCookie = (
-  response: NextResponse,
-  {
-    secret,
-    accessToken,
-    refreshToken,
-  }: { refreshToken: string; accessToken: string; secret: string },
-) => {
-  const cookies = [
-    {
-      key: tokenPrefix('accessToken'),
-      value: encrypt(accessToken, secret),
-    },
-    {
-      key: tokenPrefix('refreshToken'),
-      value: encrypt(refreshToken, secret),
-    },
-  ];
-
-  cookies.map(({ key, value }) => {
-    const cookieOptions: Partial<ResponseCookie> =
-      process.env.NODE_ENV !== 'development'
-        ? {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'lax',
-            path: '/',
-            domain: process.env.NEXT_PUBLIC_DOMAIN_NAME,
-          }
-        : {};
-
-    return response.cookies.set(key, value, cookieOptions);
-  });
-
-  return response;
-};
 
 const redirectResponse = (
   { code, username, accessToken, refreshToken }: TokenResponse,
@@ -57,7 +20,21 @@ const redirectResponse = (
     { status: 302 },
   );
 
-  return setCookie(response, { accessToken, refreshToken, secret });
+  return setCookie(
+    [
+      {
+        key: tokenPrefix('accessToken'),
+        value: encrypt(accessToken, secret),
+        proteced: true,
+      },
+      {
+        key: tokenPrefix('refreshToken'),
+        value: encrypt(refreshToken, secret),
+        proteced: true,
+      },
+    ],
+    response,
+  );
 };
 
 export { redirectResponse, setCookie };
