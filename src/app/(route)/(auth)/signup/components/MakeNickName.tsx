@@ -47,7 +47,7 @@ function MakeNickName() {
 
   useEffect(() => {
     registerCallback(handleClick);
-  }, []);
+  }, [handleClick]);
 
   return (
     <div className="flex flex-col justify-between">
