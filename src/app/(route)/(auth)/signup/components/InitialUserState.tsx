@@ -6,7 +6,9 @@ import { MemberStatusCodes } from '@api/schema/member';
 
 import useUserInfoDispatchContext from '../hooks/useUserInfoDispatchContext';
 
-function InitialUserState({ children }: PropsWithChildren) {
+type Props = PropsWithChildren;
+
+function InitialUserState({ children }: Props) {
   const { update } = useUserInfoDispatchContext();
 
   const [code] = useQueryString<`${MemberStatusCodes}`>('code', '100');
