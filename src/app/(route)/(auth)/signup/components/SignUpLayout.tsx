@@ -72,7 +72,8 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
           {children}
         </SignUpProvider>
       </div>
-      <FixedBottom className="flex touch-none gap-8 p-5">
+
+      <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 p-5">
         <Button
           className={cn('flex-1', { hidden: !goPrev })}
           size="medium"
