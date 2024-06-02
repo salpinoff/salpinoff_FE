@@ -66,7 +66,7 @@ function SignUp() {
     <UserInfoProvider>
       <DotsPagination
         activeId={step}
-        className="absolute right-0 ml-auto px-20"
+        className="absolute right-0 ml-auto mt-[28px] w-full px-20"
         orderItems={orderItem}
       />
 
