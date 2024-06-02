@@ -12,7 +12,7 @@ const createInstance = (baseURL: string) => {
 
 const baseInstance = createInstance(`${process.env.NEXT_PUBLIC_DOMAIN_NAME}`);
 const apiInstance = createInstance(
-  `${process.env.NEXT_PUBLIC_API_DOMAIN_NAME}`,
+  `${process.env.NEXT_PUBLIC_API_DOMAIN_NAME}/api/v1`,
 );
 
 export { baseInstance, apiInstance };

@@ -3,9 +3,14 @@ const ROUTER = {
     SIGNIN: {
       kakao: `/api/auth/signin/kakao`,
     },
-    TOKEN: {
-      kakao: `/api/v1/members/login/kakao`,
+    SIGNOUT: {
+      kakao: '/api/auth/signout/kakao',
     },
+    INITIAL_TOKEN: {
+      kakao: `/members/login/kakao`,
+    },
+    REFRESH_TOKEN: '/members/token/refresh',
+    USER_NICKNAME: '/members/my',
   },
 };
 
