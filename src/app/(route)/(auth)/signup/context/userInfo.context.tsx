@@ -9,36 +9,32 @@ import {
 } from 'react';
 
 import { Member, MemberStatusCode } from '@api/schema/member';
-import { Monster, Decoration } from '@api/schema/monster';
+import { Decoration, Monster } from '@api/schema/monster';
 
 // Mapped
 type UserInfo = {
   // Member Info
   code: (typeof MemberStatusCode)[keyof typeof MemberStatusCode];
-  nickname: Member['username'];
+  userName: Member['username'];
   // Monster Info
   // ! 해당 부분은 구조의 논의가 필요할 것 같습니다!
   emotion: Monster['emotion'] | '';
   stress: Monster['rating'];
   story: Monster['content'];
-  monster: {
-    name: Monster['monsterName'];
-    decorations: Omit<Decoration, 'decorationId'>[];
-  };
+  monsterName: Monster['monsterName'];
+  decorations: Omit<Decoration, 'decorationId'>[];
 };
 
 type UserInfoAction = { payload: Partial<UserInfo> };
 
 const initialUserInfo: UserInfo = {
   code: MemberStatusCode.New,
-  nickname: '',
+  userName: '',
   emotion: '',
   stress: 1,
   story: '',
-  monster: {
-    name: '',
-    decorations: [],
-  },
+  monsterName: '',
+  decorations: [],
 };
 
 const userInfoReducer = (state: UserInfo, action: UserInfoAction): UserInfo => {
