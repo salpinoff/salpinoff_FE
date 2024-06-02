@@ -10,17 +10,15 @@ import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDis
 
 function MonsterName() {
   const { setBtnDisabled } = useSignUpContext();
-  const { monster, story } = useUserInfoContext();
+  const { monsterName, story } = useUserInfoContext();
   const { update } = useUserInfoDispatchContext();
-
-  const { name } = monster;
 
   const hanleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = e;
 
-    update({ monster: { name: value, decorations: [] } });
+    update({ monsterName: value });
   };
 
   const handleChangeStory = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,21 +30,21 @@ function MonsterName() {
   };
 
   useEffect(() => {
-    const isValidName = name.length >= 2 && name.length <= 6;
+    const isValidName = monsterName.length >= 2 && monsterName.length <= 6;
     const isValidStory = story.length !== 0 && story.length <= 500;
 
     setBtnDisabled(!isValidName || !isValidStory);
-  }, [name, story]);
+  }, [monsterName, story]);
 
   return (
     <div className="">
       <TextField
         id="monster_name"
         label="이름"
-        value={name}
+        value={monsterName}
         fullWidth
         onChange={hanleChangeName}
-        error={name.length > 6}
+        error={monsterName.length > 6}
         helperText="2~6자로 입력해주세요"
         className="mb-1"
       />
