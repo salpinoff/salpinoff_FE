@@ -11,7 +11,7 @@ function InitialUserState({ children }: Props) {
 
   const searchParams = useSearchParams();
   const code = (Number(searchParams.get('code')) as 100 | 101 | 102) || 100;
-  const defaultUserName = searchParams.get('userName') || '';
+  const defaultUserName = searchParams.get('user') || '';
 
   useEffect(() => {
     updater({ payload: { code, nickname: defaultUserName } });

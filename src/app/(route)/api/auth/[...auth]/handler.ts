@@ -12,8 +12,9 @@ import refreshTokenApi from '@api/auth/token/refresh-token';
 
 import { AuthType, Providers } from '@type/auth';
 
-import { decrypt } from './utils/crypto';
-import { redirectResponse, setCookie } from './utils/redirect';
+import { deleteCookie, getCookie, setCookie } from './utils/cookie';
+import { decrypt, encrypt } from './utils/crypto';
+import { redirectResponse } from './utils/redirect';
 import tokenPrefix from './utils/token-prefix';
 
 type Props = {
@@ -41,58 +42,63 @@ const authHandler = ({ request, params, secret }: Props) => {
         }
         case 'signout': {
           const respone = NextResponse.redirect('/signin', { status: 302 });
-          const cookiesName = [
-            tokenPrefix('accessToken'),
-            tokenPrefix('refreshToken'),
-          ];
 
-          cookiesName.map((name) => {
-            return respone.cookies.delete(name);
-          });
-
-          return respone;
+          return deleteCookie(
+            [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
+            respone,
+          );
         }
         case 'session': {
           try {
-            const refreshCookie = request.cookies.get(
-              tokenPrefix('refreshToken'),
-            );
-            const accessCookie = request.cookies.get(
-              tokenPrefix('accessToken'),
+            const {
+              accessToken: oldAccessToken,
+              refreshToken: oldRefreshToken,
+            } = getCookie(
+              [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
+              request,
             );
 
-            if (!refreshCookie || !accessCookie) {
+            if (!oldAccessToken || !oldRefreshToken) {
               throw new Error('Token 이 없습니다.');
             }
 
-            const { exp } = jwtParse(accessCookie.value);
+            const { exp } = jwtParse(oldAccessToken);
             const timeRemaing =
               exp - (Math.floor(new Date().getTime() / 1000) + 10 * 60);
 
             if (timeRemaing > 0) {
-              return NextResponse.json({ accessToken: accessCookie.value });
+              return NextResponse.json({ accessToken: oldAccessToken });
             }
 
             const {
               data: { refreshToken, accessToken },
-            } = await refreshTokenApi(decrypt(refreshCookie.value, secret));
+            } = await refreshTokenApi(decrypt(oldRefreshToken, secret));
 
             const response = NextResponse.json({ accessToken });
-            return setCookie(response, { accessToken, refreshToken, secret });
+            return setCookie(
+              [
+                {
+                  key: tokenPrefix('accessToken'),
+                  value: encrypt(accessToken, secret),
+                  proteced: true,
+                },
+                {
+                  key: tokenPrefix('refreshToken'),
+                  value: encrypt(refreshToken, secret),
+                  proteced: true,
+                },
+              ],
+              response,
+            );
           } catch (error) {
             const response = isAxiosError(error)
               ? NextResponse.json(error.message, { status: 500 })
               : NextResponse.json(error, { status: 400 });
 
-            const cookiesName = [
-              tokenPrefix('accessToken'),
-              tokenPrefix('refreshToken'),
-            ];
-            cookiesName.map((name) => {
-              return response.cookies.delete(name);
-            });
-
-            return response;
+            return deleteCookie(
+              [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
+              response,
+            );
           }
         }
 

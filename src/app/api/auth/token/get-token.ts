@@ -1,22 +1,9 @@
 import ROUTER from '@constant/api.router';
 
 import { apiInstance } from '@api/api.config';
+import type { TokenResponse } from '@api/schema/token';
 
 import type { Providers } from '@type/auth';
-
-export interface Response {
-  memberId: number;
-  accessToken: string;
-  refreshToken: string;
-  username: string;
-  /**
-   * @description
-   * 100 닉네임 설정 false & 몬스터 생성 false
-   * 101 닉네임 설정 true & 몬스터 설정 false
-   * 102 닉네임 설정 true & 몬스터 설정 true
-   */
-  code: 100 | 101 | 102;
-}
 
 type Props = {
   code: string;
@@ -26,7 +13,7 @@ type Props = {
 const requestUserToken = ({ code, provider }: Props) => {
   const path = ROUTER.AUTH.TOKEN[provider];
 
-  return apiInstance.post<Response>(path, { code });
+  return apiInstance.post<TokenResponse>(path, { code });
 };
 
 export default requestUserToken;

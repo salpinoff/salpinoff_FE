@@ -1,15 +1,10 @@
 import { apiInstance } from '@api/api.config';
-
-interface Response {
-  memberId: number;
-  accessToken: string;
-  refreshToken: string;
-}
+import { TokenResponse } from '@api/schema/token';
 
 const refreshTokenApi = (refreshToken: string) => {
   const path = '/api/v1/members/token/refresh';
 
-  return apiInstance.post<Response>(path, { refreshToken });
+  return apiInstance.post<TokenResponse>(path, { refreshToken });
 };
 
 export default refreshTokenApi;
