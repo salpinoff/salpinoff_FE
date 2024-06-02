@@ -11,7 +11,7 @@ type Props = {
 };
 
 const requestUserToken = ({ code, provider }: Props) => {
-  const path = ROUTER.AUTH.TOKEN[provider];
+  const path = ROUTER.AUTH.INITIAL_TOKEN[provider];
 
   return apiInstance.post<TokenResponse>(path, { code });
 };
