@@ -43,7 +43,7 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
     <InitialUserState>
       <div
         className={cn(
-          'flex w-full flex-1 flex-col justify-between bg-black pt-[30px]',
+          'flex w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
           className,
         )}
       >

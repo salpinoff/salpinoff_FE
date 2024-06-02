@@ -58,16 +58,21 @@ function withSignUpHandle(middleware: NextMiddleware) {
       const { accessToken, refreshToken, code, username } =
         await refreshUserToken(request, secret);
 
-      const rewriteUrl = request.nextUrl.clone();
-      rewriteUrl.search =
+      if (!accessToken) {
+        throw new Error('No AccessTOken');
+      }
+
+      const redirect = request.nextUrl.clone();
+      redirect.pathname = code === 102 ? '/' : redirect.pathname;
+      redirect.search =
         (code === 100 && `code${code}`) ||
         (code === 101 && `code=${code}&user=${username}`) ||
-        '/';
+        '';
 
       const response =
-        url === rewriteUrl.href
+        url === redirect.href
           ? NextResponse.next()
-          : NextResponse.redirect(rewriteUrl);
+          : NextResponse.redirect(redirect);
 
       return setCookie(
         [

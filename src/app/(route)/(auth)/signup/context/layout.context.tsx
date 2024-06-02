@@ -29,7 +29,11 @@ function SignUpProvider({ value, onFocus, onBlur, children }: Props) {
 
   return (
     <Provider value={value}>
-      <div className="relative flex-1" onFocus={onFocus} onBlur={onBlur}>
+      <div
+        className="relative flex-1 overflow-auto"
+        onFocus={onFocus}
+        onBlur={onBlur}
+      >
         {children}
       </div>
     </Provider>

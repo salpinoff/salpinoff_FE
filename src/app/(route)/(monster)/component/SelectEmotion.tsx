@@ -68,7 +68,7 @@ function SelectEmotion() {
   }, [emotion]);
 
   return (
-    <fieldset className="flex h-max w-full flex-col">
+    <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
       <FormHelperText component="legend" className="mb-12">
         나의 감정
       </FormHelperText>
@@ -78,7 +78,7 @@ function SelectEmotion() {
             row: 2,
             column: 1,
           }),
-          'h-full w-full gap-8',
+          'w-full gap-8',
         )}
       >
         {EMOTIONS.map(([text, id]) => (
