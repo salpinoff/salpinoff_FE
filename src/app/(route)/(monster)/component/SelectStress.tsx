@@ -34,7 +34,7 @@ function SelectStress() {
   }, []);
 
   return (
-    <div>
+    <div className="h-[calc(100%+95px)]">
       <FormHelperText className="mb-[30px] block">스트레스 정도</FormHelperText>
       <Slider
         min={min}
