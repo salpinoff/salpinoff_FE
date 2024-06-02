@@ -1,6 +1,5 @@
-import ROUTER from '@constant/api.router';
-
 import { baseInstance } from '@api/api.config';
+import { API_URLS } from '@api/api.constants';
 
 import { Providers } from '@type/auth';
 
@@ -13,7 +12,7 @@ type Props = {
 };
 
 const requestSignIn = ({ provider }: Props) => {
-  const path = ROUTER.AUTH.SIGNIN[provider];
+  const path = API_URLS.AUTH.SIGNIN[provider];
 
   return baseInstance.post<Response>(path);
 };

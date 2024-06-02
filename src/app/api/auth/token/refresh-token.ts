@@ -1,10 +1,9 @@
-import ROUTER from '@constant/api.router';
-
 import { apiInstance } from '@api/api.config';
+import { API_URLS } from '@api/api.constants';
 import { TokenResponse } from '@api/schema/token';
 
 const refreshTokenApi = (refreshToken: string) => {
-  const path = ROUTER.AUTH.REFRESH_TOKEN;
+  const path = API_URLS.AUTH.REFRESH_TOKEN;
 
   return apiInstance.post<TokenResponse>(path, { refreshToken });
 };
