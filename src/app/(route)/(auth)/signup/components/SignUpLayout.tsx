@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 
 import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
+import FixedBottom from '@components/FixedBottom';
 
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
@@ -71,19 +72,24 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
           {children}
         </SignUpProvider>
       </div>
-      <div className="flex w-full touch-none gap-8">
+      <FixedBottom className="flex touch-none gap-8 p-5">
         <Button
-          className={cn({ hidden: !goPrev })}
+          className={cn('flex-1', { hidden: !goPrev })}
           size="medium"
           variant="secondary"
           onMouseDown={goPrev}
         >
           이전으로
         </Button>
-        <Button className="w-full" disabled={disabled} onMouseDown={handleNext}>
+        <Button
+          className="w-full flex-1"
+          size="medium"
+          disabled={disabled}
+          onMouseDown={handleNext}
+        >
           다음으로
         </Button>
-      </div>
+      </FixedBottom>
     </InitialUserState>
   );
 }
