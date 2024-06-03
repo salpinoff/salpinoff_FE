@@ -5,7 +5,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import cn from '@utils/cn';
 
 const cardStyles = cva(
-  'relative flex items-center justify-center overflow-hidden border-[10px] border-cool-neutral-7 shadow-3 outline outline-[5px]',
+  'relative flex items-center justify-center overflow-hidden border-[10px] border-cool-neutral-7 shadow-3 outline outline-[5px] bg-current',
   {
     variants: {
       type: {
@@ -13,11 +13,11 @@ const cardStyles = cva(
         flip: ['w-[312px]', 'h-[460px]', 'rounded-[40px]'],
       },
       color: {
-        green: ['bg-green-70', 'outline-green-70'],
-        'red-orange': ['bg-red-orange-70', 'outline-red-orange-70'],
-        cyan: ['bg-cyan-70', 'outline-cyan-70'],
-        'light-blue': ['bg-light-blue-70', 'outline-light-blue-70'],
-        violet: ['bg-violet-70', 'outline-violet-70'],
+        GREEN: ['text-green-70', 'outline-green-70'],
+        RED_ORANGE: ['text-red-orange-70', 'outline-red-orange-70'],
+        CYAN: ['text-cyan-70', 'outline-cyan-70'],
+        LIGHT_BLUE: ['text-light-blue-70', 'outline-light-blue-70'],
+        VIOLET: ['text-violet-70', 'outline-violet-70'],
       },
     },
     defaultVariants: {
@@ -34,8 +34,11 @@ export default function CardBase({
   children,
   type,
   color,
+  ...rest
 }: CardBaseProps) {
   return (
-    <div className={cn(cardStyles({ type, color }), className)}>{children}</div>
+    <div className={cn(cardStyles({ type, color }), className)} {...rest}>
+      {children}
+    </div>
   );
 }
