@@ -1,6 +1,9 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
+
+import { useMutation } from '@tanstack/react-query';
 
 import _ from 'lodash';
 
@@ -8,8 +11,12 @@ import FormControlLabel from '@components/common/FormControlLabel';
 import BaseText from '@components/common/Text/BaseText';
 import CardBase from '@components/MonsterCard/CardBase';
 
-import cn from '@utils/cn';
+import useWithAuth from '@hooks/useWithAuth';
 
+import cn from '@utils/cn';
+import { findObjectInArray } from '@utils/find';
+
+import MONSTER_APIS from '@api/monster';
 import { DecorationType } from '@api/schema/monster';
 
 import { ExtractProps } from '@type/util';
@@ -65,24 +72,33 @@ const DecorationValueTable = {
 
 type DecorationTypes = keyof typeof DecorationType;
 
-const find = _.curry(
-  <T extends Record<string, unknown>>(
-    array: T[],
-    key: keyof T,
-    value: T[keyof T],
-  ) => array.find((obj) => obj[key] === value),
-);
-
 function CustomizeMonster() {
-  const { setBtnDisabled } = useSignUpContext();
-  const { decorations } = useUserInfoContext();
+  const { replace } = useRouter();
+
+  const withAuth = useWithAuth();
+
+  const { setBtnDisabled, registerCallback } = useSignUpContext();
   const { update } = useUserInfoDispatchContext();
+  const { stress, story, emotion, monsterName, decorations } =
+    useUserInfoContext();
+
+  const { mutate: create } = useMutation({
+    mutationKey: ['creatMonster'],
+    mutationFn: MONSTER_APIS.createMonster,
+    onMutate: () => withAuth(() => {}),
+    onSuccess: (data) => replace(`/result?monsterId=${data.data.monsterId}`),
+    onError(error) {
+      // [TODO]: toast
+      console.log('error :: 몬스터 생성에 실패했어요.', error);
+      replace('/');
+    },
+  });
 
   const [type, setType] = useState<DecorationTypes>(
     DecorationType.BACKGROUND_COLOR,
   );
 
-  const findDecoration = find(decorations, 'decorationType');
+  const findDecoration = findObjectInArray(decorations, 'decorationType');
 
   const updateDecoration = (
     decorationType: DecorationTypes,
@@ -114,14 +130,23 @@ function CustomizeMonster() {
       update({
         decorations: updated,
       });
-
-      setBtnDisabled(false);
     }
   };
 
+  const handleClick = () => {
+    return create({
+      rating: stress,
+      content: story,
+      emotion: emotion !== '' ? emotion : 'DEPRESSION',
+      monsterName,
+      monsterDecorations: decorations,
+    });
+  };
+
   useEffect(() => {
-    setBtnDisabled(!decorations.length);
-  });
+    setBtnDisabled(false);
+    registerCallback(handleClick);
+  }, [decorations]);
 
   return (
     <section className="text-center">
