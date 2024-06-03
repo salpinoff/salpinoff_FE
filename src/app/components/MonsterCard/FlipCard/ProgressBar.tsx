@@ -14,11 +14,11 @@ export default function ProgressBar({ percent }: ProgressBarProps) {
         <motion.div
           className="h-full rounded-circular bg-current"
           initial={{ width: 0 }}
-          animate={{ width: `${percent}%` }}
+          animate={{ width: `${Math.min(percent, 100)}%` }}
         />
       </div>
       <BaseText component="span" variant="label-1" weight="semibold">
-        {percent}%
+        {Math.min(percent, 100)}%
       </BaseText>
     </div>
   );
