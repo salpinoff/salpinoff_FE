@@ -19,7 +19,7 @@ export default function HiddenStory({
   };
 
   return (
-    <div className="flex h-full select-none flex-col gap-20 rounded-[28px] bg-cool-neutral-17 p-20 shadow-5">
+    <div className="flex h-full w-full select-none flex-col gap-20 rounded-[28px] bg-cool-neutral-17 p-20 shadow-5">
       <BaseText
         className="my-auto flex max-h-full overflow-y-auto text-center"
         component="p"

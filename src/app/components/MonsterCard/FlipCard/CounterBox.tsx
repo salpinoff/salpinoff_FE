@@ -58,10 +58,25 @@ export default function CounterBox({
   return (
     <>
       <motion.button
-        className="absolute bottom-0 left-0 right-0 top-0 m-auto h-max w-max"
+        className="pointer absolute bottom-0 left-0 right-0 top-0 m-auto h-max w-max"
+        animate="initial"
         whileHover={{ scale: 1.15 }}
-        whileTap={{ scale: 0.9 }}
+        whileTap={{
+          scale: 0.8,
+          rotate: 5 * (Math.random() * 2 - 1),
+        }}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        variants={{
+          initial: {
+            y: [-5, 5],
+            transition: {
+              delay: 0.5,
+              duration: 1,
+              repeat: Infinity,
+              repeatType: 'mirror',
+            },
+          },
+        }}
         onClick={handleClick}
       >
         {children}
