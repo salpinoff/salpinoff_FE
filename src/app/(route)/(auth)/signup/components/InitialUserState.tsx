@@ -17,7 +17,7 @@ function InitialUserState({ children }: Props) {
   useEffect(() => {
     update({
       code: Number(code) as MemberStatusCodes,
-      nickname: defaultUserName,
+      userName: defaultUserName,
     });
   }, [code, defaultUserName]);
 

@@ -18,7 +18,7 @@ const validateValue = (value: string) => {
 
 function MakeNickName() {
   const { setBtnDisabled, registerCallback } = useSignUpContext();
-  const { nickname: userName, code } = useUserInfoContext();
+  const { userName, code } = useUserInfoContext();
   const { update } = useUserInfoDispatchContext();
 
   const message = '닉네임은 2~6자 이내로 입력해주세요';
@@ -36,7 +36,7 @@ function MakeNickName() {
 
   const handleInput: FormEventHandler = (e) => {
     const { value } = e.target as HTMLInputElement;
-    update({ nickname: value });
+    update({ userName: value });
   };
 
   useEffect(() => {
