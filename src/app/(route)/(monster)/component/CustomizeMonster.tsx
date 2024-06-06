@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { useMutation } from '@tanstack/react-query';
 
-import _ from 'lodash';
+import { unionBy } from 'lodash';
 
 import FormControlLabel from '@components/common/FormControlLabel';
 import BaseText from '@components/common/Text/BaseText';
@@ -104,7 +104,7 @@ function CustomizeMonster() {
     decorationType: DecorationTypes,
     decorationValue: string,
   ) =>
-    _.unionBy(
+    unionBy(
       [
         {
           decorationType,
