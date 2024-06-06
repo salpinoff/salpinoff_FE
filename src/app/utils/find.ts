@@ -1,6 +1,6 @@
-import _ from 'lodash';
+import { curry } from 'lodash';
 
-export const findObjectInArray = _.curry(
+export const findObjectInArray = curry(
   <T extends Record<string, unknown>>(
     array: T[],
     key: keyof T,
