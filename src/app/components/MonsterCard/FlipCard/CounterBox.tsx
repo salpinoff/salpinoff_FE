@@ -1,18 +1,12 @@
-import {
-  CSSProperties,
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  useMemo,
-  useState,
-} from 'react';
+import { Dispatch, PropsWithChildren, SetStateAction, useMemo } from 'react';
+
+import { atom, useAtom } from 'jotai';
+import { atomWithReset, useResetAtom } from 'jotai/utils';
 
 import { motion } from 'framer-motion';
 import { debounce } from 'lodash';
 
 import BaseText from '@components/common/Text/BaseText';
-
-type VisibilityType = CSSProperties['visibility'];
 
 type CounterBoxProps = PropsWithChildren & {
   startAt: number;
@@ -21,8 +15,15 @@ type CounterBoxProps = PropsWithChildren & {
   delay?: number;
   helperText?: string;
   onCount: Dispatch<SetStateAction<number>>;
-  onCountEnd: () => void;
+  onComplete: () => void;
 };
+
+const countAtom = atomWithReset<number>(0);
+
+const readWriteAtom = atom(
+  (get) => get(countAtom),
+  (get, set, step: number) => set(countAtom, get(countAtom) + step),
+);
 
 export default function CounterBox({
   children,
@@ -32,29 +33,26 @@ export default function CounterBox({
   delay = 300,
   helperText,
   onCount,
-  onCountEnd,
+  onComplete,
 }: CounterBoxProps) {
-  const [count, setCount] = useState(0);
-  const [visibility, setVisibility] = useState<VisibilityType>('hidden');
+  const [count, increment] = useAtom(readWriteAtom);
+  const resetAtom = useResetAtom(countAtom);
 
   const debouncedCount = useMemo(
     () =>
       debounce((clickCount) => {
-        onCount((prev) => Math.min(prev + clickCount + step, endAt));
-        setCount(0);
-        setVisibility('hidden');
+        onCount((prev) => Math.min(prev + clickCount * step, endAt));
+        resetAtom();
       }, delay),
-    [endAt, step, delay, onCount],
+    [endAt, step, delay, onCount, resetAtom],
   );
 
   const handleClick = () => {
     if (count + startAt < endAt) {
-      setCount((prev) => prev + step);
-      setVisibility('visible');
-
-      debouncedCount(count);
+      increment(step);
+      debouncedCount(count + 1);
     } else {
-      onCountEnd();
+      onComplete();
     }
   };
 
@@ -96,7 +94,7 @@ export default function CounterBox({
         >
           {children}
         </motion.button>
-        {helperText && (
+        {helperText && startAt < endAt && (
           <motion.div
             className="absolute bottom-0 left-0 right-0 mx-auto h-max w-max rounded-circular bg-[#171719bd] px-[16px] py-[6px]"
             variants={{
@@ -127,7 +125,8 @@ export default function CounterBox({
         color="normal"
         className="fixed bottom-0 left-0 right-0 top-0 m-auto h-[50px] w-[50px] select-none overflow-hidden rounded-8 bg-[#ffffff10] text-center leading-[50px] backdrop-blur-sm"
         style={{
-          visibility,
+          visibility:
+            count !== 0 && count + startAt < endAt ? 'visible' : 'hidden',
         }}
       >
         {count}
