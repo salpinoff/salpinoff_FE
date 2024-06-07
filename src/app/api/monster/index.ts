@@ -57,16 +57,18 @@ const MONSTER_APIS = {
     return apiInstance.delete(API_URLS.MONSTER.DELETE_MONSTER(monsterId));
   },
 
-  updateInteractionCount: ({
+  updateInteractionCount: async ({
     monsterId,
     interactionCount,
   }: UpdateInteractionCountRequest) => {
-    return apiInstance.post<UpdateInteractionCountResponse>(
+    const { data } = await apiInstance.post<UpdateInteractionCountResponse>(
       API_URLS.MONSTER.UPDATE_INTERACTION_COUNT(monsterId),
       {
         interactionCount,
       },
     );
+
+    return data;
   },
 };
 
