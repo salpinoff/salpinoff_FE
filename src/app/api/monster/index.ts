@@ -3,6 +3,7 @@ import { API_URLS } from '@api/api.constants';
 
 import {
   CreateMonsterRequest,
+  CreateMonsterResponse,
   GetMonsterListResponse,
   GetMonsterRefResponse,
   GetMonsterResponse,
@@ -13,10 +14,13 @@ import {
 } from './types';
 
 const MONSTER_APIS = {
-  createMonster: (data: CreateMonsterRequest) => {
-    return apiInstance.post(API_URLS.MONSTER.CREATE_MONSTER, {
-      ...data,
-    });
+  createMonster: async (data: CreateMonsterRequest) => {
+    return apiInstance.post<CreateMonsterResponse>(
+      API_URLS.MONSTER.CREATE_MONSTER,
+      {
+        ...data,
+      },
+    );
   },
 
   getMonsterById: async (monsterId: string | number) => {
