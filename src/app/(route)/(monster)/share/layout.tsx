@@ -1,5 +1,3 @@
-import LogoSVG from '@public/icons/logo.svg';
-
 import cn from '@utils/cn';
 
 type Props = {
@@ -14,10 +12,9 @@ function ShareLayout({ children }: Props) {
         'relative m-auto box-border	flex h-dvh w-full max-w-[414px] flex-col items-center overflow-auto overscroll-none',
       )}
     >
-      <header className="flex h-[72px] w-full items-center justify-center">
-        <LogoSVG />
-      </header>
-      {children}
+      <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] p-20">
+        {children}
+      </section>
     </main>
   );
 }

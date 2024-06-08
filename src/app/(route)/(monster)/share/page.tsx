@@ -1,71 +1,57 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
-import { useAtom, useSetAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 
-import Button from '@components/common/Button';
-import MonsterFlipCard from '@components/MonsterCard/FlipCard';
-
+import useFunnel from '@hooks/useFunnel';
 import useQueryString from '@hooks/useQueryString';
 
-import { useUpdateInteraction } from '@api/monster/queries';
+import { idAtom } from '@store/monsterAtom';
 
-import { idAtom, monsterAtom } from '@store/monsterAtom';
+import DoneStep from './components/DoneStep';
+import EncouragementStep from './components/EncouragementStep';
+import InteractionStep from './components/InteractionStep';
+import { ERROR_MESSAGE } from './constants/error';
+import { funnel } from './constants/funnel';
+
+type SharePages = (typeof funnel)[number];
+type ShareFunnelProps = React.PropsWithChildren<{ name: SharePages }>;
 
 export default function SharePage() {
   const [monsterId] = useQueryString('monsterId');
 
-  const [{ isPending, isError, data: monster }] = useAtom(monsterAtom);
-
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { Funnel, setStep } = useFunnel<SharePages, ShareFunnelProps>(
+    'interactions',
+  );
 
   const setId = useSetAtom(idAtom);
 
-  const { mutate } = useUpdateInteraction({
-    // [TODO]: toast
-    onSuccess: () => {},
-    onError(error) {
-      console.log('응원 보내기에 실패했어요.', error);
-    },
-  });
+  const validateId = (id: string) => !Number.isNaN(Number(id));
 
   useEffect(() => {
-    setId(monsterId);
-
-    if (buttonRef.current) {
-      buttonRef.current.disabled = true;
-    }
+    if (monsterId) setId(monsterId);
 
     return () => setId('');
   }, [monsterId]);
 
-  // [TODO] Pending, Error 페이지 구현
-  if (isPending)
-    return <div className="h-full w-full text-white">Loading...</div>;
-
-  if (isError) return <div className="h-full w-full text-white">Error</div>;
-
-  const handleFlipped = () => {
-    const { interactionCountPerEncouragement: interactionCount } = monster;
-
-    /** onSuccess시에만 처리가 필요할까요? */
-    if (buttonRef.current) {
-      buttonRef.current.disabled = false;
-    }
-
-    mutate({
-      monsterId,
-      interactionCount,
-    });
-  };
+  if (!monsterId) throw new Error(ERROR_MESSAGE.NOT_FOUND);
+  if (!validateId(monsterId)) throw new Error(ERROR_MESSAGE.INVALID);
 
   return (
-    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] p-20">
-      <MonsterFlipCard onFlipped={handleFlipped} />
-      <Button ref={buttonRef} variant="primary" size="large" disabled>
-        응원메세지 작성하기
-      </Button>
-    </section>
+    <Funnel>
+      <Funnel.Step name="interactions">
+        <InteractionStep goToEncouragement={() => setStep('encouragement')} />
+      </Funnel.Step>
+      <Funnel.Step name="encouragement">
+        <EncouragementStep
+          goBackToInteraction={() => setStep('encouragement')}
+          onSendMessage={() => setStep('done')}
+        />
+      </Funnel.Step>
+      <Funnel.Step name="done">
+        <DoneStep />
+      </Funnel.Step>
+    </Funnel>
   );
 }
