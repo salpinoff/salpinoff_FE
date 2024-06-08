@@ -9,6 +9,7 @@ import {
   GetMonsterResponse,
   GetMonstersListRequest,
   ModifyMonsterRequest,
+  SendEncouragementRequest,
   UpdateInteractionCountRequest,
   UpdateInteractionCountResponse,
 } from './types';
@@ -69,6 +70,15 @@ const MONSTER_APIS = {
     );
 
     return data;
+  },
+
+  sendEncouragement: (
+    monsterId: string | number,
+    data: SendEncouragementRequest,
+  ) => {
+    return apiInstance.post(API_URLS.MONSTER.SEND_ENCOURAGEMENT(monsterId), {
+      ...data,
+    });
   },
 };
 

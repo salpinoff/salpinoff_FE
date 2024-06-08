@@ -49,3 +49,9 @@ export interface UpdateInteractionCountRequest
 
 export interface UpdateInteractionCountResponse
   extends Pick<Monster, 'monsterId' | 'interactionCount'> {}
+
+/** SendEncouragement */
+export interface SendEncouragementRequest {
+  sender: string;
+  content: string;
+}
