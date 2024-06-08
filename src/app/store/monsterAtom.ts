@@ -10,6 +10,7 @@ export const idAtom = atom('');
 
 export const monsterAtom = atomWithQuery((get) => ({
   retry: 1,
+  enabled: !!get(idAtom),
   queryKey: ['monster', get(idAtom)],
   queryFn: () => MONSTER_APIS.getMonsterById(get(idAtom)),
   select: (data: AxiosResponse<GetMonsterResponse>) => data.data,
