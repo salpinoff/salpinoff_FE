@@ -1,10 +1,27 @@
-import { Monster } from '@api/schema/monster';
+import { Decoration, Monster } from '@api/schema/monster';
 
 /** CreateMonster */
-export interface CreateMonsterRequest extends Monster {}
+export interface CreateMonsterRequest
+  extends Omit<
+    Monster,
+    | 'monsterId'
+    | 'interactionCount'
+    | 'currentInteractionCount'
+    | 'monsterDecorations'
+  > {
+  monsterDecorations: Omit<Decoration, 'decorationId'>[];
+}
+
+export interface CreateMonsterResponse extends Omit<Monster, 'rating'> {
+  ownerName: string;
+  interactionCountPerEncouragement: number;
+}
 
 /** GetMonster */
-export interface GetMonsterResponse extends Monster {}
+export interface GetMonsterResponse extends Omit<Monster, 'rating'> {
+  ownerName: string;
+  interactionCountPerEncouragement: number;
+}
 
 /** GetMonsterRef */
 export interface GetMonsterRefResponse extends Monster {}
@@ -32,3 +49,9 @@ export interface UpdateInteractionCountRequest
 
 export interface UpdateInteractionCountResponse
   extends Pick<Monster, 'monsterId' | 'interactionCount'> {}
+
+/** SendEncouragement */
+export interface SendEncouragementRequest {
+  sender: string;
+  content: string;
+}
