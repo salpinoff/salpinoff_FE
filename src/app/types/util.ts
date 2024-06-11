@@ -8,3 +8,6 @@ export type ExtractProps<T> = T extends (props: infer P) => React.ReactNode
   : never;
 
 export type PropsOfFn<T> = T extends (props: infer P) => void ? P : never;
+
+export type Unpromise<T extends Promise<unknown>> =
+  T extends Promise<infer U> ? U : never;
