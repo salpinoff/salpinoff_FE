@@ -11,10 +11,13 @@ type ComponentWithCustomProps<
   P,
 > = ComponentPropsWithRef<T> & P;
 
-type Props<T extends ElementType> = ComponentWithCustomProps<T, { as?: T }>;
+type Props<T extends ElementType> = ComponentWithCustomProps<
+  T,
+  { component?: T }
+>;
 
 function MessageItem<T extends ElementType>({
-  as: Component = 'button',
+  component: Component = 'button',
   className,
   ...restProps
 }: Props<T>) {

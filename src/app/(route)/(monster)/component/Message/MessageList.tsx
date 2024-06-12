@@ -35,7 +35,11 @@ function MessageList() {
     <>
       {messageList.map(({ messageId }) => {
         return (
-          <MessageItem key={messageId} as="button" onClick={handleClick} />
+          <MessageItem
+            key={messageId}
+            component="button"
+            onClick={handleClick}
+          />
         );
       })}
     </>

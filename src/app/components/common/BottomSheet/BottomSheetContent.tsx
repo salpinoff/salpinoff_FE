@@ -7,23 +7,23 @@ import {
 
 type Props = ComponentPropsWithoutRef<ElementType> & {
   id: 'bottom_sheet_content';
-  as?: ElementType;
+  component?: ElementType;
 };
 
 function BottomSheetContent(
   {
     children,
     className,
-    as: As = 'div',
+    component: Component = 'div',
     id = 'bottom_sheet_content',
     ...restProps
   }: Props,
   ref: ForwardedRef<HTMLElement>,
 ) {
   return (
-    <As ref={ref} id={id} className={className} {...restProps}>
+    <Component ref={ref} id={id} className={className} {...restProps}>
       {children}
-    </As>
+    </Component>
   );
 }
 

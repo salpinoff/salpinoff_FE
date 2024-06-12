@@ -45,7 +45,7 @@ function MessageBottomSheet() {
       </BottomSheetHeader>
 
       <BottomSheetContent
-        as="ul"
+        component="ul"
         id="bottom_sheet_content"
         className={cn(
           'w-full px-24 pb-[18px]',
