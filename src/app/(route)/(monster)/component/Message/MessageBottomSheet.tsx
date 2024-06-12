@@ -2,6 +2,8 @@
 
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { useAtomValue } from 'jotai';
+
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import AuthSuspense from '@components/common/Aync/AuthSuspense';
@@ -12,9 +14,13 @@ import BaseText from '@components/common/Text/BaseText';
 
 import cn from '@utils/cn';
 
+import { totalMessageAtom } from '@store/messageAtom';
+
 import MessageList from './MessageList';
 
 function MessageBottomSheet() {
+  const totalCount = useAtomValue(totalMessageAtom);
+
   return (
     <BottomSheet>
       <BottomSheetHeader
@@ -39,8 +45,7 @@ function MessageBottomSheet() {
             'bg-[var(--color-brand-primary-base)] text-black',
           )}
         >
-          {/* jotail-tanstack-query 연결 */}
-          {/* {totalCount} */}
+          {totalCount ?? '?'}
         </BaseText>
       </BottomSheetHeader>
 
