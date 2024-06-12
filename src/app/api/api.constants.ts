@@ -22,5 +22,7 @@ export const API_URLS = {
     DELETE_MONSTER: (monsterId: string | number) => `/monsters/${monsterId}`,
     UPDATE_INTERACTION_COUNT: (monsterId: string | number) =>
       `/monsters/${monsterId}/interactions`,
+    SEND_ENCOURAGEMENT: (monsterId: string | number) =>
+      `/monsters/${monsterId}/encouragement`,
   },
 };

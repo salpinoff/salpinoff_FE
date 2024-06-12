@@ -19,20 +19,25 @@
     ]
   },
   "dependencies": {
+    "@tanstack/query-core": "^5.40.0",
     "@tanstack/react-query": "^5.37.1",
     "@types/crypto-js": "^4.2.2",
+    "@types/lodash": "^4.17.4",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
     "framer-motion": "^11.2.6",
     "jotai": "^2.8.1",
+    "jotai-tanstack-query": "^0.8.5",
+    "lodash": "^4.17.21",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "react-error-boundary": "^4.0.13",
     "tailwind-merge": "^2.3.0",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "wonka": "^6.3.4"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.4.0",
