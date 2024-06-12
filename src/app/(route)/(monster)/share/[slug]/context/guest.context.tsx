@@ -7,25 +7,14 @@ import {
   useReducer,
 } from 'react';
 
-import { SendEncouragementRequest } from '@api/monster/types';
-
 type GuestState = {
-  interaction: {
-    clear: boolean;
-  };
-  encouragement: SendEncouragementRequest;
+  clear: boolean;
 };
 
 type GuestAction = { payload: Partial<GuestState> };
 
 const initialState: GuestState = {
-  interaction: {
-    clear: false,
-  },
-  encouragement: {
-    sender: '',
-    content: '',
-  },
+  clear: false,
 };
 
 const reducer = (state: GuestState, action: GuestAction): GuestState => {
@@ -35,7 +24,7 @@ const reducer = (state: GuestState, action: GuestAction): GuestState => {
 export const GuestContext = createContext<GuestState>(initialState);
 
 export const GuestDispatchContext = createContext({
-  update: (_payload: Partial<GuestState>) => {},
+  update: (payload: Partial<GuestState>) => {},
 });
 
 export function GuestProvider({ children }: PropsWithChildren) {
