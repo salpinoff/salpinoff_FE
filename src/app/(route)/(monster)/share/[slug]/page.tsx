@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -29,9 +31,9 @@ type ShareFunnelProps = React.PropsWithChildren<{ name: SharePages }>;
 export default function SharePage({ params }: { params: { slug: string } }) {
   const { slug: monsterId } = params;
 
-  const { Funnel, setStep } = useFunnel<SharePages, ShareFunnelProps>(
-    'interactions',
-  );
+  const { replace } = useRouter();
+
+  const { Funnel, setStep } = useFunnel<SharePages, ShareFunnelProps>('done');
 
   const methods = useForm({
     mode: 'onChange',
@@ -95,7 +97,7 @@ export default function SharePage({ params }: { params: { slug: string } }) {
         </FormProvider>
       </Funnel.Step>
       <Funnel.Step name="done">
-        <DoneStep goNext={() => {}} />
+        <DoneStep goNext={() => replace('/signup')} />
       </Funnel.Step>
     </Funnel>
   );
