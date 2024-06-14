@@ -33,7 +33,9 @@ export default function SharePage({ params }: { params: { slug: string } }) {
 
   const { replace } = useRouter();
 
-  const { Funnel, setStep } = useFunnel<SharePages, ShareFunnelProps>('done');
+  const { Funnel, setStep } = useFunnel<SharePages, ShareFunnelProps>(
+    'interactions',
+  );
 
   const methods = useForm({
     mode: 'onChange',
