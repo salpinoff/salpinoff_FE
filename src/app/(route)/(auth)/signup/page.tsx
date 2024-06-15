@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { useEffect } from 'react';
 
@@ -28,7 +28,6 @@ type SignUpPages = (typeof funnel)[number];
 type SignUpFunnelProps = React.PropsWithChildren<{ name: SignUpPages }>;
 
 function SignUp() {
-  const { replace } = useRouter();
   const searchParams = useSearchParams();
 
   const orderItem = funnel.map((id) => ({ id }));
@@ -130,7 +129,7 @@ function SignUp() {
           <SignUpLayout
             className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
             goPrev={() => setStep('monstername')}
-            goNext={() => replace('/result')}
+            goNext={() => {}}
           >
             <CustomizeMonster />
           </SignUpLayout>

@@ -8,7 +8,7 @@ import {
 import tokenPrefix from '../(route)/api/auth/[...auth]/utils/token-prefix';
 
 function withAuthentification(middleware: NextMiddleware) {
-  const withAuthList = ['/signup'];
+  const withAuthList = ['/signup', '/'];
   const withoutAuthList = ['/signin'];
 
   return async (request: NextRequest, event: NextFetchEvent) => {

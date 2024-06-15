@@ -12,9 +12,15 @@ const useFunnel = <
   const [step, setStep] = useState(defaultStep);
 
   function Funnel({ children }: Pick<U, 'children'>) {
-    return Children.toArray(children)
+    const targetStep = Children.toArray(children)
       .filter(isValidElement<U>)
       .find((child) => child.props.name === step);
+
+    if (!targetStep) {
+      console.error(`"${step}" 스텝 컴포넌트를 찾지 못했습니다.`);
+    }
+
+    return targetStep;
   }
 
   function Step({ children }: U) {

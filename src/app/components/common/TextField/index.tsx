@@ -54,7 +54,7 @@ const inputStyles = cva(
         false: 'text-[--color-text-label-normal]',
       },
       multiline: {
-        true: 'resize-none overflow-y-scroll',
+        true: 'resize-none overflow-y-auto',
       },
     },
     compoundVariants: [],
@@ -80,7 +80,7 @@ type TextFieldProps<T extends React.ElementType> = RequiredByKeys<
   'id'
 >;
 
-type TextFieldComponent = <T extends React.ElementType = 'input'>(
+type TextFieldComponent = <T extends React.ElementType = 'input' | 'textarea'>(
   props: TextFieldProps<T> & {
     ref?: React.ComponentPropsWithRef<T>['ref'];
   },
@@ -125,6 +125,7 @@ const TextField: TextFieldComponent = forwardRef(function TextField<
           })}
           required={required}
           disabled={disabled}
+          aria-invalid={error}
           {...rest}
         />
       </div>

@@ -8,7 +8,7 @@ type ProgressBarProps = {
 };
 
 export default function ProgressBar({ value, max = 100 }: ProgressBarProps) {
-  const percent = (Math.min(value / max) * 100).toFixed(1);
+  const percent = Math.min(Math.min(value / max) * 100, 100).toFixed(1);
 
   return (
     <div className="flex items-center gap-10 last:text-inherit">

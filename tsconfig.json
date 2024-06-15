@@ -39,5 +39,5 @@
     "postcss.config.mjs",
     "next.config.mjs"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".next", ".storybook", "coverage"]
 }

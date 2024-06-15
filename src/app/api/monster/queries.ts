@@ -1,5 +1,7 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 
+import { AxiosError } from 'axios';
+
 import MONSTER_APIS from '.';
 
 import {
@@ -10,7 +12,7 @@ import {
 
 export const useSendEncouragement = (
   id: string,
-  options?: UseMutationOptions<unknown, unknown, SendEncouragementRequest>,
+  options?: UseMutationOptions<unknown, AxiosError, SendEncouragementRequest>,
 ) =>
   useMutation({
     mutationFn: (data) => MONSTER_APIS.sendEncouragement(id, data),

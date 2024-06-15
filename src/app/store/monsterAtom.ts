@@ -10,6 +10,8 @@ export const idAtom = atom('');
 
 export const monsterAtom = atomWithQuery((get) => ({
   retry: 1,
+  // gcTime: 1000 * 60 * 10,
+  // staleTime: 1000 * 60 * 5,
   enabled: !!get(idAtom),
   queryKey: ['monster', get(idAtom)],
   queryFn: () => MONSTER_APIS.getMonsterById(get(idAtom)),

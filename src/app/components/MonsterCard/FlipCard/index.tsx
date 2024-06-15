@@ -21,19 +21,21 @@ import HiddenStory from './HiddenStory';
 import ProgressBar from './ProgressBar';
 
 type MonsterFlipCardProps = {
+  flip?: boolean;
   isOwner?: boolean;
   onFlipped?: (arg?: unknown) => void;
 };
 
 export default function MonsterFlipCard({
+  flip = false,
   isOwner = false,
   onFlipped,
 }: MonsterFlipCardProps) {
   const [{ data: monster }] = useAtom(monsterAtom);
 
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(flip);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(flip ? 999 : 0);
 
   const findDecoration = findObjectInArray(
     monster?.monsterDecorations || [],
@@ -54,10 +56,10 @@ export default function MonsterFlipCard({
       if (totalCount >= monster?.interactionCountPerEncouragement) {
         setIsFlipped(true);
 
-        if (onFlipped) onFlipped();
+        onFlipped?.();
       }
     }
-  }, [totalCount, monster, setIsFlipped]);
+  }, [totalCount, monster, setIsFlipped, onFlipped]);
 
   return (
     <AnimatePresence>

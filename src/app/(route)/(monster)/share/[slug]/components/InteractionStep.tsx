@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useContext } from 'react';
 
 import { useAtom } from 'jotai';
 
@@ -9,22 +9,19 @@ import MonsterFlipCard from '@components/MonsterCard/FlipCard';
 
 import { monsterAtom } from '@store/monsterAtom';
 
+import { GuestContext } from '../context/guest.context';
+
 type InteractionStepProps = {
-  goToEncouragement: () => void;
+  onCompeleteInteraction: () => void;
+  goNext: () => void;
 };
 
 export default function InteractionStep({
-  goToEncouragement,
+  onCompeleteInteraction,
+  goNext,
 }: InteractionStepProps) {
   const [{ isPending, isError }] = useAtom(monsterAtom);
-
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (buttonRef.current) {
-      buttonRef.current.disabled = true;
-    }
-  });
+  const { clear } = useContext(GuestContext);
 
   // [TODO] Pending, Error 페이지 구현
   if (isPending)
@@ -32,24 +29,18 @@ export default function InteractionStep({
 
   if (isError) return <div className="h-full w-full text-white">Error</div>;
 
-  const handleFlipped = () => {
-    if (buttonRef.current) {
-      buttonRef.current.disabled = false;
-    }
-  };
-
   return (
     <>
       <header className="flex w-full items-center justify-center">
-        <LogoSVG />
+        <LogoSVG width={115} height={20} />
       </header>
-      <MonsterFlipCard onFlipped={handleFlipped} />
+      <MonsterFlipCard onFlipped={onCompeleteInteraction} flip={clear} />
       <nav>
         <Button
-          ref={buttonRef}
-          onClick={goToEncouragement}
-          variant="primary"
           size="large"
+          variant="primary"
+          onClick={goNext}
+          disabled={!clear}
         >
           응원메세지 작성하기
         </Button>
