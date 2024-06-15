@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { apiInstance } from '@api/api.config';
@@ -32,13 +30,11 @@ const useAuth = (): {
     },
   });
 
-  useEffect(() => {
-    if (session?.accessToken) {
-      apiInstance.defaults.headers.Authorization = `Bearer ${session.accessToken}`;
-    } else {
-      delete apiInstance.defaults.headers.Authorization;
-    }
-  }, [session]);
+  if (session?.accessToken) {
+    apiInstance.defaults.headers.Authorization = `Bearer ${session.accessToken}`;
+  } else {
+    delete apiInstance.defaults.headers.Authorization;
+  }
 
   return {
     status: (error && 'error') || session?.status || 'loading',

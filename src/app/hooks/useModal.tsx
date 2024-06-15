@@ -1,4 +1,4 @@
-import { useEffect, useId, useCallback } from 'react';
+import { useEffect, useId, useCallback, FC } from 'react';
 
 import { useAtomValue, useSetAtom } from 'jotai';
 
@@ -12,7 +12,11 @@ const useModal = (component: React.FC) => {
   const isOpen = modals.findIndex((modal) => modal.uid === uid) !== -1;
 
   const openModal = useCallback(
-    () => setModals((prev) => [...prev, { uid, element: component }]),
+    (newComponent?: FC) =>
+      setModals((prev) => [
+        ...prev,
+        { uid, element: newComponent || component },
+      ]),
     [component, uid, setModals],
   );
 

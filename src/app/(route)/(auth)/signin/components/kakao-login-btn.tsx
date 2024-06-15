@@ -22,7 +22,7 @@ function KakaoLoginBtn({ className }: Props) {
       type="button"
       onClick={handleLogin}
       className={cn(
-        'flex h-[45px] w-[300px] items-center bg-[#FEE500] px-[14px]',
+        'flex h-[45px] w-full items-center bg-[#FEE500] px-[14px]',
         className,
       )}
     >
