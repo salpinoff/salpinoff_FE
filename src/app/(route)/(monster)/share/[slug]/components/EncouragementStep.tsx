@@ -66,9 +66,7 @@ export default function EncouragementStep({
           type="submit"
           variant="primary"
           disabled={!isValid || isSubmitting}
-          onClick={(e) => {
-            handleSubmit(onSubmit)(e);
-          }}
+          onClick={handleSubmit(onSubmit)}
         >
           전송하기
         </Button>
