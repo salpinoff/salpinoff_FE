@@ -1,5 +1,7 @@
 import { MouseEventHandler, useRef } from 'react';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import Heart from '@public/icons/heart.svg';
 
 import Button from '@components/common/Button';
@@ -11,17 +13,35 @@ import useOutsideClick from '@hooks/useOutsideClick';
 
 import cn from '@utils/cn';
 
+import { confirmMessage } from '@api/message/confirm';
+import { MessageListResponse } from '@api/message/type';
+
 type Props = {
-  content: string;
-  sender: string;
-  checked: boolean;
+  message: MessageListResponse['content'][number];
+  monsterId: string;
   closeModal: () => void;
 };
 
-function MessageConfirmModal({ content, sender, checked, closeModal }: Props) {
+function MessageConfirmModal({
+  closeModal,
+  monsterId,
+  message: { content, sender, checked, messageId },
+}: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const handleClick: MouseEventHandler = () => {
-    closeModal();
+  const queryClient = useQueryClient();
+
+  const { mutate: confirm } = useMutation({
+    mutationKey: ['confirm-message', monsterId, messageId],
+    mutationFn: () =>
+      confirmMessage({ monsterId: Number(monsterId), messageId }),
+    onSuccess: () => {
+      closeModal();
+      queryClient.invalidateQueries({ queryKey: ['message-list', monsterId] });
+    },
+  });
+
+  const handleClick: MouseEventHandler = async () => {
+    confirm();
   };
 
   useOutsideClick(modalRef, () => closeModal(), 'mousedown');

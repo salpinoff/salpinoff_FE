@@ -40,7 +40,7 @@ function MessageList() {
       totalElements: pages.pages[0].result.totalElements,
     }),
     queryFn: ({ pageParam = 1 }) =>
-      getNextMessageList({ monsterId, page: pageParam }),
+      getNextMessageList({ monsterId: Number(monsterId), page: pageParam }),
     getNextPageParam: ({ nextPage }: LastPage) => {
       return nextPage;
     },
@@ -53,9 +53,8 @@ function MessageList() {
   const handleClick = (message: (typeof messageList)[number]) => {
     openModal(() => (
       <MessageConfirmModal
-        checked={message.checked}
-        sender={message.sender}
-        content={message.content}
+        message={message}
+        monsterId={monsterId}
         closeModal={closeModal}
       />
     ));
