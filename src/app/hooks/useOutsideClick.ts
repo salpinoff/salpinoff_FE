@@ -6,15 +6,19 @@ type EventType = keyof Pick<
 >;
 
 export default function useOutsideClick<T extends HTMLElement = HTMLElement>(
-  ref: RefObject<T>,
+  ref: RefObject<T> | RefObject<T>[],
   handler: (event: GlobalEventHandlersEventMap[EventType]) => void,
   eventType: EventType = 'mousedown',
   options: AddEventListenerOptions = {},
 ): void {
   useEffect(() => {
+    const refArray = (Array.isArray(ref) ? ref : [ref]).filter(Boolean);
+
     const listener = (event: GlobalEventHandlersEventMap[EventType]) => {
       const target = event.target as Node;
-      const isOutside = ref.current && !ref.current.contains(target);
+      const isOutside = refArray.every(
+        (_ref) => _ref.current && !_ref.current.contains(target),
+      );
 
       if (!target || !target.isConnected) {
         return;
