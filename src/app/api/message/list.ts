@@ -41,7 +41,7 @@ const getNextMessageList = async ({
     content.length > 0 && content.length >= PAGE_SIZE ? page + 1 : undefined;
 
   return {
-    result: { ...content, totalElements },
+    result: { list: content, totalElements },
     nextPage,
     isLast: !nextPage,
   };
