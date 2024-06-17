@@ -7,7 +7,7 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import useModal from '@hooks/useModal';
 
 import { getNextMessageList } from '@api/message/list';
-import MessageQueryFactory from '@api/message/query';
+import MessageQueryFactory from '@api/message/query/factory';
 
 import type { Unpromise } from '@type/util';
 

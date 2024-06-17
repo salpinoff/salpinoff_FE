@@ -1,7 +1,7 @@
-import type { QueryKeysProps } from './type';
+import type { QueryKeysProps } from '../type';
 
-import { confirmMessage } from './confirm';
-import { getNextMessageList } from './list';
+import { confirmMessage } from '../confirm';
+import { getNextMessageList } from '../list';
 
 const MessageQueryFactory = {
   list: {
