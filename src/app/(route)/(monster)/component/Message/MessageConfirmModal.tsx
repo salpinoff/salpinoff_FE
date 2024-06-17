@@ -13,7 +13,7 @@ import useOutsideClick from '@hooks/useOutsideClick';
 
 import cn from '@utils/cn';
 
-import MessageQueryFactory from '@api/message/query';
+import MessageQueryFactory from '@api/message/query/factory';
 import { MessageListResponse } from '@api/message/type';
 
 type Props = {
