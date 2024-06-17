@@ -5,7 +5,7 @@ import {
   NextResponse,
 } from 'next/server';
 
-import tokenPrefix from '../(route)/api/auth/[...auth]/utils/token-prefix';
+import tokenPrefix from 'src/app/(route)/api/auth/[...auth]/utils/token-prefix';
 
 function withAuthentification(middleware: NextMiddleware) {
   const withAuthList = ['/signup', '/'];
