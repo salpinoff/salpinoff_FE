@@ -6,7 +6,7 @@ type EventType = keyof Pick<
 >;
 
 export default function useOutsideClick<T extends HTMLElement = HTMLElement>(
-  ref: RefObject<T> | RefObject<T>[],
+  ref: RefObject<T> | RefObject<HTMLElement>[],
   handler: (event: GlobalEventHandlersEventMap[EventType]) => void,
   eventType: EventType = 'mousedown',
   options: AddEventListenerOptions = {},
