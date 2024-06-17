@@ -11,9 +11,12 @@ import {
   deleteCookie,
   getCookie,
   setCookie,
-} from '../(route)/api/auth/[...auth]/utils/cookie';
-import { decrypt, encrypt } from '../(route)/api/auth/[...auth]/utils/crypto';
-import tokenPrefix from '../(route)/api/auth/[...auth]/utils/token-prefix';
+} from 'src/app/(route)/api/auth/[...auth]/utils/cookie';
+import {
+  decrypt,
+  encrypt,
+} from 'src/app/(route)/api/auth/[...auth]/utils/crypto';
+import tokenPrefix from 'src/app/(route)/api/auth/[...auth]/utils/token-prefix';
 
 const refreshUserToken = async (request: NextRequest, secret: string) => {
   const { accessToken: access, refreshToken: refresh } = getCookie(

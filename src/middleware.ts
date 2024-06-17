@@ -1,11 +1,10 @@
-import { NextResponse } from 'next/server';
+import chain from './app/middlewares/chain';
+import withAuthentification from './app/middlewares/factory/withAuthentication';
+import withSignUpHandle from './app/middlewares/factory/withSignUpHandle';
 
-import withAuthentification from './app/middlewares/withAuthentication';
-import withSignUpHandle from './app/middlewares/withSignUpHandle';
+const middlewares = [withAuthentification, withSignUpHandle];
 
-export default withAuthentification(
-  withSignUpHandle(() => NextResponse.next()),
-);
+export default chain(middlewares);
 
 export const config = {
   matcher: [
