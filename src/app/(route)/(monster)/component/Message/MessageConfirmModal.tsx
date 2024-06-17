@@ -31,6 +31,7 @@ function MessageConfirmModal({
   const queryClient = useQueryClient();
 
   const {
+    list: { key: listKey },
     confirm: { key, fetcher },
   } = MessageQueryFactory;
 
@@ -39,7 +40,7 @@ function MessageConfirmModal({
     mutationFn: () => fetcher({ monsterId: Number(monsterId), messageId }),
     onSuccess: () => {
       closeModal();
-      queryClient.invalidateQueries({ queryKey: ['message-list', monsterId] });
+      queryClient.invalidateQueries({ queryKey: listKey({ monsterId }) });
     },
   });
 
