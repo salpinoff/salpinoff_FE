@@ -15,3 +15,13 @@ export type MessageListResponse = {
   page: number;
   totalElements: number;
 };
+
+export type QueryKeysProps = {
+  list: {
+    monsterId: string;
+  };
+  confirm: {
+    monsterId: string;
+    messageId: number;
+  };
+};

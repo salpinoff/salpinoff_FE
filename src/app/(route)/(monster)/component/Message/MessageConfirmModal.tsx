@@ -13,7 +13,7 @@ import useOutsideClick from '@hooks/useOutsideClick';
 
 import cn from '@utils/cn';
 
-import { confirmMessage } from '@api/message/confirm';
+import MessageQueryFactory from '@api/message/query';
 import { MessageListResponse } from '@api/message/type';
 
 type Props = {
@@ -30,10 +30,13 @@ function MessageConfirmModal({
   const modalRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
+  const {
+    confirm: { key, fetcher },
+  } = MessageQueryFactory;
+
   const { mutate: confirm } = useMutation({
-    mutationKey: ['confirm-message', monsterId, messageId],
-    mutationFn: () =>
-      confirmMessage({ monsterId: Number(monsterId), messageId }),
+    mutationKey: key({ monsterId, messageId }),
+    mutationFn: () => fetcher({ monsterId: Number(monsterId), messageId }),
     onSuccess: () => {
       closeModal();
       queryClient.invalidateQueries({ queryKey: ['message-list', monsterId] });
