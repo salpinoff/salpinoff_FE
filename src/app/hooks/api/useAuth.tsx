@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { apiInstance } from '@api/api.config';
+import { setAuthHeader } from '@api/api.config';
 import { getSession, updateSession } from '@api/auth/session';
 
 const useAuth = (): {
@@ -30,11 +30,7 @@ const useAuth = (): {
     },
   });
 
-  if (session?.accessToken) {
-    apiInstance.defaults.headers.Authorization = `Bearer ${session.accessToken}`;
-  } else {
-    delete apiInstance.defaults.headers.Authorization;
-  }
+  setAuthHeader(session?.accessToken || '');
 
   return {
     status: (error && 'error') || session?.status || 'loading',
