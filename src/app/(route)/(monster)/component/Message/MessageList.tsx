@@ -2,12 +2,16 @@ import { useEffect } from 'react';
 
 import { useSetAtom } from 'jotai';
 
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import {
+  useSuspenseInfiniteQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 
 import useModal from '@hooks/useModal';
 
 import { getNextMessageList } from '@api/message/list';
 import MessageQueryFactory from '@api/message/query/factory';
+import MONSTER_APIS from '@api/monster';
 
 import type { Unpromise } from '@type/util';
 
@@ -23,11 +27,18 @@ type LastPage = {
 };
 
 function MessageList() {
-  const monsterId = '1';
-
   const { openModal, closeModal } = useModal(() => null);
 
   const setTotalElements = useSetAtom(totalMessageAtom);
+
+  const {
+    data: { monsterId },
+  } = useSuspenseQuery({
+    retry: 1,
+    queryKey: ['my-monster'],
+    queryFn: () => MONSTER_APIS.getRefMonster(),
+    select: (result) => result.data,
+  });
 
   const {
     list: { key, fetcher },
@@ -38,7 +49,7 @@ function MessageList() {
   } = useSuspenseInfiniteQuery({
     retry: 1,
     initialPageParam: 1,
-    queryKey: key({ monsterId }),
+    queryKey: key({ monsterId: `${monsterId}` }),
     queryFn: ({ pageParam = 1 }) =>
       fetcher({ monsterId: Number(monsterId), page: pageParam }),
     select: (pages) => ({
@@ -58,7 +69,7 @@ function MessageList() {
     openModal(() => (
       <MessageConfirmModal
         message={message}
-        monsterId={monsterId}
+        monsterId={`${monsterId}`}
         closeModal={closeModal}
       />
     ));
