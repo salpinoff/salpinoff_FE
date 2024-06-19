@@ -36,6 +36,23 @@ export default function MonsterResultPage({
     },
   );
 
+  const SHARE_URL = generateShareUrl(monsterId);
+
+  const shareLink = async () => {
+    if (SHARE_URL && isValidURL(SHARE_URL)) {
+      // const success = await copyToClipboard(SHARE_URL);
+      // toast(success ? '링크를 복사했어요.' : '링크를 복사할 수 없어요.');
+
+      await copyToClipboard(SHARE_URL);
+    }
+  };
+
+  const shareKakao = () => {
+    if (SHARE_URL && isValidURL(SHARE_URL)) {
+      shareToKakao(SHARE_URL);
+    }
+  };
+
   useEffect(() => {
     if (data) {
       setMonster(data);
@@ -45,7 +62,16 @@ export default function MonsterResultPage({
   const handleDefer = () => router.push('/');
 
   const { openModal, closeModal } = useModal(() => (
-    <ShareModal monsterId={monsterId} closeModal={closeModal} />
+    <ShareModal
+      onShareByLink={() => {
+        shareLink();
+        closeModal();
+      }}
+      onShareViaKakao={() => {
+        shareKakao();
+        closeModal();
+      }}
+    />
   ));
 
   if (!monsterId) {
