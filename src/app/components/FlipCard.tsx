@@ -1,13 +1,15 @@
 'use client';
 
-import { Children, ComponentProps, isValidElement, useEffect } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
+import { Children, isValidElement, useEffect } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-type FlipCardProps = {
+type FlipCardProps = ComponentProps<'div'> & {
+  children: [ReactNode, ReactNode, ...(readonly ReactNode[])];
   flipped?: boolean;
   onFlipped?: (arg?: unknown) => void;
-} & ComponentProps<'div'>;
+};
 
 export default function FlipCard({
   children,
@@ -17,6 +19,12 @@ export default function FlipCard({
   ...rest
 }: FlipCardProps) {
   const validChildren = Children.toArray(children).filter(isValidElement);
+
+  if (validChildren.length < 2) {
+    throw new Error(
+      `FlipCard requires at least 2 children, but only ${validChildren.length} were provided.`,
+    );
+  }
 
   useEffect(() => {
     if (flipped) onFlipped?.();
