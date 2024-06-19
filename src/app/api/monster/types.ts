@@ -19,6 +19,7 @@ export interface CreateMonsterResponse extends Omit<Monster, 'rating'> {
 
 /** GetMonster */
 export interface GetMonsterResponse extends Omit<Monster, 'rating'> {
+  ratingRange: string;
   ownerName: string;
   interactionCountPerEncouragement: number;
 }
@@ -40,8 +41,7 @@ export interface GetMonsterListResponse {
 }
 
 /** ModifyMonster */
-export interface ModifyMonsterRequest
-  extends Pick<Monster, 'monsterId' | 'content'> {}
+export interface ModifyMonsterRequest extends Pick<Monster, 'content'> {}
 
 /** UpdateInteractionCount */
 export interface UpdateInteractionCountRequest

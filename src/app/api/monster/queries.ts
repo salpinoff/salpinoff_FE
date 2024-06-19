@@ -5,6 +5,7 @@ import { AxiosError } from 'axios';
 import MONSTER_APIS from '.';
 
 import {
+  ModifyMonsterRequest,
   SendEncouragementRequest,
   UpdateInteractionCountRequest,
   UpdateInteractionCountResponse,
@@ -16,6 +17,15 @@ export const useSendEncouragement = (
 ) =>
   useMutation({
     mutationFn: (data) => MONSTER_APIS.sendEncouragement(id, data),
+    ...options,
+  });
+
+export const useModifyMonster = (
+  id: string,
+  options?: UseMutationOptions<unknown, AxiosError, ModifyMonsterRequest>,
+) =>
+  useMutation({
+    mutationFn: (data) => MONSTER_APIS.modifyMonster(id, data),
     ...options,
   });
 

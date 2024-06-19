@@ -48,9 +48,9 @@ const MONSTER_APIS = {
     return data;
   },
 
-  modifyMonster: ({ monsterId, content }: ModifyMonsterRequest) => {
+  modifyMonster: (monsterId: string | number, data: ModifyMonsterRequest) => {
     return apiInstance.put(API_URLS.MONSTER.MODIFY_MONSTER(monsterId), {
-      content,
+      ...data,
     });
   },
 
