@@ -2,16 +2,22 @@ import { useEffect } from 'react';
 
 import { useSetAtom } from 'jotai';
 
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import {
+  useSuspenseInfiniteQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 
-import useQueryString from '@hooks/useQueryString';
+import useModal from '@hooks/useModal';
 
 import { getNextMessageList } from '@api/message/list';
+import MessageQueryFactory from '@api/message/query/factory';
+import MONSTER_APIS from '@api/monster';
 
 import type { Unpromise } from '@type/util';
 
 import { totalMessageAtom } from '@store/messageAtom';
 
+import MessageConfirmModal from './MessageConfirmModal';
 import MessageItem from './MessageItem';
 
 type LastPage = {
@@ -21,31 +27,53 @@ type LastPage = {
 };
 
 function MessageList() {
-  const [monsterId] = useQueryString('monsterId');
+  const { openModal, closeModal } = useModal(() => null);
+
   const setTotalElements = useSetAtom(totalMessageAtom);
+
+  const {
+    data: { monsterId },
+  } = useSuspenseQuery({
+    retry: 1,
+    queryKey: ['my-monster'],
+    queryFn: () => MONSTER_APIS.getRefMonster(),
+    select: (result) => result.data,
+  });
+
+  const {
+    list: { key, fetcher },
+  } = MessageQueryFactory;
 
   const {
     data: { messageList, totalElements },
   } = useSuspenseInfiniteQuery({
     retry: 1,
     initialPageParam: 1,
-    queryKey: ['message-list', monsterId],
-    select: (pages) => ({
-      totalElements: pages.pages[0].result.totalElements,
-      messageList: pages.pages.map((content) => content.result).flat(),
-    }),
+    queryKey: key({ monsterId: `${monsterId}` }),
     queryFn: ({ pageParam = 1 }) =>
-      getNextMessageList({ monsterId, page: pageParam }),
+      fetcher({ monsterId: Number(monsterId), page: pageParam }),
+    select: (pages) => ({
+      messageList: pages.pages.map(({ result }) => result.list).flat(),
+      totalElements: pages.pages[0].result.totalElements,
+    }),
     getNextPageParam: ({ nextPage }: LastPage) => {
       return nextPage;
     },
   });
 
-  const handleClick = () => {};
-
   useEffect(() => {
     setTotalElements(totalElements);
   }, [totalElements]);
+
+  const handleClick = (message: (typeof messageList)[number]) => {
+    openModal(() => (
+      <MessageConfirmModal
+        message={message}
+        monsterId={`${monsterId}`}
+        closeModal={closeModal}
+      />
+    ));
+  };
 
   return (
     <>
@@ -54,7 +82,9 @@ function MessageList() {
           <MessageItem
             key={message.messageId}
             component="button"
-            onClick={handleClick}
+            onClick={() => {
+              handleClick(message);
+            }}
           />
         );
       })}

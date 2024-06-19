@@ -1,36 +1,24 @@
 import { apiInstance } from '@api/api.config';
 
-type Props = {
-  page: number;
-  size?: number;
-  monsterId: string;
-};
-
-type Response = {
-  content: {
-    messageId: number;
-    sender: string;
-    content: string;
-    checked: boolean;
-  }[];
-  size: number;
-  page: number;
-  totalElements: number;
-};
+import type { MessageListProps, MessageListResponse } from './type';
 
 const PAGE_SIZE = 10;
 
-const getMessageList = async ({ page, size = PAGE_SIZE, monsterId }: Props) => {
-  const path = `/monsters/1/messages?page=${page}&size=${size}&monsterId=${monsterId}`;
+const getMessageList = async ({
+  page,
+  size = PAGE_SIZE,
+  monsterId,
+}: MessageListProps) => {
+  const path = `/monsters/${monsterId}/messages?page=${page}&size=${size}`;
 
-  return apiInstance.get<Response>(path);
+  return apiInstance.get<MessageListResponse>(path);
 };
 
 const getNextMessageList = async ({
   monsterId,
   page,
 }: {
-  monsterId: string;
+  monsterId: number;
   page: number;
 }) => {
   const {
@@ -41,7 +29,7 @@ const getNextMessageList = async ({
     content.length > 0 && content.length >= PAGE_SIZE ? page + 1 : undefined;
 
   return {
-    result: { ...content, totalElements },
+    result: { list: content, totalElements },
     nextPage,
     isLast: !nextPage,
   };
