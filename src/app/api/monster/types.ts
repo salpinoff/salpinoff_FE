@@ -22,10 +22,11 @@ export interface GetMonsterResponse extends Omit<Monster, 'rating'> {
   ratingRange: string;
   ownerName: string;
   interactionCountPerEncouragement: number;
+  createdAt: string;
 }
 
 /** GetMonsterRef */
-export interface GetMonsterRefResponse extends Monster {}
+export interface GetMonsterRefResponse extends GetMonsterResponse {}
 
 /** GetMonstersList */
 export interface GetMonstersListRequest {

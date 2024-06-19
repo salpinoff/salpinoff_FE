@@ -7,10 +7,13 @@ import {
 
 import { AxiosError, AxiosResponse } from 'axios';
 
+import useAuth from '@hooks/api/useAuth';
+
 import MONSTER_APIS from '.';
 
 import MONSTER_KEYS from './keys';
 import {
+  GetMonsterRefResponse,
   GetMonsterResponse,
   ModifyMonsterRequest,
   SendEncouragementRequest,
@@ -39,6 +42,24 @@ export const useGetMonster = (
     enabled: !!id,
     queryKey: MONSTER_KEYS.detail(id),
     queryFn: () => MONSTER_APIS.getMonsterById(id),
+    select: (data) => data.data,
+  });
+
+export const useGetRefMonster = (
+  options?: CustomUseQueryOption<
+    UseQueryOptions<
+      AxiosResponse<GetMonsterRefResponse>,
+      AxiosError,
+      GetMonsterRefResponse,
+      ReturnType<typeof MONSTER_KEYS.reference>
+    >
+  >,
+) =>
+  useQuery({
+    ...options,
+    enabled: useAuth().status === 'authenticated',
+    queryKey: MONSTER_KEYS.reference(),
+    queryFn: MONSTER_APIS.getRefMonster,
     select: (data) => data.data,
   });
 
