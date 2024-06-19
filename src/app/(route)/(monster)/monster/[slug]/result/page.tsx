@@ -13,9 +13,13 @@ import useModal from '@hooks/useModal';
 import { useGetMonster } from '@api/monster/queries';
 import { GetMonsterResponse } from '@api/monster/types';
 
-import GuideMessage from './components/GuideMessage';
-import MonsterCard from './components/MonsterCard';
-import ShareModal from './components/ShareModal';
+import { GuideMessage, ShareModal, MonsterCard } from './components';
+import {
+  copyToClipboard,
+  generateShareUrl,
+  isValidURL,
+  shareToKakao,
+} from './lib';
 
 export default function MonsterResultPage({
   params,
