@@ -1,4 +1,4 @@
-import { apiInstance } from '@api/api.config';
+import { apiFetchInstance, apiInstance } from '@api/api.config';
 import { API_URLS } from '@api/api.constants';
 
 import {
@@ -41,7 +41,7 @@ const MONSTER_APIS = {
   },
 
   getRefMonster: async () => {
-    const data = await apiInstance.get<GetMonsterRefResponse>(
+    const data = await apiFetchInstance.get<GetMonsterRefResponse>(
       API_URLS.MONSTER.GET_REF_MONSTER,
     );
 

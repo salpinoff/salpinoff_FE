@@ -37,7 +37,6 @@ function MessageList() {
     retry: 1,
     queryKey: ['my-monster'],
     queryFn: () => MONSTER_APIS.getRefMonster(),
-    select: (result) => result.data,
   });
 
   const {
