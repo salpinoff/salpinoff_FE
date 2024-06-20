@@ -33,14 +33,14 @@ const createFetchInstance = (baseUrl: string, options?: RequestInit) => {
     async get<T>(url: string, custom?: RequestInit) {
       return fetchUrl<T>(url, { ...custom, method: 'get' });
     },
-    async post(url: string, custom?: RequestInit) {
-      return fetchUrl(url, { ...custom, method: 'post' });
+    async post<T>(url: string, custom?: RequestInit) {
+      return fetchUrl<T>(url, { ...custom, method: 'post' });
     },
-    async put(url: string, custom?: RequestInit) {
-      return fetchUrl(url, { ...custom, method: 'put' });
+    async put<T>(url: string, custom?: RequestInit) {
+      return fetchUrl<T>(url, { ...custom, method: 'put' });
     },
-    async delete(url: string, custom?: RequestInit) {
-      return fetchUrl(url, { ...custom, method: 'delete' });
+    async delete<T>(url: string, custom?: RequestInit) {
+      return fetchUrl<T>(url, { ...custom, method: 'delete' });
     },
   };
 };
