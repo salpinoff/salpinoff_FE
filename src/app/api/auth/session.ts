@@ -8,10 +8,18 @@ type Session = Response & {
   status: 'authenticated' | 'unauthenticated';
 };
 
-const getSession = () => {
+const getSession = async () => {
   const path = '/api/auth/session';
 
   return baseInstance.get<Session>(path);
+};
+
+const getServerSession = async (headers: Record<string, string>) => {
+  const path = '/api/auth/session';
+
+  return baseInstance.get<Session>(path, {
+    headers,
+  });
 };
 
 const updateSession = () => {
@@ -20,4 +28,4 @@ const updateSession = () => {
   return baseInstance.post<Response>(path);
 };
 
-export { getSession, updateSession };
+export { getSession, getServerSession, updateSession };
