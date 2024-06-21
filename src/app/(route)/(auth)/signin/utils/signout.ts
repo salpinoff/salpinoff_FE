@@ -8,7 +8,11 @@ type Props = {
 const signOut = async ({ redirect, callbackUrl }: Props) => {
   return requestSignOut().then(() => {
     if (callbackUrl) {
-      window.location.href = callbackUrl;
+      const nextUrl = callbackUrl.startsWith('http')
+        ? callbackUrl
+        : `${process.env.NEXT_PUBLIC_DOMAIN_NAME}${callbackUrl}`;
+
+      window.location.href = nextUrl;
       return;
     }
 
