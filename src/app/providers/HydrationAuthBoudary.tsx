@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 
 import { setAuthHeader } from '@api/api.config';
-import { getServerSession } from '@api/auth/session';
+import { getServerSession } from '@api/auth/base/session';
 
 import { ExtractProps } from '@type/util';
 

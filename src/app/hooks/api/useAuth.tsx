@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { setAuthHeader } from '@api/api.config';
-import { getSession, updateSession } from '@api/auth/session';
+import { getSession, updateSession } from '@api/auth/base/session';
 
 const useAuth = (): {
   status: 'loading' | 'authenticated' | 'unauthenticated' | 'error';
