@@ -1,4 +1,5 @@
 import { baseInstance } from '@api/api.config';
+import { API_URLS } from '@api/api.constants';
 
 type Response = {
   accessToken: string;
@@ -9,13 +10,13 @@ type Session = Response & {
 };
 
 const getSession = async () => {
-  const path = '/api/auth/session';
+  const path = API_URLS.AUTH.BASE.SESSION;
 
   return baseInstance.get<Session>(path);
 };
 
 const getServerSession = async (headers: Record<string, string>) => {
-  const path = '/api/auth/session';
+  const path = API_URLS.AUTH.BASE.SESSION;
 
   return baseInstance.get<Session>(path, {
     headers,
@@ -23,7 +24,7 @@ const getServerSession = async (headers: Record<string, string>) => {
 };
 
 const updateSession = () => {
-  const path = '/api/auth/session';
+  const path = API_URLS.AUTH.BASE.SESSION;
 
   return baseInstance.post<Response>(path);
 };

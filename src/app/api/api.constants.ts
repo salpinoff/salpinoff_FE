@@ -1,16 +1,20 @@
 export const API_URLS = {
   AUTH: {
-    SIGNIN: {
-      kakao: `/api/auth/signin/kakao`,
+    BASE: {
+      SESSION: '/api/auth/session',
+      SIGNOUT: '/api/auth/signout/kakao',
+      SIGNIN: {
+        kakao: `/api/auth/signin/kakao`,
+      },
     },
-    SIGNOUT: {
-      kakao: '/api/auth/signout/kakao',
+    API: {
+      DELETE_TOKEN: `/members/logout`,
+      REFRESH_TOKEN: '/members/token/refresh',
+      USER_NICKNAME: '/members/my',
+      GET_TOKEN: {
+        kakao: `/members/login/kakao`,
+      },
     },
-    INITIAL_TOKEN: {
-      kakao: `/members/login/kakao`,
-    },
-    REFRESH_TOKEN: '/members/token/refresh',
-    USER_NICKNAME: '/members/my',
   },
   MONSTER: {
     CREATE_MONSTER: '/monsters',

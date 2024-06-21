@@ -12,7 +12,7 @@ type Props = {
 };
 
 const requestSignIn = ({ provider }: Props) => {
-  const path = API_URLS.AUTH.SIGNIN[provider];
+  const path = API_URLS.AUTH.BASE.SIGNIN[provider];
 
   return baseInstance.post<Response>(path);
 };
