@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-import requestSignIn from '@api/auth/signin';
+import requestSignIn from '@api/auth/base/signin';
 
 import { Providers } from '@type/auth';
 
