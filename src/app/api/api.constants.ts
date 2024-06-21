@@ -2,7 +2,7 @@ export const API_URLS = {
   AUTH: {
     BASE: {
       SESSION: '/api/auth/session',
-      SIGNOUT: '/api/auth/signout/kakao',
+      SIGNOUT: '/api/auth/signout',
       SIGNIN: {
         kakao: `/api/auth/signin/kakao`,
       },
