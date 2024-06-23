@@ -20,7 +20,7 @@ export interface Monster {
   rating: number;
   content: string;
   emotion: keyof typeof Emotion;
-  monsterId: number | string;
+  monsterId: string;
   monsterName: string;
   monsterDecorations: Decoration[];
   interactionCount: number;
