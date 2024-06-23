@@ -1,4 +1,7 @@
-import { createQueryKeys } from '@lukemorales/query-key-factory';
+import {
+  createQueryKeys,
+  inferQueryKeys,
+} from '@lukemorales/query-key-factory';
 
 import { getRefMonster, getMonsterById, getMonsterList } from '..';
 
@@ -17,5 +20,7 @@ const MonsterQueryFactory = createQueryKeys('monster', {
     contextQueries: {},
   }),
 });
+
+export type MonsterKeys = inferQueryKeys<typeof MonsterQueryFactory>;
 
 export default MonsterQueryFactory;
