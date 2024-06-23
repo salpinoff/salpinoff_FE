@@ -7,12 +7,17 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { useSetAtom } from 'jotai';
 
+import { useMutation } from '@tanstack/react-query';
+
+import { AxiosError } from 'axios';
+
 import useFunnel from '@hooks/useFunnel';
 import useModal from '@hooks/useModal';
 
 import { validate } from '@utils/validate';
 
-import { useSendEncouragement } from '@api/monster/queries';
+import { sendEncouragement } from '@api/encouragement';
+import { SendEncouragementRequest } from '@api/encouragement/types';
 
 import { idAtom } from '@store/monsterAtom';
 
@@ -54,13 +59,16 @@ export default function SharePage({ params }: { params: { slug: string } }) {
 
   const { update } = useContext(GuestDispatchContext);
 
-  const { mutate: send } = useSendEncouragement(monsterId, {
+  const { mutate: send } = useMutation<
+    unknown,
+    AxiosError,
+    SendEncouragementRequest
+  >({
+    mutationFn: (data) => sendEncouragement(monsterId, data),
     onSuccess: () => setStep('done'),
     onError: ({ response }) => {
       if (response && response.status === 404) {
         openModal();
-        // 이후 주석 해제 후 변경
-        // openModal(<ExpiredModal closeModal={closeModal} />);
       }
     },
   });

@@ -5,9 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { useForm, useWatch, Control } from 'react-hook-form';
 
-import { useAtomValue, useSetAtom } from 'jotai';
-
-import { merge, pick, isEqual } from 'lodash';
+import { pick, isEqual } from 'lodash';
 
 import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
@@ -15,13 +13,10 @@ import TextField from '@components/common/TextField';
 
 import useModal from '@hooks/useModal';
 
-import { getQueryClient } from '@utils/query';
 import { validationPatterns } from '@utils/validate/validationPatterns';
 
-import { useModifyMonster } from '@api/monster/queries';
+import { useModifyMonster, useMonster } from '@api/monster/query/hooks';
 import { ModifyMonsterRequest } from '@api/monster/types';
-
-import { idAtom, monsterAtom } from '@store/monsterAtom';
 
 import ConfirmModal from './components/ConfirmModal';
 
@@ -58,15 +53,15 @@ export default function ModifyStoryPage({
 }) {
   const { slug: monsterId } = params;
 
-  const setId = useSetAtom(idAtom);
-  const { data: monster } = useAtomValue(monsterAtom);
+  const { data: monster } = useMonster(monsterId);
+  const { mutate: modify } = useModifyMonster(monsterId);
 
   const { replace } = useRouter();
 
   const { reset, register, handleSubmit, control } = useForm<FormValues>({
     mode: 'onChange',
     defaultValues: {
-      content: '',
+      content: monster?.content || '',
     },
   });
 
@@ -80,31 +75,17 @@ export default function ModifyStoryPage({
     />
   ));
 
-  const { mutate: modify } = useModifyMonster(monsterId, {
-    onSuccess: (_, variables) => {
-      const queryClient = getQueryClient();
-      const queryKey = ['monster', monsterId];
-
-      queryClient.setQueryData(queryKey, (oldData: object) =>
-        merge(oldData, {
-          data: variables,
-        }),
-      );
-
-      replace('/');
-    },
-    onError: (error) => {
-      // [TODO] 업데이트 에러 처리 (toast...)
-      console.log('error :: 업데이트에 실패했어요.', error);
-    },
-  });
-
   const onSubmit = useCallback((data: FormValues) => {
-    if (isEqual(data, pick(monster, ['content']))) replace('/');
-    else modify(data);
-  }, []);
+    if (!isEqual(data, pick(monster, ['content'])))
+      modify(data, {
+        onError: (err) => {
+          // TODO
+          console.log(err);
+        },
+      });
 
-  useEffect(() => setId(monsterId));
+    replace('/');
+  }, []);
 
   useEffect(() => {
     if (monster) {

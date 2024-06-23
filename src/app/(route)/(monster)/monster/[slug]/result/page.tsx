@@ -10,7 +10,7 @@ import Button from '@components/common/Button';
 
 import useModal from '@hooks/useModal';
 
-import { useGetMonster } from '@api/monster/queries';
+import { useMonster } from '@api/monster/query/hooks';
 import { GetMonsterResponse } from '@api/monster/types';
 
 import { GuideMessage, ShareModal, MonsterCard } from './components';
@@ -31,14 +31,7 @@ export default function MonsterResultPage({
   const router = useRouter();
   const [monster, setMonster] = useState<GetMonsterResponse | null>();
 
-  const { error, isError, status, fetchStatus, data } = useGetMonster(
-    monsterId,
-    {
-      meta: {
-        errorMessage: '몬스터의 정보를 가져오는데 실패했어요!',
-      },
-    },
-  );
+  const { error, isError, status, fetchStatus, data } = useMonster(monsterId);
 
   const SHARE_URL = generateShareUrl(monsterId);
 
@@ -63,7 +56,9 @@ export default function MonsterResultPage({
     }
   }, [data]);
 
-  const handleDefer = () => router.push('/');
+  const handleDefer = () => {
+    router.push('/');
+  };
 
   const { openModal, closeModal } = useModal(() => (
     <ShareModal
@@ -83,6 +78,7 @@ export default function MonsterResultPage({
   }
 
   if (!monster) {
+    // [TODO] 몬스터 생성 오류 OR 임의적 접근
     return <div>Loading...</div>;
   }
 
