@@ -43,16 +43,3 @@ export interface GetMonsterListResponse {
 
 /** ModifyMonster */
 export interface ModifyMonsterRequest extends Pick<Monster, 'content'> {}
-
-/** UpdateInteractionCount */
-export interface UpdateInteractionCountRequest
-  extends Pick<Monster, 'monsterId' | 'interactionCount'> {}
-
-export interface UpdateInteractionCountResponse
-  extends Pick<Monster, 'monsterId' | 'interactionCount'> {}
-
-/** SendEncouragement */
-export interface SendEncouragementRequest {
-  sender: string;
-  content: string;
-}
