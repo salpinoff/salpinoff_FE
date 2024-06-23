@@ -83,6 +83,7 @@ function MessageList() {
         return (
           <MessageItem
             key={message.messageId}
+            checked={message.checked}
             component="button"
             onClick={() => {
               handleClick(message);
