@@ -10,7 +10,7 @@ type Props = {
 };
 
 const requestUserToken = ({ code, provider }: Props) => {
-  const path = API_URLS.AUTH.INITIAL_TOKEN[provider];
+  const path = API_URLS.AUTH.API.GET_TOKEN[provider];
 
   return apiInstance.post<TokenResponse>(path, { code });
 };

@@ -1,24 +1,9 @@
 type JWT = {
-  lastPasswordResetDate: string;
   sub: string;
-  userStatus: number;
-  auth: {
-    authority: string;
-  }[];
-  deviceOs: 0 | 1 | 2;
-  nickName: string;
-  userTypeCd: string;
-  storeSeq: number;
-  type: number;
-  typeDetail: 'APP' | 'WEB';
-  userStatusCd: string; // NORMAL
-  userSeq: number;
-  profileImgUrl: string;
-  userType: number;
-  exp: number;
-  device: string;
+  username: string;
+  authority: 'USER';
   iat: number;
-  jti: string;
+  exp: number;
 };
 
 const jwtParse = (jwt: string): JWT => {

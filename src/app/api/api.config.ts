@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+/** axios */
 const createInstance = (baseURL: string) => {
   return axios.create({
     baseURL,

@@ -62,7 +62,10 @@ const authHandler = ({ request, params, secret }: Props) => {
               throw new Error('Token 이 없습니다.');
             }
 
-            const { exp } = jwtParse(oldAccessToken);
+            const decryptAccessToken = decrypt(oldAccessToken, secret);
+            const decryptRefreshToken = decrypt(oldRefreshToken, secret);
+
+            const { exp } = jwtParse(decryptAccessToken);
             const timeRemaing =
               exp - (Math.floor(new Date().getTime() / 1000) + 10 * 60);
 
@@ -72,7 +75,7 @@ const authHandler = ({ request, params, secret }: Props) => {
 
             const {
               data: { refreshToken, accessToken },
-            } = await refreshTokenApi(decrypt(oldRefreshToken, secret));
+            } = await refreshTokenApi(decryptRefreshToken);
 
             const response = NextResponse.json({ accessToken });
             return setCookie(

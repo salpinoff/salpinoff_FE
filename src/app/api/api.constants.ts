@@ -5,17 +5,21 @@ const MEMBER_BASE = '/members';
 
 export const API_URLS = {
   AUTH: {
-    SIGNIN: {
-      kakao: `${AUTH_BASE}/signin/kakao`,
+    BASE: {
+      SESSION: `${AUTH_BASE}/session`,
+      SIGNOUT: `${AUTH_BASE}/signout`,
+      SIGNIN: {
+        kakao: `${AUTH_BASE}/signin/kakao`,
+      },
     },
-    SIGNOUT: {
-      kakao: `${AUTH_BASE}/signout/kakao`,
+    API: {
+      DELETE_TOKEN: `${MEMBER_BASE}/logout`,
+      REFRESH_TOKEN: `${MEMBER_BASE}/token/refresh`,
+      USER_NICKNAME: `${MEMBER_BASE}/my`,
+      GET_TOKEN: {
+        kakao: `${MEMBER_BASE}/login/kakao`,
+      },
     },
-    INITIAL_TOKEN: {
-      kakao: `${MEMBER_BASE}/login/kakao`,
-    },
-    REFRESH_TOKEN: `${MEMBER_BASE}/token/refresh`,
-    USER_NICKNAME: `${MEMBER_BASE}/my`,
   },
   MONSTER: {
     CREATE_MONSTER: MONSTER_BASE,

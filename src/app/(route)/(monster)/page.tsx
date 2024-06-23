@@ -1,9 +1,22 @@
+import HydrateWithAuth from '@providers/HydrationAuthBoudary';
+
+import { getRefMonster } from '@api/monster';
+
 import MessageBottomSheet from './component/Message/MessageBottomSheet';
 
-function Home() {
+async function Home() {
+  const messageQueries = [
+    {
+      queryKey: ['my-monster'],
+      queryFn: getRefMonster,
+    },
+  ];
+
   return (
     <div>
-      <MessageBottomSheet />
+      <HydrateWithAuth queries={messageQueries}>
+        <MessageBottomSheet />
+      </HydrateWithAuth>
     </div>
   );
 }

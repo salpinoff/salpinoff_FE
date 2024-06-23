@@ -37,4 +37,4 @@ const redirectResponse = (
   );
 };
 
-export { redirectResponse, setCookie };
+export { redirectResponse };

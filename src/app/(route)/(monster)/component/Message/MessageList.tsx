@@ -11,7 +11,7 @@ import useModal from '@hooks/useModal';
 
 import { getNextMessageList } from '@api/message/list';
 import MessageQueryFactory from '@api/message/query/factory';
-import MONSTER_APIS from '@api/monster';
+import { getRefMonster } from '@api/monster';
 
 import type { Unpromise } from '@type/util';
 
@@ -36,8 +36,7 @@ function MessageList() {
   } = useSuspenseQuery({
     retry: 1,
     queryKey: ['my-monster'],
-    queryFn: () => MONSTER_APIS.getRefMonster(),
-    select: (result) => result.data,
+    queryFn: () => getRefMonster(),
   });
 
   const {
