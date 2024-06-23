@@ -237,7 +237,7 @@
         "value": {
           "fontFamily": "theme(fontFamily.sans)",
           "fontWeight": 600,
-          "fontSize": "1.063remrem",
+          "fontSize": "1.063rem",
           "lineHeight": "140%",
           "letterSpacing": "-0.01em"
         }

@@ -14,8 +14,8 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - share (share page)
+     * - monster/\\S+/share (share page)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|share).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|monster/\\S+/share).*)',
   ],
 };
