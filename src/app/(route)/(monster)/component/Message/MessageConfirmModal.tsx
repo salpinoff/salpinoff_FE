@@ -1,4 +1,4 @@
-import { MouseEventHandler, useRef } from 'react';
+import { TouchEventHandler, useRef, useState } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -30,6 +30,8 @@ function MessageConfirmModal({
   const modalRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
+  const [messageRead, setMessageRead] = useState(checked);
+
   const {
     list: { key: listKey },
     confirm: { key, fetcher },
@@ -40,11 +42,12 @@ function MessageConfirmModal({
     mutationFn: () => fetcher({ monsterId: Number(monsterId), messageId }),
     onSuccess: () => {
       closeModal();
+      setMessageRead(true);
       queryClient.invalidateQueries({ queryKey: listKey({ monsterId }) });
     },
   });
 
-  const handleClick: MouseEventHandler = async () => {
+  const handleClick: TouchEventHandler = async () => {
     confirm();
   };
 
@@ -85,15 +88,15 @@ function MessageConfirmModal({
               'rounded-20',
               'flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center gap-[12.5%]',
               {
-                'bg-[var(--color-base-red-90)]': !checked,
-                'bg-[var(--color-base-cool-neutral-80)]': checked,
+                'bg-[var(--color-base-red-90)]': !messageRead,
+                'bg-[var(--color-base-cool-neutral-80)]': messageRead,
               },
             )}
           >
             <Icon
               className={cn('block h-[32.5%] w-[80%]', {
-                'text-[var(--color-base-red-50)]': !checked,
-                'text-[var(--color-base-cool-neutral-50)]': checked,
+                'text-[var(--color-base-red-50)]': !messageRead,
+                'text-[var(--color-base-cool-neutral-50)]': messageRead,
               })}
             >
               <Heart />
@@ -103,8 +106,8 @@ function MessageConfirmModal({
               weight="semibold"
               variant="caption-1"
               className={cn({
-                'text-[var(--color-base-red-40)]': !checked,
-                'text-[var(--color-base-cool-neutral-30)]': checked,
+                'text-[var(--color-base-red-40)]': !messageRead,
+                'text-[var(--color-base-cool-neutral-30)]': messageRead,
               })}
             >
               에너지 40
@@ -113,12 +116,15 @@ function MessageConfirmModal({
         </section>
 
         <Button
-          onClick={handleClick}
+          onTouchEnd={handleClick}
           className="w-[52.5%]"
-          variant={checked ? 'secondary' : 'primary'}
+          variant={messageRead ? 'secondary' : 'primary'}
         >
-          <BaseText variant="body-2" weight={checked ? 'medium' : 'semibold'}>
-            {checked ? '닫기' : '에너지 적용하기'}
+          <BaseText
+            variant="body-2"
+            weight={messageRead ? 'medium' : 'semibold'}
+          >
+            {messageRead ? '닫기' : '에너지 적용하기'}
           </BaseText>
         </Button>
       </Modal.Content>
