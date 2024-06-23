@@ -51,13 +51,16 @@ function MessageList() {
     queryKey: key({ monsterId: `${monsterId}` }),
     queryFn: ({ pageParam = 1 }) =>
       fetcher({ monsterId: Number(monsterId), page: pageParam }),
-    select: (pages) => ({
-      messageList: pages.pages.map(({ result }) => result.list).flat(),
-      totalElements: pages.pages[0].result.totalElements,
-    }),
     getNextPageParam: ({ nextPage }: LastPage) => {
       return nextPage;
     },
+    select: (pages) => ({
+      messageList: pages.pages
+        .map(({ result }) => result.list)
+        .flat()
+        .sort((a, b) => Number(a.checked) - Number(b.checked)),
+      totalElements: pages.pages[0].result.totalElements,
+    }),
   });
 
   useEffect(() => {
