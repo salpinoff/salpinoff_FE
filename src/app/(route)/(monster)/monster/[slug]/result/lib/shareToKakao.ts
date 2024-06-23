@@ -4,7 +4,7 @@ const kakaoInit = () => {
     window.Kakao?.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
 };
 
-export const shareToKakao = (url: string) => {
+const shareToKakao = (url: string) => {
   try {
     kakaoInit();
     window.Kakao?.Share.sendCustom({
@@ -17,3 +17,5 @@ export const shareToKakao = (url: string) => {
     console.error(err);
   }
 };
+
+export default shareToKakao;

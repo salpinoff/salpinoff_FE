@@ -1,32 +1,37 @@
+const API_BASE = '/api';
+const AUTH_BASE = `${API_BASE}/auth`;
+const MONSTER_BASE = '/monsters';
+const MEMBER_BASE = '/members';
+
 export const API_URLS = {
   AUTH: {
     BASE: {
-      SESSION: '/api/auth/session',
-      SIGNOUT: '/api/auth/signout',
+      SESSION: `${AUTH_BASE}/session`,
+      SIGNOUT: `${AUTH_BASE}/signout`,
       SIGNIN: {
-        kakao: `/api/auth/signin/kakao`,
+        kakao: `${AUTH_BASE}/signin/kakao`,
       },
     },
     API: {
-      DELETE_TOKEN: `/members/logout`,
-      REFRESH_TOKEN: '/members/token/refresh',
-      USER_NICKNAME: '/members/my',
+      DELETE_TOKEN: `${MEMBER_BASE}/logout`,
+      REFRESH_TOKEN: `${MEMBER_BASE}/token/refresh`,
+      USER_NICKNAME: `${MEMBER_BASE}/my`,
       GET_TOKEN: {
-        kakao: `/members/login/kakao`,
+        kakao: `${MEMBER_BASE}/login/kakao`,
       },
     },
   },
   MONSTER: {
-    CREATE_MONSTER: '/monsters',
-    GET_MONSTER_BY_ID: (monsterId: string | number) => `/monsters/${monsterId}`,
+    CREATE_MONSTER: MONSTER_BASE,
+    GET_MONSTER_BY_ID: (monsterId: string) => `${MONSTER_BASE}/${monsterId}`,
     GET_MONSTER_LIST: (page: number, size: number) =>
-      `/monsters/my?page=${page}&size=${size}`,
-    GET_REF_MONSTER: '/monsters/my/rep',
-    MODIFY_MONSTER: (monsterId: string | number) => `/monsters/${monsterId}`,
-    DELETE_MONSTER: (monsterId: string | number) => `/monsters/${monsterId}`,
-    UPDATE_INTERACTION_COUNT: (monsterId: string | number) =>
-      `/monsters/${monsterId}/interactions`,
-    SEND_ENCOURAGEMENT: (monsterId: string | number) =>
-      `/monsters/${monsterId}/encouragement`,
+      `${MONSTER_BASE}/my?page=${page}&size=${size}`,
+    GET_REF_MONSTER: `${MONSTER_BASE}/my/rep`,
+    MODIFY_MONSTER: (monsterId: string) => `${MONSTER_BASE}/${monsterId}`,
+    DELETE_MONSTER: (monsterId: string) => `${MONSTER_BASE}/${monsterId}`,
+    UPDATE_INTERACTION_COUNT: (monsterId: string) =>
+      `${MONSTER_BASE}/${monsterId}/interactions`,
+    SEND_ENCOURAGEMENT: (monsterId: string) =>
+      `${MONSTER_BASE}/${monsterId}/encouragement`,
   },
-};
+} as const;

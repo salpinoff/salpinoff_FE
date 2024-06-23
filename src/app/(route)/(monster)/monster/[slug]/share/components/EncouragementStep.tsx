@@ -6,7 +6,7 @@ import BaseText from '@components/common/Text/BaseText';
 
 import stringToElement from '@utils/string-to-element';
 
-import { SendEncouragementRequest } from '@api/monster/types';
+import { SendEncouragementRequest } from '@api/encouragement/types';
 
 import EncouragementMessageFormField from './forms/encouragement-message/EncouragementMessageFormField';
 import SenderFormField from './forms/sender/SenderFormField';

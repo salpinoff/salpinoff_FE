@@ -16,7 +16,7 @@ import useWithAuth from '@hooks/useWithAuth';
 import cn from '@utils/cn';
 import { findObjectInArray } from '@utils/find';
 
-import MONSTER_APIS from '@api/monster';
+import { createMonster } from '@api/monster';
 import { DecorationType } from '@api/schema/monster';
 
 import { ExtractProps } from '@type/util';
@@ -84,7 +84,7 @@ function CustomizeMonster() {
 
   const { mutate: create } = useMutation({
     mutationKey: ['creatMonster'],
-    mutationFn: MONSTER_APIS.createMonster,
+    mutationFn: createMonster,
     onMutate: () => withAuth(() => {}),
     onSuccess: (data) => replace(`/result?monsterId=${data.data.monsterId}`),
     onError(error) {
