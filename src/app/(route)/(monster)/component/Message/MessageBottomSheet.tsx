@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { useAtomValue } from 'jotai';
@@ -33,14 +34,20 @@ function MessageBottomSheet() {
   const queryClient = useQueryClient();
   const repMonster = queryClient.getQueryData<RepMonster>(['my-monster']);
 
+  const [isFetching, setIsFetching] = useState(false);
+
   const handleClick = () => {
-    if (repMonster) {
-      queryClient.invalidateQueries({
+    setIsFetching(true);
+
+    queryClient
+      .invalidateQueries({
         queryKey: MessageQueryFactory.list.key({
-          monsterId: repMonster.monsterId,
+          monsterId: String(repMonster?.monsterId),
         }),
+      })
+      .then(() => {
+        setTimeout(() => setIsFetching(false), 200);
       });
-    }
   };
 
   return (
@@ -74,7 +81,7 @@ function MessageBottomSheet() {
 
         <button type="button" onClick={handleClick}>
           <span className="a11yHidden">새로고침</span>
-          <RefreshSVG />
+          <RefreshSVG className={cn({ 'animate-spin': isFetching })} />
         </button>
       </BottomSheetHeader>
 
