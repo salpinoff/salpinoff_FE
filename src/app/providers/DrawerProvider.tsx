@@ -10,8 +10,10 @@ import cn from '@utils/cn';
 
 import { drawerAtom } from '@store/drawerAtom';
 
+import Menu from '../(route)/(monster)/component/MenuDrawer';
+
 function DrawerProvider() {
-  const View = useAtomValue(drawerAtom) || (() => null);
+  const View = useAtomValue(drawerAtom) || (() => <Menu />);
   const { isOpen } = useDrawer();
 
   return (
