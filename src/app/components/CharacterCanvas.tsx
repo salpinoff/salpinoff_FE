@@ -61,7 +61,6 @@ export default function CharacterCanvas({
       ctx.globalCompositeOperation = 'source-over';
 
       const imageSources = [
-        '/images/mad_before/mad_before_glasses0000.png',
         getImagePath('monsters', `${type}_${status}`),
         ...items.map((item) => getImagePath('items', item)),
       ];
