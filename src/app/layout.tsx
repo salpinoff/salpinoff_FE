@@ -3,6 +3,7 @@ import Script from 'next/script';
 
 import { Provider } from 'jotai';
 
+import DrawerProvider from '@providers/DrawerProvider';
 import ModalProvider from '@providers/modal-provider';
 import QueryProvider from '@providers/QueryProvider';
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Provider>
             {children}
             <ModalProvider />
+            <DrawerProvider />
           </Provider>
         </QueryProvider>
       </body>
