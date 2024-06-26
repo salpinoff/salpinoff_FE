@@ -1,15 +1,13 @@
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
 import { useMutation } from '@tanstack/react-query';
 
-import { unionBy } from 'lodash';
+import { findIndex, xorBy, unionBy } from 'lodash';
 
-import FormControlLabel from '@components/common/FormControlLabel';
+import CharacterCanvas from '@components/CharacterCanvas';
 import BaseText from '@components/common/Text/BaseText';
-import CardBase from '@components/MonsterCard/CardBase';
 
 import useWithAuth from '@hooks/useWithAuth';
 
@@ -17,60 +15,19 @@ import cn from '@utils/cn';
 import { findObjectInArray } from '@utils/find';
 
 import { createMonster } from '@api/monster';
-import { DecorationType } from '@api/schema/monster';
-
-import { ExtractProps } from '@type/util';
+import {
+  DecorationType,
+  DecorationValue,
+  Emotion,
+  DecorationTypes,
+  DecorationValues,
+} from '@api/schema/monster';
 
 import CustomizeOption from './CustomizeOption';
+import Tabs from './Tabs';
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
-
-type CustomFilterProps = {
-  id: DecorationType;
-  label: string;
-  active: boolean;
-};
-
-type Colors = NonNullable<ExtractProps<typeof CardBase>['color']>;
-
-const CUSTOM_FILTER: CustomFilterProps[] = [
-  {
-    id: DecorationType.BACKGROUND_COLOR,
-    label: '배경색',
-    active: true,
-  },
-  {
-    id: DecorationType.ACCESORY,
-    label: '악세사리',
-    active: false,
-  },
-  {
-    id: DecorationType.STICKER,
-    label: '스티커',
-    active: false,
-  },
-  {
-    id: DecorationType.SPEECH_BUBBLE,
-    label: '말풍선',
-    active: false,
-  },
-];
-
-const DecorationValueTable = {
-  [DecorationType.BACKGROUND_COLOR]: [
-    'RED_ORANGE',
-    'GREEN',
-    'CYAN',
-    'LIGHT_BLUE',
-    'VIOLET',
-  ],
-  [DecorationType.ACCESORY]: [],
-  [DecorationType.STICKER]: [],
-  [DecorationType.SPEECH_BUBBLE]: [],
-};
-
-type DecorationTypes = keyof typeof DecorationType;
 
 function CustomizeMonster() {
   const { replace } = useRouter();
@@ -82,11 +39,20 @@ function CustomizeMonster() {
   const { stress, story, emotion, monsterName, decorations } =
     useUserInfoContext();
 
+  const CHARACTER_TYPE = emotion === Emotion.ANGER ? 'mad' : 'sad';
+  const CHARACTER_ITEMS = decorations
+    .map(
+      (deco) =>
+        deco.decorationType !== DecorationType.BACKGROUND_COLOR &&
+        deco.decorationValue.toLowerCase(),
+    )
+    .filter(Boolean) as string[];
+
   const { mutate: create } = useMutation({
     mutationKey: ['creatMonster'],
     mutationFn: createMonster,
     onMutate: () => withAuth(() => {}),
-    onSuccess: (data) => replace(`/result?monsterId=${data.data.monsterId}`),
+    onSuccess: (data) => replace(`/monster/${data.data.monsterId}/result`),
     onError(error) {
       // [TODO]: toast
       console.log('error :: 몬스터 생성에 실패했어요.', error);
@@ -102,30 +68,31 @@ function CustomizeMonster() {
 
   const updateDecoration = (
     decorationType: DecorationTypes,
-    decorationValue: string,
-  ) =>
-    unionBy(
-      [
-        {
-          decorationType,
-          decorationValue,
-        },
-      ],
-      decorations,
-      'decorationType',
-    );
+    decorationValue: DecorationValues,
+  ) => {
+    const newDecoration = {
+      decorationType,
+      decorationValue,
+    };
 
-  const handleFilterChange = (e: React.SyntheticEvent) => {
-    const { value } = e.target as HTMLInputElement;
+    if (findIndex(decorations, newDecoration) === 0) {
+      return xorBy([newDecoration], decorations, 'decorationType');
+    }
+    return unionBy([newDecoration], decorations, 'decorationType');
+  };
 
-    setType(value as DecorationType);
+  const handleFilterChange = (
+    event: React.SyntheticEvent,
+    value: DecorationTypes,
+  ) => {
+    setType(value);
   };
 
   const handleDecoChange = (e: React.SyntheticEvent) => {
     const { value } = e.target as HTMLInputElement;
 
     if (type && value) {
-      const updated = updateDecoration(type, value);
+      const updated = updateDecoration(type, value as DecorationValues);
 
       update({
         decorations: updated,
@@ -159,38 +126,27 @@ function CustomizeMonster() {
       >
         이제 퇴사몬을 꾸며주세요!
       </BaseText>
-      <CardBase
-        color={findDecoration(type)?.decorationValue as Colors}
-        className="mx-auto mb-[32px] flex h-[260px] w-[260px] items-center justify-center border-none shadow-5 !outline-none"
+      {/* [TODO]: 제공 배경 색상 값 이후 수정 */}
+      <CharacterCanvas
+        className="mb-[32px] h-[260px] w-[260px] rounded-[36px] shadow-5"
+        background={
+          findDecoration(DecorationType.BACKGROUND_COLOR)?.decorationValue
+        }
+        type={CHARACTER_TYPE}
+        items={CHARACTER_ITEMS}
+      />
+      <Tabs<DecorationTypes>
+        className="mb-20 flex gap-12"
+        value={type}
+        onChange={handleFilterChange}
       >
-        {/* 🚧 예시 - 이후 개선 필요 */}
-        <Image
-          src="/sample.png"
-          width={246}
-          height={184}
-          alt="Sample Monster"
-        />
-      </CardBase>
-      <div
-        className={cn('mb-20 flex gap-12 overflow-x-auto', 'scrollbar-hide')}
-      >
-        {CUSTOM_FILTER.map(({ id, label, active }) => (
-          <FormControlLabel
-            key={id}
-            id={id}
-            className="label-1-semibold relative w-max rounded-full bg-[#70737C38] px-16 py-8 text-cool-neutral-90A has-[:checked]:!bg-common-100 has-[:checked]:!text-cool-neutral-10 has-[:disabled]:!text-cool-neutral-70A"
-            name="decorationType"
-            label={label}
-            value={id}
-            checked={type === id}
-            control={<input type="radio" className="a11yHidden" />}
-            disabled={!active}
-            {...(active ? { onChange: handleFilterChange } : {})}
-          />
-        ))}
-      </div>
+        <Tabs.Tab label="배경색" value={DecorationType.BACKGROUND_COLOR} />
+        <Tabs.Tab label="모자" value={DecorationType.CAP} />
+        <Tabs.Tab label="얼굴" value={DecorationType.FACE} />
+        <Tabs.Tab label="소품" value={DecorationType.ACCESSORY} />
+      </Tabs>
       <div className={cn('flex gap-[16px] overflow-x-auto', 'scrollbar-hide')}>
-        {DecorationValueTable[type].map((id) => (
+        {DecorationValue[type].map((id) => (
           <CustomizeOption
             key={id}
             id={id}
