@@ -29,13 +29,6 @@ import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
-const enum FilterIndexEnum {
-  BACKGROUND_COLOR,
-  CAP,
-  FACE,
-  ACCESSORY,
-}
-
 function CustomizeMonster() {
   const { replace } = useRouter();
 
@@ -88,8 +81,11 @@ function CustomizeMonster() {
     return unionBy([newDecoration], decorations, 'decorationType');
   };
 
-  const handleFilterChange = (event: React.SyntheticEvent, value: string) => {
-    setType(value as keyof typeof FilterIndexEnum);
+  const handleFilterChange = (
+    event: React.SyntheticEvent,
+    value: DecorationTypes,
+  ) => {
+    setType(value);
   };
 
   const handleDecoChange = (e: React.SyntheticEvent) => {
@@ -139,7 +135,7 @@ function CustomizeMonster() {
         type={CHARACTER_TYPE}
         items={CHARACTER_ITEMS}
       />
-      <Tabs
+      <Tabs<DecorationTypes>
         className="mb-20 flex gap-12"
         value={type}
         onChange={handleFilterChange}
