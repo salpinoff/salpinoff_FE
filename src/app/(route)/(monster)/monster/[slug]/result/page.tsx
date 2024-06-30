@@ -5,13 +5,16 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 import { LayoutGroup } from 'framer-motion';
+import { find } from 'lodash';
 
+import CharacterCanvas from '@components/CharacterCanvas';
 import Button from '@components/common/Button';
 
 import useModal from '@hooks/useModal';
 
 import { useMonster } from '@api/monster/query/hooks';
 import { GetMonsterResponse } from '@api/monster/types';
+import { DecorationType, Emotion } from '@api/schema/monster';
 
 import { GuideMessage, ShareModal, AnimatedSpreadCard } from './components';
 import {
@@ -86,6 +89,21 @@ export default function MonsterResultPage({
     console.error('error :: ', error);
   }
 
+  // TODO 개선
+  const color =
+    find(monster.monsterDecorations, {
+      decorationType: DecorationType.BACKGROUND_COLOR,
+    })?.decorationValue || '';
+
+  const CHARACTER_TYPE = monster.emotion === Emotion.ANGER ? 'mad' : 'sad';
+  const CHARACTER_ITEMS = monster.monsterDecorations
+    .map(
+      (deco) =>
+        deco.decorationType !== DecorationType.BACKGROUND_COLOR &&
+        deco.decorationValue.toLowerCase(),
+    )
+    .filter(Boolean) as string[];
+
   return (
     <div className="mx-auto flex !h-dvh h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
       <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
@@ -94,11 +112,13 @@ export default function MonsterResultPage({
           <>
             <LayoutGroup>
               <GuideMessage />
-              <AnimatedSpreadCard
-                name={monster.monsterName}
-                emotion={monster.emotion}
-                decorations={monster.monsterDecorations}
-              />
+              <AnimatedSpreadCard name={monster.monsterName} color={color}>
+                <CharacterCanvas
+                  type={CHARACTER_TYPE}
+                  items={CHARACTER_ITEMS}
+                  className="mb-[30px] h-full w-full"
+                />
+              </AnimatedSpreadCard>
             </LayoutGroup>
             <footer className="flex flex-col">
               <Button size="medium" onClick={() => openModal()}>

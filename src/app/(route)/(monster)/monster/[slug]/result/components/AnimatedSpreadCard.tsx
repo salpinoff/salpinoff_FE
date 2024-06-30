@@ -1,48 +1,29 @@
+import { PropsWithChildren } from 'react';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
-import CharacterCanvas from '@components/CharacterCanvas';
 import OutlineCard from '@components/OutlineCard';
-
-import { findObjectInArray } from '@utils/find';
-
-import { DecorationType, Emotion, Monster } from '@api/schema/monster';
 
 import SquareMonsterCard from 'src/app/(route)/(monster)/component/SquareMonsterCard';
 
 const MotionSquareShadeCard = motion(OutlineCard);
 const MotionSquareMonsterCard = motion(SquareMonsterCard);
 
-type AnimatedSpreadCardProps = {
+type AnimatedSpreadCardProps = PropsWithChildren & {
   name: string;
-  emotion: Monster['emotion'];
-  decorations: Monster['monsterDecorations'];
+  color: string;
 };
 
 export default function AnimatedSpreadCard({
   name,
-  emotion,
-  decorations,
+  color,
+  children,
 }: AnimatedSpreadCardProps) {
   const transition = {
     type: 'spring',
     bounce: 0.4,
     duration: 0.8,
   };
-
-  const color = findObjectInArray(
-    decorations,
-    'decorationType',
-    DecorationType.BACKGROUND_COLOR,
-  )?.decorationValue;
-
-  const CHARACTER_TYPE = emotion === Emotion.ANGER ? 'mad' : 'sad';
-  const CHARACTER_ITEMS = decorations
-    .map(
-      (deco) =>
-        deco.decorationType !== DecorationType.BACKGROUND_COLOR &&
-        deco.decorationValue.toLowerCase(),
-    )
-    .filter(Boolean) as string[];
 
   return (
     <AnimatePresence mode="wait">
@@ -76,11 +57,7 @@ export default function AnimatedSpreadCard({
             },
           }}
         >
-          <CharacterCanvas
-            type={CHARACTER_TYPE}
-            items={CHARACTER_ITEMS}
-            className="mb-[30px] h-full w-full"
-          />
+          {children}
         </MotionSquareMonsterCard>
       </motion.section>
     </AnimatePresence>
