@@ -13,7 +13,7 @@ import useModal from '@hooks/useModal';
 import { useMonster } from '@api/monster/query/hooks';
 import { GetMonsterResponse } from '@api/monster/types';
 
-import { GuideMessage, ShareModal, LayeredMotionCard } from './components';
+import { GuideMessage, ShareModal, AnimatedSpreadCard } from './components';
 import {
   copyToClipboard,
   generateShareUrl,
@@ -94,7 +94,7 @@ export default function MonsterResultPage({
           <>
             <LayoutGroup>
               <GuideMessage />
-              <LayeredMotionCard
+              <AnimatedSpreadCard
                 name={monster.monsterName}
                 emotion={monster.emotion}
                 decorations={monster.monsterDecorations}

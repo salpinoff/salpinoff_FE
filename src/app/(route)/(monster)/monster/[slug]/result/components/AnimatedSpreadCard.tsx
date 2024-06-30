@@ -12,17 +12,17 @@ import SquareMonsterCard from 'src/app/(route)/(monster)/component/SquareMonster
 const MotionSquareShadeCard = motion(OutlineCard);
 const MotionSquareMonsterCard = motion(SquareMonsterCard);
 
-type LayeredMotionCardProps = {
+type AnimatedSpreadCardProps = {
   name: string;
   emotion: Monster['emotion'];
   decorations: Monster['monsterDecorations'];
 };
 
-export default function LayeredMotionCard({
+export default function AnimatedSpreadCard({
   name,
   emotion,
   decorations,
-}: LayeredMotionCardProps) {
+}: AnimatedSpreadCardProps) {
   const transition = {
     type: 'spring',
     bounce: 0.4,
