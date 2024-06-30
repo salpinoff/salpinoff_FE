@@ -8,8 +8,12 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
-    'storybook-addon-jotai',
+    // 'storybook-addon-jotai',
   ],
+  docs: {
+    autodocs: true,
+    defaultName: 'Docs',
+  },
   framework: {
     name: '@storybook/nextjs',
     options: {},
