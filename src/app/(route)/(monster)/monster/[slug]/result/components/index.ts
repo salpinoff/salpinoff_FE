@@ -1,5 +1,5 @@
-import AnimatedSpreadCard from './AnimatedSpreadCard';
 import GuideMessage from './GuideMessage';
+import LayeredMotionCard from './LayeredMotionCard';
 import ShareModal from './ShareModal';
 
-export { AnimatedSpreadCard, GuideMessage, ShareModal };
+export { LayeredMotionCard, GuideMessage, ShareModal };

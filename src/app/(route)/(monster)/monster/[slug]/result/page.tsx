@@ -16,7 +16,7 @@ import { useMonster } from '@api/monster/query/hooks';
 import { GetMonsterResponse } from '@api/monster/types';
 import { DecorationType, Emotion } from '@api/schema/monster';
 
-import { GuideMessage, ShareModal, AnimatedSpreadCard } from './components';
+import { GuideMessage, ShareModal, LayeredMotionCard } from './components';
 import {
   copyToClipboard,
   generateShareUrl,
@@ -106,19 +106,18 @@ export default function MonsterResultPage({
 
   return (
     <div className="mx-auto flex !h-dvh h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
+    <div className="mx-auto flex !h-dvh h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
       <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
         {fetchStatus === 'fetching' && <>fetching...</>}
         {status === 'success' && fetchStatus === 'idle' && (
           <>
             <LayoutGroup>
               <GuideMessage />
-              <AnimatedSpreadCard name={monster.monsterName} color={color}>
-                <CharacterCanvas
-                  type={CHARACTER_TYPE}
-                  items={CHARACTER_ITEMS}
-                  className="mb-[30px] h-full w-full"
-                />
-              </AnimatedSpreadCard>
+              <LayeredMotionCard
+                name={monster.monsterName}
+                emotion={monster.emotion}
+                decorations={monster.monsterDecorations}
+              />
             </LayoutGroup>
             <footer className="flex flex-col">
               <Button size="medium" onClick={() => openModal()}>
