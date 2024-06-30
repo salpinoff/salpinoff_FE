@@ -113,11 +113,13 @@ export default function MonsterResultPage({
           <>
             <LayoutGroup>
               <GuideMessage />
-              <AnimatedSpreadCard
-                name={monster.monsterName}
-                emotion={monster.emotion}
-                decorations={monster.monsterDecorations}
-              />
+              <AnimatedSpreadCard name={monster.monsterName} color={color}>
+                <CharacterCanvas
+                  type={CHARACTER_TYPE}
+                  items={CHARACTER_ITEMS}
+                  className="mb-[30px] h-full w-full"
+                />
+              </AnimatedSpreadCard>
             </LayoutGroup>
             <footer className="flex flex-col">
               <Button size="medium" onClick={() => openModal()}>
