@@ -36,8 +36,10 @@ export default function AnimatedSpreadCard({
         className="h-[240px] w-[240px]"
       >
         <MotionSquareShadeCard
-          className="absolute aspect-square h-[240px] w-[240px] rounded-[36px] bg-cool-neutral-7 opacity-35"
+          className="absolute aspect-square rounded-[36px] bg-cool-neutral-7 opacity-35"
           color={color}
+          width={240}
+          height={240}
           style={{ originX: 0, originY: 1.65 }}
           variants={{
             onscreen: {
@@ -50,6 +52,8 @@ export default function AnimatedSpreadCard({
         <MotionSquareMonsterCard
           name={name}
           color={color}
+          width={240}
+          height={240}
           variants={{
             onscreen: {
               rotate: -10,
