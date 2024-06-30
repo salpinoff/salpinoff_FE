@@ -1,5 +1,5 @@
 import GuideMessage from './GuideMessage';
-import MonsterCard from './MonsterCard';
+import LayeredMotionCard from './LayeredMotionCard';
 import ShareModal from './ShareModal';
 
-export { MonsterCard, GuideMessage, ShareModal };
+export { LayeredMotionCard, GuideMessage, ShareModal };
