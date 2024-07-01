@@ -127,14 +127,15 @@ function CustomizeMonster() {
         이제 퇴사몬을 꾸며주세요!
       </BaseText>
       {/* [TODO]: 제공 배경 색상 값 이후 수정 */}
-      <CharacterCanvas
-        className="mb-[32px] h-[260px] w-[260px] rounded-[36px] shadow-5"
-        background={
-          findDecoration(DecorationType.BACKGROUND_COLOR)?.decorationValue
-        }
-        type={CHARACTER_TYPE}
-        items={CHARACTER_ITEMS}
-      />
+      <div className="relative mx-auto mb-[32px] h-[260px] w-[260px] overflow-hidden rounded-[36px] shadow-5">
+        <CharacterCanvas
+          background={
+            findDecoration(DecorationType.BACKGROUND_COLOR)?.decorationValue
+          }
+          type={CHARACTER_TYPE}
+          items={CHARACTER_ITEMS}
+        />
+      </div>
       <Tabs<DecorationTypes>
         className="mb-20 flex gap-12"
         value={type}
