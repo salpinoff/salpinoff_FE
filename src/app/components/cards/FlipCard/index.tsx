@@ -5,7 +5,7 @@ import { Children, isValidElement, useEffect } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-type FlipCardProps = ComponentProps<'div'> & {
+export type FlipCardProps = ComponentProps<'div'> & {
   children: [ReactNode, ReactNode, ...(readonly ReactNode[])];
   flipped?: boolean;
   onFlipped?: (arg?: unknown) => void;

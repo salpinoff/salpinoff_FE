@@ -1,12 +1,12 @@
-import { ComponentProps, useEffect } from 'react';
+import { ComponentPropsWithoutRef, useEffect } from 'react';
 
 import useCanvas from '@hooks/useCanvas';
 
 import cn from '@utils/cn';
 import getImagePath from '@utils/get-image-path';
 
-type CharacterCanvasProps = ComponentProps<'div'> & {
-  type: 'mad' | 'sad';
+type CharacterCanvasProps = ComponentPropsWithoutRef<'canvas'> & {
+  type?: 'mad' | 'sad';
   status?: 'before' | 'after';
   background?: string;
   items?: string[];
@@ -56,28 +56,29 @@ export default function CharacterCanvas({
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
+    const imageSources = [];
 
     if (ctx) {
       ctx.globalCompositeOperation = 'source-over';
 
-      const imageSources = [
-        getImagePath('monsters', `${type}_${status}`),
-        ...items.map((item) => getImagePath('items', item)),
-      ];
+      if (type && status)
+        imageSources.push(getImagePath('monsters', `${type}_${status}`));
+
+      if (items && items.length)
+        imageSources.push(...items.map((item) => getImagePath('items', item)));
 
       if (imageSources.length) drawImages(ctx, imageSources, background);
     }
   }, [canvasRef, type, status, items, background]);
 
   return (
-    <div
-      className={cn('relative mx-auto overflow-hidden', className)}
+    <canvas
+      ref={canvasRef}
+      className={cn(
+        'absolute bottom-0 left-0 right-0 top-0 h-full w-full',
+        className,
+      )}
       {...rest}
-    >
-      <canvas
-        ref={canvasRef}
-        className="absolute bottom-0 left-0 right-0 top-0 h-full w-full"
-      />
-    </div>
+    />
   );
 }

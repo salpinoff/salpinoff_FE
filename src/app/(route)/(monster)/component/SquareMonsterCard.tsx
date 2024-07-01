@@ -2,8 +2,10 @@ import { forwardRef } from 'react';
 
 import RoundedTrapezoidSVG from '@public/icons/rounded-trapezoid.svg';
 
+import OutlineCard, {
+  type OutlineCardProps,
+} from '@components/cards/OutlineCard';
 import BaseText from '@components/common/Text/BaseText';
-import OutlineCard, { type OutlineCardProps } from '@components/OutlineCard';
 
 type SquareMonsterCardProps = OutlineCardProps & {
   name: string;

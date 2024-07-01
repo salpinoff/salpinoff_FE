@@ -15,7 +15,9 @@ type CounterBoxProps = PropsWithChildren & {
   delay?: number;
   helperText?: string;
   onCount: Dispatch<SetStateAction<number>>;
-  onComplete: () => void;
+  onComplete?: () => void;
+  onMouseDown?: () => void;
+  onMouseUp?: () => void;
 };
 
 const countAtom = atomWithReset<number>(0);
@@ -34,9 +36,13 @@ export default function CounterBox({
   helperText,
   onCount,
   onComplete,
+  onMouseDown,
+  onMouseUp,
 }: CounterBoxProps) {
   const [count, increment] = useAtom(readWriteAtom);
   const resetAtom = useResetAtom(countAtom);
+
+  const transition = { type: 'spring', stiffness: 400, damping: 17 };
 
   const debouncedCount = useMemo(
     () =>
@@ -52,7 +58,7 @@ export default function CounterBox({
       increment(step);
       debouncedCount(count + 1);
     } else {
-      onComplete();
+      onComplete?.();
     }
   };
 
@@ -78,7 +84,7 @@ export default function CounterBox({
             scale: 0.8,
             rotate: 5 * (Math.random() * 2 - 1),
           }}
-          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          transition={transition}
           variants={{
             visible: {
               y: [-10, 8],
@@ -91,21 +97,22 @@ export default function CounterBox({
             },
           }}
           onClick={handleClick}
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
         >
           {children}
         </motion.button>
+
         {helperText && startAt < endAt && (
           <motion.div
             className="absolute bottom-0 left-0 right-0 mx-auto h-max w-max rounded-circular bg-[#171719bd] px-[16px] py-[6px]"
-            variants={{
-              hidden: {
-                y: '200%',
-              },
-              visible: {
-                y: -16,
-                transition: {
-                  duration: 0.5,
-                },
+            initial={{
+              y: '200%',
+            }}
+            whileInView={{
+              y: -16,
+              transition: {
+                duration: 0.5,
               },
             }}
           >
