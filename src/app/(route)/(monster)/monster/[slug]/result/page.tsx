@@ -106,7 +106,6 @@ export default function MonsterResultPage({
 
   return (
     <div className="mx-auto flex !h-dvh h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
-    <div className="mx-auto flex !h-dvh h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
       <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
         {fetchStatus === 'fetching' && <>fetching...</>}
         {status === 'success' && fetchStatus === 'idle' && (
