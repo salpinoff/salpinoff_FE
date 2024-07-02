@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const copyToClipboard = async (url?: string) => {
+const ShareByLink = async (url: string) => {
   if (typeof window === 'undefined') return false;
 
   try {
@@ -28,4 +28,4 @@ const copyToClipboard = async (url?: string) => {
   return false;
 };
 
-export default copyToClipboard;
+export default ShareByLink;
