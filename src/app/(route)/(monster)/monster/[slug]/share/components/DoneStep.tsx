@@ -35,7 +35,7 @@ export default function DoneStep({ goNext }: DoneStepProps) {
           }}
         >
           <Image
-            src="/images/action-icons/heart0000.png"
+            src="/images/heart0000.png"
             width={108}
             height={108}
             alt="하트"

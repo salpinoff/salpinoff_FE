@@ -15,8 +15,8 @@ type MonsterCounterBoxPropps = CharacterCanvasProps &
     clear?: boolean;
   };
 
-const HEART_IMAGE_URL = '/images/action-icons/heart0000.png';
-const THUNDER_IMAGE_URL = '/images/action-icons/thunder0000.png';
+const HEART_IMAGE_URL = '/images/heart0000.png';
+const THUNDER_IMAGE_URL = '/images/thunder0000.png';
 
 const ImageMap = {
   mad: THUNDER_IMAGE_URL,
