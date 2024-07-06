@@ -55,7 +55,7 @@ export default function MonsterCounterBox({
           width: 50,
           height: 50,
         },
-        particleNumber: 100,
+        particleNumber: 10,
         speed: 3,
       });
     }
