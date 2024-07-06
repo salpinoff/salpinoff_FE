@@ -8,7 +8,7 @@ import { debounce } from 'lodash';
 
 import BaseText from '@components/common/Text/BaseText';
 
-type CounterBoxProps = PropsWithChildren & {
+export type CounterBoxProps = PropsWithChildren & {
   startAt: number;
   endAt: number;
   step?: number;
@@ -130,7 +130,7 @@ export default function CounterBox({
       <BaseText
         variant="heading-1"
         color="normal"
-        className="fixed bottom-0 left-0 right-0 top-0 m-auto h-[50px] w-[50px] select-none overflow-hidden rounded-8 bg-[#ffffff10] text-center leading-[50px] backdrop-blur-sm"
+        className="pointer-events-none fixed bottom-0 left-0 right-0 top-0 m-auto h-[50px] w-[50px] select-none overflow-hidden rounded-8 bg-[#ffffff10] text-center leading-[50px] backdrop-blur-sm"
         style={{
           visibility:
             count !== 0 && count + startAt < endAt ? 'visible' : 'hidden',
