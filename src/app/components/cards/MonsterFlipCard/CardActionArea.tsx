@@ -1,10 +1,19 @@
-import { PropsWithChildren } from 'react';
+import { ComponentProps } from 'react';
 
-type CardActionAreaProps = PropsWithChildren;
+import cn from '@utils/cn';
 
-export default function CardActionArea({ children }: CardActionAreaProps) {
+type CardActionAreaProps = ComponentProps<'div'>;
+
+export default function CardActionArea({
+  className,
+  children,
+  ...rest
+}: CardActionAreaProps) {
   return (
-    <div className="relative h-full w-full rounded-t-[28px] p-16">
+    <div
+      className={cn('relative h-full w-full rounded-t-[28px] p-16', className)}
+      {...rest}
+    >
       {children}
     </div>
   );
