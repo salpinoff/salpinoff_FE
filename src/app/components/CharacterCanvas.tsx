@@ -5,7 +5,7 @@ import useCanvas from '@hooks/useCanvas';
 import cn from '@utils/cn';
 import getImagePath from '@utils/get-image-path';
 
-type CharacterCanvasProps = ComponentPropsWithoutRef<'canvas'> & {
+export type CharacterCanvasProps = ComponentPropsWithoutRef<'canvas'> & {
   type?: 'mad' | 'sad';
   status?: 'before' | 'after';
   background?: string;
@@ -20,7 +20,7 @@ export default function CharacterCanvas({
   items = [],
   ...rest
 }: CharacterCanvasProps) {
-  const canvasRef = useCanvas();
+  const canvasRef = useCanvas(480, 480); // X2
 
   const fillBackground = (ctx: CanvasRenderingContext2D, fillStyle: string) => {
     ctx.fillStyle = fillStyle;
@@ -42,14 +42,19 @@ export default function CharacterCanvas({
     sources: string[],
     fillStyle?: string,
   ) => {
-    const images = await Promise.all(sources.map((src) => loadImage(src)));
+    const { width, height } = ctx.canvas;
 
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    const images = await Promise.all(sources.map((src) => loadImage(src)));
+    ctx.clearRect(0, 0, width, height);
 
     if (fillStyle) fillBackground(ctx, fillStyle);
 
     images.forEach((image) => {
-      ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
+      const scale = Math.min(width / image.width, height / image.height);
+      const dw = image.width * scale;
+      const dh = image.height * scale;
+
+      ctx.drawImage(image, 0, 0, dw, dh);
     });
   };
 
