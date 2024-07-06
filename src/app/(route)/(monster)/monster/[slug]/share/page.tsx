@@ -2,10 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-
-import { useSetAtom } from 'jotai';
 
 import { useMutation } from '@tanstack/react-query';
 
@@ -18,8 +16,6 @@ import { validate } from '@utils/validate';
 
 import { sendEncouragement } from '@api/encouragement';
 import { SendEncouragementRequest } from '@api/encouragement/types';
-
-import { idAtom } from '@store/monsterAtom';
 
 import DoneStep from './components/DoneStep';
 import EncouragementStep from './components/EncouragementStep';
@@ -55,8 +51,6 @@ export default function SharePage({ params }: { params: { slug: string } }) {
     <ExpiredModal closeModal={closeModal} />
   ));
 
-  const setId = useSetAtom(idAtom);
-
   const { update } = useContext(GuestDispatchContext);
 
   const { mutate: send } = useMutation<
@@ -72,12 +66,6 @@ export default function SharePage({ params }: { params: { slug: string } }) {
       }
     },
   });
-
-  useEffect(() => {
-    if (monsterId) setId(monsterId);
-
-    return () => setId('');
-  }, [monsterId]);
 
   if (!monsterId) throw new Error(ERROR_MESSAGE.NOT_FOUND);
   if (!validate.monsterId(monsterId)) throw new Error(ERROR_MESSAGE.INVALID);
