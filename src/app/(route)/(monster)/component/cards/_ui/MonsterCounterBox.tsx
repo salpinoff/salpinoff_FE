@@ -51,7 +51,7 @@ export default function MonsterCounterBox({
   onComplete,
 }: MonsterCounterBoxPropps) {
   const canvasRef = useCanvas(580, 720); // X2
-  const { addConfetti } = useConfetti(canvasRef);
+  const { addConfetti, destroyCanvas } = useConfetti(canvasRef);
 
   const [isMouseDown, setIsMouseDown] = useState(false);
 
@@ -64,6 +64,10 @@ export default function MonsterCounterBox({
     leading: false,
     trailing: true,
   });
+
+  if (clear) {
+    destroyCanvas();
+  }
 
   useEffect(() => {
     if (isMouseDown) {
