@@ -11,3 +11,11 @@ export interface TokenResponse {
    */
   code: 100 | 101 | 102;
 }
+
+export type Response = {
+  accessToken: string;
+};
+
+export type Session = Response & {
+  status: 'authenticated' | 'unauthenticated';
+};

@@ -1,13 +1,6 @@
 import { baseInstance } from '@api/api.config';
 import { API_URLS } from '@api/api.constants';
-
-type Response = {
-  accessToken: string;
-};
-
-type Session = Response & {
-  status: 'authenticated' | 'unauthenticated';
-};
+import { Session, Response } from '@api/schema/token';
 
 const getSession = async () => {
   const path = API_URLS.AUTH.BASE.SESSION;
