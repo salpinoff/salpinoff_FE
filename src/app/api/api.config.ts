@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { getQueryClient } from '@utils/query/get-query-client';
 
 import { API_URLS } from './api.constants';
+import AuthFactory from './auth/query';
 import { Session } from './schema/token';
 
 /** axios */
@@ -78,7 +79,7 @@ apiInstance.interceptors.response.use(
           API_URLS.AUTH.BASE.SESSION,
         );
 
-        queryClient.invalidateQueries({ queryKey: ['authToken'] });
+        queryClient.invalidateQueries({ queryKey: AuthFactory.token.queryKey });
         setAuthHeader(accessToken);
 
         originalRequest.headers = {

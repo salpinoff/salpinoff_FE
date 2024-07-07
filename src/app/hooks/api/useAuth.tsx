@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { setAuthHeader } from '@api/api.config';
 import { getSession, updateSession } from '@api/auth/base/session';
+import AuthFactory from '@api/auth/query';
 
 const useAuth = (): {
   status: 'loading' | 'authenticated' | 'unauthenticated' | 'error';
@@ -11,7 +12,7 @@ const useAuth = (): {
   const queryClient = useQueryClient();
 
   const { data: session, error } = useQuery({
-    queryKey: ['authToken'],
+    queryKey: AuthFactory.token.queryKey,
     queryFn: getSession,
     retry: false,
     staleTime: 1000 * 60 * 5, // 5분 동안 토큰이 신선하다고 간주
