@@ -12,17 +12,14 @@ import Button from '@components/common/Button';
 
 import useModal from '@hooks/useModal';
 
+import generateShareUrl from '@utils/client/generate-share-url';
+
 import { useMonster } from '@api/monster/query/hooks';
 import { GetMonsterResponse } from '@api/monster/types';
 import { DecorationType, Emotion } from '@api/schema/monster';
 
-import { GuideMessage, ShareModal, AnimatedSpreadCard } from './components';
-import {
-  copyToClipboard,
-  generateShareUrl,
-  isValidURL,
-  shareToKakao,
-} from './lib';
+import { GuideMessage, AnimatedSpreadCard } from './components';
+import ShareModal from '../../../../../components/modals/ShareModal';
 
 export default function MonsterResultPage({
   params,
@@ -36,22 +33,7 @@ export default function MonsterResultPage({
 
   const { error, isError, status, fetchStatus, data } = useMonster(monsterId);
 
-  const SHARE_URL = generateShareUrl(monsterId);
-
-  const shareLink = async () => {
-    if (SHARE_URL && isValidURL(SHARE_URL)) {
-      // const success = await copyToClipboard(SHARE_URL);
-      // toast(success ? '링크를 복사했어요.' : '링크를 복사할 수 없어요.');
-
-      await copyToClipboard(SHARE_URL);
-    }
-  };
-
-  const shareKakao = () => {
-    if (SHARE_URL && isValidURL(SHARE_URL)) {
-      shareToKakao(SHARE_URL);
-    }
-  };
+  const SHARE_URL = generateShareUrl(monsterId) ?? '';
 
   useEffect(() => {
     if (data) {
@@ -65,12 +47,11 @@ export default function MonsterResultPage({
 
   const { openModal, closeModal } = useModal(() => (
     <ShareModal
+      url={SHARE_URL}
       onShareByLink={() => {
-        shareLink();
         closeModal();
       }}
       onShareViaKakao={() => {
-        shareKakao();
         closeModal();
       }}
     />

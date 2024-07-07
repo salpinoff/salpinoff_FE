@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SquareMonsterCard from './SquareMonsterCard';
+import SquareMonsterCard from '.';
 
 const meta = {
   title: 'Components/Cards/SquareMonsterCard',
