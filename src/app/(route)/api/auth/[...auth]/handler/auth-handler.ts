@@ -11,11 +11,16 @@ import refreshTokenApi from '@api/auth/token/refresh-token';
 
 import { AuthType, Providers } from '@type/auth';
 
-import { deleteCookie, getCookie, setCookie } from './utils/cookie';
-import { decrypt, encrypt } from './utils/crypto';
-import isTimeRemain from './utils/is-time-remain';
-import { redirectResponse } from './utils/redirect';
-import tokenPrefix from './utils/token-prefix';
+import { deleteCookie, getCookie, setCookie } from '../utils/cookie';
+import {
+  createCSRFToken,
+  decrypt,
+  encrypt,
+  verifyCSRFToken,
+} from '../utils/crypto';
+import isTimeRemain from '../utils/is-time-remain';
+import { redirectResponse } from '../utils/redirect';
+import tokenPrefix from '../utils/token-prefix';
 
 type Props = {
   request: NextRequest;
@@ -102,7 +107,6 @@ const authHandler = ({ request, params, secret }: Props) => {
             );
           }
         }
-
         default:
           return NextResponse.next();
       }
@@ -147,6 +151,24 @@ const authHandler = ({ request, params, secret }: Props) => {
             status: accessToken ? 'authenticated' : 'unauthenticated',
             accessToken: decrypt(accessToken || '', secret),
           });
+        }
+        case 'csrf': {
+          const { csrfToken } = getCookie([tokenPrefix('csrfToken')], request);
+
+          if (csrfToken && verifyCSRFToken(csrfToken, secret)) {
+            return NextResponse.next();
+          }
+
+          const response = NextResponse.json({});
+          const cookies = [
+            {
+              key: tokenPrefix('csrfToken'),
+              value: createCSRFToken(secret),
+              proteced: true,
+            },
+          ];
+
+          return setCookie(cookies, response);
         }
         default:
           return NextResponse.next();

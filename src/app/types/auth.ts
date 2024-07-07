@@ -1,3 +1,3 @@
 export type Providers = 'kakao';
 
-export type AuthType = 'signin' | 'signout' | 'session';
+export type AuthType = 'signin' | 'signout' | 'session' | 'csrf';
