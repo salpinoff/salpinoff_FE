@@ -49,6 +49,7 @@ function MessageList() {
     retry: 1,
     initialPageParam: 1,
     queryKey: key({ monsterId: `${monsterId}` }),
+    staleTime: 0,
     queryFn: ({ pageParam = 1 }) =>
       fetcher({ monsterId: Number(monsterId), page: pageParam }),
     getNextPageParam: ({ nextPage }: LastPage) => {

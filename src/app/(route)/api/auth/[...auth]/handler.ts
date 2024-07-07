@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { isAxiosError } from 'axios';
 
-import jwtParse from '@utils/jwt-parse';
 import qs from '@utils/qs';
 
 import { providers } from '@constant/auth/providers';
@@ -14,6 +13,7 @@ import { AuthType, Providers } from '@type/auth';
 
 import { deleteCookie, getCookie, setCookie } from './utils/cookie';
 import { decrypt, encrypt } from './utils/crypto';
+import isTimeRemain from './utils/is-time-remain';
 import { redirectResponse } from './utils/redirect';
 import tokenPrefix from './utils/token-prefix';
 
@@ -26,6 +26,7 @@ type Props = {
 const authHandler = ({ request, params, secret }: Props) => {
   const { method } = request;
   const [authType, providerId] = params;
+  const nextUrl = request.nextUrl.clone();
 
   const handlers: Record<typeof method, () => Promise<NextResponse>> = {
     post: async () => {
@@ -41,7 +42,8 @@ const authHandler = ({ request, params, secret }: Props) => {
               );
         }
         case 'signout': {
-          const respone = NextResponse.redirect('/signin', { status: 302 });
+          nextUrl.pathname = '/signin';
+          const respone = NextResponse.redirect(nextUrl, { status: 302 });
 
           return deleteCookie(
             [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
@@ -65,11 +67,7 @@ const authHandler = ({ request, params, secret }: Props) => {
             const decryptAccessToken = decrypt(oldAccessToken, secret);
             const decryptRefreshToken = decrypt(oldRefreshToken, secret);
 
-            const { exp } = jwtParse(decryptAccessToken);
-            const timeRemaing =
-              exp - (Math.floor(new Date().getTime() / 1000) + 10 * 60);
-
-            if (timeRemaing > 0) {
+            if (isTimeRemain(decryptAccessToken)) {
               return NextResponse.json({ accessToken: oldAccessToken });
             }
 
@@ -140,15 +138,14 @@ const authHandler = ({ request, params, secret }: Props) => {
           }
         }
         case 'session': {
-          const accessTokenCookie = request.cookies.get(
-            tokenPrefix('accessToken'),
+          const { accessToken } = getCookie(
+            [tokenPrefix('accessToken')],
+            request,
           );
 
           return NextResponse.json({
-            status: accessTokenCookie ? 'authenticated' : 'unauthenticated',
-            accessToken: accessTokenCookie
-              ? decrypt(accessTokenCookie.value, secret)
-              : '',
+            status: accessToken ? 'authenticated' : 'unauthenticated',
+            accessToken: decrypt(accessToken || '', secret),
           });
         }
         default:
