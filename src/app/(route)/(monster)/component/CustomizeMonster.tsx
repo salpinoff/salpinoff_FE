@@ -141,7 +141,7 @@ function CustomizeMonster() {
         value={type}
         onChange={handleFilterChange}
       >
-        <Tabs.Tab label="배경색" value={DecorationType.BACKGROUND_COLOR} />
+        <Tabs.Tab label="배경" value={DecorationType.BACKGROUND_COLOR} />
         <Tabs.Tab label="모자" value={DecorationType.CAP} />
         <Tabs.Tab label="얼굴" value={DecorationType.FACE} />
         <Tabs.Tab label="소품" value={DecorationType.ACCESSORY} />
