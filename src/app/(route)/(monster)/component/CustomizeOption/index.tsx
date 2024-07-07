@@ -1,26 +1,25 @@
+import Image from 'next/image';
+
 import React from 'react';
 
 import FormControlLabel, {
   type FormControlLabelProps,
 } from '@components/common/FormControlLabel';
 
-import { DecorationType } from '@api/schema/monster';
-
-import { Color, type ColorProps } from './Color';
-import { ImageItem } from './ImageItem';
+import { DecorationType, DecorationTypes } from '@api/schema/monster';
 
 type CustomizeOptionProps = Omit<
   FormControlLabelProps<'label'>,
   'label' | 'control' | 'value'
 > & {
-  name: keyof typeof DecorationType;
+  name: DecorationTypes;
 };
 
 const OptionLookUpTable = {
-  [DecorationType.BACKGROUND_COLOR]: Color,
-  [DecorationType.ACCESORY]: ImageItem,
-  [DecorationType.STICKER]: ImageItem,
-  [DecorationType.SPEECH_BUBBLE]: ImageItem,
+  [DecorationType.BACKGROUND_COLOR]: 'div',
+  [DecorationType.CAP]: Image,
+  [DecorationType.FACE]: Image,
+  [DecorationType.ACCESSORY]: Image,
 };
 
 export default function CustomizeOption({
@@ -29,26 +28,39 @@ export default function CustomizeOption({
   checked,
   onChange,
 }: CustomizeOptionProps) {
-  if (typeof OptionLookUpTable[name] !== 'undefined') {
-    const labelProps =
+  if (OptionLookUpTable[name]) {
+    const Label =
       name === DecorationType.BACKGROUND_COLOR
-        ? ({
-            color: id,
-          } as ColorProps)
-        : {};
+        ? React.createElement(OptionLookUpTable[name], {
+            className:
+              'relative aspect-square min-h-[36px] min-w-[36px]	rounded-circular',
+            style: {
+              background: id,
+            },
+          })
+        : React.createElement(OptionLookUpTable[name], {
+            alt: id.toLowerCase(),
+            // TODO 경로 하드코딩 수정
+            src: `/images/items/preview/${id}0000.png`,
+            width: 52,
+            height: 52,
+            // placeholder: 'blur',
+            // blurDataURL: '',
+          });
 
     return (
       <FormControlLabel
-        className="relative flex aspect-square h-64 w-64 items-center justify-center rounded-[16px] border-2 border-transparent bg-[#70737C38] p-[14px] has-[:checked]:!border-common-100 has-[:checked]:bg-cool-neutral-7"
+        className="relative flex aspect-square h-64 w-64 items-center justify-center rounded-[16px] border-2 border-transparent bg-[#70737C38] p-4 has-[:checked]:!border-common-100 has-[:checked]:bg-cool-neutral-7"
         id={id}
         name={name}
         value={id}
         checked={checked}
-        label={React.createElement(OptionLookUpTable[name], labelProps)}
-        control={<input className="a11yHidden" type="radio" />}
+        label={Label}
+        control={<input className="a11yHidden" type="checkbox" />}
         onChange={onChange}
       />
     );
   }
+
   return <div>존재하지 않습니다.</div>;
 }

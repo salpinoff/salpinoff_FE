@@ -13,9 +13,10 @@ export const config = {
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
+     * - image
      * - favicon.ico (favicon file)
      * - monster/\\S+/share (share page)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|monster/\\S+/share).*)',
+    '/((?!api|_next/static|_next/image|image|favicon.ico|monster/\\S+/share).*)',
   ],
 };
