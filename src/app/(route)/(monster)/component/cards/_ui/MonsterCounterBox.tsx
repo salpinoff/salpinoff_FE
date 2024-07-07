@@ -18,9 +18,27 @@ type MonsterCounterBoxPropps = CharacterCanvasProps &
 const HEART_IMAGE_URL = '/images/heart0000.png';
 const THUNDER_IMAGE_URL = '/images/thunder0000.png';
 
-const ImageMap = {
-  mad: THUNDER_IMAGE_URL,
-  sad: HEART_IMAGE_URL,
+const ConfettiMap = {
+  mad: {
+    image: {
+      src: THUNDER_IMAGE_URL,
+      width: 75,
+      height: 75,
+    },
+    start: 'center',
+    speed: 10,
+    particleNumber: 10,
+  },
+  sad: {
+    image: {
+      src: HEART_IMAGE_URL,
+      width: 50,
+      height: 50,
+    },
+    start: 'center',
+    speed: 6,
+    particleNumber: 10,
+  },
 } as const;
 
 export default function MonsterCounterBox({
@@ -49,15 +67,7 @@ export default function MonsterCounterBox({
 
   useEffect(() => {
     if (isMouseDown) {
-      addConfetti({
-        image: {
-          src: ImageMap[type],
-          width: 50,
-          height: 50,
-        },
-        particleNumber: 10,
-        speed: 3,
-      });
+      addConfetti(ConfettiMap[type]);
     }
   }, [isMouseDown]);
 
