@@ -6,6 +6,7 @@ const MEMBER_BASE = '/members';
 export const API_URLS = {
   AUTH: {
     BASE: {
+      CSRF: `${AUTH_BASE}/csrf`,
       SESSION: `${AUTH_BASE}/session`,
       SIGNOUT: `${AUTH_BASE}/signout`,
       SIGNIN: {
