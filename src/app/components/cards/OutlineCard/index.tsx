@@ -13,8 +13,8 @@ const cardStyles = cva(
 
 export type OutlineCardProps = VariantProps<typeof cardStyles> &
   React.ComponentPropsWithRef<'div'> & {
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
   };
 
 const OutlineCard = forwardRef<HTMLDivElement, OutlineCardProps>(

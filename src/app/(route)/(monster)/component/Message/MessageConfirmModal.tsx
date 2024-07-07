@@ -55,7 +55,7 @@ function MessageConfirmModal({
 
   return (
     <Modal open>
-      <Modal.Dimmed />
+      <Modal.Dimmed blur />
       <Modal.Content className="w-[calc(100vw-64px)] items-center bg-transparent p-0">
         <section
           ref={modalRef}
@@ -117,7 +117,8 @@ function MessageConfirmModal({
 
         <Button
           onTouchEnd={handleClick}
-          className="w-[52.5%]"
+          // className="w-[52.5%]"
+          size="medium"
           variant={messageRead ? 'secondary' : 'primary'}
         >
           <BaseText

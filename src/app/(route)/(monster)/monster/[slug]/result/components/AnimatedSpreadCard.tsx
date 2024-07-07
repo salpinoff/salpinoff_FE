@@ -2,9 +2,9 @@ import { PropsWithChildren } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-import OutlineCard from '@components/OutlineCard';
+import OutlineCard from '@components/cards/OutlineCard';
 
-import SquareMonsterCard from 'src/app/(route)/(monster)/component/SquareMonsterCard';
+import SquareMonsterCard from 'src/app/(route)/(monster)/component/cards/SquareMonsterCard';
 
 const MotionSquareShadeCard = motion(OutlineCard);
 const MotionSquareMonsterCard = motion(SquareMonsterCard);
