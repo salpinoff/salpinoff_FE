@@ -77,12 +77,13 @@ function getImagePath(
 
 function getImagePath(type: keyof DirPath, name?: string): string {
   if (type !== 'base' && name) {
-    if (hasIn(imagePath, [type, name])) {
-      return get(imagePath, [type, name])();
+    if (hasIn(imagePath, [type, name.toLowerCase()])) {
+      return get(imagePath, [type, name.toLowerCase()])();
     }
+    return '';
   }
 
-  return `/${dirPath.base.join('/')}`;
+  return `${dirPath.base.join('/')}`;
 }
 
 export default getImagePath;
