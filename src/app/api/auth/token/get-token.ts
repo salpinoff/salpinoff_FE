@@ -1,3 +1,7 @@
+'use server';
+
+import { converHeaderToRecord } from '@utils/server/convert-header-to-record';
+
 import { apiInstance } from '@api/api.config';
 import { API_URLS } from '@api/api.constants';
 import type { TokenResponse } from '@api/schema/token';
@@ -11,8 +15,13 @@ type Props = {
 
 const requestUserToken = ({ code, provider }: Props) => {
   const path = API_URLS.AUTH.API.GET_TOKEN[provider];
+  const requestHeader = converHeaderToRecord();
 
-  return apiInstance.post<TokenResponse>(path, { code });
+  return apiInstance.post<TokenResponse>(
+    path,
+    { code },
+    { headers: requestHeader },
+  );
 };
 
 export default requestUserToken;
