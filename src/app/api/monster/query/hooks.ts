@@ -32,7 +32,7 @@ export const useModifyMonster = (id: string) => {
     mutationFn: (data) => modifyMonster(id, data),
     onSuccess: (_, variables) => {
       queryClient.setQueryData(
-        MonsterQueryFactory.detail(id).queryKey,
+        MonsterQueryFactory.reference.queryKey,
         (oldData: object) =>
           merge(oldData, {
             data: variables,
