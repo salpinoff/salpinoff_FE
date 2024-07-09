@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { debounce } from 'lodash';
 
@@ -43,6 +43,7 @@ const ConfettiMap = {
 
 export default function MonsterCounterBox({
   type = 'sad',
+  background,
   items,
   startAt,
   endAt,
@@ -69,41 +70,31 @@ export default function MonsterCounterBox({
     destroyCanvas();
   }
 
-  useEffect(() => {
-    if (isMouseDown) {
-      addConfetti(ConfettiMap[type]);
-    }
-  }, [isMouseDown]);
-
   return (
-    <>
-      <CounterBox
-        startAt={startAt}
-        endAt={endAt}
-        onCount={onCount}
-        onComplete={onComplete}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-      >
-        <div className="h-[240px] w-[240px] pb-[32px]">
-          {/* Layer0: 기본 캐릭터 */}
-          <CharacterCanvas
-            className="h-full w-full"
-            type={type}
-            status={clear || isMouseDown ? 'after' : 'before'}
-          />
-          {/* Layer1: 캐릭터 아이템 */}
-          <CharacterCanvas
-            className="absolute left-0 top-0 h-full w-full"
-            items={items}
-          />
-          {/* Layer2: 이펙트 */}
-        </div>
-      </CounterBox>
-      <canvas
-        ref={canvasRef}
-        className="pointer-events-none absolute h-full w-full select-none"
-      />
-    </>
+    <CounterBox
+      startAt={startAt}
+      endAt={endAt}
+      onCount={(count) => {
+        onCount(count);
+        addConfetti(ConfettiMap[type]);
+      }}
+      onComplete={onComplete}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
+      <div className="h-inherit w-inherit pb-[32px]">
+        <CharacterCanvas
+          background={background}
+          className="h-full w-full"
+          type={type}
+          items={items}
+          status={clear || isMouseDown ? 'after' : 'before'}
+        />
+        <canvas
+          ref={canvasRef}
+          className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
+        />
+      </div>
+    </CounterBox>
   );
 }
