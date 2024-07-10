@@ -43,23 +43,22 @@ export default function CharacterCanvas({
     fillStyle?: string,
   ) => {
     const { width, height } = ctx.canvas;
+    try {
+      const images = await Promise.all(sources.map((src) => loadImage(src)));
+      ctx.clearRect(0, 0, width, height);
 
-    const images = await Promise.all(sources.map((src) => loadImage(src)));
-    ctx.clearRect(0, 0, width, height);
+      if (fillStyle) fillBackground(ctx, fillStyle);
 
-    if (fillStyle) fillBackground(ctx, fillStyle);
+      images.forEach((image) => {
+        const scale = Math.min(width / image.width, height / image.height);
+        const dw = image.width * scale;
+        const dh = image.height * scale;
 
-    images.forEach((image) => {
-      const scale = Math.min(width / image.width, height / image.height);
-
-      const dw = image.width * scale;
-      const dh = image.height * scale;
-
-      console.log('dw :: ', dw);
-      console.log('dh :: ', dh);
-
-      ctx.drawImage(image, (width - dw) / 2, (height - dh) / 2, dw, dh);
-    });
+        ctx.drawImage(image, (width - dw) / 2, (height - dh) / 2, dw, dh);
+      });
+    } catch (error) {
+      console.error('Error loading images:', error);
+    }
   };
 
   useEffect(() => {
