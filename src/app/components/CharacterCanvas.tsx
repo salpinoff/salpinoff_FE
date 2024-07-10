@@ -20,7 +20,7 @@ export default function CharacterCanvas({
   items = [],
   ...rest
 }: CharacterCanvasProps) {
-  const canvasRef = useCanvas(480, 480); // X2
+  const canvasRef = useCanvas(480, 720); // X2
 
   const fillBackground = (ctx: CanvasRenderingContext2D, fillStyle: string) => {
     ctx.fillStyle = fillStyle;
@@ -51,10 +51,14 @@ export default function CharacterCanvas({
 
     images.forEach((image) => {
       const scale = Math.min(width / image.width, height / image.height);
+
       const dw = image.width * scale;
       const dh = image.height * scale;
 
-      ctx.drawImage(image, 0, 0, dw, dh);
+      console.log('dw :: ', dw);
+      console.log('dh :: ', dh);
+
+      ctx.drawImage(image, (width - dw) / 2, (height - dh) / 2, dw, dh);
     });
   };
 
