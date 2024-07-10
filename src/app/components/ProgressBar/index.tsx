@@ -45,7 +45,7 @@ export default function ProgressBar({
           component="span"
           variant="label-1"
           weight="semibold"
-          className="w-2/12 text-right"
+          className="pointer-event-none w-2/12 select-none text-right"
         >
           {label === 'percent' && `${percent.toFixed(fractionDigits)}%`}
           {label === 'numeric' && `${value}/${max}`}
