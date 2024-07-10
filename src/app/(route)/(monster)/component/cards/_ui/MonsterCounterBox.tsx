@@ -15,13 +15,10 @@ type MonsterCounterBoxPropps = CharacterCanvasProps &
     clear?: boolean;
   };
 
-const HEART_IMAGE_URL = '/images/heart0000.png';
-const THUNDER_IMAGE_URL = '/images/thunder0000.png';
-
 const ConfettiMap = {
   mad: {
     image: {
-      src: THUNDER_IMAGE_URL,
+      src: '/images/thunder0000.png',
       width: 75,
       height: 75,
     },
@@ -31,7 +28,7 @@ const ConfettiMap = {
   },
   sad: {
     image: {
-      src: HEART_IMAGE_URL,
+      src: '/images/heart0000.png',
       width: 50,
       height: 50,
     },
@@ -56,6 +53,11 @@ export default function MonsterCounterBox({
 
   const [isMouseDown, setIsMouseDown] = useState(false);
 
+  const handleCount = (count: number) => {
+    onCount(count);
+    addConfetti(ConfettiMap[type]);
+  };
+
   const handleMouseDown = debounce(() => !clear && setIsMouseDown(true), 5000, {
     leading: true,
     trailing: false,
@@ -71,30 +73,27 @@ export default function MonsterCounterBox({
   }
 
   return (
-    <CounterBox
-      startAt={startAt}
-      endAt={endAt}
-      onCount={(count) => {
-        onCount(count);
-        addConfetti(ConfettiMap[type]);
-      }}
-      onComplete={onComplete}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-    >
-      <div className="h-inherit w-inherit pb-[32px]">
+    <>
+      <CounterBox
+        startAt={startAt}
+        endAt={endAt}
+        onCount={handleCount}
+        onComplete={onComplete}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+      >
         <CharacterCanvas
-          background={background}
           className="h-full w-full"
           type={type}
-          items={items}
           status={clear || isMouseDown ? 'after' : 'before'}
+          items={items}
+          background={background}
         />
-        <canvas
-          ref={canvasRef}
-          className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
-        />
-      </div>
-    </CounterBox>
+      </CounterBox>
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
+      />
+    </>
   );
 }
