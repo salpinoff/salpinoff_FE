@@ -5,7 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { useAtomValue } from 'jotai';
 
-import { QueryErrorResetBoundary, useQueryClient } from '@tanstack/react-query';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import RefreshSVG from '@public/icons/refresh.svg';
 
@@ -16,9 +16,11 @@ import BottomSheetHeader from '@components/common/BottomSheet/BottomSheetHeader'
 import BaseText from '@components/common/Text/BaseText';
 
 import cn from '@utils/cn';
+import { getQueryClient } from '@utils/query/get-query-client';
 
 import MessageQueryFactory from '@api/message/query/factory';
 import { getRefMonster } from '@api/monster';
+import MonsterQueryFactory from '@api/monster/query/factory';
 
 import { Unpromise } from '@type/util';
 
@@ -31,8 +33,10 @@ type RepMonster = Unpromise<ReturnType<typeof getRefMonster>>;
 function MessageBottomSheet() {
   const totalCount = useAtomValue(totalMessageAtom);
 
-  const queryClient = useQueryClient();
-  const repMonster = queryClient.getQueryData<RepMonster>(['my-monster']);
+  const queryClient = getQueryClient();
+  const repMonster = queryClient.getQueryData<RepMonster>([
+    ...MonsterQueryFactory.reference.queryKey,
+  ]);
 
   const [isFetching, setIsFetching] = useState(false);
 

@@ -6,13 +6,17 @@ import BaseText from '@components/common/Text/BaseText';
 
 import useDrawer from '@hooks/useDrawer';
 
+import signOut from 'src/app/(route)/(auth)/signin/utils/signout';
+
 import Section from './Section';
 
 function Menu() {
   const { closeDrawer } = useDrawer();
 
+  const handleSignout = () => signOut({ callbackUrl: '/signin' });
+
   return (
-    <aside className="h-dvh bg-black px-20">
+    <aside className="full-height full-height-ios bg-black px-20">
       <header className="flex w-full items-center justify-center py-3 text-white">
         <button className="h-24 w-24" onClick={closeDrawer}>
           <span className="a11yHidden">뒤로가기</span>
@@ -39,7 +43,7 @@ function Menu() {
         <Section.Item component="a" href="/">
           프로필 수정
         </Section.Item>
-        <Section.Item component="button" type="button">
+        <Section.Item type="button" component="button" onClick={handleSignout}>
           로그아웃
         </Section.Item>
       </Section>

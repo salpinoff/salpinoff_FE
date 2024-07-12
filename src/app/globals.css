@@ -4,14 +4,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --full-height: 100vh;
+  --full-height: 100dvh;
   --box-size: border-box;
-
-  @supports (-webkit-touch-callout: none) {
-    /* IOS Safari */
-    --full-height: -webkit-fill-available;
-    --box-size: content-box;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,14 +17,11 @@
 }
 
 html {
-  /* max-height: var(--full-height); */
   overflow: hidden;
 }
 
 body {
   margin: 0;
-  /* max-height: 100vh;
-  max-height: var(--full-height); */
   overflow: hidden;
 }
 
@@ -49,7 +40,11 @@ body {
   }
 
   .full-height {
-    height: var(--full-height);
+    height: 100dvh;
+  }
+
+  .full-height-ios {
+    height: -webkit-fill-available;
   }
 
   .height {
