@@ -1,10 +1,22 @@
-import { PropsWithChildren } from 'react';
+import { ComponentProps } from 'react';
 
-type CardContentProps = PropsWithChildren;
+import cn from '@utils/cn';
 
-export default function CardContent({ children }: CardContentProps) {
+type CardContentProps = ComponentProps<'div'>;
+
+export default function CardContent({
+  className,
+  children,
+  ...rest
+}: CardContentProps) {
   return (
-    <div className="flex h-[88px] w-full flex-col gap-12 rounded-b-[28px] bg-cool-neutral-7 px-20 py-12">
+    <div
+      className={cn(
+        'flex h-[88px] w-full flex-col gap-12 rounded-b-[28px] bg-cool-neutral-7 px-20 py-12 outline outline-cool-neutral-7',
+        className,
+      )}
+      {...rest}
+    >
       {children}
     </div>
   );

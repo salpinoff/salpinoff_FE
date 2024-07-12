@@ -7,17 +7,25 @@ import OutlineCard, {
 } from '@components/cards/OutlineCard';
 import BaseText from '@components/common/Text/BaseText';
 
+import cn from '@utils/cn';
+
 type SquareMonsterCardProps = OutlineCardProps & {
   name: string;
 };
 
 const SquareMonsterCard = forwardRef<HTMLDivElement, SquareMonsterCardProps>(
-  function SquareMonsterCard({ children, color, name, ...rest }, ref) {
+  function SquareMonsterCard(
+    { className, children, color, name, ...rest },
+    ref,
+  ) {
     return (
       <OutlineCard
         ref={ref}
         color={color}
-        className="aspect-square h-[240px] w-[240px] rounded-[36px]"
+        className={cn(
+          'aspect-square h-[240px] w-[240px] rounded-[36px]',
+          className,
+        )}
         {...rest}
       >
         {children}

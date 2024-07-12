@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { debounce } from 'lodash';
 
@@ -15,13 +15,10 @@ type MonsterCounterBoxPropps = CharacterCanvasProps &
     clear?: boolean;
   };
 
-const HEART_IMAGE_URL = '/images/heart0000.png';
-const THUNDER_IMAGE_URL = '/images/thunder0000.png';
-
 const ConfettiMap = {
   mad: {
     image: {
-      src: THUNDER_IMAGE_URL,
+      src: '/images/thunder0000.png',
       width: 75,
       height: 75,
     },
@@ -31,7 +28,7 @@ const ConfettiMap = {
   },
   sad: {
     image: {
-      src: HEART_IMAGE_URL,
+      src: '/images/heart0000.png',
       width: 50,
       height: 50,
     },
@@ -43,6 +40,7 @@ const ConfettiMap = {
 
 export default function MonsterCounterBox({
   type = 'sad',
+  background,
   items,
   startAt,
   endAt,
@@ -54,6 +52,11 @@ export default function MonsterCounterBox({
   const { addConfetti, destroyCanvas } = useConfetti(canvasRef);
 
   const [isMouseDown, setIsMouseDown] = useState(false);
+
+  const handleCount = (count: number) => {
+    onCount(count);
+    addConfetti(ConfettiMap[type]);
+  };
 
   const handleMouseDown = debounce(() => !clear && setIsMouseDown(true), 5000, {
     leading: true,
@@ -69,40 +72,27 @@ export default function MonsterCounterBox({
     destroyCanvas();
   }
 
-  useEffect(() => {
-    if (isMouseDown) {
-      addConfetti(ConfettiMap[type]);
-    }
-  }, [isMouseDown]);
-
   return (
     <>
       <CounterBox
         startAt={startAt}
         endAt={endAt}
-        onCount={onCount}
+        onCount={handleCount}
         onComplete={onComplete}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       >
-        <div className="h-[240px] w-[240px] pb-[32px]">
-          {/* Layer0: 기본 캐릭터 */}
-          <CharacterCanvas
-            className="h-full w-full"
-            type={type}
-            status={clear || isMouseDown ? 'after' : 'before'}
-          />
-          {/* Layer1: 캐릭터 아이템 */}
-          <CharacterCanvas
-            className="absolute left-0 top-0 h-full w-full"
-            items={items}
-          />
-          {/* Layer2: 이펙트 */}
-        </div>
+        <CharacterCanvas
+          className="h-full w-full"
+          type={type}
+          status={clear || isMouseDown ? 'after' : 'before'}
+          items={items}
+          background={background}
+        />
       </CounterBox>
       <canvas
         ref={canvasRef}
-        className="pointer-events-none absolute h-full w-full select-none"
+        className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
       />
     </>
   );

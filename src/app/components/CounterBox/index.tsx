@@ -1,4 +1,4 @@
-import { Dispatch, PropsWithChildren, SetStateAction, useMemo } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 
 import { atom, useAtom } from 'jotai';
 import { atomWithReset, useResetAtom } from 'jotai/utils';
@@ -14,7 +14,7 @@ export type CounterBoxProps = PropsWithChildren & {
   step?: number;
   delay?: number;
   helperText?: string;
-  onCount: Dispatch<SetStateAction<number>>;
+  onCount: (count: number) => void;
   onComplete?: () => void;
   onMouseDown?: () => void;
   onMouseUp?: () => void;
@@ -47,7 +47,7 @@ export default function CounterBox({
   const debouncedCount = useMemo(
     () =>
       debounce((clickCount) => {
-        onCount((prev) => Math.min(prev + clickCount * step, endAt));
+        onCount(clickCount * step);
         resetAtom();
       }, delay),
     [endAt, step, delay, onCount, resetAtom],
@@ -65,6 +65,7 @@ export default function CounterBox({
   return (
     <>
       <motion.div
+        className="h-full w-full"
         initial="hidden"
         animate="visible"
         variants={{
@@ -78,7 +79,7 @@ export default function CounterBox({
         }}
       >
         <motion.button
-          className="pointer absolute bottom-0 left-0 right-0 top-0 m-auto h-max w-max"
+          className="pointer m-auto h-full w-full"
           whileHover={{ scale: 1.15 }}
           whileTap={{
             scale: 0.8,
