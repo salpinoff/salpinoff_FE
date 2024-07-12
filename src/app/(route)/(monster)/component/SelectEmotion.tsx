@@ -5,7 +5,7 @@ import { ChangeEventHandler, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 
 import FormLabel from '@components/common/FormLabel';
-import FormHelperText from '@components/common/TextField/FormHelperText';
+import Tooltip from '@components/common/Tooltip';
 
 import cn from '@utils/cn';
 
@@ -69,9 +69,15 @@ function SelectEmotion() {
 
   return (
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
-      <FormHelperText component="legend" className="mb-12">
-        나의 감정
-      </FormHelperText>
+      <Tooltip
+        label="나의 감정"
+        content={`스트레스가 높을수록 퇴사몬을 \n 클리어하기 위해 더 많은 탭이 필요해요`}
+        className="mb-12"
+      >
+        <Tooltip.Label className="flex-none" />
+        <Tooltip.Content className="p-3" />
+      </Tooltip>
+
       <div
         className={cn(
           gridStyles({
