@@ -39,8 +39,8 @@ export default function EncouragementStep({
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <>
-      <div className="h-full w-full">
+    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] bg-gradient-to-b from-cool-neutral-5 to-[#253047] p-[20px] pt-[36px]">
+      <div className="max-w-dvw h-full w-[375px] w-full">
         <BaseText
           className="align-left mb-[40px]"
           component="h3"
@@ -71,6 +71,6 @@ export default function EncouragementStep({
           전송하기
         </Button>
       </nav>
-    </>
+    </section>
   );
 }

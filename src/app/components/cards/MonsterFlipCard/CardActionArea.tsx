@@ -11,7 +11,10 @@ export default function CardActionArea({
 }: CardActionAreaProps) {
   return (
     <div
-      className={cn('relative h-full w-full rounded-t-[28px] p-16', className)}
+      className={cn(
+        'relative h-full w-full select-none rounded-t-[28px] p-16',
+        className,
+      )}
       {...rest}
     >
       {children}

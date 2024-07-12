@@ -110,7 +110,7 @@ export default function SharedMonsterFlipCard({
         <BaseText
           variant="label-2"
           weight="semibold"
-          className="absolute left-0 right-0 mx-auto w-max p-16 text-cool-neutral-22"
+          className="absolute left-0 right-0 z-[10] mx-auto w-max p-16 text-cool-neutral-22"
         >
           {monster.ownerName}님의 퇴사몬
         </BaseText>
@@ -119,7 +119,11 @@ export default function SharedMonsterFlipCard({
           type={monster.type}
           clear={clear}
           startAt={totalCount}
-          onCount={setTotalCount}
+          onCount={(count) => {
+            setTotalCount((prev) =>
+              Math.min(prev + count, monster.interactionCount),
+            );
+          }}
           endAt={monster.interactionCountPerEncouragement}
           onComplete={onComplete}
         />

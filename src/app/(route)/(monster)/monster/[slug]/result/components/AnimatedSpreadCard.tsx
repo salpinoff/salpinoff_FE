@@ -11,7 +11,7 @@ const MotionSquareMonsterCard = motion(SquareMonsterCard);
 
 type AnimatedSpreadCardProps = PropsWithChildren & {
   name: string;
-  color: string;
+  color?: string;
 };
 
 export default function AnimatedSpreadCard({
@@ -33,10 +33,10 @@ export default function AnimatedSpreadCard({
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: true, amount: 0.8 }}
-        className="h-[240px] w-[240px]"
+        className="my-[55px] h-[240px] w-[240px]"
       >
         <MotionSquareShadeCard
-          className="absolute aspect-square rounded-[36px] bg-cool-neutral-7 opacity-35"
+          className="absolute aspect-square rounded-[36px] bg-cool-neutral-7 opacity-35 will-change-transform"
           color={color}
           width={240}
           height={240}
@@ -50,6 +50,7 @@ export default function AnimatedSpreadCard({
           }}
         />
         <MotionSquareMonsterCard
+          className="will-change-transform"
           name={name}
           color={color}
           width={240}

@@ -5,9 +5,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import LogoSVG from '@public/icons/logo.svg';
-
 import Button from '@components/common/Button';
+import Header from '@components/Header';
 
 import SharedMonsterFlipCard from 'src/app/(route)/(monster)/component/cards/SharedMonsterFlipCard';
 import SharedMonsterFlipCardSkeleton from 'src/app/(route)/(monster)/component/cards/SharedMonsterFlipCard/Skeleton';
@@ -28,24 +27,25 @@ export default function InteractionStep({
   const { clear } = useContext(GuestContext);
 
   return (
-    <>
-      <header className="flex w-full items-center justify-center">
-        <LogoSVG width={115} height={20} />
-      </header>
-      <QueryErrorResetBoundary>
-        {({ reset }) => (
-          <ErrorBoundary FallbackComponent={Error} onReset={reset}>
-            <Suspense fallback={<SharedMonsterFlipCardSkeleton />}>
-              <SharedMonsterFlipCard
-                clear={clear}
-                monsterId={slug}
-                onComplete={onCompeleteInteraction}
-              />
-            </Suspense>
-          </ErrorBoundary>
-        )}
-      </QueryErrorResetBoundary>
-
+    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] bg-gradient-to-b from-cool-neutral-5 to-[#253047] px-[20px] pb-[20px]">
+      <div className="h-dvh">
+        <Header className="mb-[20px] justify-center">
+          <Header.Logo size={32} />
+        </Header>
+        <QueryErrorResetBoundary>
+          {({ reset }) => (
+            <ErrorBoundary FallbackComponent={Error} onReset={reset}>
+              <Suspense fallback={<SharedMonsterFlipCardSkeleton />}>
+                <SharedMonsterFlipCard
+                  clear={clear}
+                  monsterId={slug}
+                  onComplete={onCompeleteInteraction}
+                />
+              </Suspense>
+            </ErrorBoundary>
+          )}
+        </QueryErrorResetBoundary>
+      </div>
       <nav>
         <Button
           size="large"
@@ -56,6 +56,6 @@ export default function InteractionStep({
           응원메세지 작성하기
         </Button>
       </nav>
-    </>
+    </section>
   );
 }
