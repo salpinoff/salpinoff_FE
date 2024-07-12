@@ -156,7 +156,7 @@ const authHandler = ({ request, params, secret }: Props) => {
           const { csrfToken } = getCookie([tokenPrefix('csrfToken')], request);
 
           if (csrfToken && verifyCSRFToken(csrfToken, secret)) {
-            return NextResponse.next();
+            return NextResponse.json({ csrfToken });
           }
 
           const response = NextResponse.json({});
