@@ -3,6 +3,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { merge } from 'lodash';
 
+import { Adapter } from '@utils/client/adapter';
+import transformMonster from '@utils/client/transform-monster';
 import { getQueryClient } from '@utils/query/get-query-client';
 
 import { modifyMonster } from '..';
@@ -14,12 +16,12 @@ export const useMonster = (id: string) => {
   return useQuery<
     AxiosResponse<GetMonsterResponse>,
     AxiosError,
-    GetMonsterResponse,
+    ReturnType<typeof transformMonster<GetMonsterResponse>>,
     MonsterKeys['detail']['queryKey']
   >({
     ...MonsterQueryFactory.detail(id),
     enabled: !!id,
-    select: (data) => data.data,
+    select: (data) => Adapter.from(data.data).to(transformMonster),
   });
 };
 
@@ -30,7 +32,7 @@ export const useModifyMonster = (id: string) => {
     mutationFn: (data) => modifyMonster(id, data),
     onSuccess: (_, variables) => {
       queryClient.setQueryData(
-        MonsterQueryFactory.detail(id).queryKey,
+        MonsterQueryFactory.reference.queryKey,
         (oldData: object) =>
           merge(oldData, {
             data: variables,

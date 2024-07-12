@@ -13,12 +13,10 @@ function ShareLayout({ children }: Props) {
     <main
       style={{ touchAction: 'auto' }}
       className={cn(
-        'relative m-auto box-border	flex h-dvh w-full max-w-[414px] flex-col items-center overflow-auto overscroll-none p-20',
+        'relative m-auto box-border	flex h-dvh w-full flex-col items-center overflow-hidden overscroll-none',
       )}
     >
-      <section className="flex h-full w-full flex-col items-center justify-between gap-[28px]">
-        <GuestProvider>{children}</GuestProvider>
-      </section>
+      <GuestProvider>{children}</GuestProvider>
     </main>
   );
 }

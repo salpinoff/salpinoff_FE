@@ -1,6 +1,30 @@
 import { cva, VariantProps } from 'class-variance-authority';
 
+import ArrowBackSVG from '@public/icons/arrow-back.svg';
+import DownloadSVG from '@public/icons/download.svg';
+import EditSVG from '@public/icons/edit.svg';
+import EllipsisSVG from '@public/icons/ellipsis.svg';
+import HamburgerSVG from '@public/icons/hamburger.svg';
+import HeartSVG from '@public/icons/heart.svg';
+import InfoSVG from '@public/icons/info.svg';
+import RefreshSVG from '@public/icons/refresh.svg';
+import ShareSVG from '@public/icons/share.svg';
+import SpinSVG from '@public/icons/spin.svg';
+
 import cn from '@utils/cn';
+
+export const IconMap = {
+  'arrow-back': ArrowBackSVG,
+  download: DownloadSVG,
+  edit: EditSVG,
+  ellipsis: EllipsisSVG,
+  hamburger: HamburgerSVG,
+  heart: HeartSVG,
+  information: InfoSVG,
+  refresh: RefreshSVG,
+  share: ShareSVG,
+  spin: SpinSVG,
+} as const;
 
 export const iconStyles = cva(
   ['inline-flex', 'items-center', 'justify-center'],
@@ -46,13 +70,13 @@ export const iconStyles = cva(
   },
 );
 
-export type IconProps<T extends React.ElementType> = VariantProps<
-  typeof iconStyles
-> &
-  React.ComponentPropsWithoutRef<T> & {
-    children: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-    component?: T;
-  };
+export type IconProps<T extends React.ElementType = 'span'> =
+  React.ComponentPropsWithoutRef<T> &
+    VariantProps<typeof iconStyles> & {
+      component?: T;
+      children?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
+      name?: keyof typeof IconMap;
+    };
 
 export default function Icon<T extends React.ElementType = 'span'>({
   component,
@@ -60,12 +84,14 @@ export default function Icon<T extends React.ElementType = 'span'>({
   children,
   size,
   stroke,
+  name,
 }: IconProps<T>) {
   const Component: React.ElementType = component || 'span';
 
   return (
     <Component className={cn(iconStyles({ size, stroke }), className)}>
-      {children}
+      {name && IconMap[name]()}
+      {!name && children}
     </Component>
   );
 }

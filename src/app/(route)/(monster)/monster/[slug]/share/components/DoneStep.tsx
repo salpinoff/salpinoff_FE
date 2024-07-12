@@ -1,42 +1,92 @@
 import Image from 'next/image';
 
+import { motion } from 'framer-motion';
+
 import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
-
-import stringToElement from '@utils/string-to-element';
 
 type DoneStepProps = {
   goNext: () => void;
 };
 
 export default function DoneStep({ goNext }: DoneStepProps) {
+  // [TODO] 공통 인터렉션 상수 분리
+  const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } };
+
   return (
-    <>
-      <div className="m-auto">
-        {/* [TODO] 최종 캐릭터 선정 시 이미지 변경 */}
-        <div className="mb-20">
-          <Image
-            src="/sample.png"
-            width={277}
-            height={192}
-            alt="Sample Monster"
-          />
+    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] bg-gradient-to-b from-cool-neutral-5 to-[#253047] p-[20px] pt-[36px]">
+      <motion.div
+        className="flex h-full w-full flex-col items-center"
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+      >
+        <div className="m-auto">
+          <motion.div
+            className="mx-auto mb-20 w-max"
+            animate={{
+              rotateY: 180,
+              transition: {
+                duration: 0.6,
+              },
+            }}
+            variants={{
+              hidden: { opacity: 0, y: -24 },
+              visible,
+            }}
+          >
+            <Image
+              src="/images/heart0000.png"
+              width={108}
+              height={108}
+              alt="하트"
+            />
+          </motion.div>
+          <motion.div>
+            <BaseText
+              color="strong"
+              component="h3"
+              variant="heading-1"
+              weight="semibold"
+              align="center"
+            >
+              <motion.span
+                className="block"
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible,
+                }}
+              >
+                친구에게 나의 응원이
+              </motion.span>
+              <motion.span
+                className="block"
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible,
+                }}
+              >
+                전송 되었어요!
+              </motion.span>
+            </BaseText>
+          </motion.div>
         </div>
-        <BaseText
-          color="strong"
-          component="h3"
-          variant="heading-1"
-          weight="semibold"
-          align="center"
+        <motion.nav
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            visible: { ...visible, transition: { duration: 0.8 } },
+          }}
         >
-          {stringToElement(['친구에게 나의 응원이', '전송 되었어요!'])}
-        </BaseText>
-      </div>
-      <nav>
-        <Button variant="primary" size="large" onClick={goNext}>
-          나도 퇴사몬 만들어보기
-        </Button>
-      </nav>
-    </>
+          <Button
+            className="mx-auto"
+            variant="primary"
+            size="large"
+            onClick={goNext}
+          >
+            나도 퇴사몬 만들어보기
+          </Button>
+        </motion.nav>
+      </motion.div>
+    </section>
   );
 }

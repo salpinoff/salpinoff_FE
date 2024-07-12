@@ -1,15 +1,18 @@
-import { useContext } from 'react';
+import { useParams } from 'next/navigation';
 
-import { useAtom } from 'jotai';
+import { Suspense, useContext } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import LogoSVG from '@public/icons/logo.svg';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import Button from '@components/common/Button';
-import MonsterFlipCard from '@components/MonsterCard/FlipCard';
+import Header from '@components/Header';
 
-import { monsterAtom } from '@store/monsterAtom';
+import SharedMonsterFlipCard from 'src/app/(route)/(monster)/component/cards/SharedMonsterFlipCard';
+import SharedMonsterFlipCardSkeleton from 'src/app/(route)/(monster)/component/cards/SharedMonsterFlipCard/Skeleton';
 
 import { GuestContext } from '../context/guest.context';
+import Error from '../error';
 
 type InteractionStepProps = {
   onCompeleteInteraction: () => void;
@@ -20,21 +23,29 @@ export default function InteractionStep({
   onCompeleteInteraction,
   goNext,
 }: InteractionStepProps) {
-  const [{ isPending, isError }] = useAtom(monsterAtom);
+  const { slug } = useParams<{ slug: string }>();
   const { clear } = useContext(GuestContext);
 
-  // [TODO] Pending, Error 페이지 구현
-  if (isPending)
-    return <div className="h-full w-full text-white">Loading...</div>;
-
-  if (isError) return <div className="h-full w-full text-white">Error</div>;
-
   return (
-    <>
-      <header className="flex w-full items-center justify-center">
-        <LogoSVG width={115} height={20} />
-      </header>
-      <MonsterFlipCard onFlipped={onCompeleteInteraction} flip={clear} />
+    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] bg-gradient-to-b from-cool-neutral-5 to-[#253047] px-[20px] pb-[20px]">
+      <div className="h-dvh">
+        <Header className="mb-[20px] justify-center">
+          <Header.Logo size={32} />
+        </Header>
+        <QueryErrorResetBoundary>
+          {({ reset }) => (
+            <ErrorBoundary FallbackComponent={Error} onReset={reset}>
+              <Suspense fallback={<SharedMonsterFlipCardSkeleton />}>
+                <SharedMonsterFlipCard
+                  clear={clear}
+                  monsterId={slug}
+                  onComplete={onCompeleteInteraction}
+                />
+              </Suspense>
+            </ErrorBoundary>
+          )}
+        </QueryErrorResetBoundary>
+      </div>
       <nav>
         <Button
           size="large"
@@ -45,6 +56,6 @@ export default function InteractionStep({
           응원메세지 작성하기
         </Button>
       </nav>
-    </>
+    </section>
   );
 }
