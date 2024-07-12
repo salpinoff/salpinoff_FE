@@ -12,7 +12,7 @@ type Props = PropsWithChildren;
 function CsrfTokenInitializer({ children }: Props) {
   useQuery({
     queryKey: AuthFactory.csrf.queryKey,
-    queryFn: () => getCsrfToken(),
+    queryFn: getCsrfToken,
   });
 
   return children;
