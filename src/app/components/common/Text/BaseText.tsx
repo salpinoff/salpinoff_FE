@@ -117,7 +117,6 @@ export default function BaseText<T extends React.ElementType = 'p'>({
   return (
     <Component
       className={cn(
-        className,
         textStyles({
           variant,
           weight,
@@ -128,6 +127,7 @@ export default function BaseText<T extends React.ElementType = 'p'>({
           wrap,
           color,
         }),
+        className,
       )}
       {...rest}
     >
