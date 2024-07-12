@@ -46,8 +46,8 @@ function BottomSheet({
       ref={sheet}
       id="portal"
       style={{
-        height: `calc(100dvh - ${topY}px)`,
-        transform: `translateY(calc(100dvh - ${initialHeight + topY}px))`,
+        height: `calc(100% - ${topY}px)`,
+        transform: `translateY(calc(100% - ${initialHeight}px))`,
       }}
       className={cn(
         'flex flex-col',
