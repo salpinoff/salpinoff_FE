@@ -132,6 +132,8 @@ const authHandler = ({ request, params, secret }: Props) => {
 
             return redirectResponse(data, secret);
           } catch (thrownError) {
+            console.log(thrownError);
+
             const errorMessage = isAxiosError(thrownError)
               ? thrownError.message
               : thrownError;
