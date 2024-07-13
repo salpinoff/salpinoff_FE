@@ -9,6 +9,9 @@ interface BottomSheetMetrics {
     prevTouchY?: number;
     movingDirection: 'none' | 'down' | 'up';
   };
+  touchEnd: {
+    touchY: number;
+  };
   isContentTouched: boolean;
 }
 
@@ -30,6 +33,9 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
       prevTouchY: 0,
       movingDirection: 'none',
     },
+    touchEnd: {
+      touchY: 0,
+    },
     isContentTouched: false,
   });
 
@@ -49,6 +55,8 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
   useEffect(() => {
     const TOP_Y = topY;
     const BOTTOM_Y = window.innerHeight - initialHeight;
+    const MAX_BOTTOM_Y =
+      window.innerHeight - (initialHeight - Math.floor(initialHeight / 2));
     const bottomSheet = sheet.current;
 
     const checkTouchContent = () => {
@@ -65,7 +73,7 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      const { touchMove, touchStart } = metrics.current;
+      const { touchMove, touchStart, touchEnd } = metrics.current;
       const currentTouch = e.touches[0];
 
       touchMove.prevTouchY = touchStart.touchY;
@@ -85,10 +93,15 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
         nextSheetY = TOP_Y;
       }
 
-      if (nextSheetY > BOTTOM_Y) {
+      if (nextSheetY >= BOTTOM_Y && nextSheetY < MAX_BOTTOM_Y) {
         nextSheetY = BOTTOM_Y;
       }
 
+      if (nextSheetY >= MAX_BOTTOM_Y) {
+        nextSheetY = MAX_BOTTOM_Y;
+      }
+
+      touchEnd.touchY = nextSheetY;
       bottomSheet?.style.setProperty(
         'transform',
         `translateY(${nextSheetY - TOP_Y}px)`,
@@ -96,17 +109,24 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
     };
 
     const handleTouchEnd = () => {
-      const { touchMove } = metrics.current;
+      const { touchMove, touchEnd } = metrics.current;
 
       if (touchMove.movingDirection === 'down' && !checkTouchContent()) {
+        const targetEnd =
+          touchEnd.touchY >= MAX_BOTTOM_Y ? MAX_BOTTOM_Y : BOTTOM_Y;
+
         bottomSheet?.style.setProperty(
           'transform',
-          `translateY(${BOTTOM_Y - TOP_Y}px)`,
+          `translateY(${targetEnd - TOP_Y}px)`,
         );
       }
 
       if (touchMove.movingDirection === 'up') {
-        bottomSheet?.style.setProperty('transform', `translateY(0)`);
+        const targetEnd = touchEnd.touchY < BOTTOM_Y ? 0 : BOTTOM_Y;
+
+        console.log('end', targetEnd, BOTTOM_Y);
+
+        bottomSheet?.style.setProperty('transform', `translateY(${targetEnd})`);
       }
 
       document.body.style.overflowY = 'auto';
@@ -118,6 +138,9 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
         touchMove: {
           prevTouchY: 0,
           movingDirection: 'none',
+        },
+        touchEnd: {
+          touchY: 0,
         },
         isContentTouched: false,
       };
