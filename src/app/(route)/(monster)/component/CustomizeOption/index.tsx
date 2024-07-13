@@ -41,7 +41,7 @@ export default function CustomizeOption({
         : React.createElement(OptionLookUpTable[name], {
             alt: id.toLowerCase(),
             // TODO 경로 하드코딩 수정
-            src: `/images/items/preview/${id}0000.png`,
+            src: `/images/items/preview/${id.toLocaleLowerCase()}0000.png`,
             width: 52,
             height: 52,
             // placeholder: 'blur',
