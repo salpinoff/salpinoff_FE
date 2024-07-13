@@ -22,14 +22,14 @@ const getNextMessageList = async ({
   page: number;
 }) => {
   const {
-    data: { content, totalElements },
+    data: { content, totalElements, uncheckedMessageCount },
   } = await getMessageList({ monsterId, page });
 
   const nextPage =
     content.length > 0 && content.length >= PAGE_SIZE ? page + 1 : undefined;
 
   return {
-    result: { list: content, totalElements },
+    result: { list: content, totalElements, uncheckedMessageCount },
     nextPage,
     isLast: !nextPage,
   };

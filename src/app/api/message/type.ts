@@ -14,6 +14,8 @@ export type MessageListResponse = {
   size: number;
   page: number;
   totalElements: number;
+  checkedMessageCount: number;
+  uncheckedMessageCount: number;
 };
 
 export type QueryKeysProps = {
