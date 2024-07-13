@@ -6,6 +6,8 @@ import cn from '@utils/cn';
 import getImagePath from '@utils/get-image-path';
 
 export type CharacterCanvasProps = ComponentPropsWithoutRef<'canvas'> & {
+  width?: number;
+  height?: number;
   type?: 'mad' | 'sad';
   status?: 'before' | 'after';
   background?: string;
@@ -13,6 +15,8 @@ export type CharacterCanvasProps = ComponentPropsWithoutRef<'canvas'> & {
 };
 
 export default function CharacterCanvas({
+  width = 480,
+  height = 720,
   className,
   type,
   status = 'before',
@@ -20,7 +24,7 @@ export default function CharacterCanvas({
   items = [],
   ...rest
 }: CharacterCanvasProps) {
-  const canvasRef = useCanvas(480, 720); // X2
+  const canvasRef = useCanvas(width, height); // X2
 
   const fillBackground = (ctx: CanvasRenderingContext2D, fillStyle: string) => {
     ctx.fillStyle = fillStyle;
@@ -42,19 +46,29 @@ export default function CharacterCanvas({
     sources: string[],
     fillStyle?: string,
   ) => {
-    const { width, height } = ctx.canvas;
+    const { width: canvasWidth, height: canvasHeight } = ctx.canvas;
+
     try {
       const images = await Promise.all(sources.map((src) => loadImage(src)));
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       if (fillStyle) fillBackground(ctx, fillStyle);
 
       images.forEach((image) => {
-        const scale = Math.min(width / image.width, height / image.height);
+        const scale = Math.min(
+          canvasWidth / image.width,
+          canvasHeight / image.height,
+        );
         const dw = image.width * scale;
         const dh = image.height * scale;
 
-        ctx.drawImage(image, (width - dw) / 2, (height - dh) / 2, dw, dh);
+        ctx.drawImage(
+          image,
+          (canvasWidth - dw) / 2,
+          (canvasHeight - dh) / 2,
+          dw,
+          dh,
+        );
       });
     } catch (error) {
       console.error('Error loading images:', error);
