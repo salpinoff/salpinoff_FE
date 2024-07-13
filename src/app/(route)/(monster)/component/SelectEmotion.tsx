@@ -16,8 +16,16 @@ import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
 const EMOTIONS = [
-  ['분노', Emotion.ANGER],
-  ['우울', Emotion.DEPRESSION],
+  {
+    id: Emotion.ANGER,
+    label: '분노!!',
+    className: 'has-[:checked]:bg-[#F450A6]',
+  },
+  {
+    id: Emotion.DEPRESSION,
+    label: '우울...',
+    className: 'has-[:checked]:bg-blue-60',
+  },
 ];
 
 const gridStyles = cva('grid', {
@@ -35,14 +43,15 @@ const gridStyles = cva('grid', {
 
 const buttonStyle = cva(
   [
-    'w-full h-[160px] rounded-20',
-    'flex justify-center items-center',
+    'cursor-pointer select-none transition-colors	',
+    'w-full h-[160px] rounded-20 p-[48px]',
+    'flex items-center',
     // default
     'bg-[#70737C1F] text-cool-neutral-90A',
     // :has[:checked]
-    'has-[:checked]:bg-blue-60 has-[:checked]:text-white',
+    'has-[:checked]:!font-bold has-[:checked]:bg-blue-60 has-[:checked]:text-white',
     // important
-    '!heading-1-semibold',
+    '!title-3-regular',
   ],
   {
     variants: {},
@@ -87,9 +96,9 @@ function SelectEmotion() {
           'w-full gap-8',
         )}
       >
-        {EMOTIONS.map(([text, id]) => (
-          <FormLabel key={id} id={id} className={buttonStyle()}>
-            {text}
+        {EMOTIONS.map(({ label, id, className }) => (
+          <FormLabel key={id} id={id} className={cn(buttonStyle(), className)}>
+            {label}
             <input
               type="radio"
               id={id}
