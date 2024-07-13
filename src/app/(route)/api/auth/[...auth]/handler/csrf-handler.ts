@@ -20,7 +20,11 @@ const withCsrfToken = (route: Route): Route => {
     const { auth } = context.params;
     const [authType] = auth;
 
-    const { csrfToken } = getCookie([tokenPrefix('csrfToken')], request);
+    const { [tokenPrefix('csrfToken')]: csrfToken } = getCookie(
+      [tokenPrefix('csrfToken')],
+      request,
+    );
+
     const isVerified =
       csrfToken && verifyCSRFToken(csrfToken, process.env.AUTH_SECRET);
 
