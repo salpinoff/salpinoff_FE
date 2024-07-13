@@ -71,7 +71,7 @@ function Menu() {
       </Section>
 
       <Section className="my-16">
-        <Section.Item component="a" href="/">
+        <Section.Item component="a" onClick={closeDrawer} href="/profile/edit">
           프로필 수정
         </Section.Item>
         <Section.Item
