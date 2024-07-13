@@ -35,19 +35,20 @@ apiInstance.interceptors.request.use(async (request) => {
     REFRESH_TOKEN,
     GET_TOKEN: { kakao: KAKAO_LOGIN },
   } = API_URLS.AUTH.API;
+  const MONSTER_INFO = /^\/monsters\/\d+$/g;
 
-  const reqeustUrl = request.url || '';
+  const requestUrl = request.url || '';
   const withOutAuthHeader = [REFRESH_TOKEN, KAKAO_LOGIN];
 
-  const isWithOustUrl = withOutAuthHeader.some((url) =>
-    url.includes(reqeustUrl),
-  );
+  const isWithOutUrl =
+    withOutAuthHeader.some((url) => url.includes(requestUrl)) ||
+    MONSTER_INFO.test(requestUrl);
 
-  if (isWithOustUrl) {
+  if (isWithOutUrl) {
     delete request.headers.Authorization;
   }
 
-  if (!isWithOustUrl && !request.headers.Authorization) {
+  if (!isWithOutUrl && !request.headers.Authorization) {
     const {
       data: { accessToken },
     } = await baseInstance.get<Session>(API_URLS.AUTH.BASE.SESSION);
