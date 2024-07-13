@@ -1,4 +1,4 @@
-import Icon from '@components/common/Icon';
+import Icon, { IconProps } from '@components/common/Icon';
 
 import cn from '@utils/cn';
 
@@ -7,7 +7,7 @@ import { ExtractProps } from '@type/util';
 import Button from '.';
 
 export type IconButtonProps = Omit<ExtractProps<typeof Button>, 'size'> &
-  Pick<ExtractProps<typeof Icon>, 'name' | 'size' | 'stroke'>;
+  Pick<IconProps, 'name' | 'size' | 'stroke'>;
 
 export default function IconButton({
   className,
