@@ -129,6 +129,8 @@ function CustomizeMonster() {
       {/* [TODO]: 제공 배경 색상 값 이후 수정 */}
       <div className="relative mx-auto mb-[32px] h-[260px] w-[260px] overflow-hidden rounded-[36px] shadow-5">
         <CharacterCanvas
+          width={520}
+          height={520}
           background={
             findDecoration(DecorationType.BACKGROUND_COLOR)?.decorationValue
           }
