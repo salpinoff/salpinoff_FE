@@ -17,15 +17,15 @@ const setCookie = (
   response: NextResponse,
 ) => {
   const { cookies } = response;
-  const cookieOptions: Partial<ResponseCookie> = {};
-  // process.env.NODE_ENV !== 'development'
-  // {
-  //   httpOnly: true,
-  //   secure: true,
-  //   sameSite: 'lax',
-  //   domain: process.env.NEXT_PUBLIC_DOMAIN_NAME,
-  // };
-  // : {};
+  const cookieOptions: Partial<ResponseCookie> =
+    process.env.NODE_ENV !== 'development'
+      ? {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'lax',
+          path: '/',
+        }
+      : {};
 
   pairs.forEach(({ key, value, proteced }) => {
     cookies.set(key, value, proteced ? cookieOptions : {});

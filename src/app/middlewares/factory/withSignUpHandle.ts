@@ -19,7 +19,10 @@ import {
 import tokenPrefix from 'src/app/(route)/api/auth/[...auth]/utils/token-prefix';
 
 const refreshUserToken = async (request: NextRequest, secret: string) => {
-  const { accessToken: access, refreshToken: refresh } = getCookie(
+  const {
+    [tokenPrefix('accessToken')]: access,
+    [tokenPrefix('refreshToken')]: refresh,
+  } = getCookie(
     [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
     request,
   );

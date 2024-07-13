@@ -8,6 +8,9 @@ import BaseText from '@components/common/Text/BaseText';
 
 import useDrawer from '@hooks/useDrawer';
 
+import { isIOS } from '@utils/client/agent';
+import cn from '@utils/cn';
+
 import signOut from 'src/app/(route)/(auth)/signin/utils/signout';
 
 import Section from './Section';
@@ -39,7 +42,12 @@ function Menu() {
   };
 
   return (
-    <aside className="full-height full-height-ios bg-black px-20">
+    <aside
+      className={cn('bg-black px-20', {
+        'full-height': !isIOS,
+        'full-height-ios': isIOS,
+      })}
+    >
       <header className="flex w-full items-center justify-center py-3 text-white">
         <button className="h-24 w-24" onClick={closeDrawer}>
           <span className="a11yHidden">뒤로가기</span>

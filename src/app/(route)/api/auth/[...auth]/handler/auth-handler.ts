@@ -58,8 +58,8 @@ const authHandler = ({ request, params, secret }: Props) => {
         case 'session': {
           try {
             const {
-              accessToken: oldAccessToken,
-              refreshToken: oldRefreshToken,
+              [tokenPrefix('accessToken')]: oldAccessToken,
+              [tokenPrefix('refreshToken')]: oldRefreshToken,
             } = getCookie(
               [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
               request,
@@ -144,7 +144,7 @@ const authHandler = ({ request, params, secret }: Props) => {
           }
         }
         case 'session': {
-          const { accessToken } = getCookie(
+          const { [tokenPrefix('accessToken')]: accessToken } = getCookie(
             [tokenPrefix('accessToken')],
             request,
           );
@@ -155,7 +155,10 @@ const authHandler = ({ request, params, secret }: Props) => {
           });
         }
         case 'csrf': {
-          const { csrfToken } = getCookie([tokenPrefix('csrfToken')], request);
+          const { [tokenPrefix('csrfToken')]: csrfToken } = getCookie(
+            [tokenPrefix('csrfToken')],
+            request,
+          );
 
           if (csrfToken && verifyCSRFToken(csrfToken, secret)) {
             return NextResponse.json({ csrfToken });
