@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import { cva, VariantProps } from 'class-variance-authority';
 
 import ArrowBackSVG from '@public/icons/arrow-back.svg';
@@ -78,20 +80,25 @@ export type IconProps<T extends React.ElementType = 'span'> =
       name?: keyof typeof IconMap;
     };
 
-export default function Icon<T extends React.ElementType = 'span'>({
-  component,
-  className,
-  children,
-  size,
-  stroke,
-  name,
-}: IconProps<T>) {
-  const Component: React.ElementType = component || 'span';
+const Icon = forwardRef(
+  <T extends React.ElementType = 'span'>(
+    { component, className, children, size, stroke, name }: IconProps<T>,
+    ref: React.Ref<Element>,
+  ) => {
+    const Component: React.ElementType = component || 'span';
 
-  return (
-    <Component className={cn(iconStyles({ size, stroke }), className)}>
-      {name && IconMap[name]()}
-      {!name && children}
-    </Component>
-  );
-}
+    return (
+      <Component
+        ref={ref}
+        className={cn(iconStyles({ size, stroke }), className)}
+      >
+        {name && IconMap[name]()}
+        {!name && children}
+      </Component>
+    );
+  },
+);
+
+Icon.displayName = 'Icon';
+
+export default Icon;
