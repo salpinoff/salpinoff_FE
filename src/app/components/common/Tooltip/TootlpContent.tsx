@@ -24,6 +24,7 @@ const TooltipContent = forwardRef<HTMLDivElement, Props>(
   (
     {
       style,
+      children,
       className,
       closeIcon: CloseIcon = CloseSVG,
       iconDisplay = true,
@@ -52,7 +53,6 @@ const TooltipContent = forwardRef<HTMLDivElement, Props>(
         >
           {stringToElement(content)}
         </BaseText>
-
         <button
           onClick={toggleOpen}
           className={cn('w-[24px] flex-none self-start', {
@@ -62,6 +62,7 @@ const TooltipContent = forwardRef<HTMLDivElement, Props>(
           <span className="a11yHidden">닫기</span>
           <CloseIcon />
         </button>
+        {children}
       </div>
     );
   },

@@ -1,12 +1,11 @@
 import {
   ComponentPropsWithRef,
-  FC,
   MouseEventHandler,
   forwardRef,
   useContext,
 } from 'react';
 
-import TooltipSVG from '@public/icons/tooltip.svg';
+import Icon, { IconProps } from '@components/common/Icon';
 
 import { tooltipContext } from './TooltipProvider';
 import FormHelperText from '../TextField/FormHelperText';
@@ -14,7 +13,7 @@ import FormHelperText from '../TextField/FormHelperText';
 type Props = Omit<
   ComponentPropsWithRef<'label' & typeof FormHelperText>,
   'children'
-> & { icons?: FC };
+> & { icons?: IconProps['name'] };
 
 const TooltipLabel = forwardRef<HTMLButtonElement, Props>(
   (
@@ -22,7 +21,7 @@ const TooltipLabel = forwardRef<HTMLButtonElement, Props>(
       onClick,
       className,
       component = 'label',
-      icons: Icons = TooltipSVG,
+      icons = 'information',
       ...restProps
     },
     ref,
@@ -35,7 +34,7 @@ const TooltipLabel = forwardRef<HTMLButtonElement, Props>(
     };
 
     return (
-      <button ref={ref} onClick={handleClick}>
+      <button onClick={handleClick}>
         <FormHelperText
           color="neutral"
           variant="label-1"
@@ -44,7 +43,7 @@ const TooltipLabel = forwardRef<HTMLButtonElement, Props>(
           {...restProps}
         >
           {label}
-          <Icons />
+          <Icon name={icons} ref={ref} />
         </FormHelperText>
       </button>
     );

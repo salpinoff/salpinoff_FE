@@ -6,9 +6,10 @@ import {
   useMemo,
   useState,
   cloneElement,
+  createElement,
 } from 'react';
 
-import { useFloating, offset } from '@floating-ui/react-dom';
+import { useFloating, offset, arrow, shift } from '@floating-ui/react-dom';
 
 import useOutsideClick from '@hooks/useOutsideClick';
 
@@ -44,11 +45,28 @@ function Tooltip({ label, content, children, className }: Props) {
     });
 
   const [isOpen, setIsOpen] = useState(false);
-  const { refs, floatingStyles } = useFloating({
+
+  const [arrowEl, setArrowEl] = useState(null);
+
+  const { refs, placement, floatingStyles, middlewareData } = useFloating({
     open: isOpen,
-    placement: 'bottom-start',
-    middleware: [offset(10)],
+    placement: 'bottom',
+    middleware: [
+      shift(),
+      offset(10),
+      arrow({
+        element: arrowEl,
+      }),
+    ],
   });
+
+  const staticSide =
+    {
+      top: 'bottom',
+      right: 'left',
+      bottom: 'top',
+      left: 'right',
+    }[placement.split('-')[0]] ?? '';
 
   useOutsideClick(
     [refs.floating, refs.reference as RefObject<HTMLElement>],
@@ -72,14 +90,30 @@ function Tooltip({ label, content, children, className }: Props) {
         ...labelChild.props,
       })}
 
-      {cloneElement(contentChild, {
-        ref: refs.setFloating,
-        style: {
-          ...floatingStyles,
-          visibility: isOpen ? 'visible' : 'hidden',
+      {cloneElement(
+        contentChild,
+        {
+          ref: refs.setFloating,
+          style: {
+            ...floatingStyles,
+            visibility: isOpen ? 'visible' : 'hidden',
+          },
         },
-        ...contentChild.props,
-      })}
+        // Tooltip Arrow
+        createElement('div', {
+          ref: setArrowEl,
+          style: {
+            position: 'absolute',
+            width: '10px',
+            height: '10px',
+            top: middlewareData.arrow?.y ?? 0,
+            left: middlewareData.arrow?.x ?? 0,
+            background: 'inherit',
+            transform: 'rotate(45deg)',
+            [staticSide]: -5,
+          },
+        }),
+      )}
     </TooltipPropvider>
   );
 }
