@@ -1,5 +1,7 @@
 'use client';
 
+import { useReducer } from 'react';
+
 import ArrowBackSVG from '@public/icons/arrow-back.svg';
 
 import BaseText from '@components/common/Text/BaseText';
@@ -10,10 +12,31 @@ import signOut from 'src/app/(route)/(auth)/signin/utils/signout';
 
 import Section from './Section';
 
+type LoadginType = 'signout';
+type LoadingState = Record<LoadginType, boolean>;
+type LoadingReducer = (
+  state: LoadingState,
+  payload: LoadingState,
+) => LoadingState;
+
 function Menu() {
   const { closeDrawer } = useDrawer();
 
-  const handleSignout = () => signOut({ callbackUrl: '/signin' });
+  const [{ signout }, updater] = useReducer<LoadingReducer>(
+    (state, payload) => {
+      return { ...state, ...payload };
+    },
+    {
+      signout: false,
+    },
+  );
+
+  const handleSignout = () => {
+    updater({ signout: true });
+    signOut({ callbackUrl: '/signin' }).finally(() => {
+      updater({ signout: false });
+    });
+  };
 
   return (
     <aside className="full-height full-height-ios bg-black px-20">
@@ -43,7 +66,12 @@ function Menu() {
         <Section.Item component="a" href="/">
           프로필 수정
         </Section.Item>
-        <Section.Item type="button" component="button" onClick={handleSignout}>
+        <Section.Item
+          type="button"
+          component="button"
+          loading={signout}
+          onClick={handleSignout}
+        >
           로그아웃
         </Section.Item>
       </Section>
