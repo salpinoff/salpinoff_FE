@@ -77,6 +77,8 @@ export default function MonsterResultPage({
                 color={BACKGROUND_COLOR ?? ''}
               >
                 <CharacterCanvas
+                  width={560}
+                  height={560}
                   type={data.type}
                   items={Object.values(REST_DECOS)}
                   className={cn(
