@@ -13,7 +13,7 @@ export default function Header({ className, children, ...rest }: HeaderProps) {
   return (
     <header
       className={cn(
-        'flex w-full items-center justify-between p-[12px]',
+        'flex min-h-[48px] w-full items-center justify-between p-[12px]',
         className,
       )}
       {...rest}
