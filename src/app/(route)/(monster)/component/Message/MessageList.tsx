@@ -43,12 +43,12 @@ function MessageList() {
   } = MessageQueryFactory;
 
   const {
-    data: { messageList, totalElements },
+    data: { messageList, uncheckedMessageCount },
   } = useSuspenseInfiniteQuery({
     retry: 1,
+    staleTime: 0,
     initialPageParam: 1,
     queryKey: key({ monsterId: `${monsterId}` }),
-    staleTime: 0,
     queryFn: ({ pageParam = 1 }) =>
       fetcher({ monsterId: Number(monsterId), page: pageParam }),
     getNextPageParam: ({ nextPage }: LastPage) => {
@@ -60,12 +60,13 @@ function MessageList() {
         .flat()
         .sort((a, b) => Number(a.checked) - Number(b.checked)),
       totalElements: pages.pages[0].result.totalElements,
+      uncheckedMessageCount: pages.pages[0].result.uncheckedMessageCount,
     }),
   });
 
   useEffect(() => {
-    setTotalElements(totalElements);
-  }, [totalElements]);
+    setTotalElements(uncheckedMessageCount);
+  }, [uncheckedMessageCount]);
 
   const handleClick = (message: (typeof messageList)[number]) => {
     openModal(() => (
