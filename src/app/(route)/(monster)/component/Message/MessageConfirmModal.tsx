@@ -1,20 +1,21 @@
+import Image from 'next/image';
+
 import { TouchEventHandler, useRef, useState } from 'react';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import Heart from '@public/icons/heart.svg';
+import { useMutation } from '@tanstack/react-query';
 
 import Button from '@components/common/Button';
-import Icon from '@components/common/Icon';
 import { Modal } from '@components/common/Modal';
 import BaseText from '@components/common/Text/BaseText';
 
 import useOutsideClick from '@hooks/useOutsideClick';
 
 import cn from '@utils/cn';
+import { getQueryClient } from '@utils/query/get-query-client';
 
 import MessageQueryFactory from '@api/message/query/factory';
 import { MessageListResponse } from '@api/message/type';
+import { useMonster } from '@api/monster/query/hooks';
 
 type Props = {
   message: MessageListResponse['content'][number];
@@ -28,7 +29,7 @@ function MessageConfirmModal({
   message: { content, sender, checked, messageId },
 }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const queryClient = useQueryClient();
+  const queryClient = getQueryClient();
 
   const [messageRead, setMessageRead] = useState(checked);
 
@@ -46,6 +47,13 @@ function MessageConfirmModal({
       queryClient.invalidateQueries({ queryKey: listKey({ monsterId }) });
     },
   });
+
+  const { data } = useMonster(monsterId);
+
+  const emotion = data?.emotion;
+  const energyPerInteraction =
+    (data?.interactionCountPerEncouragement || 0) *
+    (emotion === 'ANGER' ? -1 : 1);
 
   const handleClick: TouchEventHandler = async () => {
     confirm();
@@ -84,41 +92,44 @@ function MessageConfirmModal({
 
           <div
             className={cn(
-              'aspect-square h-80',
               'rounded-20',
+              'aspect-square h-80',
+              'border-2 bg-cool-neutral-17',
               'flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center gap-[12.5%]',
               {
-                'bg-[var(--color-base-red-90)]': !messageRead,
-                'bg-[var(--color-base-cool-neutral-80)]': messageRead,
+                'border-red-60': !messageRead && emotion === 'DEPRESSION',
+                'border-orange-50': !messageRead && emotion === 'ANGER',
+                'border-cool-neutral-60': messageRead,
               },
             )}
           >
-            <Icon
-              className={cn('block h-[32.5%] w-[80%]', {
-                'text-[var(--color-base-red-50)]': !messageRead,
-                'text-[var(--color-base-cool-neutral-50)]': messageRead,
-              })}
-            >
-              <Heart />
-            </Icon>
+            <div className={cn('relative block aspect-square w-[32px]')}>
+              {emotion && (
+                <Image
+                  fill
+                  alt={emotion}
+                  src={`/images/${emotion === 'DEPRESSION' ? 'heart' : 'mad'}_${messageRead ? 'inactive' : 'active'}.webp`}
+                />
+              )}
+            </div>
 
             <BaseText
               weight="semibold"
               variant="caption-1"
               className={cn({
-                'text-[var(--color-base-red-40)]': !messageRead,
-                'text-[var(--color-base-cool-neutral-30)]': messageRead,
+                'text-red-60': !messageRead && emotion === 'DEPRESSION',
+                'text-orange-50': !messageRead && emotion === 'ANGER',
+                'text-cool-neutral-60': messageRead,
               })}
             >
-              에너지 40
+              에너지 {energyPerInteraction}
             </BaseText>
           </div>
         </section>
 
         <Button
-          onTouchEnd={handleClick}
-          // className="w-[52.5%]"
           size="medium"
+          onTouchEnd={handleClick}
           variant={messageRead ? 'secondary' : 'primary'}
         >
           <BaseText

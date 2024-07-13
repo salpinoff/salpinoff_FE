@@ -5,7 +5,6 @@ import DownloadSVG from '@public/icons/download.svg';
 import EditSVG from '@public/icons/edit.svg';
 import EllipsisSVG from '@public/icons/ellipsis.svg';
 import HamburgerSVG from '@public/icons/hamburger.svg';
-import HeartSVG from '@public/icons/heart.svg';
 import InfoSVG from '@public/icons/info.svg';
 import RefreshSVG from '@public/icons/refresh.svg';
 import ShareSVG from '@public/icons/share.svg';
@@ -19,7 +18,6 @@ export const IconMap = {
   edit: EditSVG,
   ellipsis: EllipsisSVG,
   hamburger: HamburgerSVG,
-  heart: HeartSVG,
   information: InfoSVG,
   refresh: RefreshSVG,
   share: ShareSVG,
