@@ -18,26 +18,25 @@ const slider = {
   max: 100,
 };
 
-/** TODO. helper text 변경하기 */
 const helperText = (stress: number): string => {
   return match(stress)
     .when(
-      (value) => value >= 1 && value < 10,
-      () => 'test1',
+      (value) => value >= 1 && value <= 20,
+      () => '살짝 짜증',
     )
     .when(
-      (value) => value >= 10 && value < 30,
-      () => 'test2',
+      (value) => value >= 21 && value <= 40,
+      () => '슬슬 지침',
     )
     .when(
-      (value) => value >= 30 && value < 50,
-      () => 'test3',
+      (value) => value >= 41 && value <= 60,
+      () => '많이 힘듦',
     )
     .when(
-      (value) => value >= 50 && value < 70,
-      () => 'test4',
+      (value) => value >= 61 && value <= 80,
+      () => '한계 도달',
     )
-    .otherwise(() => 'test5');
+    .otherwise(() => '퇴사 결심');
 };
 
 function SelectStress() {
