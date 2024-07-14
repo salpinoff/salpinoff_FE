@@ -16,7 +16,10 @@ import { AxiosError } from 'axios';
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
+import MonsterCreationModal from '@components/modals/MonsterCreationModal';
 import ProgressBar from '@components/ProgressBar';
+
+import useModal from '@hooks/useModal';
 
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
@@ -47,6 +50,10 @@ export default function RefMonsterFlipCard() {
   });
 
   const { mutate: updateCount } = useUpdateInteraction(monster.monsterId);
+
+  const { openModal, closeModal } = useModal(() => (
+    <MonsterCreationModal onClose={closeModal} />
+  ));
 
   const [clear, setClear] = useState(
     () => monster.currentInteractionCount >= monster.interactionCount,
@@ -128,6 +135,18 @@ export default function RefMonsterFlipCard() {
             setClear(true);
           }}
         />
+        {clear && (
+          <div className="absolute bottom-0 left-0 right-0 w-full px-[16px] py-[12px]">
+            <Button
+              className="label-1-medium mx-auto w-full bg-[#17171985] text-cool-neutral-99"
+              size="small"
+              variant="secondary"
+              onClick={() => openModal()}
+            >
+              새로운 퇴사몬 만들기
+            </Button>
+          </div>
+        )}
       </MonsterFlipCard.ActionArea>
       <MonsterFlipCard.Content
         onMouseDown={handleMouseDown}
