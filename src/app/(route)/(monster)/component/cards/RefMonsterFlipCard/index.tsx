@@ -31,7 +31,7 @@ import { GetMonsterRefResponse } from '@api/monster/types';
 import { ActionMenu, MonsterCounterBox, StressLevelBadge } from '../_ui';
 
 const CARD_WIDTH = 312;
-const CARD_HEIGHT = 460;
+const CARD_HEIGHT = 400;
 
 export default function RefMonsterFlipCard() {
   const router = useRouter();

@@ -5,7 +5,7 @@ import OutlineCard from '@components/cards/OutlineCard';
 import tokens from 'tokens/color/base.json';
 
 const CARD_WIDTH = 312;
-const CARD_HEIGHT = 460;
+const CARD_HEIGHT = 400;
 
 export default function SharedMonsterFlipCardSkeleton() {
   return (
