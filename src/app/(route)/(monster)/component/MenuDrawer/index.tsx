@@ -5,13 +5,13 @@ import { useReducer } from 'react';
 import ArrowBackSVG from '@public/icons/arrow-back.svg';
 
 import BaseText from '@components/common/Text/BaseText';
+import SignoutConfirmModal from '@components/modals/SignoutConfirmModal';
 
 import useDrawer from '@hooks/useDrawer';
+import useModal from '@hooks/useModal';
 
 import { isIOS } from '@utils/client/agent';
 import cn from '@utils/cn';
-
-import signOut from 'src/app/(route)/(auth)/signin/utils/signout';
 
 import Section from './Section';
 
@@ -23,8 +23,6 @@ type LoadingReducer = (
 ) => LoadingState;
 
 function Menu() {
-  const { closeDrawer } = useDrawer();
-
   const [{ signout }, updater] = useReducer<LoadingReducer>(
     (state, payload) => {
       return { ...state, ...payload };
@@ -34,11 +32,21 @@ function Menu() {
     },
   );
 
+  const { closeDrawer } = useDrawer();
+
+  const { openModal, closeModal } = useModal(() => (
+    <SignoutConfirmModal
+      onCancel={closeModal}
+      onSignout={() => {
+        closeModal();
+        updater({ signout: true });
+      }}
+      onSignoutFailed={() => updater({ signout: true })}
+    />
+  ));
+
   const handleSignout = () => {
-    updater({ signout: true });
-    signOut({ callbackUrl: '/signin' }).finally(() => {
-      updater({ signout: false });
-    });
+    openModal();
   };
 
   return (
