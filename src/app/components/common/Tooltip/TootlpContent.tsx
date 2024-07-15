@@ -40,7 +40,7 @@ const TooltipContent = forwardRef<HTMLDivElement, Props>(
         style={style}
         className={cn(
           'flex w-[max-content] items-center gap-16',
-          'rounded-8 bg-blue-60 text-white',
+          'z-[1] rounded-8 bg-blue-60 text-white',
           className,
         )}
       >
