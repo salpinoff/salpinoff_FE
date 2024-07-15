@@ -6,9 +6,7 @@ import type {
   ElementType,
 } from 'react';
 
-import ArrowSVG from '@public/icons/arrow-back.svg';
-
-import Spinner from '@components/Spinner';
+import Icon from '@components/common/Icon';
 
 import cn from '@utils/cn';
 
@@ -52,10 +50,15 @@ function SecionItem({
       {...restProps}
     >
       {children}
-
-      {loading && <Spinner />}
-      {!loading && (
-        <ArrowSVG className="rotate-180 scale-[60%]" color="#C2C4C8E0" />
+      {loading ? (
+        <Icon name="spin" size={16} stroke="subtle" />
+      ) : (
+        <Icon
+          name="arrow-back"
+          size={12}
+          stroke="subtle"
+          className="rotate-180"
+        />
       )}
     </Component>
   );
