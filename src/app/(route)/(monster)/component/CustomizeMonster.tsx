@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 
-import { useEffect, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 
 import { useMutation } from '@tanstack/react-query';
 
@@ -11,23 +11,35 @@ import BaseText from '@components/common/Text/BaseText';
 
 import useWithAuth from '@hooks/useWithAuth';
 
+import { getCharacterTypeByEmotion } from '@utils/client/transform-monster';
 import cn from '@utils/cn';
 import { findObjectInArray } from '@utils/find';
 
 import { createMonster } from '@api/monster';
-import {
-  DecorationType,
-  DecorationValue,
-  Emotion,
-  DecorationTypes,
-  DecorationValues,
-} from '@api/schema/monster';
+import { DECORATION_TYPE, EMOTION } from '@api/schema/monster';
 
 import CustomizeOption from './CustomizeOption';
 import Tabs from './Tabs';
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
+import { DECORATION_PAIRS } from '../constants/decorations';
+
+type DecorationTypes = keyof typeof DECORATION_TYPE;
+type DecorationValues = (typeof DECORATION_PAIRS)[DecorationTypes][number];
+
+type TabPanelProps = PropsWithChildren;
+
+function TabPanel({ children }: TabPanelProps) {
+  return (
+    <div
+      role="tabpanel"
+      className={cn('flex gap-[16px] overflow-x-auto', 'scrollbar-hide')}
+    >
+      {children}
+    </div>
+  );
+}
 
 function CustomizeMonster() {
   const { replace } = useRouter();
@@ -39,11 +51,14 @@ function CustomizeMonster() {
   const { stress, story, emotion, monsterName, decorations } =
     useUserInfoContext();
 
-  const CHARACTER_TYPE = emotion === Emotion.ANGER ? 'mad' : 'sad';
+  const CHARACTER_TYPE = getCharacterTypeByEmotion(
+    emotion as keyof typeof EMOTION,
+  );
+
   const CHARACTER_ITEMS = decorations
     .map(
       (deco) =>
-        deco.decorationType !== DecorationType.BACKGROUND_COLOR &&
+        deco.decorationType !== DECORATION_TYPE.BACKGROUND_COLOR &&
         deco.decorationValue.toLowerCase(),
     )
     .filter(Boolean) as string[];
@@ -61,7 +76,7 @@ function CustomizeMonster() {
   });
 
   const [type, setType] = useState<DecorationTypes>(
-    DecorationType.BACKGROUND_COLOR,
+    DECORATION_TYPE.BACKGROUND_COLOR,
   );
 
   const findDecoration = findObjectInArray(decorations, 'decorationType');
@@ -126,30 +141,28 @@ function CustomizeMonster() {
       >
         이제 퇴사몬을 꾸며주세요!
       </BaseText>
-      {/* [TODO]: 제공 배경 색상 값 이후 수정 */}
-      <div className="relative mx-auto mb-[32px] h-[260px] w-[260px] overflow-hidden rounded-[36px] shadow-5">
-        <CharacterCanvas
-          width={520}
-          height={520}
-          background={
-            findDecoration(DecorationType.BACKGROUND_COLOR)?.decorationValue
-          }
-          type={CHARACTER_TYPE}
-          items={CHARACTER_ITEMS}
-        />
-      </div>
+      <CharacterCanvas
+        className="relative mx-auto mb-[32px] h-[260px] w-[260px] overflow-hidden rounded-[36px] shadow-5"
+        width={520}
+        height={520}
+        background={
+          findDecoration(DECORATION_TYPE.BACKGROUND_COLOR)?.decorationValue
+        }
+        type={CHARACTER_TYPE}
+        items={CHARACTER_ITEMS}
+      />
       <Tabs<DecorationTypes>
         className="mb-20 flex gap-12"
         value={type}
         onChange={handleFilterChange}
       >
-        <Tabs.Tab label="배경" value={DecorationType.BACKGROUND_COLOR} />
-        <Tabs.Tab label="모자" value={DecorationType.CAP} />
-        <Tabs.Tab label="얼굴" value={DecorationType.FACE} />
-        <Tabs.Tab label="소품" value={DecorationType.ACCESSORY} />
+        <Tabs.Tab label="배경" value={DECORATION_TYPE.BACKGROUND_COLOR} />
+        <Tabs.Tab label="모자" value={DECORATION_TYPE.CAP} />
+        <Tabs.Tab label="얼굴" value={DECORATION_TYPE.FACE} />
+        <Tabs.Tab label="소품" value={DECORATION_TYPE.ACCESSORY} />
       </Tabs>
-      <div className={cn('flex gap-[16px] overflow-x-auto', 'scrollbar-hide')}>
-        {DecorationValue[type].map((id) => (
+      <TabPanel>
+        {DECORATION_PAIRS[type].map((id) => (
           <CustomizeOption
             key={id}
             id={id}
@@ -158,7 +171,7 @@ function CustomizeMonster() {
             onChange={handleDecoChange}
           />
         ))}
-      </div>
+      </TabPanel>
     </section>
   );
 }
