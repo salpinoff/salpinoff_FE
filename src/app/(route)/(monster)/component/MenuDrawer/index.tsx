@@ -2,9 +2,7 @@
 
 import { useReducer } from 'react';
 
-import ArrowBackSVG from '@public/icons/arrow-back.svg';
-
-import BaseText from '@components/common/Text/BaseText';
+import Header from '@components/Header';
 
 import useDrawer from '@hooks/useDrawer';
 
@@ -48,22 +46,17 @@ function Menu() {
         'full-height-ios': isIOS,
       })}
     >
-      <header className="flex w-full items-center justify-center py-3 text-white">
-        <button className="h-24 w-24" onClick={closeDrawer}>
-          <span className="a11yHidden">뒤로가기</span>
-          <ArrowBackSVG color="white" />
-        </button>
-
-        <BaseText
-          component="h2"
-          variant="heading-1"
-          weight="semibold"
-          className="mr-24 flex-1 text-center"
-        >
+      <Header className="grid grid-cols-6 gap-4">
+        <Header.IconButton
+          name="arrow-back"
+          aria-label="뒤로가기"
+          className="col-span-1 col-start-1"
+          onClick={closeDrawer}
+        />
+        <Header.Title className="col-span-4 col-start-2 mx-auto">
           설정
-        </BaseText>
-      </header>
-
+        </Header.Title>
+      </Header>
       <Section>
         <Section.Item component="a" href="/">
           퇴사몬 보관함
