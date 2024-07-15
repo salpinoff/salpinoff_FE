@@ -6,20 +6,20 @@ import FormControlLabel, {
   type FormControlLabelProps,
 } from '@components/common/FormControlLabel';
 
-import { DecorationType, DecorationTypes } from '@api/schema/monster';
+import { DECORATION_TYPE } from '@api/schema/monster';
 
 type CustomizeOptionProps = Omit<
   FormControlLabelProps<'label'>,
   'label' | 'control' | 'value'
 > & {
-  name: DecorationTypes;
+  name: keyof typeof DECORATION_TYPE;
 };
 
 const OptionLookUpTable = {
-  [DecorationType.BACKGROUND_COLOR]: 'div',
-  [DecorationType.CAP]: Image,
-  [DecorationType.FACE]: Image,
-  [DecorationType.ACCESSORY]: Image,
+  [DECORATION_TYPE.BACKGROUND_COLOR]: 'div',
+  [DECORATION_TYPE.CAP]: Image,
+  [DECORATION_TYPE.FACE]: Image,
+  [DECORATION_TYPE.ACCESSORY]: Image,
 };
 
 export default function CustomizeOption({
@@ -30,7 +30,7 @@ export default function CustomizeOption({
 }: CustomizeOptionProps) {
   if (OptionLookUpTable[name]) {
     const Label =
-      name === DecorationType.BACKGROUND_COLOR
+      name === DECORATION_TYPE.BACKGROUND_COLOR
         ? React.createElement(OptionLookUpTable[name], {
             className:
               'relative aspect-square min-h-[36px] min-w-[36px]	rounded-circular',
@@ -50,7 +50,7 @@ export default function CustomizeOption({
 
     return (
       <FormControlLabel
-        className="relative flex aspect-square h-64 w-64 items-center justify-center rounded-[16px] border-2 border-transparent bg-[#70737C38] p-4 has-[:checked]:!border-common-100 has-[:checked]:bg-cool-neutral-7"
+        className="relative flex aspect-square h-64 min-h-64 w-64 min-w-64 items-center justify-center rounded-[16px] border-2 border-transparent bg-[#70737C38] p-4 has-[:checked]:!border-common-100 has-[:checked]:bg-cool-neutral-7"
         id={id}
         name={name}
         value={id}
