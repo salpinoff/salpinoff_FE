@@ -58,7 +58,11 @@ function Menu() {
         </Header.Title>
       </Header>
       <Section>
-        <Section.Item component="a" href="/">
+        <Section.Item
+          component="a"
+          onClick={closeDrawer}
+          href="/monster/collection"
+        >
           퇴사몬 보관함
         </Section.Item>
       </Section>
