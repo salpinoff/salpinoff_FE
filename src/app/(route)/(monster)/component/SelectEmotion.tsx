@@ -4,7 +4,7 @@ import { ChangeEventHandler, useEffect } from 'react';
 
 import { cva } from 'class-variance-authority';
 
-import FormLabel from '@components/common/FormLabel';
+import FormControlLabel from '@components/common/FormControlLabel';
 import Tooltip from '@components/common/Tooltip';
 
 import cn from '@utils/cn';
@@ -19,12 +19,12 @@ const EMOTIONS = [
   {
     id: Emotion.ANGER,
     label: '분노!!',
-    className: 'has-[:checked]:bg-[#F450A6]',
+    className: 'has-[:checked]:bg-[#F450A6] bg-[url("/images/angry.png")]',
   },
   {
     id: Emotion.DEPRESSION,
     label: '우울...',
-    className: 'has-[:checked]:bg-blue-60',
+    className: 'has-[:checked]:bg-blue-60 bg-[url("/images/depressed.png")]',
   },
 ];
 
@@ -43,13 +43,14 @@ const gridStyles = cva('grid', {
 
 const buttonStyle = cva(
   [
-    'cursor-pointer select-none transition-colors	',
+    'relative overflow-hidden cursor-pointer select-none transition-colors',
     'w-full h-[160px] rounded-20 p-[48px]',
     'flex items-center',
     // default
-    'bg-[#70737C1F] text-cool-neutral-90A',
+    'isolate bg-[#70737C1F] bg-no-repeat	bg-contain bg-right-bottom text-cool-neutral-80A',
+    'after:content-[""] after:absolute after:-z-10 after:opacity-90 after:bg-cool-neutral-15',
     // :has[:checked]
-    'has-[:checked]:!font-bold has-[:checked]:bg-blue-60 has-[:checked]:text-white',
+    'has-[:checked]:!font-bold has-[:checked]:bg-blue-60 has-[:checked]:text-white after:w-full after:h-full after:inset-0 has-[:checked]:after:content-none',
     // important
     '!title-3-regular',
   ],
@@ -80,7 +81,7 @@ function SelectEmotion() {
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
       <Tooltip
         label="나의 감정"
-        content={`스트레스가 높을수록 퇴사몬을 \n 클리어하기 위해 더 많은 탭이 필요해요`}
+        content={`나의 감정 상태에 따라\n다른 형태의 퇴사몬이 등장해요`}
         className="mb-12"
       >
         <Tooltip.Label className="flex-none" />
@@ -97,17 +98,21 @@ function SelectEmotion() {
         )}
       >
         {EMOTIONS.map(({ label, id, className }) => (
-          <FormLabel key={id} id={id} className={cn(buttonStyle(), className)}>
-            {label}
-            <input
-              type="radio"
-              id={id}
-              name="emotion"
-              className="a11yHidden"
-              onChange={handleChange}
-              checked={emotion === id}
-            />
-          </FormLabel>
+          <FormControlLabel
+            key={id}
+            id={id}
+            name="emotion"
+            className={cn(buttonStyle(), className)}
+            label={label}
+            checked={emotion === id}
+            control={
+              <input
+                type="radio"
+                className="a11yHidden"
+                onChange={handleChange}
+              />
+            }
+          />
         ))}
       </div>
     </fieldset>
