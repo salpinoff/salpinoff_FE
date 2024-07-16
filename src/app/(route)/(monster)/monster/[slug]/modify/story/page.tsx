@@ -13,6 +13,8 @@ import TextField from '@components/common/TextField';
 
 import useModal from '@hooks/useModal';
 
+import { Adapter } from '@utils/client/adapter';
+import transformMonster from '@utils/client/transform-monster';
 import { validationPatterns } from '@utils/validate/validationPatterns';
 
 import { useModifyMonster, useMonster } from '@api/monster/query/hooks';
@@ -53,7 +55,9 @@ export default function ModifyStoryPage({
 }) {
   const { slug: monsterId } = params;
 
-  const { data: monster } = useMonster(monsterId);
+  const { data: monster } = useMonster(monsterId, {
+    select: (data) => Adapter.from(data.data).to(transformMonster),
+  });
   const { mutate: modify } = useModifyMonster(monsterId);
 
   const { replace } = useRouter();
