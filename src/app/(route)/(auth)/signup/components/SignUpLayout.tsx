@@ -9,7 +9,6 @@ import FixedBottom from '@components/FixedBottom';
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
 
-import InitialUserState from './InitialUserState';
 import { SignUpProvider } from '../context/layout.context';
 
 interface Props extends Omit<React.ComponentProps<'div'>, 'title'> {
@@ -40,7 +39,7 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
   };
 
   return (
-    <InitialUserState>
+    <>
       <div
         className={cn(
           'flex w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
@@ -91,7 +90,7 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
           다음으로
         </Button>
       </FixedBottom>
-    </InitialUserState>
+    </>
   );
 }
 

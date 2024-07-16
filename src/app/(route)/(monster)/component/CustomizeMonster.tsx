@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 
-import { useEffect, useState } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { useMutation } from '@tanstack/react-query';
 
@@ -25,29 +26,32 @@ import {
 
 import CustomizeOption from './CustomizeOption';
 import Tabs from './Tabs';
+import { UserInfo } from '../../(auth)/signup/context/context.type';
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
-import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
-import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
 function CustomizeMonster() {
   const { replace } = useRouter();
-
-  const withAuth = useWithAuth();
-
   const { setBtnDisabled, registerCallback } = useSignUpContext();
-  const { update } = useUserInfoDispatchContext();
-  const { stress, story, emotion, monsterName, decorations } =
-    useUserInfoContext();
+  const { getValues, control } = useFormContext<UserInfo>();
+
+  const emotion = getValues('emotion');
+  const decorations = useWatch({
+    control,
+    name: 'decorations',
+    exact: true,
+  });
 
   const CHARACTER_TYPE = emotion === Emotion.ANGER ? 'mad' : 'sad';
-  const CHARACTER_ITEMS = decorations
-    .map(
-      (deco) =>
-        deco.decorationType !== DecorationType.BACKGROUND_COLOR &&
-        deco.decorationValue.toLowerCase(),
-    )
-    .filter(Boolean) as string[];
+  const CHARACTER_ITEMS =
+    (decorations
+      ?.map(
+        (deco) =>
+          deco.decorationType !== DecorationType.BACKGROUND_COLOR &&
+          deco.decorationValue.toLowerCase(),
+      )
+      .filter(Boolean) as string[]) || [];
 
+  const withAuth = useWithAuth();
   const { mutate: create } = useMutation({
     mutationKey: ['creatMonster'],
     mutationFn: createMonster,
@@ -88,24 +92,12 @@ function CustomizeMonster() {
     setType(value);
   };
 
-  const handleDecoChange = (e: React.SyntheticEvent) => {
-    const { value } = e.target as HTMLInputElement;
-
-    if (type && value) {
-      const updated = updateDecoration(type, value as DecorationValues);
-
-      update({
-        decorations: updated,
-      });
-    }
-  };
-
   const handleClick = () => {
     return create({
-      rating: stress,
-      content: story,
+      rating: getValues('stress'),
+      content: getValues('story'),
       emotion: emotion !== '' ? emotion : 'DEPRESSION',
-      monsterName,
+      monsterName: getValues('monsterName'),
       monsterDecorations: decorations,
     });
   };
@@ -138,6 +130,7 @@ function CustomizeMonster() {
           items={CHARACTER_ITEMS}
         />
       </div>
+
       <Tabs<DecorationTypes>
         className="mb-20 flex gap-12"
         value={type}
@@ -148,14 +141,36 @@ function CustomizeMonster() {
         <Tabs.Tab label="얼굴" value={DecorationType.FACE} />
         <Tabs.Tab label="소품" value={DecorationType.ACCESSORY} />
       </Tabs>
+
       <div className={cn('flex gap-[16px] overflow-x-auto', 'scrollbar-hide')}>
         {DecorationValue[type].map((id) => (
-          <CustomizeOption
+          <Controller
             key={id}
-            id={id}
-            name={type}
-            checked={findDecoration(type)?.decorationValue === id}
-            onChange={handleDecoChange}
+            control={control}
+            name="decorations"
+            render={({ field: { onChange } }) => {
+              const handleChange: FormEventHandler = (e) => {
+                const { value } = e.target as HTMLInputElement;
+
+                if (type && value) {
+                  const updatedDecorations = updateDecoration(
+                    type,
+                    value as DecorationValues,
+                  );
+
+                  onChange(updatedDecorations);
+                }
+              };
+
+              return (
+                <CustomizeOption
+                  id={id}
+                  name={type}
+                  checked={findDecoration(type)?.decorationValue === id}
+                  onChange={handleChange}
+                />
+              );
+            }}
           />
         ))}
       </div>

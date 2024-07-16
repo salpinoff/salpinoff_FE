@@ -1,6 +1,7 @@
 'use client';
 
-import { ChangeEventHandler, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { cva } from 'class-variance-authority';
 
@@ -11,9 +12,9 @@ import cn from '@utils/cn';
 
 import { Emotion } from '@api/schema/monster';
 
+import type { UserInfo } from '../../(auth)/signup/context/context.type';
+
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
-import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
-import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
 
 const EMOTIONS = [
   {
@@ -60,21 +61,19 @@ const buttonStyle = cva(
 );
 
 function SelectEmotion() {
-  const { emotion } = useUserInfoContext();
-  const { update } = useUserInfoDispatchContext();
-
   const { setBtnDisabled } = useSignUpContext();
+  const {
+    register,
+    control,
+    getValues,
+    formState: { errors },
+  } = useFormContext<UserInfo>();
 
-  const handleChange: ChangeEventHandler = (e) => {
-    const target = e.target as HTMLInputElement;
-    const id = target.id as keyof typeof Emotion;
-
-    update({ emotion: id });
-  };
+  const selectedId = useWatch({ control, name: 'emotion' });
 
   useEffect(() => {
-    setBtnDisabled(emotion === '');
-  }, [emotion]);
+    setBtnDisabled(!!errors.emotion || getValues('emotion') === '');
+  }, [errors]);
 
   return (
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
@@ -100,12 +99,14 @@ function SelectEmotion() {
           <FormLabel key={id} id={id} className={cn(buttonStyle(), className)}>
             {label}
             <input
-              type="radio"
               id={id}
-              name="emotion"
+              type="radio"
+              value={id}
               className="a11yHidden"
-              onChange={handleChange}
-              checked={emotion === id}
+              checked={selectedId === id}
+              {...register('emotion', {
+                required: true,
+              })}
             />
           </FormLabel>
         ))}
