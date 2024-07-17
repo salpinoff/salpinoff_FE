@@ -9,7 +9,7 @@ import Tooltip from '@components/common/Tooltip';
 
 import cn from '@utils/cn';
 
-import { Emotion } from '@api/schema/monster';
+import { EMOTION } from '@api/schema/monster';
 
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
@@ -17,12 +17,12 @@ import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDis
 
 const EMOTIONS = [
   {
-    id: Emotion.ANGER,
+    id: EMOTION.ANGER,
     label: '분노!!',
     className: 'has-[:checked]:bg-[#F450A6] bg-[url("/images/angry.png")]',
   },
   {
-    id: Emotion.DEPRESSION,
+    id: EMOTION.DEPRESSION,
     label: '우울...',
     className: 'has-[:checked]:bg-blue-60 bg-[url("/images/depressed.png")]',
   },
@@ -68,7 +68,7 @@ function SelectEmotion() {
 
   const handleChange: ChangeEventHandler = (e) => {
     const target = e.target as HTMLInputElement;
-    const id = target.id as keyof typeof Emotion;
+    const id = target.id as keyof typeof EMOTION;
 
     update({ emotion: id });
   };
