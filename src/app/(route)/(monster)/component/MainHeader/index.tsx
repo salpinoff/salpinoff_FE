@@ -2,12 +2,14 @@
 
 import Header from '@components/Header';
 
-import useDrawer from '@hooks/useDrawer';
+import useModal from '@hooks/useModal';
 
-import Menu from '../MenuDrawer';
+import Setting from './Setting';
 
 export default function MainHeader() {
-  const { openDrawer } = useDrawer(() => <Menu />);
+  const { openModal, closeModal } = useModal(() => (
+    <Setting close={closeModal} />
+  ));
 
   return (
     <Header className="grid grid-cols-6 gap-4">
@@ -15,7 +17,7 @@ export default function MainHeader() {
       <Header.IconButton
         className="col-span-1 ml-auto"
         name="hamburger"
-        onClick={() => openDrawer()}
+        onClick={() => openModal()}
       />
     </Header>
   );
