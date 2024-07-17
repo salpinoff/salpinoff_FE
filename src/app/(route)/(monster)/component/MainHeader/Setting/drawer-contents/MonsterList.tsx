@@ -191,11 +191,16 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
               >
                 {messageList.map(({ messageId, sender, content }) => (
                   <li
-                    className="body-2-regular w-full shrink-0 resize-none overflow-y-auto rounded-12 border border-[#70737C52] bg-[#70737C38] px-16 py-12 text-[--color-text-label-normal] outline-none focus:border-transparent"
+                    className={cn(
+                      'rounded-12 border border-[#70737C52] outline-none',
+                      'bg-[#70737C38]',
+                      'w-full shrink-0 resize-none px-16 py-12',
+                      'whitespace-pre-wrap',
+                    )}
                     id={`message_${messageId}`}
                     key={messageId}
                   >
-                    <BaseText component="p" variant="label-1">
+                    <BaseText component="p" variant="label-1" color="normal">
                       {content}
                     </BaseText>
                     <BaseText
