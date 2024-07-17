@@ -24,10 +24,10 @@ import {
   DecorationValues,
 } from '@api/schema/monster';
 
-import CustomizeOption from './CustomizeOption';
-import Tabs from './Tabs';
-import { UserInfo } from '../../(auth)/signup/context/context.type';
-import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
+import { UserInfo } from '../../../../(auth)/signup/context/context.type';
+import useSignUpContext from '../../../../(auth)/signup/hooks/useSignUpContext';
+import CustomizeOption from '../../../component/CustomizeOption';
+import Tabs from '../../../component/Tabs';
 
 function CustomizeMonster() {
   const { replace } = useRouter();

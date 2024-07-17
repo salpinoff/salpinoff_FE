@@ -9,8 +9,8 @@ import FormHelperText from '@components/common/TextField/FormHelperText';
 import Tooltip from '@components/common/Tooltip';
 import Slider from '@components/Slider';
 
-import { UserInfo } from '../../(auth)/signup/context/context.type';
-import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
+import { UserInfo } from '../../../../(auth)/signup/context/context.type';
+import useSignUpContext from '../../../../(auth)/signup/hooks/useSignUpContext';
 
 const slider = {
   step: 1,

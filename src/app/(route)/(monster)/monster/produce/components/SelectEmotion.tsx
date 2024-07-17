@@ -12,9 +12,9 @@ import cn from '@utils/cn';
 
 import { Emotion } from '@api/schema/monster';
 
-import type { UserInfo } from '../../(auth)/signup/context/context.type';
+import type { UserInfo } from '../../../../(auth)/signup/context/context.type';
 
-import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
+import useSignUpContext from '../../../../(auth)/signup/hooks/useSignUpContext';
 
 const EMOTIONS = [
   {
@@ -65,15 +65,14 @@ function SelectEmotion() {
   const {
     register,
     control,
-    getValues,
     formState: { errors },
   } = useFormContext<UserInfo>();
 
   const selectedId = useWatch({ control, name: 'emotion' });
 
   useEffect(() => {
-    setBtnDisabled(!!errors.emotion || getValues('emotion') === '');
-  }, [errors]);
+    setBtnDisabled(!!errors.emotion || selectedId === '');
+  }, [selectedId, errors]);
 
   return (
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">

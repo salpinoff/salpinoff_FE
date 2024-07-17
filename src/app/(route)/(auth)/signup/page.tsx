@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 
 import { useEffect } from 'react';
@@ -10,19 +9,14 @@ import DotsPagination from '@components/DotsPagination';
 import useFunnel from '@hooks/useFunnel';
 
 import MakeNickName from './components/MakeNickName';
-import SignUpLayout from './components/SignUpLayout';
 import { funnel, title } from './constant/funnel';
 import { UserInfoProvider } from './context/userInfo.context';
-import CustomizeMonster from '../../(monster)/component/CustomizeMonster';
-import SelectEmotion from '../../(monster)/component/SelectEmotion';
-import SelectStress from '../../(monster)/component/SelectStress';
-
-const WriteStory = dynamic(
-  () => import('../../(monster)/component/WriteStory'),
-);
-const MonsterName = dynamic(
-  () => import('../../(monster)/component/MosterName'),
-);
+import MonsterName from '../../(monster)/component/MosterName';
+import CustomizeMonster from '../../(monster)/monster/produce/components/CustomizeMonster';
+import MonsterLayout from '../../(monster)/monster/produce/components/layout/MonsterLayout';
+import SelectEmotion from '../../(monster)/monster/produce/components/SelectEmotion';
+import SelectStress from '../../(monster)/monster/produce/components/SelectStress';
+import WriteStory from '../../(monster)/monster/produce/components/WriteStory';
 
 type SignUpPages = (typeof funnel)[number];
 type SignUpFunnelProps = React.PropsWithChildren<{ name: SignUpPages }>;
@@ -72,67 +66,67 @@ function SignUp() {
       <Funnel>
         {/* 닉네임 설정 */}
         <Funnel.Step name="nickname">
-          <SignUpLayout
+          <MonsterLayout
             title={title.nickname}
             goNext={() => setStep('emotion')}
           >
             <MakeNickName />
-          </SignUpLayout>
+          </MonsterLayout>
         </Funnel.Step>
 
         {/* 감정 설정 */}
         <Funnel.Step name="emotion">
-          <SignUpLayout
+          <MonsterLayout
             title={title.emotion}
             goPrev={() => setStep('nickname')}
             goNext={() => setStep('stress')}
           >
             <SelectEmotion />
-          </SignUpLayout>
+          </MonsterLayout>
         </Funnel.Step>
 
         {/* 스트레스 수치 설정 */}
         <Funnel.Step name="stress">
-          <SignUpLayout
+          <MonsterLayout
             title={title.stress}
             goPrev={() => setStep('emotion')}
             goNext={() => setStep('story')}
           >
             <SelectStress />
-          </SignUpLayout>
+          </MonsterLayout>
         </Funnel.Step>
 
         {/* 세부 상황 설정 */}
         <Funnel.Step name="story">
-          <SignUpLayout
+          <MonsterLayout
             title={title.story}
             goPrev={() => setStep('stress')}
             goNext={() => setStep('monstername')}
           >
             <WriteStory />
-          </SignUpLayout>
+          </MonsterLayout>
         </Funnel.Step>
 
         {/* 몬스터 닉네임 설정 */}
         <Funnel.Step name="monstername">
-          <SignUpLayout
+          <MonsterLayout
             className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
             goPrev={() => setStep('story')}
             goNext={() => setStep('monsterstyle')}
           >
             <MonsterName />
-          </SignUpLayout>
+          </MonsterLayout>
         </Funnel.Step>
 
         {/* 몬스터 스타일 설정 */}
         <Funnel.Step name="monsterstyle">
-          <SignUpLayout
+          <MonsterLayout
             className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
             goPrev={() => setStep('monstername')}
             goNext={() => {}}
           >
             <CustomizeMonster />
-          </SignUpLayout>
+          </MonsterLayout>
         </Funnel.Step>
       </Funnel>
     </UserInfoProvider>
