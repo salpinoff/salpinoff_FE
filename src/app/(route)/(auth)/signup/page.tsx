@@ -69,6 +69,7 @@ function SignUp() {
           <MonsterLayout
             title={title.nickname}
             goNext={() => setStep('emotion')}
+            control={['퇴사몬 만들기']}
           >
             <MakeNickName />
           </MonsterLayout>
