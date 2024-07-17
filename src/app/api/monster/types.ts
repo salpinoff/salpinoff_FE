@@ -1,5 +1,11 @@
 import { Decoration, Monster } from '@api/schema/monster';
 
+export interface MonsterResponse extends Omit<Monster, 'rating'> {
+  ratingRange: string;
+  createdAt: string;
+  interactionCountPerEncouragement: number;
+}
+
 /** CreateMonster */
 export interface CreateMonsterRequest
   extends Omit<
@@ -12,17 +18,13 @@ export interface CreateMonsterRequest
   monsterDecorations: Omit<Decoration, 'decorationId'>[];
 }
 
-export interface CreateMonsterResponse extends Omit<Monster, 'rating'> {
+export interface CreateMonsterResponse extends MonsterResponse {
   ownerName: string;
-  interactionCountPerEncouragement: number;
 }
 
 /** GetMonster */
-export interface GetMonsterResponse extends Omit<Monster, 'rating'> {
-  ratingRange: string;
+export interface GetMonsterResponse extends MonsterResponse {
   ownerName: string;
-  interactionCountPerEncouragement: number;
-  createdAt: string;
 }
 
 /** GetMonsterRef */
@@ -37,7 +39,7 @@ export interface GetMonstersListRequest {
 export interface GetMonsterListResponse {
   page: number;
   size: number;
-  content: Omit<Monster, 'rating'>[];
+  content: MonsterResponse[];
   totalElements: number;
 }
 
