@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { findIndex, xorBy, unionBy } from 'lodash';
 
 import CharacterCanvas from '@components/CharacterCanvas';
+import Tabs from '@components/common/navigation/Tabs';
 import BaseText from '@components/common/Text/BaseText';
 
 import useWithAuth from '@hooks/useWithAuth';
@@ -19,7 +20,6 @@ import { createMonster } from '@api/monster';
 import { DECORATION_TYPE, EMOTION } from '@api/schema/monster';
 
 import CustomizeOption from './CustomizeOption';
-import Tabs from './Tabs';
 import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
 import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
 import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';

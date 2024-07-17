@@ -1,40 +1,25 @@
 import Link from 'next/link';
 
-import type {
-  ComponentProps,
-  ComponentPropsWithoutRef,
-  ElementType,
-} from 'react';
+import type { ComponentPropsWithoutRef, ElementType } from 'react';
 
 import Icon from '@components/common/data-display/Icon';
 
 import cn from '@utils/cn';
 
-type SectionProps = ComponentProps<'section'>;
-type SectionCommonItemProps<T extends ElementType> =
+type MenuCommonItemProps<T extends ElementType> =
   ComponentPropsWithoutRef<T> & { loading?: boolean };
-type SectionItemProps =
-  | (SectionCommonItemProps<'a'> & { component: 'a' })
-  | (SectionCommonItemProps<'button'> & { component: 'button' });
 
-function Section({ children, className, ...restProps }: SectionProps) {
-  return (
-    <section
-      className={cn('-mx-20 flex flex-col text-white', className)}
-      {...restProps}
-    >
-      {children}
-    </section>
-  );
-}
+type MenuItemProps =
+  | (MenuCommonItemProps<'a'> & { component: 'a' })
+  | (MenuCommonItemProps<'button'> & { component: 'button' });
 
-function SecionItem({
+export default function MenuItem({
   children,
   component,
   className,
   loading = false,
   ...restProps
-}: SectionItemProps) {
+}: MenuItemProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Component: any = component === 'a' ? Link : 'button';
 
@@ -63,7 +48,3 @@ function SecionItem({
     </Component>
   );
 }
-
-Section.Item = SecionItem;
-
-export default Section;

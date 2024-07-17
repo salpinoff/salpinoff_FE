@@ -10,6 +10,8 @@ import BaseText from '@components/common/Text/BaseText';
 
 import useOutsideClick from '@hooks/useOutsideClick';
 
+import { Adapter } from '@utils/client/adapter';
+import transformMonster from '@utils/client/transform-monster';
 import cn from '@utils/cn';
 import { getQueryClient } from '@utils/query/get-query-client';
 
@@ -48,7 +50,10 @@ function MessageConfirmModal({
     },
   });
 
-  const { data } = useMonster(monsterId);
+  const { data } = useMonster(monsterId, {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    select: (data) => Adapter.from(data.data).to(transformMonster),
+  });
 
   const emotion = data?.emotion;
   const energyPerInteraction =
