@@ -9,7 +9,7 @@ import FixedBottom from '@components/FixedBottom';
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
 
-import { SignUpProvider } from '../context/layout.context';
+import { SignUpProvider } from '../../../../../(auth)/signup/context/layout.context';
 
 interface Props extends Omit<React.ComponentProps<'div'>, 'title'> {
   title?: string | string[];
@@ -20,7 +20,7 @@ interface Props extends Omit<React.ComponentProps<'div'>, 'title'> {
 type Callback = (event: MouseEvent<Element>) => Promise<boolean> | void;
 type RegisterCallback = (callback: Callback) => void;
 
-function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
+function MonsterLayout({ className, children, title, goPrev, goNext }: Props) {
   const [disabled, setBtnDisabled] = useState(true);
   const [callback, setCallback] = useState<Callback>(() => {
     return (e: MouseEvent) => {
@@ -94,4 +94,4 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
   );
 }
 
-export default SignUpLayout;
+export default MonsterLayout;
