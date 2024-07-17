@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import TextField from '@components/common/TextField';
 
@@ -16,6 +16,7 @@ import useMonsterLayout from '../../../(monster)/monster/produce/hooks/useMonste
 function MakeNickName() {
   const { setBtnDisabled, registerCallback } = useMonsterLayout();
   const {
+    control,
     register,
     formState: {
       defaultValues,
@@ -23,7 +24,7 @@ function MakeNickName() {
     },
   } = useFormContext<UserInfo>();
 
-  const userName = defaultValues?.userName || '';
+  const userName = useWatch({ control, name: 'userName' });
   const code = defaultValues?.code || 100;
 
   const withAuth = useWithAuth();
@@ -41,7 +42,7 @@ function MakeNickName() {
 
   useEffect(() => {
     registerCallback(handleClick);
-  }, [handleClick]);
+  }, []);
 
   return (
     <div className="flex flex-col justify-between">
