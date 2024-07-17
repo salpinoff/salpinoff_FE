@@ -5,7 +5,7 @@ import {
   useContext,
 } from 'react';
 
-import Icon, { IconProps } from '@components/common/Icon';
+import Icon, { IconProps } from '@components/common/data-display/Icon';
 
 import { tooltipContext } from './TooltipProvider';
 import FormHelperText from '../TextField/FormHelperText';
