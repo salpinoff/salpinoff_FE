@@ -9,7 +9,7 @@ import FixedBottom from '@components/FixedBottom';
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
 
-import { MonsterProvider } from '../../context/layout.context';
+import { MonsterLayoutProvider } from '../../context/layout.context';
 
 interface Props extends Omit<React.ComponentProps<'div'>, 'title'> {
   title?: string | string[];
@@ -67,9 +67,9 @@ function MonsterLayout({ className, children, title, goPrev, goNext }: Props) {
           </BaseText>
         </motion.p>
 
-        <MonsterProvider value={{ setBtnDisabled, registerCallback }}>
+        <MonsterLayoutProvider value={{ setBtnDisabled, registerCallback }}>
           {children}
-        </MonsterProvider>
+        </MonsterLayoutProvider>
       </div>
 
       <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 p-5">

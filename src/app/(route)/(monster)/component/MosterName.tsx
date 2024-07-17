@@ -10,10 +10,10 @@ import TextField from '@components/common/TextField';
 import stringToElement from '@utils/string-to-element';
 
 import { UserInfo } from '../../(auth)/signup/context/context.type';
-import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
+import useMonsterLayout from '../monster/produce/hooks/useMonsterLayout';
 
 function MonsterName() {
-  const { setBtnDisabled } = useSignUpContext();
+  const { setBtnDisabled } = useMonsterLayout();
 
   const {
     getValues,

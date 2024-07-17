@@ -14,7 +14,7 @@ import { Emotion } from '@api/schema/monster';
 
 import type { UserInfo } from '../../../../(auth)/signup/context/context.type';
 
-import useSignUpContext from '../../../../(auth)/signup/hooks/useSignUpContext';
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 const EMOTIONS = [
   {
@@ -61,7 +61,7 @@ const buttonStyle = cva(
 );
 
 function SelectEmotion() {
-  const { setBtnDisabled } = useSignUpContext();
+  const { setBtnDisabled } = useMonsterLayout();
   const {
     register,
     control,

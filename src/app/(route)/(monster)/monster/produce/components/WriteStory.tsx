@@ -6,12 +6,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 import TextField from '@components/common/TextField';
 
 import { UserInfo } from '../../../../(auth)/signup/context/context.type';
-import useSignUpContext from '../../../../(auth)/signup/hooks/useSignUpContext';
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 const MAX_LENGTH = 500;
 
 function WriteStory() {
-  const { setBtnDisabled } = useSignUpContext();
+  const { setBtnDisabled } = useMonsterLayout();
 
   const {
     control,

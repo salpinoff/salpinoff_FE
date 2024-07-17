@@ -10,7 +10,7 @@ import Tooltip from '@components/common/Tooltip';
 import Slider from '@components/Slider';
 
 import { UserInfo } from '../../../../(auth)/signup/context/context.type';
-import useSignUpContext from '../../../../(auth)/signup/hooks/useSignUpContext';
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 const slider = {
   step: 1,
@@ -41,7 +41,7 @@ const helperText = (stress: number): string => {
 
 function SelectStress() {
   const { min, max, step } = slider;
-  const { setBtnDisabled } = useSignUpContext();
+  const { setBtnDisabled } = useMonsterLayout();
   const { control, getValues } = useFormContext<UserInfo>();
 
   const stress = useWatch({ control, name: 'stress' });

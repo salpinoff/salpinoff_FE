@@ -11,10 +11,10 @@ import useWithAuth from 'src/app/hooks/useWithAuth';
 
 import type { UserInfo } from '../context/context.type';
 
-import useSignUpContext from '../hooks/useSignUpContext';
+import useMonsterLayout from '../../../(monster)/monster/produce/hooks/useMonsterLayout';
 
 function MakeNickName() {
-  const { setBtnDisabled, registerCallback } = useSignUpContext();
+  const { setBtnDisabled, registerCallback } = useMonsterLayout();
   const {
     register,
     formState: {

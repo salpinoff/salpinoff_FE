@@ -25,13 +25,13 @@ import {
 } from '@api/schema/monster';
 
 import { UserInfo } from '../../../../(auth)/signup/context/context.type';
-import useSignUpContext from '../../../../(auth)/signup/hooks/useSignUpContext';
 import CustomizeOption from '../../../component/CustomizeOption';
 import Tabs from '../../../component/Tabs';
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 function CustomizeMonster() {
   const { replace } = useRouter();
-  const { setBtnDisabled, registerCallback } = useSignUpContext();
+  const { setBtnDisabled, registerCallback } = useMonsterLayout();
   const { getValues, control } = useFormContext<UserInfo>();
 
   const emotion = getValues('emotion');
