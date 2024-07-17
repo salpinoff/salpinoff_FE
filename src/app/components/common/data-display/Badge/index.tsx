@@ -1,3 +1,5 @@
+import { cloneElement, forwardRef, ReactNode } from 'react';
+
 import { cva, VariantProps } from 'class-variance-authority';
 
 import cn from '@utils/cn';
@@ -77,34 +79,54 @@ export const badgeStyles = cva('truncate', {
   },
 });
 
-export type BadgeProps<T extends React.ElementType> = React.PropsWithChildren<
-  VariantProps<typeof badgeStyles>
-> &
-  React.ComponentPropsWithRef<T> & {
-    count: number;
-    max?: number;
-    showZero?: boolean;
-  };
+export type BadgeProps<T extends React.ElementType = 'span'> =
+  React.ComponentPropsWithRef<T> &
+    VariantProps<typeof badgeStyles> & {
+      component?: T;
+      children?: [ReactNode, ...(readonly ReactNode[])];
+      max?: number;
+      count: number;
+      showZero?: boolean;
+    };
 
-export default function Badge<T extends React.ElementType = 'span'>({
-  className,
-  children,
-  variant,
-  color,
-  count,
-  max = 99,
-  showZero = false,
-}: BadgeProps<T>) {
-  if (!showZero && count === 0) {
-    return <div className={className}>{children}</div>;
-  }
+const Badge = forwardRef(
+  <T extends React.ElementType = 'span'>(
+    {
+      component,
+      className,
+      children,
+      variant,
+      color,
+      count,
+      max = 99,
+      showZero = false,
+      ...rest
+    }: BadgeProps<T>,
+    ref: React.Ref<Element>,
+  ) => {
+    const Component: React.ElementType = component || 'span';
 
-  return (
-    <span className={cn(badgeBoxStyles({ variant }), className)}>
-      <span className="shrink-0">{children}</span>
-      <span className={badgeStyles({ variant, color })}>
-        {variant !== 'dot' && (count > max ? `${max}+` : count)}
-      </span>
-    </span>
-  );
-}
+    if (!showZero && count === 0) {
+      return <Component className={className}>{children}</Component>;
+    }
+
+    return (
+      <Component
+        ref={ref}
+        className={cn(badgeBoxStyles({ variant }), className)}
+        {...rest}
+      >
+        {cloneElement(children, {
+          className: 'shrink-0',
+        })}
+        <span className={badgeStyles({ variant, color })}>
+          {variant !== 'dot' && (count > max ? `${max}+` : count)}
+        </span>
+      </Component>
+    );
+  },
+);
+
+Badge.displayName = 'Badge';
+
+export default Badge;
