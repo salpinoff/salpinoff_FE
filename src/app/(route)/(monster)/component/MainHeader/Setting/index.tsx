@@ -5,10 +5,10 @@ import { MouseEventHandler, ReactElement, useReducer } from 'react';
 import Drawer from '@components/common/navigation/Drawer';
 import Menu from '@components/common/navigation/Menu';
 import Header from '@components/Header';
+import SignoutConfirmModal from '@components/modals/SignoutConfirmModal';
 
 import useModal from '@hooks/useModal';
 
-import signOut from 'src/app/(route)/(auth)/signin/utils/signout';
 import EditContent from 'src/app/(route)/profile/edit/components/EditForm';
 
 import MonsterList from './drawer-contents/MonsterList';
@@ -64,10 +64,16 @@ export default function Setting({ close }: SettingProps) {
     openByDrawer(e.currentTarget, <EditContent />);
 
   const handleSignout = () => {
-    updater({ signout: true });
-    signOut({ callbackUrl: '/signin' }).finally(() => {
-      updater({ signout: false });
-    });
+    openModal(() => (
+      <SignoutConfirmModal
+        onCancel={closeModal}
+        onSignout={() => {
+          closeModal();
+          updater({ signout: true });
+        }}
+        onSignoutFailed={() => updater({ signout: true })}
+      />
+    ));
   };
 
   return (
