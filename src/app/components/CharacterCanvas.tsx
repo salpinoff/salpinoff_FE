@@ -15,8 +15,8 @@ export type CharacterCanvasProps = ComponentPropsWithoutRef<'canvas'> & {
 };
 
 export default function CharacterCanvas({
-  width = 480,
-  height = 720,
+  width = 580,
+  height = 580,
   className,
   type,
   status = 'before',

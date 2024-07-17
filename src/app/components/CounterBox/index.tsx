@@ -46,11 +46,11 @@ export default function CounterBox({
 
   const debouncedCount = useMemo(
     () =>
-      debounce((clickCount) => {
+      debounce((clickCount: number) => {
         onCount(clickCount * step);
         resetAtom();
       }, delay),
-    [endAt, step, delay, onCount, resetAtom],
+    [],
   );
 
   const handleClick = () => {
