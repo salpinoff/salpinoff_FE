@@ -4,13 +4,12 @@ import DotsPagination from '@components/DotsPagination';
 
 import useFunnel from '@hooks/useFunnel';
 
-import { funnel, title } from 'src/app/(route)/(auth)/signup/constant/funnel';
-
 import CustomizeMonster from './components/CustomizeMonster';
 import MonsterLayout from './components/layout/MonsterLayout';
 import SelectEmotion from './components/SelectEmotion';
 import SelectStress from './components/SelectStress';
 import WriteStory from './components/WriteStory';
+import { funnel, title } from './constant/funnel';
 import MonsterInfoProvider from './context/monster.context';
 import MonsterName from '../../component/MosterName';
 
@@ -24,14 +23,12 @@ function MonsterProducePage() {
     'emotion',
   );
 
-  const [, ...orderItem] = funnel;
-
   return (
     <MonsterInfoProvider>
       <DotsPagination
         activeId={step}
         className="absolute right-0 ml-auto mt-[28px] w-full px-20"
-        orderItems={orderItem.map((id) => ({ id }))}
+        orderItems={funnel.map((id) => ({ id }))}
       />
 
       <Funnel>
