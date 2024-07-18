@@ -168,7 +168,15 @@ export default function RefMonsterFlipCard() {
               {monster.monsterName}
             </BaseText>
           </div>
-          <ActionMenu targetId={monster.monsterId} />
+          <ActionMenu
+            monster={{
+              monsterId: monster.monsterId,
+              type: monster.type,
+              status: monster.status,
+              items: ITEMS,
+              background: BACKGROUND_COLOR ?? '',
+            }}
+          />
         </div>
         <ProgressBar
           value={totalCount}
