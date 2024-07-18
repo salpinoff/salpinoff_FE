@@ -156,10 +156,7 @@ export default function RefMonsterFlipCard() {
           </div>
         )}
       </MonsterFlipCard.ActionArea>
-      <MonsterFlipCard.Content
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-      >
+      <MonsterFlipCard.Content>
         <div className="flex items-center justify-between">
           <div className="pointer-event-none flex select-none items-center gap-8">
             <StressLevelBadge level={monster.ratingRange} />
@@ -181,7 +178,7 @@ export default function RefMonsterFlipCard() {
           label="percent"
         />
       </MonsterFlipCard.Content>
-      <MonsterFlipCard.Back onClick={toggleCard}>
+      <MonsterFlipCard.Back>
         <BaseText
           className={cn(
             'my-auto flex h-full max-h-full w-full flex-initial items-center',
