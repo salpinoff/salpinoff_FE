@@ -8,10 +8,9 @@ import { offset, useFloating } from '@floating-ui/react-dom';
 
 import DownloadSVG from '@public/icons/download.svg';
 import EditSVG from '@public/icons/edit.svg';
-import EllipsisSVG from '@public/icons/ellipsis.svg';
 import ShareSVG from '@public/icons/share.svg';
 
-import Button from '@components/common/Button';
+import IconButton from '@components/common/Button/IconButton';
 import Separator from '@components/common/data-display/Separator';
 import { Menu, MenuItem } from '@components/Menu';
 import ShareModal from '@components/modals/ShareModal';
@@ -69,15 +68,13 @@ export default function ActionMenu({ targetId }: ActionMenuProps) {
 
   return (
     <div className="relative w-[55px] text-right shadow-2">
-      <Button
+      <IconButton
         ref={refs.setReference}
         id="menu-button"
-        variant="ghost"
-        className="inline-flex h-32 w-32 items-center justify-center rounded-circular p-0 data-[open]:bg-[#5050501f]"
+        className="inline-flex h-32 w-32 items-center justify-center rounded-circular p-0 text-cool-neutral-40 data-[open]:bg-[#5050501f]"
+        name="ellipsis"
         onClick={() => setIsOpen((prev) => !prev)}
-      >
-        <EllipsisSVG className="text-cool-neutral-40" />
-      </Button>
+      />
       <Menu open={isOpen} ref={refs.setFloating} style={floatingStyles}>
         <MenuItem onClick={handleSave}>
           저장하기

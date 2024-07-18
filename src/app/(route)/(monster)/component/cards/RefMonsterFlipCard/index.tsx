@@ -23,6 +23,7 @@ import useModal from '@hooks/useModal';
 
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
+import cn from '@utils/cn';
 
 import { useUpdateInteraction } from '@api/interaction/query/hooks';
 import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
@@ -68,6 +69,13 @@ export default function RefMonsterFlipCard() {
   const ITEMS = Object.values(restDecos);
 
   const toggleCard = () => setFlipped((prev) => !prev);
+
+  const handleModify: MouseEventHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    router.push(`/monster/${monster.monsterId}/modify/story`);
+  };
 
   const handleTouchMove: TouchEventHandler = (event) => {
     const touch = event.touches[0]!;
@@ -173,30 +181,27 @@ export default function RefMonsterFlipCard() {
           label="percent"
         />
       </MonsterFlipCard.Content>
-      <MonsterFlipCard.Back>
-        <div
-          className="flex h-full w-full items-center justify-center"
-          role="none"
-          onClick={toggleCard}
+      <MonsterFlipCard.Back onClick={toggleCard}>
+        <BaseText
+          className={cn(
+            'my-auto flex h-full max-h-full w-full flex-initial items-center',
+            'whitespace-pre-wrap text-center leading-relaxed',
+            'overflow-y-auto scrollbar-hide',
+          )}
+          component="p"
+          variant="body-2"
+          weight="regular"
+          color="strong"
+          wrap
         >
-          <BaseText
-            className="my-auto flex max-h-full overflow-y-auto text-center"
-            component="p"
-            variant="body-2"
-            weight="medium"
-            color="strong"
-            wrap
-          >
-            {monster.content}
-          </BaseText>
-        </div>
+          {monster.content}
+        </BaseText>
         <Button
           variant="secondary"
           size="small"
-          className="w-full"
-          onClick={() => {
-            router.push(`/monster/${monster.monsterId}/modify/story`);
-          }}
+          className="w-full flex-none"
+          onClick={handleModify}
+          aria-label="내용 수정하기"
         >
           내용 수정하기
         </Button>
