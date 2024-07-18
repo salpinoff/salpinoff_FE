@@ -17,15 +17,13 @@ import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterResponse } from '@api/monster/types';
 
 import { MonsterCounterBox, StressLevelBadge } from '../_ui';
+import { FLIP_CARD_HEIGHT, FLIP_CARD_WIDTH } from '../constants';
 
 type SharedMonsterFlipCardProps = {
   clear?: boolean;
   monsterId: string;
   onComplete: () => void;
 };
-
-const CARD_WIDTH = 312;
-const CARD_HEIGHT = 400;
 
 const ACTION_HELPER_TEXT = '화면을 연타하면 사연을 볼 수 있어요';
 const CLEAR_HELPER_TEXT = '숨겨진 사연이 열렸어요, 한번 더 탭하세요!';
@@ -100,8 +98,8 @@ export default function SharedMonsterFlipCard({
 
   return (
     <MonsterFlipCard
-      width={CARD_WIDTH}
-      height={CARD_HEIGHT}
+      width={FLIP_CARD_WIDTH}
+      height={FLIP_CARD_HEIGHT}
       color={BACKGROUND_COLOR}
       flipped={flipped}
       onClick={handleClick}

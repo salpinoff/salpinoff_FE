@@ -9,7 +9,7 @@ type MenuProps = ComponentProps<'section'>;
 function Menu({ children, className, ...restProps }: MenuProps) {
   return (
     <section
-      className={cn('-mx-20 flex flex-col text-white', className)}
+      className={cn('-mx-20 flex flex-col text-cool-neutral-99', className)}
       {...restProps}
     >
       {children}

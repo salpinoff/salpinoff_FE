@@ -23,15 +23,14 @@ import useModal from '@hooks/useModal';
 
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
+import cn from '@utils/cn';
 
 import { useUpdateInteraction } from '@api/interaction/query/hooks';
 import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterRefResponse } from '@api/monster/types';
 
 import { ActionMenu, MonsterCounterBox, StressLevelBadge } from '../_ui';
-
-const CARD_WIDTH = 312;
-const CARD_HEIGHT = 400;
+import { FLIP_CARD_HEIGHT, FLIP_CARD_WIDTH } from '../constants';
 
 export default function RefMonsterFlipCard() {
   const router = useRouter();
@@ -69,6 +68,13 @@ export default function RefMonsterFlipCard() {
 
   const toggleCard = () => setFlipped((prev) => !prev);
 
+  const handleModify: MouseEventHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    router.push(`/monster/${monster.monsterId}/modify/story`);
+  };
+
   const handleTouchMove: TouchEventHandler = (event) => {
     const touch = event.touches[0]!;
 
@@ -100,8 +106,8 @@ export default function RefMonsterFlipCard() {
   return (
     <MonsterFlipCard
       className="mx-auto"
-      width={CARD_WIDTH}
-      height={CARD_HEIGHT}
+      width={FLIP_CARD_WIDTH}
+      height={FLIP_CARD_HEIGHT}
       flipped={flipped}
       color={BACKGROUND_COLOR}
       // Mobile
@@ -148,10 +154,7 @@ export default function RefMonsterFlipCard() {
           </div>
         )}
       </MonsterFlipCard.ActionArea>
-      <MonsterFlipCard.Content
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-      >
+      <MonsterFlipCard.Content>
         <div className="flex items-center justify-between">
           <div className="pointer-event-none flex select-none items-center gap-8">
             <StressLevelBadge level={monster.ratingRange} />
@@ -165,7 +168,15 @@ export default function RefMonsterFlipCard() {
               {monster.monsterName}
             </BaseText>
           </div>
-          <ActionMenu targetId={monster.monsterId} />
+          <ActionMenu
+            monster={{
+              monsterId: monster.monsterId,
+              type: monster.type,
+              status: monster.status,
+              items: ITEMS,
+              background: BACKGROUND_COLOR ?? '',
+            }}
+          />
         </div>
         <ProgressBar
           value={totalCount}
@@ -174,29 +185,26 @@ export default function RefMonsterFlipCard() {
         />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
-        <div
-          className="flex h-full w-full items-center justify-center"
-          role="none"
-          onClick={toggleCard}
+        <BaseText
+          className={cn(
+            'my-auto flex h-full max-h-full w-full flex-initial items-center',
+            'whitespace-pre-wrap text-center leading-relaxed',
+            'overflow-y-auto scrollbar-hide',
+          )}
+          component="p"
+          variant="body-2"
+          weight="regular"
+          color="strong"
+          wrap
         >
-          <BaseText
-            className="my-auto flex max-h-full overflow-y-auto text-center"
-            component="p"
-            variant="body-2"
-            weight="medium"
-            color="strong"
-            wrap
-          >
-            {monster.content}
-          </BaseText>
-        </div>
+          {monster.content}
+        </BaseText>
         <Button
           variant="secondary"
           size="small"
-          className="w-full"
-          onClick={() => {
-            router.push(`/monster/${monster.monsterId}/modify/story`);
-          }}
+          className="w-full flex-none"
+          onClick={handleModify}
+          aria-label="내용 수정하기"
         >
           내용 수정하기
         </Button>

@@ -5,7 +5,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import cn from '@utils/cn';
 
 const cardStyles = cva(
-  'relative flex items-center justify-center overflow-hidden border-[10px] border-cool-neutral-7 shadow-[0_0_0_5px] bg-current text-transparent',
+  'relative flex items-center justify-center overflow-hidden border-[11px] border-cool-neutral-7 shadow-[0_0_0_5px] bg-current text-transparent',
   {
     variants: {},
   },
