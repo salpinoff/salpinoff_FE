@@ -12,9 +12,9 @@ import EllipsisSVG from '@public/icons/ellipsis.svg';
 import ShareSVG from '@public/icons/share.svg';
 
 import Button from '@components/common/Button';
+import Separator from '@components/common/data-display/Separator';
 import { Menu, MenuItem } from '@components/Menu';
 import ShareModal from '@components/modals/ShareModal';
-import Separator from '@components/Separator';
 
 import useModal from '@hooks/useModal';
 import useOutsideClick from '@hooks/useOutsideClick';

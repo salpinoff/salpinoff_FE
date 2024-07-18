@@ -28,7 +28,7 @@ const ConfettiMap = {
   },
   sad: {
     image: {
-      src: '/images/heart0000.png',
+      src: '/images/heart_active.webp',
       width: 50,
       height: 50,
     },
@@ -48,7 +48,7 @@ export default function MonsterCounterBox({
   onCount,
   onComplete,
 }: MonsterCounterBoxPropps) {
-  const canvasRef = useCanvas(580, 720); // X2
+  const canvasRef = useCanvas(580, 580); // X2
   const { addConfetti, destroyCanvas } = useConfetti(canvasRef);
 
   const [isMouseDown, setIsMouseDown] = useState(false);

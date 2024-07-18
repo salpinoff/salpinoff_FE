@@ -1,4 +1,4 @@
-import Icon, { IconProps } from '@components/common/Icon';
+import Icon, { IconProps } from '@components/common/data-display/Icon';
 
 import cn from '@utils/cn';
 

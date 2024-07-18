@@ -1,18 +1,18 @@
-import { Decoration, Emotion, Monster } from '@api/schema/monster';
+import { Decoration, EMOTION, Monster } from '@api/schema/monster';
 
-const getCharacterTypeByEmotion = (emotion: keyof typeof Emotion) =>
+export const getCharacterTypeByEmotion = (emotion: keyof typeof EMOTION) =>
   (
     ({
-      [Emotion.ANGER]: 'mad',
-      [Emotion.DEPRESSION]: 'sad',
+      [EMOTION.ANGER]: 'mad',
+      [EMOTION.DEPRESSION]: 'sad',
       // ...
     }) as const
   )[emotion] ?? 'sad';
 
-const getCharacterStatus = (clear: boolean) =>
+export const getCharacterStatus = (clear: boolean) =>
   clear ? ('after' as const) : ('before' as const);
 
-const getDecorationMap = <T extends readonly Decoration[]>(
+export const getDecorationMap = <T extends readonly Decoration[]>(
   decorations: T,
 ): Partial<
   Record<T[number]['decorationType'], T[number]['decorationValue']>

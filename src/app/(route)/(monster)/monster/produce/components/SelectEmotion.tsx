@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { ChangeEventHandler, useEffect } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { cva } from 'class-variance-authority';
 
-import FormLabel from '@components/common/FormLabel';
+import FormControlLabel from '@components/common/FormControlLabel';
 import Tooltip from '@components/common/Tooltip';
 
 import cn from '@utils/cn';
 
-import { Emotion } from '@api/schema/monster';
+import { EMOTION } from '@api/schema/monster';
 
 import type { UserInfo } from '../../../../(auth)/signup/context/context.type';
 
@@ -18,14 +18,14 @@ import useMonsterLayout from '../hooks/useMonsterLayout';
 
 const EMOTIONS = [
   {
-    id: Emotion.ANGER,
+    id: EMOTION.ANGER,
     label: '분노!!',
-    className: 'has-[:checked]:bg-[#F450A6]',
+    className: 'has-[:checked]:bg-[#F450A6] bg-[url("/images/angry.png")]',
   },
   {
-    id: Emotion.DEPRESSION,
+    id: EMOTION.DEPRESSION,
     label: '우울...',
-    className: 'has-[:checked]:bg-blue-60',
+    className: 'has-[:checked]:bg-blue-60 bg-[url("/images/depressed.png")]',
   },
 ];
 
@@ -44,13 +44,14 @@ const gridStyles = cva('grid', {
 
 const buttonStyle = cva(
   [
-    'cursor-pointer select-none transition-colors	',
+    'relative overflow-hidden cursor-pointer select-none transition-colors',
     'w-full h-[160px] rounded-20 p-[48px]',
     'flex items-center',
     // default
-    'bg-[#70737C1F] text-cool-neutral-90A',
+    'isolate bg-[#70737C1F] bg-no-repeat	bg-contain bg-right-bottom text-cool-neutral-80A',
+    'after:content-[""] after:absolute after:-z-10 after:opacity-90 after:bg-cool-neutral-15',
     // :has[:checked]
-    'has-[:checked]:!font-bold has-[:checked]:bg-blue-60 has-[:checked]:text-white',
+    'has-[:checked]:!font-bold has-[:checked]:bg-blue-60 has-[:checked]:text-white after:w-full after:h-full after:inset-0 has-[:checked]:after:content-none',
     // important
     '!title-3-regular',
   ],
@@ -63,7 +64,6 @@ const buttonStyle = cva(
 function SelectEmotion() {
   const { setBtnDisabled } = useMonsterLayout();
   const {
-    register,
     control,
     formState: { errors },
   } = useFormContext<UserInfo>();
@@ -78,7 +78,7 @@ function SelectEmotion() {
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
       <Tooltip
         label="나의 감정"
-        content={`스트레스가 높을수록 퇴사몬을 \n 클리어하기 위해 더 많은 탭이 필요해요`}
+        content={`나의 감정 상태에 따라\n다른 형태의 퇴사몬이 등장해요`}
         className="mb-12"
       >
         <Tooltip.Label className="flex-none" />
@@ -95,19 +95,33 @@ function SelectEmotion() {
         )}
       >
         {EMOTIONS.map(({ label, id, className }) => (
-          <FormLabel key={id} id={id} className={cn(buttonStyle(), className)}>
-            {label}
-            <input
-              id={id}
-              type="radio"
-              value={id}
-              className="a11yHidden"
-              checked={selectedId === id}
-              {...register('emotion', {
-                required: true,
-              })}
-            />
-          </FormLabel>
+          <Controller
+            key={id}
+            name="emotion"
+            control={control}
+            render={({ field: { onChange } }) => {
+              const handleChange: ChangeEventHandler = () => {
+                onChange(id);
+              };
+
+              return (
+                <FormControlLabel
+                  id={id}
+                  name="emotion"
+                  label={label}
+                  checked={selectedId === id}
+                  className={cn(buttonStyle(), className)}
+                  control={
+                    <input
+                      type="radio"
+                      className="a11yHidden"
+                      onChange={handleChange}
+                    />
+                  }
+                />
+              );
+            }}
+          />
         ))}
       </div>
     </fieldset>

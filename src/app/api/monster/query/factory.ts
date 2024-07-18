@@ -10,14 +10,16 @@ const MonsterQueryFactory = createQueryKeys('monster', {
     queryKey: null, // output: ['monster', 'reference']
     queryFn: getRefMonster,
   },
+  list: {
+    queryKey: null,
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await getMonsterList({ page: pageParam as number, size: 10 });
+      return res.data;
+    },
+  },
   detail: (id: string) => ({
     queryKey: [id], // output: ['monster', 'detail', id]
     queryFn: () => getMonsterById(id),
-  }),
-  list: (filters) => ({
-    queryKey: [{ filters }], // output: ['monster', 'list', { filters }]
-    queryFn: getMonsterList,
-    contextQueries: {},
   }),
 });
 

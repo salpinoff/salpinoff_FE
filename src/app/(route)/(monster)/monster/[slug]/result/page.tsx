@@ -9,7 +9,9 @@ import Button from '@components/common/Button';
 
 import useModal from '@hooks/useModal';
 
+import { Adapter } from '@utils/client/adapter';
 import generateShareUrl from '@utils/client/generate-share-url';
+import transformMonster from '@utils/client/transform-monster';
 import cn from '@utils/cn';
 
 import { useMonster } from '@api/monster/query/hooks';
@@ -26,8 +28,13 @@ export default function MonsterResultPage({
 
   const router = useRouter();
 
-  const { error, isError, isFetching, status, fetchStatus, data } =
-    useMonster(monsterId);
+  const { error, isError, isFetching, status, fetchStatus, data } = useMonster(
+    monsterId,
+    {
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      select: (data) => Adapter.from(data.data).to(transformMonster),
+    },
+  );
 
   const SHARE_URL = generateShareUrl(monsterId) ?? '';
 
@@ -99,7 +106,7 @@ export default function MonsterResultPage({
             </footer>
           </>
         )}
-        {error && <>error</>}
+        {isError && <>error</>}
       </div>
     </div>
   );

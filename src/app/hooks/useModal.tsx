@@ -2,6 +2,8 @@ import { useEffect, useId, useCallback, FC } from 'react';
 
 import { useAtomValue, useSetAtom } from 'jotai';
 
+import { unionBy } from 'lodash';
+
 import { modalAtom } from '@store/modalAtom';
 
 const useModal = (component: React.FC) => {
@@ -13,10 +15,9 @@ const useModal = (component: React.FC) => {
 
   const openModal = useCallback(
     (newComponent?: FC) =>
-      setModals((prev) => [
-        ...prev,
-        { uid, element: newComponent || component },
-      ]),
+      setModals((prev) =>
+        unionBy([...prev, { uid, element: newComponent || component }], 'uid'),
+      ),
     [component, uid, setModals],
   );
 

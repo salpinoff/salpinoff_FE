@@ -4,7 +4,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import SpinSVG from '@public/icons/spin.svg';
 
-import Icon from '@components/common/Icon';
+import Icon from '@components/common/data-display/Icon';
 
 import cn from '@utils/cn';
 

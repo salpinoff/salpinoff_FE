@@ -25,7 +25,7 @@ type SharedMonsterFlipCardProps = {
 };
 
 const CARD_WIDTH = 312;
-const CARD_HEIGHT = 460;
+const CARD_HEIGHT = 400;
 
 const ACTION_HELPER_TEXT = '화면을 연타하면 사연을 볼 수 있어요';
 const CLEAR_HELPER_TEXT = '숨겨진 사연이 열렸어요, 한번 더 탭하세요!';
