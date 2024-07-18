@@ -12,7 +12,7 @@ export default function CardActionArea({
   return (
     <div
       className={cn(
-        'relative h-full w-full select-none rounded-t-[28px] p-16',
+        'relative h-[calc(100%-88px)] w-full select-none overflow-hidden rounded-t-[28px] p-16',
         className,
       )}
       {...rest}
