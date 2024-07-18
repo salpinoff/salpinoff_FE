@@ -34,7 +34,11 @@ function MonsterProducePage() {
       <Funnel>
         {/* 감정 설정 */}
         <Funnel.Step name="emotion">
-          <MonsterLayout title={title.emotion} goNext={() => setStep('stress')}>
+          <MonsterLayout
+            title={title.emotion}
+            control={['다음으로']}
+            goNext={() => setStep('stress')}
+          >
             <SelectEmotion />
           </MonsterLayout>
         </Funnel.Step>

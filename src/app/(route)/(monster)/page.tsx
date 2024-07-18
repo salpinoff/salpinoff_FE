@@ -19,8 +19,8 @@ async function Home() {
 
   return (
     <section>
+      <MainHeader />
       <HydrateWithAuth queries={messageQueries}>
-        <MainHeader />
         <div className="flex h-[calc(100vh-48px)] w-screen px-32">
           {/* [TODO] ErrorBoundary 개선 */}
           <ErrorBoundary fallback={<>error</>}>

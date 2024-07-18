@@ -15,11 +15,14 @@ async function HydrateWithAuth(props: Props) {
     {},
   );
 
-  const {
-    data: { accessToken },
-  } = await getServerSession(header);
-
-  setAuthHeader(accessToken);
+  await Promise.race([
+    new Promise((resolve) => {
+      setTimeout(resolve, 300);
+    }),
+    getServerSession(header).then(({ data: { accessToken } }) => {
+      setAuthHeader(accessToken);
+    }),
+  ]);
 
   return <Hydrate {...props} />;
 }

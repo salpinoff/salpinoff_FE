@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEventHandler, ReactElement, useReducer } from 'react';
+import { MouseEventHandler, ReactElement } from 'react';
 
 import Drawer from '@components/common/navigation/Drawer';
 import Menu from '@components/common/navigation/Menu';
@@ -9,30 +9,17 @@ import SignoutConfirmModal from '@components/modals/SignoutConfirmModal';
 
 import useModal from '@hooks/useModal';
 
+import useSignout from 'src/app/(route)/(auth)/signin/hooks/useSignout';
 import EditContent from 'src/app/(route)/profile/edit/components/EditForm';
 
 import MonsterList from './drawer-contents/MonsterList';
-
-type LoadingType = 'signout';
-type LoadingState = Record<LoadingType, boolean>;
-type LoadingReducer = (
-  state: LoadingState,
-  payload: LoadingState,
-) => LoadingState;
 
 type SettingProps = {
   close: () => void;
 };
 
 export default function Setting({ close }: SettingProps) {
-  const [{ signout }, updater] = useReducer<LoadingReducer>(
-    (state, payload) => {
-      return { ...state, ...payload };
-    },
-    {
-      signout: false,
-    },
-  );
+  const { mutate: signOut, isPending } = useSignout({ callbackUrl: '/signin' });
 
   const { openModal, closeModal } = useModal(() => null);
 
@@ -69,9 +56,8 @@ export default function Setting({ close }: SettingProps) {
         onCancel={closeModal}
         onSignout={() => {
           closeModal();
-          updater({ signout: true });
+          signOut();
         }}
-        onSignoutFailed={() => updater({ signout: true })}
       />
     ));
   };
@@ -112,7 +98,7 @@ export default function Setting({ close }: SettingProps) {
         <Menu.Item
           type="button"
           component="button"
-          loading={signout}
+          loading={isPending}
           onClick={handleSignout}
           aria-label="로그아웃"
         >
