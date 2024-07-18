@@ -65,15 +65,14 @@ function withSignUpHandle(middleware: NextMiddleware) {
         await refreshUserToken(request, secret);
 
       if (!accessToken) {
-        throw new Error('No AccessTOken');
+        throw new Error('No AccessToken');
       }
 
       const redirect = request.nextUrl.clone();
-      // redirect.pathname = code === 102 ? '/' : redirect.pathname;
+      redirect.pathname = code === 102 ? '/' : redirect.pathname;
       redirect.search =
         (code === 100 && `code=${code}`) ||
         (code === 101 && `code=${code}&user=${username}`) ||
-        (code === 102 && `code=${code}&user=${username}`) ||
         '';
 
       const response =
