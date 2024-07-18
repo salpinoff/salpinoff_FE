@@ -1,25 +1,16 @@
 // import toast from 'react-hot-toast';
-import { Modal } from '@components/common/Modal';
 
-import signOut from 'src/app/(route)/(auth)/signin/utils/signout';
+import { Modal } from '@components/common/Modal';
 
 type SignoutConfirmModalProps = {
   onCancel: () => void;
   onSignout?: () => void;
-  onSignoutFailed?: () => void;
 };
 
 export default function SignoutConfirmModal({
   onCancel,
   onSignout,
-  onSignoutFailed,
 }: SignoutConfirmModalProps) {
-  const handleSignout = () => {
-    signOut({ callbackUrl: '/signin' })
-      .then(() => onSignout?.())
-      .catch(() => onSignoutFailed?.());
-  };
-
   return (
     <Modal open>
       <Modal.Dimmed />
@@ -36,7 +27,7 @@ export default function SignoutConfirmModal({
             취소
           </Modal.Button>
           <Modal.Button
-            onClick={handleSignout}
+            onClick={onSignout}
             aria-label="로그아웃"
             className="bg-red-60"
           >

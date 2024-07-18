@@ -6,20 +6,22 @@ import Button from '@components/common/Button';
 
 import cn from '@utils/cn';
 
-import signIn from '../utils/signIn';
+import useSignIn from '../hooks/useSignin';
 
 type Props = {
   className?: string;
 };
 
 function KakaoLoginBtn({ className }: Props) {
-  const handleLogin = () => signIn('kakao');
+  const { mutate: signIn, isPending } = useSignIn('kakao');
+
+  const handleLogin = () => signIn();
 
   return (
-    /** kakao_login_medium_wide */
     <Button
       size="small"
       type="button"
+      loading={isPending}
       onClick={handleLogin}
       className={cn(
         'flex h-[45px] w-full items-center bg-[#FEE500] px-[14px]',
