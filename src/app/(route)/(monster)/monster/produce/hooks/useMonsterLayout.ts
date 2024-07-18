@@ -1,17 +1,17 @@
 import { useContext } from 'react';
 
-import { signUpContext } from '../context/layout.context';
+import { monsterLayoutContext } from '../context/layout.context';
 
-const useSignUpContext = () => {
-  const signUpHandler = useContext(signUpContext);
+const useMonsterLayout = () => {
+  const layouHandler = useContext(monsterLayoutContext);
 
-  if (!signUpHandler) {
+  if (!layouHandler) {
     throw new Error(
       'Context MisMatch : this hook must be under SignUpContext.Provider',
     );
   }
 
-  const { setBtnDisabled: makeBtnDisabled, registerCallback } = signUpHandler;
+  const { setBtnDisabled: makeBtnDisabled, registerCallback } = layouHandler;
 
   const setBtnDisabled = (disable: boolean) => {
     makeBtnDisabled(disable);
@@ -23,4 +23,4 @@ const useSignUpContext = () => {
   };
 };
 
-export default useSignUpContext;
+export default useMonsterLayout;

@@ -1,6 +1,7 @@
 'use client';
 
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { match } from 'ts-pattern';
 
@@ -8,9 +9,8 @@ import FormHelperText from '@components/common/TextField/FormHelperText';
 import Tooltip from '@components/common/Tooltip';
 import Slider from '@components/Slider';
 
-import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
-import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
-import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
+import { UserInfo } from '../../../../(auth)/signup/context/context.type';
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 const slider = {
   step: 1,
@@ -41,17 +41,10 @@ const helperText = (stress: number): string => {
 
 function SelectStress() {
   const { min, max, step } = slider;
-  const { stress } = useUserInfoContext();
-  const { update } = useUserInfoDispatchContext();
+  const { setBtnDisabled } = useMonsterLayout();
+  const { control, getValues } = useFormContext<UserInfo>();
 
-  const { setBtnDisabled } = useSignUpContext();
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { target } = e;
-    const { value } = target;
-
-    update({ stress: Number(value) });
-  };
+  const stress = useWatch({ control, name: 'stress' });
 
   useEffect(() => {
     setBtnDisabled(false);
@@ -67,14 +60,23 @@ function SelectStress() {
         <Tooltip.Label className="flex-none" />
         <Tooltip.Content className="z-10 p-3" />
       </Tooltip>
-      <Slider
-        min={min}
-        max={max}
-        step={step}
-        displayInterval
-        defaultValue={stress}
-        className="mb-48"
-        onChange={handleChange}
+
+      <Controller
+        name="stress"
+        control={control}
+        render={({ field: { onChange } }) => {
+          return (
+            <Slider
+              step={step}
+              displayInterval
+              defaultValue={getValues('stress')}
+              onChange={onChange}
+              className="mb-48"
+              min={min}
+              max={max}
+            />
+          );
+        }}
       />
 
       <span className="m-auto flex h-[180px] w-[180px] flex-col items-center justify-center rounded-circular bg-[var(--color-base-cool-neutral-7)]">

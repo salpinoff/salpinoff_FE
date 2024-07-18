@@ -1,8 +1,13 @@
 import chain from './app/middlewares/chain';
 import withAuthentification from './app/middlewares/factory/withAuthentication';
+import withMonsterHandler from './app/middlewares/factory/withMonsterHandler';
 import withSignUpHandle from './app/middlewares/factory/withSignUpHandle';
 
-const middlewares = [withAuthentification, withSignUpHandle];
+const middlewares = [
+  withAuthentification,
+  withSignUpHandle,
+  withMonsterHandler,
+];
 
 export default chain(middlewares);
 

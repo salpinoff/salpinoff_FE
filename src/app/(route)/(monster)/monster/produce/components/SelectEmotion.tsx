@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEventHandler, useEffect } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { cva } from 'class-variance-authority';
 
@@ -11,9 +12,9 @@ import cn from '@utils/cn';
 
 import { EMOTION } from '@api/schema/monster';
 
-import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
-import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
-import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
+import type { UserInfo } from '../../../../(auth)/signup/context/context.type';
+
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 const EMOTIONS = [
   {
@@ -61,21 +62,17 @@ const buttonStyle = cva(
 );
 
 function SelectEmotion() {
-  const { emotion } = useUserInfoContext();
-  const { update } = useUserInfoDispatchContext();
+  const { setBtnDisabled } = useMonsterLayout();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<UserInfo>();
 
-  const { setBtnDisabled } = useSignUpContext();
-
-  const handleChange: ChangeEventHandler = (e) => {
-    const target = e.target as HTMLInputElement;
-    const id = target.id as keyof typeof EMOTION;
-
-    update({ emotion: id });
-  };
+  const selectedId = useWatch({ control, name: 'emotion' });
 
   useEffect(() => {
-    setBtnDisabled(emotion === '');
-  }, [emotion]);
+    setBtnDisabled(!!errors.emotion || selectedId === '');
+  }, [selectedId, errors]);
 
   return (
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
@@ -98,20 +95,32 @@ function SelectEmotion() {
         )}
       >
         {EMOTIONS.map(({ label, id, className }) => (
-          <FormControlLabel
+          <Controller
             key={id}
-            id={id}
             name="emotion"
-            className={cn(buttonStyle(), className)}
-            label={label}
-            checked={emotion === id}
-            control={
-              <input
-                type="radio"
-                className="a11yHidden"
-                onChange={handleChange}
-              />
-            }
+            control={control}
+            render={({ field: { onChange } }) => {
+              const handleChange: ChangeEventHandler = () => {
+                onChange(id);
+              };
+
+              return (
+                <FormControlLabel
+                  id={id}
+                  name="emotion"
+                  label={label}
+                  checked={selectedId === id}
+                  className={cn(buttonStyle(), className)}
+                  control={
+                    <input
+                      type="radio"
+                      className="a11yHidden"
+                      onChange={handleChange}
+                    />
+                  }
+                />
+              );
+            }}
           />
         ))}
       </div>

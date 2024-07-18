@@ -9,19 +9,26 @@ import FixedBottom from '@components/FixedBottom';
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
 
-import InitialUserState from './InitialUserState';
-import { SignUpProvider } from '../context/layout.context';
+import { MonsterLayoutProvider } from '../../context/layout.context';
 
 interface Props extends Omit<React.ComponentProps<'div'>, 'title'> {
   title?: string | string[];
   goNext: MouseEventHandler;
   goPrev?: MouseEventHandler;
+  control?: [string, string] | [string];
 }
 
 type Callback = (event: MouseEvent<Element>) => Promise<boolean> | void;
 type RegisterCallback = (callback: Callback) => void;
 
-function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
+function MonsterLayout({
+  className,
+  children,
+  title,
+  goPrev,
+  goNext,
+  control,
+}: Props) {
   const [disabled, setBtnDisabled] = useState(true);
   const [callback, setCallback] = useState<Callback>(() => {
     return (e: MouseEvent) => {
@@ -39,8 +46,10 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
     });
   };
 
+  const buttonLabels = control || ['이전으로', '다음으로'];
+
   return (
-    <InitialUserState>
+    <>
       <div
         className={cn(
           'flex w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
@@ -68,19 +77,19 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
           </BaseText>
         </motion.p>
 
-        <SignUpProvider value={{ setBtnDisabled, registerCallback }}>
+        <MonsterLayoutProvider value={{ setBtnDisabled, registerCallback }}>
           {children}
-        </SignUpProvider>
+        </MonsterLayoutProvider>
       </div>
 
       <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 p-5">
         <Button
-          className={cn('flex-1', { hidden: !goPrev })}
+          className={cn('flex-1', { hidden: control?.length === 1 })}
           size="medium"
           variant="secondary"
           onMouseDown={goPrev}
         >
-          이전으로
+          {buttonLabels[0]}
         </Button>
         <Button
           className="w-full flex-1"
@@ -88,11 +97,11 @@ function SignUpLayout({ className, children, title, goPrev, goNext }: Props) {
           disabled={disabled}
           onMouseDown={handleNext}
         >
-          다음으로
+          {buttonLabels[buttonLabels.length - 1]}
         </Button>
       </FixedBottom>
-    </InitialUserState>
+    </>
   );
 }
 
-export default SignUpLayout;
+export default MonsterLayout;

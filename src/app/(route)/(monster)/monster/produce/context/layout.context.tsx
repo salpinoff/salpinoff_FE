@@ -8,24 +8,24 @@ import {
 } from 'react';
 
 type Callback = (event: MouseEvent<Element>) => Promise<boolean> | void;
-type SignUpContext = {
+type MonsterLayout = {
   setBtnDisabled: Dispatch<SetStateAction<boolean>>;
   registerCallback: (callback: Callback) => Promise<boolean> | void;
 };
 
 type Props = PropsWithChildren<{
-  value: SignUpContext;
+  value: MonsterLayout;
   onBlur?: FocusEventHandler;
   onFocus?: FocusEventHandler;
 }>;
 
-const signUpContext = createContext<SignUpContext>({
+const monsterLayoutContext = createContext<MonsterLayout>({
   setBtnDisabled: () => {},
   registerCallback: () => {},
 });
 
-function SignUpProvider({ value, onFocus, onBlur, children }: Props) {
-  const { Provider } = signUpContext;
+function MonsterLayoutProvider({ value, onFocus, onBlur, children }: Props) {
+  const { Provider } = monsterLayoutContext;
 
   return (
     <Provider value={value}>
@@ -39,4 +39,5 @@ function SignUpProvider({ value, onFocus, onBlur, children }: Props) {
     </Provider>
   );
 }
-export { SignUpProvider, signUpContext };
+
+export { MonsterLayoutProvider, monsterLayoutContext };

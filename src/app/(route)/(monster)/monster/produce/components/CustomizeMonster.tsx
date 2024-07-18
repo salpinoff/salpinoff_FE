@@ -1,6 +1,12 @@
 import { useRouter } from 'next/navigation';
 
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import {
+  FormEventHandler,
+  useEffect,
+  useState,
+  PropsWithChildren,
+} from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { useMutation } from '@tanstack/react-query';
 
@@ -19,11 +25,11 @@ import { findObjectInArray } from '@utils/find';
 import { createMonster } from '@api/monster';
 import { DECORATION_TYPE, EMOTION } from '@api/schema/monster';
 
-import CustomizeOption from './CustomizeOption';
-import useSignUpContext from '../../(auth)/signup/hooks/useSignUpContext';
-import useUserInfoContext from '../../(auth)/signup/hooks/useUserInfoContext';
-import useUserInfoDispatchContext from '../../(auth)/signup/hooks/useUserInfoDispatchContext';
-import { DECORATION_PAIRS } from '../constants/decorations';
+import { UserInfo } from 'src/app/(route)/(auth)/signup/context/context.type';
+
+import CustomizeOption from '../../../component/CustomizeOption';
+import { DECORATION_PAIRS } from '../../../constants/decorations';
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 type DecorationTypes = keyof typeof DECORATION_TYPE;
 type DecorationValues = (typeof DECORATION_PAIRS)[DecorationTypes][number];
@@ -43,13 +49,15 @@ function TabPanel({ children }: TabPanelProps) {
 
 function CustomizeMonster() {
   const { replace } = useRouter();
+  const { setBtnDisabled, registerCallback } = useMonsterLayout();
+  const { getValues, control } = useFormContext<UserInfo>();
 
-  const withAuth = useWithAuth();
-
-  const { setBtnDisabled, registerCallback } = useSignUpContext();
-  const { update } = useUserInfoDispatchContext();
-  const { stress, story, emotion, monsterName, decorations } =
-    useUserInfoContext();
+  const emotion = getValues('emotion');
+  const decorations = useWatch({
+    control,
+    name: 'decorations',
+    exact: true,
+  });
 
   const CHARACTER_TYPE = getCharacterTypeByEmotion(
     emotion as keyof typeof EMOTION,
@@ -63,6 +71,7 @@ function CustomizeMonster() {
     )
     .filter(Boolean) as string[];
 
+  const withAuth = useWithAuth();
   const { mutate: create } = useMutation({
     mutationKey: ['creatMonster'],
     mutationFn: createMonster,
@@ -103,24 +112,12 @@ function CustomizeMonster() {
     setType(value);
   };
 
-  const handleDecoChange = (e: React.SyntheticEvent) => {
-    const { value } = e.target as HTMLInputElement;
-
-    if (type && value) {
-      const updated = updateDecoration(type, value as DecorationValues);
-
-      update({
-        decorations: updated,
-      });
-    }
-  };
-
   const handleClick = () => {
     return create({
-      rating: stress,
-      content: story,
+      rating: getValues('stress'),
+      content: getValues('story'),
       emotion: emotion !== '' ? emotion : 'DEPRESSION',
-      monsterName,
+      monsterName: getValues('monsterName'),
       monsterDecorations: decorations,
     });
   };
@@ -161,14 +158,36 @@ function CustomizeMonster() {
         <Tabs.Tab label="얼굴" value={DECORATION_TYPE.FACE} />
         <Tabs.Tab label="소품" value={DECORATION_TYPE.ACCESSORY} />
       </Tabs>
+
       <TabPanel>
         {DECORATION_PAIRS[type].map((id) => (
-          <CustomizeOption
+          <Controller
             key={id}
-            id={id}
-            name={type}
-            checked={findDecoration(type)?.decorationValue === id}
-            onChange={handleDecoChange}
+            control={control}
+            name="decorations"
+            render={({ field: { onChange } }) => {
+              const handleChange: FormEventHandler = (e) => {
+                const { value } = e.target as HTMLInputElement;
+
+                if (type && value) {
+                  const updatedDecorations = updateDecoration(
+                    type,
+                    value as DecorationValues,
+                  );
+
+                  onChange(updatedDecorations);
+                }
+              };
+
+              return (
+                <CustomizeOption
+                  id={id}
+                  name={type}
+                  checked={findDecoration(type)?.decorationValue === id}
+                  onChange={handleChange}
+                />
+              );
+            }}
           />
         ))}
       </TabPanel>
