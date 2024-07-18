@@ -16,7 +16,7 @@ export default function MonsterCreationModal({
   const router = useRouter();
 
   const handleCreation = () => {
-    router.push('/monster/new');
+    router.push('/monster/produce');
     onCreate?.();
   };
 
