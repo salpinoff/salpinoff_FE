@@ -30,9 +30,7 @@ import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterRefResponse } from '@api/monster/types';
 
 import { ActionMenu, MonsterCounterBox, StressLevelBadge } from '../_ui';
-
-const CARD_WIDTH = 312;
-const CARD_HEIGHT = 400;
+import { FLIP_CARD_HEIGHT, FLIP_CARD_WIDTH } from '../constants';
 
 export default function RefMonsterFlipCard() {
   const router = useRouter();
@@ -108,8 +106,8 @@ export default function RefMonsterFlipCard() {
   return (
     <MonsterFlipCard
       className="mx-auto"
-      width={CARD_WIDTH}
-      height={CARD_HEIGHT}
+      width={FLIP_CARD_WIDTH}
+      height={FLIP_CARD_HEIGHT}
       flipped={flipped}
       color={BACKGROUND_COLOR}
       // Mobile
