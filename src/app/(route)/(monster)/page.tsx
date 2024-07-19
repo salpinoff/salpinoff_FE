@@ -18,7 +18,7 @@ async function Home() {
   ];
 
   return (
-    <section>
+    <section className="from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]">
       <MainHeader />
       <HydrateWithAuth queries={messageQueries}>
         <div className="flex h-[calc(100vh-48px)] w-screen px-32">
