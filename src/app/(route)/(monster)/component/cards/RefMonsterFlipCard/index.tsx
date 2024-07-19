@@ -6,6 +6,7 @@ import {
   MouseEventHandler,
   TouchEventHandler,
   useCallback,
+  useEffect,
   useState,
 } from 'react';
 
@@ -102,6 +103,14 @@ export default function RefMonsterFlipCard() {
       setPrevPageX(null);
     }
   };
+
+  useEffect(() => {
+    setTotalCount((prev) =>
+      monster.currentInteractionCount !== prev
+        ? monster.currentInteractionCount
+        : prev,
+    );
+  }, [monster]);
 
   return (
     <MonsterFlipCard

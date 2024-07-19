@@ -17,6 +17,7 @@ import { getQueryClient } from '@utils/query/get-query-client';
 
 import MessageQueryFactory from '@api/message/query/factory';
 import { MessageListResponse } from '@api/message/type';
+import MonsterQueryFactory from '@api/monster/query/factory';
 import { useMonster } from '@api/monster/query/hooks';
 
 type Props = {
@@ -47,6 +48,9 @@ function MessageConfirmModal({
       closeModal();
       setMessageRead(true);
       queryClient.invalidateQueries({ queryKey: listKey({ monsterId }) });
+      queryClient.invalidateQueries({
+        queryKey: MonsterQueryFactory.reference.queryKey,
+      });
     },
   });
 
