@@ -32,8 +32,13 @@ export const useModifyMonster = (id: string) => {
   return useMutation<unknown, AxiosError, ModifyMonsterRequest>({
     mutationFn: (data) => modifyMonster(id, data),
     onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: MonsterQueryFactory.reference.queryKey,
+        exact: true,
+      });
+
       queryClient.setQueryData(
-        MonsterQueryFactory.reference.queryKey,
+        MonsterQueryFactory.detail(id).queryKey,
         (oldData: object) =>
           merge(oldData, {
             data: variables,
