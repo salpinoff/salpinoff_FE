@@ -18,6 +18,7 @@ function MakeNickName() {
   const {
     control,
     register,
+    getValues,
     formState: {
       defaultValues,
       errors: { userName: nameError },
@@ -31,7 +32,7 @@ function MakeNickName() {
   const handleClick = withAuth(async () => {
     const method = code === 100 ? createUserName : modifyUserName;
 
-    return method(userName)
+    return method(getValues('userName'))
       .then(() => true)
       .catch(() => false);
   });
