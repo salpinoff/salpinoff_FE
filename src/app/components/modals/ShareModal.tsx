@@ -25,8 +25,14 @@ export default function ShareModal({
   };
 
   const handleShareViaKakaoButton = () => {
-    ShareViaKakao(url);
-    onShareViaKakao?.();
+    try {
+      const parsedUrl = new URL(url);
+
+      ShareViaKakao(parsedUrl.pathname);
+      onShareViaKakao?.();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

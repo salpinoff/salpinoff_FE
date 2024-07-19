@@ -10,7 +10,7 @@ const ShareViaKakao = (url: string) => {
     window.Kakao?.Share.sendCustom({
       templateId: Number(process.env.NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID),
       templateArgs: {
-        REGI_WEB_DOMAIN: url,
+        path: url,
       },
     });
   } catch (err) {
