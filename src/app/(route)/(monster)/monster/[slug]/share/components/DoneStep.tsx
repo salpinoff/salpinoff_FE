@@ -36,7 +36,7 @@ export default function DoneStep({ goNext }: DoneStepProps) {
             }}
           >
             <Image
-              src="/images/heart0000.png"
+              src="/images/heart_active.webp"
               width={108}
               height={108}
               alt="하트"
