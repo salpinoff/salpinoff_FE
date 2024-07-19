@@ -20,12 +20,12 @@ const EMOTIONS = [
   {
     id: EMOTION.ANGER,
     label: '분노!!',
-    className: 'has-[:checked]:bg-[#F450A6] bg-[url("/images/angry.png")]',
+    className: 'has-[:checked]:bg-[#E6067B] bg-[url("/images/angry.png")]',
   },
   {
     id: EMOTION.DEPRESSION,
     label: '우울...',
-    className: 'has-[:checked]:bg-blue-60 bg-[url("/images/depressed.png")]',
+    className: 'has-[:checked]:bg-[#086AFD] bg-[url("/images/depressed.png")]',
   },
 ];
 
