@@ -42,7 +42,7 @@ apiInstance.interceptors.request.use(async (request) => {
 
   const isWithOutUrl =
     withOutAuthHeader.some((url) => url.includes(requestUrl)) ||
-    MONSTER_INFO.test(requestUrl);
+    (MONSTER_INFO.test(requestUrl) && request.method === 'get');
 
   if (isWithOutUrl) {
     delete request.headers.Authorization;
