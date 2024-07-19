@@ -39,8 +39,8 @@ function MessageItem<T extends ElementType>({
         src={message}
         alt="메시지"
         width={28}
-        height={35}
-        className="aspect-[28/35] w-[39%]"
+        height={28}
+        className="aspect-square w-[39%]"
       />
     </Component>
   );
