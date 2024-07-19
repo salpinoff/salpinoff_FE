@@ -43,6 +43,7 @@ export default function RefMonsterFlipCard() {
     MonsterKeys['reference']['queryKey']
   >({
     ...MonsterQueryFactory.reference,
+    refetchOnMount: true,
     select: useCallback(
       (data: GetMonsterRefResponse) => Adapter.from(data).to(transformMonster),
       [],
@@ -105,6 +106,7 @@ export default function RefMonsterFlipCard() {
   };
 
   useEffect(() => {
+    setClear(() => monster.currentInteractionCount >= monster.interactionCount);
     setTotalCount((prev) =>
       monster.currentInteractionCount !== prev
         ? monster.currentInteractionCount
