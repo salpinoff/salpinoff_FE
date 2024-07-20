@@ -83,7 +83,9 @@ export default function DoneStep({ goNext }: DoneStepProps) {
             size="large"
             onClick={goNext}
           >
-            나도 퇴사몬 만들어보기
+            <BaseText variant="body-2" weight="semibold">
+              나도 퇴사몬 만들어보기
+            </BaseText>
           </Button>
         </motion.nav>
       </motion.div>
