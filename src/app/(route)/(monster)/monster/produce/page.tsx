@@ -6,12 +6,12 @@ import useFunnel from '@hooks/useFunnel';
 
 import CustomizeMonster from './components/CustomizeMonster';
 import MonsterLayout from './components/layout/MonsterLayout';
+import MonsterName from './components/MosterName';
 import SelectEmotion from './components/SelectEmotion';
 import SelectStress from './components/SelectStress';
 import WriteStory from './components/WriteStory';
 import { funnel, title } from './constant/funnel';
 import MonsterInfoProvider from './context/monster.context';
-import MonsterName from '../../component/MosterName';
 
 type ProducePage = Omit<typeof funnel, 'nickname'>[number];
 type ProducePageProps = React.PropsWithChildren<{

@@ -9,8 +9,8 @@ import TextField from '@components/common/TextField';
 
 import stringToElement from '@utils/string-to-element';
 
-import { UserInfo } from '../../(auth)/signup/context/context.type';
-import useMonsterLayout from '../monster/produce/hooks/useMonsterLayout';
+import { UserInfo } from '../../../../(auth)/signup/context/context.type';
+import useMonsterLayout from '../hooks/useMonsterLayout';
 
 function MonsterName() {
   const { setBtnDisabled } = useMonsterLayout();
