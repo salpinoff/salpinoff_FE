@@ -53,6 +53,7 @@ function SelectStress() {
   return (
     <div className="h-[calc(100%+95px)]">
       <Tooltip
+        open
         label="스트레스 정도"
         content={`스트레스가 높을수록 퇴사몬을 \n 클리어하기 위해 더 많은 탭이 필요해요`}
         className="mb-[30px]"

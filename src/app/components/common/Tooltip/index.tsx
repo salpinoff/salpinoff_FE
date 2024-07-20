@@ -19,9 +19,12 @@ import { TooltipContent } from './TootlpContent';
 
 type LabelProps = ComponentProps<typeof TooltipLabel>;
 type ContentProps = ComponentProps<typeof TooltipContent>;
-type Props = Omit<Context, 'toggleOpen'> & ComponentProps<'button'>;
+type Props = Omit<Context, 'toggleOpen'> &
+  ComponentProps<'button'> & {
+    open?: boolean;
+  };
 
-function Tooltip({ label, content, children, className }: Props) {
+function Tooltip({ open = false, label, content, children, className }: Props) {
   const [labelChild] = Children.toArray(children)
     .filter(isValidElement<LabelProps>)
     .filter((child) => {
@@ -44,7 +47,7 @@ function Tooltip({ label, content, children, className }: Props) {
       );
     });
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(open);
 
   const [arrowEl, setArrowEl] = useState(null);
 
