@@ -96,7 +96,9 @@ function MessageConfirmModal({
               'max-h-[32dvh] max-w-full break-all',
             )}
           >
-            <span className="my-auto inline-block">{content}</span>
+            <span className="my-auto inline-block whitespace-pre-wrap">
+              {content}
+            </span>
           </BaseText>
 
           <div
