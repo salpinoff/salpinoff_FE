@@ -74,7 +74,7 @@ function MessageBottomSheet() {
             weight="semibold"
             className={cn(
               'flex items-center justify-center',
-              'aspect-square w-24 rounded-circular text-center',
+              'aspect-square h-24 w-24 rounded-circular text-center',
               'bg-[var(--color-brand-primary-base)] text-black',
             )}
           >
