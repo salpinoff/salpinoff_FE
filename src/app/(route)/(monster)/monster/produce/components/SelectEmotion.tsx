@@ -77,6 +77,7 @@ function SelectEmotion() {
   return (
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
       <Tooltip
+        open
         label="나의 감정"
         content={`나의 감정 상태에 따라\n다른 형태의 퇴사몬이 등장해요`}
         className="mb-12"
