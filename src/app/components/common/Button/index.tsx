@@ -9,7 +9,7 @@ import Icon from '@components/common/data-display/Icon';
 import cn from '@utils/cn';
 
 const buttonStyles = cva(
-  'body-2-semibold h-[55px] disabled:!text-cool-neutral-70A disabled:!bg-cool-neutral-22',
+  'body-2-semibold h-[55px] disabled:!text-cool-neutral-70A disabled:bg-cool-neutral-22',
   {
     variants: {
       variant: {

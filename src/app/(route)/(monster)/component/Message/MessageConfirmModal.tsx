@@ -104,7 +104,7 @@ function MessageConfirmModal({
           <div
             className={cn(
               'rounded-20',
-              'aspect-square h-80',
+              'h-[88px] w-[80px]',
               'border-2 bg-cool-neutral-17',
               'flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center gap-[12.5%]',
               {

@@ -112,7 +112,7 @@ export default function ModifyStoryPage({
         <TextField
           multiline
           fullWidth
-          className="h-[144px]"
+          className="h-[220px]"
           helperText={<HelperText control={control} />}
           {...FORM_FIELD_PROPS}
           {...register(FORM_FIELD_PROPS.id, {

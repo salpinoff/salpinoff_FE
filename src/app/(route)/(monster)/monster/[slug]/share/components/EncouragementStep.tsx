@@ -39,7 +39,7 @@ export default function EncouragementStep({
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] bg-gradient-to-b from-cool-neutral-5 to-[#253047] p-[20px] pt-[36px]">
+    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] p-[20px] pt-[36px]">
       <div className="max-w-dvw h-full w-[375px] w-full">
         <BaseText
           className="align-left mb-[40px]"
@@ -60,7 +60,9 @@ export default function EncouragementStep({
       </div>
       <nav className="flex gap-8">
         <Button variant="secondary" onClick={() => goPrev(getValues())}>
-          뒤로가기
+          <BaseText variant="body-2" weight="medium">
+            뒤로가기
+          </BaseText>
         </Button>
         <Button
           type="submit"
@@ -68,7 +70,9 @@ export default function EncouragementStep({
           disabled={!isValid || isSubmitting}
           onClick={handleSubmit(onSubmit)}
         >
-          전송하기
+          <BaseText variant="body-2" weight="semibold">
+            전송하기
+          </BaseText>
         </Button>
       </nav>
     </section>

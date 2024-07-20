@@ -13,7 +13,7 @@ function ShareLayout({ children }: Props) {
     <main
       style={{ touchAction: 'auto' }}
       className={cn(
-        'relative m-auto box-border	flex h-dvh w-full flex-col items-center overflow-hidden overscroll-none',
+        'relative m-auto box-border flex	h-dvh w-full flex-col items-center overflow-hidden overscroll-none bg-cool-neutral-5',
       )}
     >
       <GuestProvider>{children}</GuestProvider>

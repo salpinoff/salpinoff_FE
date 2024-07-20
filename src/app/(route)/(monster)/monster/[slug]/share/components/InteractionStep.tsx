@@ -6,6 +6,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import Button from '@components/common/Button';
+import BaseText from '@components/common/Text/BaseText';
 import Header from '@components/Header';
 
 import SharedMonsterFlipCard from 'src/app/(route)/(monster)/component/cards/SharedMonsterFlipCard';
@@ -53,7 +54,9 @@ export default function InteractionStep({
           onClick={goNext}
           disabled={!clear}
         >
-          응원메세지 작성하기
+          <BaseText variant="body-2" weight="semibold">
+            응원메세지 작성하기
+          </BaseText>
         </Button>
       </nav>
     </section>

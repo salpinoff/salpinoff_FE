@@ -66,6 +66,7 @@ function MonsterName() {
           id="monster_name"
           label="이름"
           className="mb-1"
+          placeholder="퇴사몬의 이름을 지어주세요"
           helperText="2~6자로 입력해주세요"
           error={!!monsterName}
           {...register('monsterName', {

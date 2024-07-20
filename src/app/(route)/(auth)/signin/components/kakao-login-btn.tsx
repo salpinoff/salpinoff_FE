@@ -23,11 +23,12 @@ function KakaoLoginBtn({ className }: Props) {
       type="button"
       loading={isPending}
       onClick={handleLogin}
+      aria-label="카카오톡 로그인"
       className={cn(
         'flex w-full items-center bg-[#FEE500] text-[#000000]/85',
+        'disabled:bg-[#FEE500]',
         className,
       )}
-      aria-label="카카오톡 로그인"
     >
       <KakaoSVG width={18} height={17} />
       <div className="w-full">카카오톡 로그인</div>

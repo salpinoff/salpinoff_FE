@@ -12,12 +12,7 @@ import FormHelperText from './FormHelperText';
 
 // Container Styles
 const inputBoxStyles = cva(
-  [
-    'inline-flex',
-    'flex-col',
-    'gap-12',
-    'text-[--color-base-cool-neutral-80-a]',
-  ],
+  ['inline-flex', 'flex-col', 'text-[--color-base-cool-neutral-80-a]'],
   {
     variants: {
       fullWidth: {
@@ -109,7 +104,7 @@ const TextField: TextFieldComponent = forwardRef(function TextField<
   return (
     <div className={inputBoxStyles({ fullWidth })}>
       {label && (
-        <FormLabel id={id} required={required}>
+        <FormLabel className="mb-3" id={id} required={required}>
           {label}
         </FormLabel>
       )}
@@ -130,7 +125,9 @@ const TextField: TextFieldComponent = forwardRef(function TextField<
         />
       </div>
       {helperText && (
-        <FormHelperText error={error}>{helperText}</FormHelperText>
+        <FormHelperText className="mt-2" error={error}>
+          {helperText}
+        </FormHelperText>
       )}
     </div>
   );
