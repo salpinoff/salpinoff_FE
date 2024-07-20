@@ -36,3 +36,16 @@ export const API_URLS = {
       `${MONSTER_BASE}/${monsterId}/encouragement`,
   },
 } as const;
+
+export const WITHOUT_AUTH = [
+  {
+    regexp: new RegExp(`^${API_URLS.AUTH.API.REFRESH_TOKEN}$`, 'g'),
+    method: 'all',
+  },
+  {
+    regexp: new RegExp(`^${API_URLS.AUTH.API.GET_TOKEN.kakao}$`, 'g'),
+    method: 'all',
+  },
+  { regexp: /^\/monsters\/\d+$/g, method: 'get' },
+  { regexp: /^\/monsters\/\d+\/encouragement$/g, method: 'all' },
+];
