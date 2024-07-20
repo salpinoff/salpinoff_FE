@@ -72,7 +72,7 @@ function MessageConfirmModal({
 
   return (
     <Modal open>
-      <Modal.Dimmed blur />
+      <Modal.Dimmed />
       <Modal.Content className="w-[calc(100vw-64px)] items-center bg-transparent p-0">
         <section
           ref={modalRef}
