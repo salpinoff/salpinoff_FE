@@ -14,7 +14,7 @@ export default function DoneStep({ goNext }: DoneStepProps) {
   const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } };
 
   return (
-    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] bg-gradient-to-b from-cool-neutral-5 to-[#253047] p-[20px] pt-[36px]">
+    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] p-[20px] pt-[36px]">
       <motion.div
         className="flex h-full w-full flex-col items-center"
         initial="hidden"
@@ -72,6 +72,7 @@ export default function DoneStep({ goNext }: DoneStepProps) {
           </motion.div>
         </div>
         <motion.nav
+          className="w-full"
           variants={{
             hidden: { opacity: 0, y: 10 },
             visible: { ...visible, transition: { duration: 0.8 } },
