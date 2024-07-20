@@ -89,7 +89,9 @@ function MonsterLayout({
           variant="secondary"
           onMouseDown={goPrev}
         >
-          {buttonLabels[0]}
+          <BaseText variant="body-2" weight="medium">
+            {buttonLabels[0]}
+          </BaseText>
         </Button>
         <Button
           className="w-full flex-1"
@@ -97,7 +99,9 @@ function MonsterLayout({
           disabled={disabled}
           onMouseDown={handleNext}
         >
-          {buttonLabels[buttonLabels.length - 1]}
+          <BaseText variant="body-2" weight="semibold">
+            {buttonLabels[buttonLabels.length - 1]}
+          </BaseText>
         </Button>
       </FixedBottom>
     </>
