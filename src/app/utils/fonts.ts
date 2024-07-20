@@ -4,6 +4,7 @@ export const Pretendard = localFont({
   src: '../fonts/PretendardVariable.woff2',
   display: 'swap',
   variable: '--font-pretendard',
+  weight: '45 920',
   fallback: [
     'Pretendard Variable',
     'Pretendard',
