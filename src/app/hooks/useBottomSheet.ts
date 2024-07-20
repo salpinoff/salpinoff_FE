@@ -127,7 +127,9 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
       if (touchMove.movingDirection === 'up') {
         const targetEnd = touchEnd.touchY < BOTTOM_Y ? 0 : BOTTOM_Y;
 
-        dimmed?.classList.remove('hidden');
+        if (targetEnd === 0) {
+          dimmed?.classList.remove('hidden');
+        }
         bottomSheet?.style.setProperty('transform', `translateY(${targetEnd})`);
       }
 

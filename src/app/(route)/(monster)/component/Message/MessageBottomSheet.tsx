@@ -57,7 +57,7 @@ function MessageBottomSheet() {
   return (
     <>
       <Dimmed className="z-0 hidden" />
-      <BottomSheet className="z-10">
+      <BottomSheet className="z-0">
         <BottomSheetHeader
           id="bottom_sheet_header"
           className="flex flex-none px-24 pt-9"
