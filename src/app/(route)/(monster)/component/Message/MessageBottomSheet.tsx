@@ -7,12 +7,11 @@ import { useAtomValue } from 'jotai';
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import RefreshSVG from '@public/icons/refresh.svg';
-
 import AuthSuspense from '@components/common/Aync/AuthSuspense';
 import BottomSheet from '@components/common/BottomSheet';
 import BottomSheetContent from '@components/common/BottomSheet/BottomSheetContent';
 import BottomSheetHeader from '@components/common/BottomSheet/BottomSheetHeader';
+import Icon from '@components/common/data-display/Icon';
 import BaseText from '@components/common/Text/BaseText';
 
 import cn from '@utils/cn';
@@ -85,7 +84,7 @@ function MessageBottomSheet() {
 
         <button type="button" onClick={handleClick}>
           <span className="a11yHidden">새로고침</span>
-          <RefreshSVG className={cn({ 'animate-spin': isFetching })} />
+          <Icon name="refresh" className={cn({ 'animate-spin': isFetching })} />
         </button>
       </BottomSheetHeader>
 
