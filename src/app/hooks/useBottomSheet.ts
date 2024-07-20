@@ -57,7 +57,9 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
     const BOTTOM_Y = window.innerHeight - initialHeight;
     const MAX_BOTTOM_Y =
       window.innerHeight - (initialHeight - Math.floor(initialHeight / 2));
+
     const bottomSheet = sheet.current;
+    const dimmed = document.querySelector('#dimmed');
 
     const checkTouchContent = () => {
       const { isContentTouched } = metrics.current;
@@ -115,6 +117,7 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
         const targetEnd =
           touchEnd.touchY >= MAX_BOTTOM_Y ? MAX_BOTTOM_Y : BOTTOM_Y;
 
+        dimmed?.classList.add('hidden');
         bottomSheet?.style.setProperty(
           'transform',
           `translateY(${targetEnd - TOP_Y}px)`,
@@ -124,8 +127,7 @@ const useBottomSheet = ({ initialHeight = 163, topY = 60 }: Props) => {
       if (touchMove.movingDirection === 'up') {
         const targetEnd = touchEnd.touchY < BOTTOM_Y ? 0 : BOTTOM_Y;
 
-        console.log('end', targetEnd, BOTTOM_Y);
-
+        dimmed?.classList.remove('hidden');
         bottomSheet?.style.setProperty('transform', `translateY(${targetEnd})`);
       }
 

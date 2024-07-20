@@ -12,6 +12,7 @@ import BottomSheet from '@components/common/BottomSheet';
 import BottomSheetContent from '@components/common/BottomSheet/BottomSheetContent';
 import BottomSheetHeader from '@components/common/BottomSheet/BottomSheetHeader';
 import Icon from '@components/common/data-display/Icon';
+import Dimmed from '@components/common/Modal/ModalDimmed';
 import BaseText from '@components/common/Text/BaseText';
 
 import cn from '@utils/cn';
@@ -54,61 +55,67 @@ function MessageBottomSheet() {
   };
 
   return (
-    <BottomSheet>
-      <BottomSheetHeader
-        id="bottom_sheet_header"
-        className="flex flex-none px-24 pt-9"
-      >
-        <div className="flex flex-1 gap-x-8">
-          <BaseText
-            component="h2"
-            variant="headline-1"
-            weight="semibold"
-            color="normal"
-          >
-            받은 응원 메시지
-          </BaseText>
-          <BaseText
-            component="span"
-            variant="label-1"
-            weight="semibold"
-            className={cn(
-              'flex items-center justify-center',
-              'aspect-square h-24 w-24 rounded-circular text-center',
-              'bg-[var(--color-brand-primary-base)] text-black',
-            )}
-          >
-            {totalCount ?? '?'}
-          </BaseText>
-        </div>
+    <>
+      <Dimmed className="z-0 hidden" />
+      <BottomSheet className="z-10">
+        <BottomSheetHeader
+          id="bottom_sheet_header"
+          className="flex flex-none px-24 pt-9"
+        >
+          <div className="flex flex-1 gap-x-8">
+            <BaseText
+              component="h2"
+              variant="headline-1"
+              weight="semibold"
+              color="normal"
+            >
+              받은 응원 메시지
+            </BaseText>
+            <BaseText
+              component="span"
+              variant="label-1"
+              weight="semibold"
+              className={cn(
+                'flex items-center justify-center',
+                'aspect-square h-24 w-24 rounded-circular text-center',
+                'bg-[var(--color-brand-primary-base)] text-black',
+              )}
+            >
+              {totalCount ?? '?'}
+            </BaseText>
+          </div>
 
-        <button type="button" onClick={handleClick}>
-          <span className="a11yHidden">새로고침</span>
-          <Icon name="refresh" className={cn({ 'animate-spin': isFetching })} />
-        </button>
-      </BottomSheetHeader>
+          <button type="button" onClick={handleClick}>
+            <span className="a11yHidden">새로고침</span>
+            <Icon
+              name="refresh"
+              className={cn({ 'animate-spin': isFetching })}
+            />
+          </button>
+        </BottomSheetHeader>
 
-      <BottomSheetContent
-        component="ul"
-        id="bottom_sheet_content"
-        className={cn(
-          'w-full px-24 pb-[18px]',
-          'mt-12 grid flex-grow-0 grid-cols-4 gap-12 overflow-auto',
-        )}
-      >
-        <QueryErrorResetBoundary>
-          {() => {
-            return (
-              <ErrorBoundary fallback={<>...error</>}>
-                <AuthSuspense fallback={<>loading...</>}>
-                  <MessageList />
-                </AuthSuspense>
-              </ErrorBoundary>
-            );
-          }}
-        </QueryErrorResetBoundary>
-      </BottomSheetContent>
-    </BottomSheet>
+        <BottomSheetContent
+          component="ul"
+          id="bottom_sheet_content"
+          className={cn(
+            'w-full px-24 pb-[18px]',
+            'mt-12 grid flex-grow-0 grid-cols-4 gap-12 overflow-auto',
+          )}
+        >
+          <QueryErrorResetBoundary>
+            {() => {
+              return (
+                <ErrorBoundary fallback={<>...error</>}>
+                  <AuthSuspense fallback={<>loading...</>}>
+                    <MessageList />
+                  </AuthSuspense>
+                </ErrorBoundary>
+              );
+            }}
+          </QueryErrorResetBoundary>
+        </BottomSheetContent>
+      </BottomSheet>
+    </>
   );
 }
 
