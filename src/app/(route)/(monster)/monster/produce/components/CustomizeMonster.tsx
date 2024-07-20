@@ -21,8 +21,10 @@ import useWithAuth from '@hooks/useWithAuth';
 import { getCharacterTypeByEmotion } from '@utils/client/transform-monster';
 import cn from '@utils/cn';
 import { findObjectInArray } from '@utils/find';
+import { getQueryClient } from '@utils/query/get-query-client';
 
 import { createMonster } from '@api/monster';
+import MonsterQueryFactory from '@api/monster/query/factory';
 import { DECORATION_TYPE, EMOTION } from '@api/schema/monster';
 
 import { UserInfo } from 'src/app/(route)/(auth)/signup/context/context.type';
@@ -72,11 +74,21 @@ function CustomizeMonster() {
     .filter(Boolean) as string[];
 
   const withAuth = useWithAuth();
+
   const { mutate: create } = useMutation({
     mutationKey: ['creatMonster'],
     mutationFn: createMonster,
     onMutate: () => withAuth(() => {}),
-    onSuccess: (data) => replace(`/monster/${data.data.monsterId}/result`),
+    onSuccess: (data) => {
+      const queryClient = getQueryClient();
+
+      replace(`/monster/${data.data.monsterId}/result`);
+
+      queryClient.invalidateQueries({
+        queryKey: MonsterQueryFactory.reference.queryKey,
+        exact: true,
+      });
+    },
     onError(error) {
       // [TODO]: toast
       console.log('error :: 몬스터 생성에 실패했어요.', error);
