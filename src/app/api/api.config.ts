@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { getQueryClient } from '@utils/query/get-query-client';
 
-import { API_URLS } from './api.constants';
+import { API_URLS, WITHOUT_AUTH } from './api.constants';
 import AuthFactory from './auth/query';
 import { Session } from './schema/token';
 
@@ -31,18 +31,13 @@ const setAuthHeader = (token: string) => {
 };
 
 apiInstance.interceptors.request.use(async (request) => {
-  const {
-    REFRESH_TOKEN,
-    GET_TOKEN: { kakao: KAKAO_LOGIN },
-  } = API_URLS.AUTH.API;
-  const MONSTER_INFO = /^\/monsters\/\d+$/g;
-
   const requestUrl = request.url || '';
-  const withOutAuthHeader = [REFRESH_TOKEN, KAKAO_LOGIN];
 
-  const isWithOutUrl =
-    withOutAuthHeader.some((url) => url.includes(requestUrl)) ||
-    (MONSTER_INFO.test(requestUrl) && request.method === 'get');
+  const isWithOutUrl = WITHOUT_AUTH.some(
+    ({ regexp, method }) =>
+      regexp.test(requestUrl) &&
+      (method === 'all' || method === request.method),
+  );
 
   if (isWithOutUrl) {
     delete request.headers.Authorization;
