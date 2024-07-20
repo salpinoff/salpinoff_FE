@@ -33,7 +33,7 @@ function MonsterName() {
         <BaseText
           variant="label-2"
           color="strong"
-          className="relative w-max rounded-[16px] bg-cool-neutral-17 px-[20px] py-[16px] shadow-3"
+          className="relative w-max rounded-[16px] bg-cool-neutral-17 px-[20px] py-[16px] text-center shadow-3"
         >
           {stringToElement(['나의 감정을 담은', '퇴사몬이 등장했어요!'])}
           <span
