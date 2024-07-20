@@ -80,7 +80,7 @@ function MonsterName() {
           id="story"
           fullWidth
           multiline
-          className="mt-24 h-28 bg-[#70737C]/30"
+          className="mt-24 h-36 bg-[#70737C]/30"
           {...register('story', {
             required: true,
             maxLength: 500,
