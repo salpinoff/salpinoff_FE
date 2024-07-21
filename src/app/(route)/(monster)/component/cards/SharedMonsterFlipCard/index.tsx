@@ -15,6 +15,7 @@ import useConfetti from '@hooks/useConfetti';
 
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
+import cn from '@utils/cn';
 
 import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterResponse } from '@api/monster/types';
@@ -187,7 +188,7 @@ export default function SharedMonsterFlipCard({
       </MonsterFlipCard.ActionArea>
       <MonsterFlipCard.Content>
         <div className="flex items-center gap-8">
-          <StressLevelBadge level={monster.ratingRange} />
+          <StressLevelBadge level={monster.rating} />
           <BaseText
             overflow="truncate"
             component="span"
@@ -205,21 +206,20 @@ export default function SharedMonsterFlipCard({
         />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
-        <div
-          className="flex h-full w-full items-center justify-center"
-          role="none"
+        <BaseText
+          className={cn(
+            'm-auto max-h-full shrink',
+            'whitespace-pre-wrap text-center leading-relaxed',
+            'scroller overflow-y-scroll scrollbar-hide',
+          )}
+          component="p"
+          variant="body-2"
+          weight="regular"
+          color="strong"
+          wrap
         >
-          <BaseText
-            className="my-auto flex max-h-full overflow-y-auto text-center"
-            component="p"
-            variant="body-2"
-            weight="medium"
-            color="strong"
-            wrap
-          >
-            {monster.content}
-          </BaseText>
-        </div>
+          {monster.content}
+        </BaseText>
       </MonsterFlipCard.Back>
     </MonsterFlipCard>
   );

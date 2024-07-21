@@ -194,7 +194,7 @@ export default function RefMonsterFlipCard() {
       <MonsterFlipCard.Content>
         <div className="flex items-center justify-between">
           <div className="pointer-event-none flex select-none items-center gap-8">
-            <StressLevelBadge level={monster.ratingRange} />
+            <StressLevelBadge level={monster.rating} />
             <BaseText
               overflow="truncate"
               component="span"
@@ -224,7 +224,7 @@ export default function RefMonsterFlipCard() {
       <MonsterFlipCard.Back>
         <BaseText
           className={cn(
-            'my-auto flex h-full max-h-full w-full flex-initial items-center justify-center',
+            'max-h-ful m-auto flex shrink',
             'whitespace-pre-wrap text-center leading-relaxed',
             'overflow-y-auto scrollbar-hide',
           )}

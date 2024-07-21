@@ -1,6 +1,6 @@
 import { Decoration, Monster } from '@api/schema/monster';
 
-export interface MonsterResponse extends Omit<Monster, 'rating'> {
+export interface MonsterResponse extends Monster {
   ratingRange: string;
   createdAt: string;
   interactionCountPerEncouragement: number;

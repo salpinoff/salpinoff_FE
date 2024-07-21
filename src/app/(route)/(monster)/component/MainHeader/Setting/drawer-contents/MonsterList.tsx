@@ -131,7 +131,7 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
             <MonsterFlipCard.Content>
               <div className="flex items-center justify-between">
                 <div className="pointer-event-none flex select-none items-center gap-8">
-                  <StressLevelBadge level={monster.ratingRange} />
+                  <StressLevelBadge level={monster.rating} />
                   <BaseText
                     overflow="truncate"
                     component="span"
