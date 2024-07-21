@@ -97,6 +97,8 @@ const authHandler = ({ request, params, secret }: Props) => {
               response,
             );
           } catch (error) {
+            console.error('error in post /api/auth/signin', error);
+
             const response = isAxiosError(error)
               ? NextResponse.json(error.message, { status: 500 })
               : NextResponse.json(error, { status: 400 });
