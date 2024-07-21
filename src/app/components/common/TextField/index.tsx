@@ -6,13 +6,20 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import FormLabel from '@components/common/FormLabel';
 
+import cn from '@utils/cn';
+
 import { RequiredByKeys } from '@type/util';
 
 import FormHelperText from './FormHelperText';
 
 // Container Styles
 const inputBoxStyles = cva(
-  ['inline-flex', 'flex-col', 'text-[--color-base-cool-neutral-80-a]'],
+  [
+    'inline-flex',
+    'flex-col',
+    'gap-12',
+    'text-[--color-base-cool-neutral-80-a]',
+  ],
   {
     variants: {
       fullWidth: {
@@ -28,19 +35,13 @@ const inputBoxStyles = cva(
 // Input || Textarea Styles
 const inputStyles = cva(
   [
-    'w-full',
-    'px-16',
-    'py-12',
+    'w-full scroller',
     'body-2-regular',
-    'rounded-12',
-    'bg-[#70737C38]',
-    'outline-none',
+    'bg-transparent',
+    'outline-none focus:border-transparent',
   ],
   {
     variants: {
-      variant: {
-        outlined: ['border border-[#70737C52]', 'focus:border-transparent'],
-      },
       error: {
         true: 'text-[--color-text-danger]',
       },
@@ -53,9 +54,6 @@ const inputStyles = cva(
       },
     },
     compoundVariants: [],
-    defaultVariants: {
-      variant: 'outlined',
-    },
   },
 );
 
@@ -86,7 +84,6 @@ const TextField: TextFieldComponent = forwardRef(function TextField<
 >(
   {
     id,
-    variant,
     className,
     label,
     helperText,
@@ -104,16 +101,21 @@ const TextField: TextFieldComponent = forwardRef(function TextField<
   return (
     <div className={inputBoxStyles({ fullWidth })}>
       {label && (
-        <FormLabel className="mb-3" id={id} required={required}>
+        <FormLabel id={id} required={required}>
           {label}
         </FormLabel>
       )}
-      <div>
+      <div
+        className={cn(
+          multiline ? 'px-20 py-16' : 'px-16 py-12',
+          'rounded-12',
+          'border border-[#70737C52] bg-[#70737C38]',
+        )}
+      >
         <Component
           ref={ref}
           id={id}
           className={inputStyles({
-            variant,
             className,
             disabled,
             multiline,
@@ -125,9 +127,7 @@ const TextField: TextFieldComponent = forwardRef(function TextField<
         />
       </div>
       {helperText && (
-        <FormHelperText className="mt-2" error={error}>
-          {helperText}
-        </FormHelperText>
+        <FormHelperText error={error}>{helperText}</FormHelperText>
       )}
     </div>
   );
