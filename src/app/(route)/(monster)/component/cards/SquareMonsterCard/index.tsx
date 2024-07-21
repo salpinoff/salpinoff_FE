@@ -32,7 +32,7 @@ const SquareMonsterCard = forwardRef<HTMLDivElement, SquareMonsterCardProps>(
         <div className="absolute bottom-0 text-cool-neutral-7">
           <RoundedTrapezoidSVG />
           <BaseText
-            className="absolute bottom-0 left-0 right-0 top-0 m-auto w-[60%] text-center !leading-[28px]"
+            className="absolute bottom-0 left-0 right-0 top-0 m-auto w-[60%] pb-4 pt-6 text-center"
             component="span"
             variant="label-2"
             weight="semibold"
