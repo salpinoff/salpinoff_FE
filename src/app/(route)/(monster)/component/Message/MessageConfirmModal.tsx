@@ -5,7 +5,7 @@ import { TouchEventHandler, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import Button from '@components/common/Button';
-import { Modal } from '@components/common/Modal';
+import Modal from '@components/common/feedback/Modal';
 import BaseText from '@components/common/Text/BaseText';
 
 import useOutsideClick from '@hooks/useOutsideClick';

@@ -10,7 +10,7 @@ import ModalContent from './ModalContent';
 import ModalDescription from './ModalDescription';
 import ModalTitle from './ModalTitle';
 
-export function Modal({
+export default function Modal({
   open,
   children,
 }: PropsWithChildren<{

@@ -1,8 +1,6 @@
 import { useRouter } from 'next/navigation';
 
-// import toast from 'react-hot-toast';
-
-import { Modal } from '@components/common/Modal';
+import Modal from '@components/common/feedback/Modal';
 
 type MonsterCreationModalProps = {
   onClose: () => void;

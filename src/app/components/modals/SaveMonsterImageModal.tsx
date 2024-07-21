@@ -6,7 +6,7 @@ import html2canvas from 'html2canvas';
 import CharacterCanvas, {
   type CharacterCanvasProps,
 } from '@components/CharacterCanvas';
-import { Modal } from '@components/common/Modal';
+import Modal from '@components/common/feedback/Modal';
 
 type SaveMonsterImageModalProps = {
   monster: CharacterCanvasProps;

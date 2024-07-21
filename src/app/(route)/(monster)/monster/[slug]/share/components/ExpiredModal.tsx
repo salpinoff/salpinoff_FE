@@ -1,4 +1,4 @@
-import { Modal } from '@components/common/Modal';
+import Modal from '@components/common/feedback/Modal';
 
 type ExpiredModalProps = {
   closeModal: () => void;
