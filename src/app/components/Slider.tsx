@@ -40,7 +40,7 @@ function Slider({
 
   return (
     <div className={className}>
-      <div className="relative h-[62px]">
+      <div className="relative h-[50px]">
         <div
           aria-hidden
           className="absolute top-0 h-12 w-full translate-y-1/2 rounded-circular border border-[#70737C52] bg-transparent"

@@ -92,7 +92,7 @@ function SelectEmotion() {
             row: 2,
             column: 1,
           }),
-          'w-full gap-8',
+          'w-full gap-16',
         )}
       >
         {EMOTIONS.map(({ label, id, className }) => (

@@ -65,7 +65,9 @@ function MessageConfirmModal({
     (emotion === 'ANGER' ? -1 : 1);
 
   const handleClick: TouchEventHandler = async () => {
-    confirm();
+    const method = messageRead ? closeModal : confirm;
+
+    method();
   };
 
   useOutsideClick(modalRef, () => closeModal(), 'mousedown');

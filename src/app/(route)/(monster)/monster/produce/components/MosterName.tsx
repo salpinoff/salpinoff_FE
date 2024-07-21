@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import CharacterCanvas from '@components/CharacterCanvas';
 import BaseText from '@components/common/Text/BaseText';
@@ -16,16 +16,20 @@ function MonsterName() {
   const { setBtnDisabled } = useMonsterLayout();
 
   const {
-    getValues,
+    control,
     register,
-    formState: {
-      errors: { monsterName, story },
-    },
+    getValues,
+    formState: { errors },
   } = useFormContext<UserInfo>();
 
+  const monsterName = useWatch({ control, name: 'monsterName' });
+  const story = useWatch({ control, name: 'story' });
+
   useEffect(() => {
-    setBtnDisabled(!!monsterName || !!story);
-  }, [monsterName, story]);
+    setBtnDisabled(
+      !!errors.monsterName || !!errors.story || !monsterName || !story,
+    );
+  }, [monsterName, story, errors]);
 
   return (
     <>
@@ -68,7 +72,7 @@ function MonsterName() {
           className="mb-1"
           placeholder="퇴사몬의 이름을 지어주세요"
           helperText="2~6자로 입력해주세요"
-          error={!!monsterName}
+          error={!!errors.monsterName}
           {...register('monsterName', {
             required: true,
             minLength: 2,
@@ -80,7 +84,8 @@ function MonsterName() {
           id="story"
           fullWidth
           multiline
-          className="mt-24 h-28 bg-[#70737C]/30"
+          error={!!errors.story}
+          className="mt-24 h-36 bg-[#70737C]/30"
           {...register('story', {
             required: true,
             maxLength: 500,

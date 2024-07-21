@@ -135,10 +135,16 @@ const authHandler = ({ request, params, secret }: Props) => {
             return redirectResponse(data, secret);
           } catch (thrownError) {
             if (isAxiosError(thrownError)) {
+              console.error('axios error request in get /api/auth/signin', {
+                requestUrl: thrownError.request.url,
+              });
+
               console.error(
                 'axios error request in get /api/auth/signin',
                 thrownError.request,
               );
+
+              console.error('axios error cause', thrownError.cause);
               console.error(
                 'axios error response in get /api/auth/signin',
                 thrownError.response,

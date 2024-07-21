@@ -39,6 +39,8 @@ apiInstance.interceptors.request.use(async (request) => {
       (method === 'all' || method === request.method),
   );
 
+  console.log(requestUrl, isWithOutUrl);
+
   if (isWithOutUrl) {
     delete request.headers.Authorization;
   }
