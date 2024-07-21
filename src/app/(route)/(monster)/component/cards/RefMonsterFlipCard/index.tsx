@@ -19,12 +19,10 @@ import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
 import Toast from '@components/feedback/Toast';
-import MonsterCreationModal from '@components/modals/MonsterCreationModal';
 import ProgressBar from '@components/ProgressBar';
 
 import useCanvas from '@hooks/useCanvas';
 import useConfetti from '@hooks/useConfetti';
-import useModal from '@hooks/useModal';
 
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
@@ -34,7 +32,12 @@ import { useUpdateInteraction } from '@api/interaction/query/hooks';
 import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterRefResponse } from '@api/monster/types';
 
-import { ActionMenu, MonsterCounterBox, StressLevelBadge } from '../_ui';
+import {
+  ActionMenu,
+  MonsterCounterBox,
+  StressLevelBadge,
+  ClearedOverlay,
+} from '../_ui';
 import { ConfettiMap } from '../constants';
 
 const REF_FLIP_CARD_WIDTH = 302;
@@ -65,10 +68,6 @@ export default function RefMonsterFlipCard() {
   const canvasRef = useCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 
   const { addConfetti } = useConfetti(canvasRef);
-
-  const { openModal, closeModal } = useModal(() => (
-    <MonsterCreationModal onClose={closeModal} />
-  ));
 
   const [clear, setClear] = useState(
     () => monster.currentInteractionCount >= monster.interactionCount,
@@ -176,18 +175,7 @@ export default function RefMonsterFlipCard() {
           ref={canvasRef}
           className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
         />
-        {clear && (
-          <div className="absolute bottom-0 left-0 right-0 w-full px-[16px] py-[12px]">
-            <Button
-              className="label-1-medium mx-auto w-full bg-[#17171985] text-cool-neutral-99"
-              size="small"
-              variant="secondary"
-              onClick={() => openModal()}
-            >
-              새로운 퇴사몬 만들기
-            </Button>
-          </div>
-        )}
+        {clear && <ClearedOverlay />}
         <Toaster
           position="bottom-center"
           reverseOrder={false}
