@@ -136,7 +136,7 @@ export default function SharedMonsterFlipCard({
         >
           {(t) => (
             <motion.div
-              className="h-max w-max rounded-circular bg-[#171719bd] px-[16px] py-[6px]"
+              className="flex h-max w-max items-center justify-center rounded-circular bg-[#171719bd] px-[16px] py-[9px]"
               initial={{
                 y: 20,
                 opacity: 0,
