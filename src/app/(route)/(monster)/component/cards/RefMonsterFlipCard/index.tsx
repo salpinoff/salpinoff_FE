@@ -9,6 +9,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { Toaster, resolveValue } from 'react-hot-toast';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -17,6 +18,7 @@ import { AxiosError } from 'axios';
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
+import Toast from '@components/feedback/Toast';
 import MonsterCreationModal from '@components/modals/MonsterCreationModal';
 import ProgressBar from '@components/ProgressBar';
 
@@ -186,6 +188,20 @@ export default function RefMonsterFlipCard() {
             </Button>
           </div>
         )}
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          containerClassName="toast-container"
+          containerStyle={{
+            position: 'absolute',
+            bottom: 20,
+          }}
+          toastOptions={{
+            duration: 2000,
+          }}
+        >
+          {(t) => <Toast>{resolveValue(t.message, t)}</Toast>}
+        </Toaster>
       </MonsterFlipCard.ActionArea>
       <MonsterFlipCard.Content>
         <div className="flex items-center justify-between">

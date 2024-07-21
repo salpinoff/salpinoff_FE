@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
+import toast from 'react-hot-toast';
+
 import DownloadSVG from '@public/icons/download.svg';
 import EditSVG from '@public/icons/edit.svg';
 import ShareSVG from '@public/icons/share.svg';
@@ -42,6 +44,7 @@ export default function ActionMenu({ monster }: ActionMenuProps) {
         }}
         onSave={() => {
           closeModal();
+          toast('이미지가 저장되었어요!');
         }}
       />
     ));
@@ -53,6 +56,7 @@ export default function ActionMenu({ monster }: ActionMenuProps) {
         url={generateShareUrl(monsterId) ?? ''}
         onShareByLink={() => {
           closeModal();
+          toast('링크가 클립보드에 복사되었어요!');
         }}
         onShareViaKakao={() => {
           closeModal();
