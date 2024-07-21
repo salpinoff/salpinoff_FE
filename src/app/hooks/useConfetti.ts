@@ -1,4 +1,4 @@
-import { useRef, type RefObject } from 'react';
+import { useRef, useState, type RefObject } from 'react';
 
 type AddConfettiConfig = {
   image: {
@@ -23,6 +23,8 @@ export default function useConfetti(ref: RefObject<HTMLCanvasElement>) {
       height: number;
     })[]
   >([]);
+
+  const [init, setInit] = useState(false);
 
   const getRandomPosition = (
     canvas: HTMLCanvasElement,
@@ -146,6 +148,7 @@ export default function useConfetti(ref: RefObject<HTMLCanvasElement>) {
       const img = new Image();
       img.src = image.src;
       img.onload = () => {
+        setInit(true);
         initializeParticles(canvas, image, start, particleNumber);
         requestRef.current = requestAnimationFrame(() =>
           draw(canvas, img, speed),
@@ -155,8 +158,14 @@ export default function useConfetti(ref: RefObject<HTMLCanvasElement>) {
   };
 
   const destroyCanvas = () => {
-    ref.current?.remove();
-    cancelAnimationFrame(requestRef.current);
+    try {
+      if (init) {
+        ref.current?.remove();
+        cancelAnimationFrame(requestRef.current);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return {
