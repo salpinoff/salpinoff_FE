@@ -198,7 +198,7 @@ export default function RefMonsterFlipCard() {
       <MonsterFlipCard.Back>
         <BaseText
           className={cn(
-            'my-auto flex h-full max-h-full w-full flex-initial items-center',
+            'my-auto flex h-full max-h-full w-full flex-initial items-center justify-center',
             'whitespace-pre-wrap text-center leading-relaxed',
             'overflow-y-auto scrollbar-hide',
           )}
