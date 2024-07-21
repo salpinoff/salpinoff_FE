@@ -1,11 +1,11 @@
 import cn from '@utils/cn';
 
-type ModalDimmedProps = {
+type DimmedProps = {
   blur?: boolean;
   className?: string;
 };
 
-export default function ModalDimmed({ blur, className }: ModalDimmedProps) {
+export default function Dimmed({ blur, className }: DimmedProps) {
   return (
     <div
       id="dimmed"

@@ -3,10 +3,11 @@ import { createPortal } from 'react-dom';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
+import Dimmed from '@components/common/feedback/Dimmed';
+
 import ModalButton from './ModalButton';
 import ModalContent from './ModalContent';
 import ModalDescription from './ModalDescription';
-import ModalDimmed from './ModalDimmed';
 import ModalTitle from './ModalTitle';
 
 export function Modal({
@@ -49,5 +50,5 @@ export function Modal({
 Modal.Button = ModalButton;
 Modal.Content = ModalContent;
 Modal.Description = ModalDescription;
-Modal.Dimmed = ModalDimmed;
+Modal.Dimmed = Dimmed;
 Modal.Title = ModalTitle;
