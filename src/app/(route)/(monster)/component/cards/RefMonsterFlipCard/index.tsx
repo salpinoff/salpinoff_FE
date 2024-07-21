@@ -140,7 +140,7 @@ export default function RefMonsterFlipCard() {
 
   return (
     <MonsterFlipCard
-      className="mx-auto"
+      className="m-auto"
       width={REF_FLIP_CARD_WIDTH}
       height={REF_FLIP_CARD_HEIGHT}
       flipped={flipped}
