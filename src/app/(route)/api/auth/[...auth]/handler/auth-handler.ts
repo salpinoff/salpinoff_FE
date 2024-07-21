@@ -132,7 +132,15 @@ const authHandler = ({ request, params, secret }: Props) => {
 
             return redirectResponse(data, secret);
           } catch (thrownError) {
-            console.log(thrownError);
+            if (isAxiosError(thrownError)) {
+              console.error(
+                'axios error in get /api/auth/signin',
+                thrownError.request,
+                thrownError.response,
+              );
+            } else {
+              console.error('error in get /api/auth/signin', thrownError);
+            }
 
             const errorMessage = isAxiosError(thrownError)
               ? thrownError.message
