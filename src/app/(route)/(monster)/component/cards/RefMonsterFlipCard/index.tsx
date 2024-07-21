@@ -226,7 +226,7 @@ export default function RefMonsterFlipCard() {
           className={cn(
             'max-h-ful m-auto flex shrink',
             'whitespace-pre-wrap text-center leading-relaxed',
-            'overflow-y-auto scrollbar-hide',
+            'scroller overflow-y-auto',
           )}
           component="p"
           variant="body-2"
