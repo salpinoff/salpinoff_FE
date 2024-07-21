@@ -103,67 +103,78 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
             상세보기
           </Header.Title>
         </Header>
-        <section className="flex h-[calc(100vh-48px)] w-full flex-col gap-16 overflow-y-auto scrollbar-hide">
-          <MonsterFlipCard
-            className="mx-auto my-[16px] flex-none"
-            width={REF_FLIP_CARD_WIDTH}
-            height={REF_FLIP_CARD_HEIGHT}
-            flipped={flipped}
-            color={BACKGROUND_COLOR}
-            onClick={toggleCard}
-            onTouchMove={toggleCard}
-          >
-            <MonsterFlipCard.ActionArea>
-              <CharacterCanvas
-                width={REF_FLIP_CARD_WIDTH}
-                height={REF_FLIP_CARD_HEIGHT - 88}
-                type={monster.type}
-                status={monster.status}
-                items={Object.values(REST_DECOS)}
-                background={BACKGROUND_COLOR}
-              />
-            </MonsterFlipCard.ActionArea>
-            <MonsterFlipCard.Content>
-              <div className="flex items-center justify-between">
-                <div className="pointer-event-none flex select-none items-center gap-8">
-                  <StressLevelBadge level={monster.ratingRange} />
+        <section
+          className={cn(
+            'flex h-[calc(100vh-48px)] w-full flex-none flex-col gap-16',
+            'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
+          )}
+        >
+          <div className="mx-auto flex-none snap-start pt-16">
+            <MonsterFlipCard
+              width={REF_FLIP_CARD_WIDTH}
+              height={REF_FLIP_CARD_HEIGHT}
+              flipped={flipped}
+              color={BACKGROUND_COLOR}
+              onClick={toggleCard}
+              onTouchMove={toggleCard}
+            >
+              <MonsterFlipCard.ActionArea>
+                <CharacterCanvas
+                  width={REF_FLIP_CARD_WIDTH}
+                  height={REF_FLIP_CARD_HEIGHT - 88}
+                  type={monster.type}
+                  status={monster.status}
+                  items={Object.values(REST_DECOS)}
+                  background={BACKGROUND_COLOR}
+                />
+              </MonsterFlipCard.ActionArea>
+              <MonsterFlipCard.Content>
+                <div className="flex items-center justify-between">
+                  <div className="pointer-event-none flex select-none items-center gap-8">
+                    <StressLevelBadge level={monster.ratingRange} />
+                    <BaseText
+                      overflow="truncate"
+                      component="span"
+                      variant="body-1"
+                      weight="semibold"
+                      color="neutral"
+                    >
+                      {monster.monsterName}
+                    </BaseText>
+                  </div>
+                </div>
+                <ProgressBar
+                  value={monster.currentInteractionCount}
+                  max={monster.interactionCount}
+                  label="percent"
+                />
+              </MonsterFlipCard.Content>
+              <MonsterFlipCard.Back>
+                <div
+                  className="flex h-full w-full items-center justify-center"
+                  role="none"
+                  onClick={() => setFlipped(true)}
+                >
                   <BaseText
-                    overflow="truncate"
-                    component="span"
-                    variant="body-1"
-                    weight="semibold"
-                    color="neutral"
+                    className="my-auto flex max-h-full overflow-y-auto text-center"
+                    component="p"
+                    variant="body-2"
+                    weight="medium"
+                    color="strong"
+                    wrap
                   >
-                    {monster.monsterName}
+                    {monster.content}
                   </BaseText>
                 </div>
-              </div>
-              <ProgressBar
-                value={monster.currentInteractionCount}
-                max={monster.interactionCount}
-                label="percent"
-              />
-            </MonsterFlipCard.Content>
-            <MonsterFlipCard.Back>
-              <div
-                className="flex h-full w-full items-center justify-center"
-                role="none"
-                onClick={() => setFlipped(true)}
-              >
-                <BaseText
-                  className="my-auto flex max-h-full overflow-y-auto text-center"
-                  component="p"
-                  variant="body-2"
-                  weight="medium"
-                  color="strong"
-                  wrap
-                >
-                  {monster.content}
-                </BaseText>
-              </div>
-            </MonsterFlipCard.Back>
-          </MonsterFlipCard>
-          <div className="flex min-h-full shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]">
+              </MonsterFlipCard.Back>
+            </MonsterFlipCard>
+          </div>
+          <div
+            className={cn(
+              'flex min-h-full shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
+              'snap-start',
+            )}
+          >
             <div>
               <Badge
                 variant="string"
@@ -183,7 +194,7 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
                 </BaseText>
               </Badge>
             </div>
-            <ul className="mx-auto flex w-[312px] flex-col gap-y-[16px]">
+            <ul className="mx-auto flex w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
               {messageList.length === 0 && (
                 <div className="flex h-full w-full flex-col items-center justify-center">
                   <BaseText variant="body-2" color="alternative">
@@ -196,7 +207,7 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
                   className={cn(
                     'rounded-20 border border-[#70737C52] outline-none',
                     'bg-[#70737C38]',
-                    'w-full shrink-0 resize-none p-20',
+                    'w-full resize-none p-20',
                     'whitespace-pre-wrap',
                   )}
                   id={`message_${messageId}`}
@@ -284,7 +295,7 @@ export default function MonsterList() {
       <div
         className={cn(
           'mx-auto flex h-[calc(100vh-48px)] max-h-full w-max flex-col gap-32 px-32 py-24',
-          'overflow-y-auto scrollbar-hide',
+          'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
         )}
       >
         {pages.length &&
@@ -298,7 +309,10 @@ export default function MonsterList() {
                 key={monsterId + monsterName}
                 name={monsterName}
                 color={BACKGROUND_COLOR}
-                className="relative h-[240px] min-h-[240px] w-[240px]"
+                className={cn(
+                  'relative h-[240px] min-h-[240px] w-[240px]',
+                  'snap-center snap-normal',
+                )}
                 onClick={() => handleClick(idx)}
               >
                 <CharacterCanvas
