@@ -44,7 +44,7 @@ const gridStyles = cva('grid', {
 
 const buttonStyle = cva(
   [
-    'relative overflow-hidden cursor-pointer select-none transition-colors',
+    'relative overflow-hidden cursor-pointer select-none',
     'w-full h-[160px] rounded-20 p-[48px]',
     'flex items-center',
     // default
