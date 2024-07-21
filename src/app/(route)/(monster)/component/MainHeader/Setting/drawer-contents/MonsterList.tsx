@@ -37,6 +37,9 @@ import SquareMonsterCard from '../../../cards/SquareMonsterCard';
 
 const PER_SIZE = 10;
 
+const REF_FLIP_CARD_WIDTH = 302;
+const REF_FLIP_CARD_HEIGHT = 390;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ExtractObjectTypes<T extends any[]> = {
   [K in keyof T]: T[K] extends object ? T[K] : never;
@@ -105,18 +108,18 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
         </Header>
         <section className="h-[calc(100vh-48px)] w-full">
           <MonsterFlipCard
-            className="mx-auto py-[12px]"
-            width={312}
-            height={400}
+            className="mx-auto"
+            width={REF_FLIP_CARD_WIDTH}
+            height={REF_FLIP_CARD_HEIGHT}
             flipped={flipped}
             color={BACKGROUND_COLOR}
             onClick={toggleCard}
             onTouchMove={toggleCard}
           >
-            <MonsterFlipCard.ActionArea className="overflow-hidden p-0">
+            <MonsterFlipCard.ActionArea>
               <CharacterCanvas
-                width={560}
-                height={560}
+                width={REF_FLIP_CARD_WIDTH}
+                height={REF_FLIP_CARD_HEIGHT - 88}
                 type={monster.type}
                 status={monster.status}
                 items={Object.values(REST_DECOS)}

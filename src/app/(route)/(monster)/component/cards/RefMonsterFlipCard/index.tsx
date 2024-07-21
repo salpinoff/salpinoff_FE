@@ -32,8 +32,8 @@ import { GetMonsterRefResponse } from '@api/monster/types';
 
 import { ActionMenu, MonsterCounterBox, StressLevelBadge } from '../_ui';
 
-export const REF_FLIP_CARD_WIDTH = 302;
-export const REF_FLIP_CARD_HEIGHT = 390;
+const REF_FLIP_CARD_WIDTH = 302;
+const REF_FLIP_CARD_HEIGHT = 390;
 
 export default function RefMonsterFlipCard() {
   const router = useRouter();
@@ -131,7 +131,6 @@ export default function RefMonsterFlipCard() {
       onMouseUp={handleMouseUp}
     >
       <MonsterFlipCard.ActionArea
-        className="overflow-hidden p-0"
         style={{
           pointerEvents: prevPageX ? 'unset' : 'auto',
         }}

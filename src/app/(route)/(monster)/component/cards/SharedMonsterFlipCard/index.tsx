@@ -105,7 +105,7 @@ export default function SharedMonsterFlipCard({
       flipped={flipped}
       onClick={handleClick}
     >
-      <MonsterFlipCard.ActionArea className="overflow-hidden p-0">
+      <MonsterFlipCard.ActionArea>
         <BaseText
           variant="label-2"
           weight="semibold"
