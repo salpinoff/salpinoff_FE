@@ -46,13 +46,10 @@ export default function Drawer({ children, open = false }: DrawerProps) {
               animate={{
                 left: 0,
               }}
-              className={cn(
-                'fixed right-0 top-0 w-full overflow-y-scroll bg-black px-20 scrollbar-hide',
-                {
-                  'full-height': !isIOS,
-                  'full-height-ios': isIOS,
-                },
-              )}
+              className={cn('fixed right-0 top-0 w-full bg-black px-20', {
+                'full-height': !isIOS,
+                'full-height-ios': isIOS,
+              })}
             >
               {children}
             </m.aside>
