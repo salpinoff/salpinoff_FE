@@ -28,7 +28,7 @@ export default function Setting({ close }: SettingProps) {
 
     return openModal(() => (
       <Drawer open>
-        <Header className="mb-5 grid grid-cols-6 gap-4 px-0">
+        <Header className="grid grid-cols-6 gap-4 px-0">
           <Header.IconButton
             name="arrow-back"
             aria-label="뒤로가기"
@@ -64,7 +64,7 @@ export default function Setting({ close }: SettingProps) {
 
   return (
     <Drawer open>
-      <Header className="mb-5 grid grid-cols-6 gap-4 px-0">
+      <Header className="grid grid-cols-6 gap-4 px-0">
         <Header.IconButton
           name="arrow-back"
           aria-label="뒤로가기"
@@ -75,42 +75,45 @@ export default function Setting({ close }: SettingProps) {
           설정
         </Header.Title>
       </Header>
-      <Menu>
-        <Menu.Item
-          type="button"
-          component="button"
-          onClick={handleViewCollection}
-          aria-label="퇴사몬 보관함"
-        >
-          퇴사몬 보관함
-        </Menu.Item>
-      </Menu>
+      {/* Menu Group */}
+      <div className="p-20">
+        <Menu>
+          <Menu.Item
+            type="button"
+            component="button"
+            onClick={handleViewCollection}
+            aria-label="퇴사몬 보관함"
+          >
+            퇴사몬 보관함
+          </Menu.Item>
+        </Menu>
 
-      <Menu className="my-16">
-        <Menu.Item
-          type="button"
-          component="button"
-          onClick={handleEditProfile}
-          aria-label="프로필 수정"
-        >
-          프로필 수정
-        </Menu.Item>
-        <Menu.Item
-          type="button"
-          component="button"
-          loading={isPending}
-          onClick={handleSignout}
-          aria-label="로그아웃"
-        >
-          로그아웃
-        </Menu.Item>
-      </Menu>
+        <Menu className="my-16">
+          <Menu.Item
+            type="button"
+            component="button"
+            onClick={handleEditProfile}
+            aria-label="프로필 수정"
+          >
+            프로필 수정
+          </Menu.Item>
+          <Menu.Item
+            type="button"
+            component="button"
+            loading={isPending}
+            onClick={handleSignout}
+            aria-label="로그아웃"
+          >
+            로그아웃
+          </Menu.Item>
+        </Menu>
 
-      <Menu>
-        <Menu.Item component="a" href="/">
-          제작정보
-        </Menu.Item>
-      </Menu>
+        <Menu>
+          <Menu.Item component="a" href="/">
+            제작정보
+          </Menu.Item>
+        </Menu>
+      </div>
     </Drawer>
   );
 }
