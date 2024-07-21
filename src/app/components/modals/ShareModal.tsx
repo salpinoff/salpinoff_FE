@@ -1,10 +1,10 @@
 import { useRef } from 'react';
-// import toast from 'react-hot-toast';
 
 import { Modal } from '@components/common/Modal';
 
 import ShareByLink from '@utils/client/share-by-link';
 import ShareViaKakao from '@utils/client/share-via-kakao';
+import stringToElement from '@utils/string-to-element';
 
 type ShareModalProps = {
   url: string;
@@ -41,7 +41,10 @@ export default function ShareModal({
       <Modal.Content ref={modalRef}>
         <Modal.Title>나의 퇴사몬을 공유할까요?</Modal.Title>
         <Modal.Description>
-          친구에게 나의 퇴사몬과 이야기를 공유하고 답장을 받아보세요
+          {stringToElement([
+            '친구에게 나의 퇴사몬과 이야기를',
+            '공유하고 답장을 받아보세요',
+          ])}
         </Modal.Description>
         <div className="flex gap-8">
           <Modal.Button
@@ -55,6 +58,7 @@ export default function ShareModal({
             variant="primary"
             onClick={handleShareViaKakaoButton}
             aria-label="카카오톡 공유 보내기 버튼"
+            className="font-semibold"
           >
             카카오톡 공유
           </Modal.Button>
