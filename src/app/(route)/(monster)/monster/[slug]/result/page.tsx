@@ -44,6 +44,7 @@ export default function MonsterResultPage({
 
   const handleDefer = () => {
     router.push('/');
+    toast.dismiss();
   };
 
   const { openModal, closeModal } = useModal(() => (

@@ -83,6 +83,8 @@ export default function SharedMonsterFlipCard({
   const handleClick: MouseEventHandler = (e) => {
     if (totalCount >= monster.interactionCountPerEncouragement) {
       e.preventDefault();
+
+      toast.remove();
       toggleCard();
     }
   };
@@ -129,7 +131,7 @@ export default function SharedMonsterFlipCard({
         <BaseText
           variant="label-2"
           weight="semibold"
-          className="absolute left-0 right-0 z-[10] mx-auto w-max p-16 text-cool-neutral-22"
+          className="absolute left-0 right-0 mx-auto w-max p-16 text-cool-neutral-22"
         >
           {monster.ownerName}님의 퇴사몬
         </BaseText>
