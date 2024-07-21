@@ -48,7 +48,12 @@ export default function Setting({ close }: SettingProps) {
     openByDrawer(e.currentTarget, <MonsterList />);
 
   const handleEditProfile: MouseEventHandler = (e) =>
-    openByDrawer(e.currentTarget, <EditContent />);
+    openByDrawer(
+      e.currentTarget,
+      <div className="p-20">
+        <EditContent />
+      </div>,
+    );
 
   const handleSignout = () => {
     openModal(() => (
@@ -64,7 +69,7 @@ export default function Setting({ close }: SettingProps) {
 
   return (
     <Drawer open>
-      <Header className="grid grid-cols-6 gap-4 px-0">
+      <Header className="grid grid-cols-6 gap-4">
         <Header.IconButton
           name="arrow-back"
           aria-label="뒤로가기"

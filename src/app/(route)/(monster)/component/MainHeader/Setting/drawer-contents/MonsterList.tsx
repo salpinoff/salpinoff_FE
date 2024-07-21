@@ -294,7 +294,7 @@ export default function MonsterList() {
     <AuthSuspense fallback={<>...Loading</>}>
       <div
         className={cn(
-          'mx-auto flex h-[calc(100vh-48px)] max-h-full w-max flex-col gap-32 px-32 py-24',
+          'mx-auto flex h-[calc(100vh-48px)] max-h-full w-max flex-col gap-32 p-20',
           'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
         )}
       >
