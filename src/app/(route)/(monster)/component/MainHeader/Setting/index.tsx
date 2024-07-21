@@ -28,7 +28,7 @@ export default function Setting({ close }: SettingProps) {
 
     return openModal(() => (
       <Drawer open>
-        <Header className="grid grid-cols-6 gap-4 px-0">
+        <Header className="grid grid-cols-6 gap-4">
           <Header.IconButton
             name="arrow-back"
             aria-label="뒤로가기"
