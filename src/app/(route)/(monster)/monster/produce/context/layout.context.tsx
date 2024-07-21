@@ -30,7 +30,7 @@ function MonsterLayoutProvider({ value, onFocus, onBlur, children }: Props) {
   return (
     <Provider value={value}>
       <div
-        className="relative flex-1 overflow-auto scrollbar-hide"
+        className="relative shrink-0 grow overflow-auto scrollbar-hide"
         onFocus={onFocus}
         onBlur={onBlur}
       >
