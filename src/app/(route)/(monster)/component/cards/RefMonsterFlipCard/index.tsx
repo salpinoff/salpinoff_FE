@@ -20,6 +20,8 @@ import BaseText from '@components/common/Text/BaseText';
 import MonsterCreationModal from '@components/modals/MonsterCreationModal';
 import ProgressBar from '@components/ProgressBar';
 
+import useCanvas from '@hooks/useCanvas';
+import useConfetti from '@hooks/useConfetti';
 import useModal from '@hooks/useModal';
 
 import { Adapter } from '@utils/client/adapter';
@@ -31,9 +33,13 @@ import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterRefResponse } from '@api/monster/types';
 
 import { ActionMenu, MonsterCounterBox, StressLevelBadge } from '../_ui';
+import { ConfettiMap } from '../constants';
 
 const REF_FLIP_CARD_WIDTH = 302;
 const REF_FLIP_CARD_HEIGHT = 390;
+
+const CANVAS_WIDTH = REF_FLIP_CARD_WIDTH;
+const CANVAS_HEIGHT = REF_FLIP_CARD_HEIGHT - 88;
 
 export default function RefMonsterFlipCard() {
   const router = useRouter();
@@ -54,6 +60,10 @@ export default function RefMonsterFlipCard() {
 
   const { mutate: updateCount } = useUpdateInteraction(monster.monsterId);
 
+  const canvasRef = useCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+
+  const { addConfetti } = useConfetti(canvasRef);
+
   const { openModal, closeModal } = useModal(() => (
     <MonsterCreationModal onClose={closeModal} />
   ));
@@ -63,7 +73,6 @@ export default function RefMonsterFlipCard() {
   );
   const [flipped, setFlipped] = useState(false);
   const [totalCount, setTotalCount] = useState(monster.currentInteractionCount);
-
   const [prevPageX, setPrevPageX] = useState<number | null>(null);
 
   const { BACKGROUND_COLOR, ...restDecos } = monster.decorations;
@@ -107,13 +116,25 @@ export default function RefMonsterFlipCard() {
     }
   };
 
+  const handleCount = (count: number) => {
+    if (!prevPageX) {
+      updateCount(count);
+      addConfetti(ConfettiMap[monster.type]);
+      setTotalCount((prev) => Math.min(prev + count, monster.interactionCount));
+    }
+  };
+
   useEffect(() => {
     setClear(() => monster.currentInteractionCount >= monster.interactionCount);
+
     setTotalCount((prev) =>
       monster.currentInteractionCount !== prev
         ? monster.currentInteractionCount
         : prev,
     );
+
+    if (totalCount !== monster.currentInteractionCount && !clear)
+      addConfetti(ConfettiMap[monster.type]);
   }, [monster]);
 
   return (
@@ -136,24 +157,22 @@ export default function RefMonsterFlipCard() {
         }}
       >
         <MonsterCounterBox
-          width={REF_FLIP_CARD_WIDTH}
-          height={REF_FLIP_CARD_HEIGHT - 88}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
           items={ITEMS}
           type={monster.type}
           clear={clear}
           startAt={totalCount}
           endAt={monster.interactionCount}
-          onCount={(count) => {
-            if (!prevPageX) {
-              updateCount(count);
-              setTotalCount((prev) =>
-                Math.min(prev + count, monster.interactionCount),
-              );
-            }
-          }}
+          onCount={handleCount}
           onComplete={() => {
             setClear(true);
           }}
+        />
+        {/* Effect */}
+        <canvas
+          ref={canvasRef}
+          className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
         />
         {clear && (
           <div className="absolute bottom-0 left-0 right-0 w-full px-[16px] py-[12px]">

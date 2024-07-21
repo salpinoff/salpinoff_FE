@@ -10,6 +10,9 @@ import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import BaseText from '@components/common/Text/BaseText';
 import ProgressBar from '@components/ProgressBar';
 
+import useCanvas from '@hooks/useCanvas';
+import useConfetti from '@hooks/useConfetti';
+
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
 
@@ -17,6 +20,7 @@ import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterResponse } from '@api/monster/types';
 
 import { MonsterCounterBox, StressLevelBadge } from '../_ui';
+import { ConfettiMap } from '../constants';
 
 type SharedMonsterFlipCardProps = {
   clear?: boolean;
@@ -26,6 +30,10 @@ type SharedMonsterFlipCardProps = {
 
 const SUB_FLIP_CARD_WIDTH = 302;
 const SUB_FLIP_CARD_HEIGHT = 450;
+
+const CANVAS_WIDTH = SUB_FLIP_CARD_WIDTH;
+const CANVAS_HEIGHT = SUB_FLIP_CARD_HEIGHT - 88;
+
 const ACTION_HELPER_TEXT = '화면을 연타하면 사연을 볼 수 있어요';
 const CLEAR_HELPER_TEXT = '숨겨진 사연이 열렸어요, 한번 더 탭하세요!';
 
@@ -50,7 +58,12 @@ export default function SharedMonsterFlipCard({
     ),
   });
 
-  const [flipped, setFlipped] = useState(false);
+  const canvasRef = useCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+
+  const { addConfetti, destroyCanvas } = useConfetti(canvasRef);
+
+  const [flipped, setFlipped] = useState(clear);
+
   const [totalCount, setTotalCount] = useState(
     clear ? monster.interactionCountPerEncouragement : 0,
   );
@@ -94,8 +107,14 @@ export default function SharedMonsterFlipCard({
         id: 'complete',
         ariaProps,
       });
+
+      destroyCanvas();
     }
   });
+
+  useEffect(() => {
+    if (totalCount > 0 && !clear) addConfetti(ConfettiMap[monster.type]);
+  }, [totalCount]);
 
   return (
     <MonsterFlipCard
@@ -114,8 +133,8 @@ export default function SharedMonsterFlipCard({
           {monster.ownerName}님의 퇴사몬
         </BaseText>
         <MonsterCounterBox
-          width={SUB_FLIP_CARD_WIDTH}
-          height={SUB_FLIP_CARD_HEIGHT - 88}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
           items={ITEMS}
           type={monster.type}
           clear={clear}
@@ -127,6 +146,11 @@ export default function SharedMonsterFlipCard({
           }}
           endAt={monster.interactionCountPerEncouragement}
           onComplete={onComplete}
+        />
+        {/* Effect */}
+        <canvas
+          ref={canvasRef}
+          className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
         />
         <Toaster
           containerStyle={{
