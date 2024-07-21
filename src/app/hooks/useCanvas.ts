@@ -8,8 +8,8 @@ const useCanvas = (width?: number, height?: number) => {
       const canvas = canvasRef.current;
 
       if (canvas) {
-        canvas.width = width ?? window.innerWidth;
-        canvas.height = height ?? window.innerHeight;
+        canvas.width = width ? width * 2 : window.innerWidth;
+        canvas.height = height ? height * 2 : window.innerHeight;
       }
     };
 

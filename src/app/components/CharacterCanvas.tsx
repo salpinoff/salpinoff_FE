@@ -15,8 +15,8 @@ export type CharacterCanvasProps = ComponentPropsWithoutRef<'canvas'> & {
 };
 
 export default function CharacterCanvas({
-  width = 580,
-  height = 580,
+  width = 280,
+  height = 280,
   className,
   type,
   status = 'before',
@@ -24,7 +24,7 @@ export default function CharacterCanvas({
   items = [],
   ...rest
 }: CharacterCanvasProps) {
-  const canvasRef = useCanvas(width, height); // X2
+  const canvasRef = useCanvas(width, height);
 
   const fillBackground = (ctx: CanvasRenderingContext2D, fillStyle: string) => {
     ctx.fillStyle = fillStyle;

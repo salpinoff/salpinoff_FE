@@ -39,6 +39,8 @@ const ConfettiMap = {
 } as const;
 
 export default function MonsterCounterBox({
+  width = 280,
+  height = 280,
   type = 'sad',
   background,
   items,
@@ -48,7 +50,7 @@ export default function MonsterCounterBox({
   onCount,
   onComplete,
 }: MonsterCounterBoxPropps) {
-  const canvasRef = useCanvas(580, 580); // X2
+  const canvasRef = useCanvas(width, height);
   const { addConfetti, destroyCanvas } = useConfetti(canvasRef);
 
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -83,6 +85,8 @@ export default function MonsterCounterBox({
         onMouseUp={handleMouseUp}
       >
         <CharacterCanvas
+          width={width}
+          height={height}
           className="h-full w-full"
           type={type}
           status={clear || isMouseDown ? 'after' : 'before'}
