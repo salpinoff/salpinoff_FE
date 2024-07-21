@@ -7,9 +7,6 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import CharacterCanvas from '@components/CharacterCanvas';
 import AuthSuspense from '@components/common/Aync/AuthSuspense';
-import BottomSheet from '@components/common/BottomSheet';
-import BottomSheetContent from '@components/common/BottomSheet/BottomSheetContent';
-import BottomSheetHeader from '@components/common/BottomSheet/BottomSheetHeader';
 import Badge from '@components/common/data-display/Badge';
 import Drawer from '@components/common/navigation/Drawer';
 import BaseText from '@components/common/Text/BaseText';
@@ -36,6 +33,9 @@ import { StressLevelBadge } from 'src/app/(route)/(monster)/component/cards/_ui'
 import SquareMonsterCard from '../../../cards/SquareMonsterCard';
 
 const PER_SIZE = 10;
+
+const REF_FLIP_CARD_WIDTH = 302;
+const REF_FLIP_CARD_HEIGHT = 390;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ExtractObjectTypes<T extends any[]> = {
@@ -90,7 +90,7 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
   const toggleCard = () => setFlipped((prev) => !prev);
 
   return (
-    <Drawer open>
+    <Drawer open className="overflow-y-auto scrollbar-hide">
       <div className="h-full w-full">
         <Header className="grid grid-cols-6 gap-4">
           <Header.IconButton
@@ -103,20 +103,25 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
             상세보기
           </Header.Title>
         </Header>
-        <section className="h-[calc(100vh-48px)] w-full">
+        <section
+          className={cn(
+            'flex h-[calc(100vh-48px)] w-full flex-none flex-col gap-16',
+            'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
+          )}
+        >
           <MonsterFlipCard
-            className="mx-auto py-[12px]"
-            width={312}
-            height={400}
+            className="mx-auto flex-none snap-start scroll-m-4 pt-16"
+            width={REF_FLIP_CARD_WIDTH}
+            height={REF_FLIP_CARD_HEIGHT}
             flipped={flipped}
             color={BACKGROUND_COLOR}
             onClick={toggleCard}
             onTouchMove={toggleCard}
           >
-            <MonsterFlipCard.ActionArea className="overflow-hidden p-0">
+            <MonsterFlipCard.ActionArea>
               <CharacterCanvas
-                width={560}
-                height={560}
+                width={REF_FLIP_CARD_WIDTH}
+                height={REF_FLIP_CARD_HEIGHT - 88}
                 type={monster.type}
                 status={monster.status}
                 items={Object.values(REST_DECOS)}
@@ -126,7 +131,7 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
             <MonsterFlipCard.Content>
               <div className="flex items-center justify-between">
                 <div className="pointer-event-none flex select-none items-center gap-8">
-                  <StressLevelBadge level={monster.ratingRange} />
+                  <StressLevelBadge level={monster.rating} />
                   <BaseText
                     overflow="truncate"
                     component="span"
@@ -163,60 +168,71 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
               </div>
             </MonsterFlipCard.Back>
           </MonsterFlipCard>
-          <div>
-            <BottomSheet className="overflow-auto scrollbar-hide">
-              <BottomSheetHeader id="bottom_sheet_header">
-                <Badge
-                  variant="string"
-                  color="inverse"
-                  count={messageList.length}
-                  max={999}
-                  showZero
-                  className="mt-12 flex justify-center text-center text-inherit"
+          <div
+            className={cn(
+              'flex min-h-full shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
+              'snap-start',
+            )}
+          >
+            <div>
+              <Badge
+                variant="string"
+                color="inverse"
+                count={messageList.length}
+                max={999}
+                showZero
+                className="flex justify-center text-center text-inherit"
+              >
+                <BaseText
+                  component="h3"
+                  variant="headline-2"
+                  weight="semibold"
+                  color="normal"
+                >
+                  받은 메세지
+                </BaseText>
+              </Badge>
+            </div>
+            <ul className="mx-auto flex w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
+              {messageList.length === 0 && (
+                <div className="flex h-full w-full flex-col items-center justify-center">
+                  <BaseText variant="body-2" color="alternative">
+                    아직 완료된 퇴사몬이 없어요
+                  </BaseText>
+                </div>
+              )}
+              {messageList.map(({ messageId, sender, content }) => (
+                <li
+                  className={cn(
+                    'rounded-20 border border-[#70737C52] outline-none',
+                    'bg-[#70737C38]',
+                    'w-full resize-none p-20',
+                    'whitespace-pre-wrap',
+                  )}
+                  id={`message_${messageId}`}
+                  key={messageId}
                 >
                   <BaseText
-                    component="h3"
-                    variant="headline-2"
-                    weight="semibold"
+                    component="p"
+                    variant="label-1"
                     color="normal"
+                    className="leading-relaxed"
                   >
-                    받은 메세지
+                    {content}
                   </BaseText>
-                </Badge>
-              </BottomSheetHeader>
-              <BottomSheetContent
-                component="ul"
-                id="bottom_sheet_content"
-                className="mx-auto flex w-[312px] flex-col gap-y-[16px] pb-[20px]"
-              >
-                {messageList.map(({ messageId, sender, content }) => (
-                  <li
-                    className={cn(
-                      'rounded-12 border border-[#70737C52] outline-none',
-                      'bg-[#70737C38]',
-                      'w-full shrink-0 resize-none px-16 py-12',
-                      'whitespace-pre-wrap',
-                    )}
-                    id={`message_${messageId}`}
-                    key={messageId}
+                  <BaseText
+                    className="mt-12 block w-full"
+                    component="span"
+                    variant="label-2"
+                    weight="medium"
+                    color="alternative"
+                    align="right"
                   >
-                    <BaseText component="p" variant="label-1" color="normal">
-                      {content}
-                    </BaseText>
-                    <BaseText
-                      className="mt-12 block w-full"
-                      component="span"
-                      variant="label-2"
-                      weight="medium"
-                      color="alternative"
-                      align="right"
-                    >
-                      From.{sender}
-                    </BaseText>
-                  </li>
-                ))}
-              </BottomSheetContent>
-            </BottomSheet>
+                    From.{sender}
+                  </BaseText>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>
@@ -277,8 +293,8 @@ export default function MonsterList() {
     <AuthSuspense fallback={<>...Loading</>}>
       <div
         className={cn(
-          'mx-auto flex h-[calc(100vh-48px)] max-h-full w-max flex-col gap-32 px-32 py-24',
-          'overflow-y-auto scrollbar-hide',
+          'mx-auto flex h-[calc(100vh-48px)] max-h-full w-max flex-col gap-32 p-20',
+          'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
         )}
       >
         {pages.length &&
@@ -292,7 +308,10 @@ export default function MonsterList() {
                 key={monsterId + monsterName}
                 name={monsterName}
                 color={BACKGROUND_COLOR}
-                className="relative h-[240px] min-h-[240px] w-[240px]"
+                className={cn(
+                  'relative h-[240px] min-h-[240px] w-[240px]',
+                  'snap-center snap-normal',
+                )}
                 onClick={() => handleClick(idx)}
               >
                 <CharacterCanvas

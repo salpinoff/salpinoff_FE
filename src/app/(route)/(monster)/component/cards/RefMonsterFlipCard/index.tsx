@@ -9,6 +9,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { Toaster, resolveValue } from 'react-hot-toast';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -17,10 +18,11 @@ import { AxiosError } from 'axios';
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Button from '@components/common/Button';
 import BaseText from '@components/common/Text/BaseText';
-import MonsterCreationModal from '@components/modals/MonsterCreationModal';
+import Toast from '@components/feedback/Toast';
 import ProgressBar from '@components/ProgressBar';
 
-import useModal from '@hooks/useModal';
+import useCanvas from '@hooks/useCanvas';
+import useConfetti from '@hooks/useConfetti';
 
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
@@ -30,8 +32,19 @@ import { useUpdateInteraction } from '@api/interaction/query/hooks';
 import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterRefResponse } from '@api/monster/types';
 
-import { ActionMenu, MonsterCounterBox, StressLevelBadge } from '../_ui';
-import { FLIP_CARD_HEIGHT, FLIP_CARD_WIDTH } from '../constants';
+import {
+  ActionMenu,
+  MonsterCounterBox,
+  StressLevelBadge,
+  ClearedOverlay,
+} from '../_ui';
+import { ConfettiMap } from '../constants';
+
+const REF_FLIP_CARD_WIDTH = 302;
+const REF_FLIP_CARD_HEIGHT = 390;
+
+const CANVAS_WIDTH = REF_FLIP_CARD_WIDTH;
+const CANVAS_HEIGHT = REF_FLIP_CARD_HEIGHT - 88;
 
 export default function RefMonsterFlipCard() {
   const router = useRouter();
@@ -52,16 +65,15 @@ export default function RefMonsterFlipCard() {
 
   const { mutate: updateCount } = useUpdateInteraction(monster.monsterId);
 
-  const { openModal, closeModal } = useModal(() => (
-    <MonsterCreationModal onClose={closeModal} />
-  ));
+  const canvasRef = useCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+
+  const { addConfetti } = useConfetti(canvasRef);
 
   const [clear, setClear] = useState(
     () => monster.currentInteractionCount >= monster.interactionCount,
   );
   const [flipped, setFlipped] = useState(false);
   const [totalCount, setTotalCount] = useState(monster.currentInteractionCount);
-
   const [prevPageX, setPrevPageX] = useState<number | null>(null);
 
   const { BACKGROUND_COLOR, ...restDecos } = monster.decorations;
@@ -105,20 +117,32 @@ export default function RefMonsterFlipCard() {
     }
   };
 
+  const handleCount = (count: number) => {
+    if (!prevPageX) {
+      updateCount(count);
+      addConfetti(ConfettiMap[monster.type]);
+      setTotalCount((prev) => Math.min(prev + count, monster.interactionCount));
+    }
+  };
+
   useEffect(() => {
     setClear(() => monster.currentInteractionCount >= monster.interactionCount);
+
     setTotalCount((prev) =>
       monster.currentInteractionCount !== prev
         ? monster.currentInteractionCount
         : prev,
     );
+
+    if (totalCount !== monster.currentInteractionCount && !clear)
+      addConfetti(ConfettiMap[monster.type]);
   }, [monster]);
 
   return (
     <MonsterFlipCard
-      className="mx-auto"
-      width={FLIP_CARD_WIDTH}
-      height={FLIP_CARD_HEIGHT}
+      className="m-auto"
+      width={REF_FLIP_CARD_WIDTH}
+      height={REF_FLIP_CARD_HEIGHT}
       flipped={flipped}
       color={BACKGROUND_COLOR}
       // Mobile
@@ -129,46 +153,48 @@ export default function RefMonsterFlipCard() {
       onMouseUp={handleMouseUp}
     >
       <MonsterFlipCard.ActionArea
-        className="overflow-hidden p-0"
         style={{
           pointerEvents: prevPageX ? 'unset' : 'auto',
         }}
       >
         <MonsterCounterBox
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
           items={ITEMS}
           type={monster.type}
           clear={clear}
           startAt={totalCount}
           endAt={monster.interactionCount}
-          onCount={(count) => {
-            if (!prevPageX) {
-              updateCount(count);
-              setTotalCount((prev) =>
-                Math.min(prev + count, monster.interactionCount),
-              );
-            }
-          }}
+          onCount={handleCount}
           onComplete={() => {
             setClear(true);
           }}
         />
-        {clear && (
-          <div className="absolute bottom-0 left-0 right-0 w-full px-[16px] py-[12px]">
-            <Button
-              className="label-1-medium mx-auto w-full bg-[#17171985] text-cool-neutral-99"
-              size="small"
-              variant="secondary"
-              onClick={() => openModal()}
-            >
-              새로운 퇴사몬 만들기
-            </Button>
-          </div>
-        )}
+        {/* Effect */}
+        <canvas
+          ref={canvasRef}
+          className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
+        />
+        {clear && <ClearedOverlay />}
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          containerClassName="toast-container"
+          containerStyle={{
+            position: 'absolute',
+            bottom: 20,
+          }}
+          toastOptions={{
+            duration: 2000,
+          }}
+        >
+          {(t) => <Toast>{resolveValue(t.message, t)}</Toast>}
+        </Toaster>
       </MonsterFlipCard.ActionArea>
       <MonsterFlipCard.Content>
         <div className="flex items-center justify-between">
           <div className="pointer-event-none flex select-none items-center gap-8">
-            <StressLevelBadge level={monster.ratingRange} />
+            <StressLevelBadge level={monster.rating} />
             <BaseText
               overflow="truncate"
               component="span"
@@ -198,7 +224,7 @@ export default function RefMonsterFlipCard() {
       <MonsterFlipCard.Back>
         <BaseText
           className={cn(
-            'my-auto flex h-full max-h-full w-full flex-initial items-center',
+            'max-h-ful m-auto flex shrink',
             'whitespace-pre-wrap text-center leading-relaxed',
             'overflow-y-auto scrollbar-hide',
           )}

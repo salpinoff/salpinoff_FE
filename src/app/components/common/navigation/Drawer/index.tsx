@@ -1,4 +1,4 @@
-import { PropsWithChildren, useId } from 'react';
+import { ComponentProps, useId } from 'react';
 import { createPortal } from 'react-dom';
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
@@ -6,11 +6,15 @@ import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
 import { isIOS } from '@utils/client/agent';
 import cn from '@utils/cn';
 
-type DrawerProps = PropsWithChildren & {
+type DrawerProps = ComponentProps<'aside'> & {
   open?: boolean;
 };
 
-export default function Drawer({ children, open = false }: DrawerProps) {
+export default function Drawer({
+  className,
+  children,
+  open = false,
+}: DrawerProps) {
   const uid = useId();
 
   return createPortal(
@@ -46,13 +50,11 @@ export default function Drawer({ children, open = false }: DrawerProps) {
               animate={{
                 left: 0,
               }}
-              className={cn(
-                'fixed right-0 top-0 w-full overflow-y-scroll bg-black px-20 scrollbar-hide',
-                {
-                  'full-height': !isIOS,
-                  'full-height-ios': isIOS,
-                },
-              )}
+              className={cn('fixed right-0 top-0 w-full bg-cool-neutral-5', {
+                'full-height': !isIOS,
+                'full-height-ios': isIOS,
+                className,
+              })}
             >
               {children}
             </m.aside>

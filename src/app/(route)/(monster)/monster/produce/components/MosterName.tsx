@@ -64,12 +64,11 @@ function MonsterName() {
           />
         </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-[25px]">
         <TextField
           fullWidth
           id="monster_name"
           label="이름"
-          className="mb-1"
           placeholder="퇴사몬의 이름을 지어주세요"
           helperText="2~6자로 입력해주세요"
           error={!!errors.monsterName}
@@ -84,8 +83,8 @@ function MonsterName() {
           id="story"
           fullWidth
           multiline
+          className="bg-[#70737C]/12 h-28"
           error={!!errors.story}
-          className="mt-24 h-36 bg-[#70737C]/30"
           {...register('story', {
             required: true,
             maxLength: 500,

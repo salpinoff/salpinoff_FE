@@ -2,10 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 
+import toast, { Toaster, resolveValue } from 'react-hot-toast';
+
 import { LayoutGroup } from 'framer-motion';
 
 import CharacterCanvas from '@components/CharacterCanvas';
 import Button from '@components/common/Button';
+import Toast from '@components/feedback/Toast';
 
 import useModal from '@hooks/useModal';
 
@@ -33,12 +36,14 @@ export default function MonsterResultPage({
     {
       // eslint-disable-next-line @typescript-eslint/no-shadow
       select: (data) => Adapter.from(data.data).to(transformMonster),
+      staleTime: 1000 * 60 * 30,
     },
   );
 
   const SHARE_URL = generateShareUrl(monsterId) ?? '';
 
   const handleDefer = () => {
+    toast.remove();
     router.push('/');
   };
 
@@ -47,6 +52,7 @@ export default function MonsterResultPage({
       url={SHARE_URL}
       onShareByLink={() => {
         closeModal();
+        toast('링크가 클립보드에 복사되었어요!');
       }}
       onShareViaKakao={() => {
         closeModal();
@@ -90,7 +96,6 @@ export default function MonsterResultPage({
                   items={Object.values(REST_DECOS)}
                   className={cn(
                     'h-full w-full',
-                    data.type === 'mad' && ' -translate-y-[20px]',
                     data.type === 'sad' && ' -translate-y-[10px]',
                   )}
                 />
@@ -104,6 +109,16 @@ export default function MonsterResultPage({
                 다음에 할래요
               </Button>
             </footer>
+            <Toaster
+              position="bottom-center"
+              reverseOrder={false}
+              containerClassName="toast-container"
+              containerStyle={{
+                bottom: 20,
+              }}
+            >
+              {(t) => <Toast>{resolveValue(t.message, t)}</Toast>}
+            </Toaster>
           </>
         )}
         {isError && <>error</>}

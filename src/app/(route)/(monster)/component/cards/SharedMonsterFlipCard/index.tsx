@@ -10,20 +10,30 @@ import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import BaseText from '@components/common/Text/BaseText';
 import ProgressBar from '@components/ProgressBar';
 
+import useCanvas from '@hooks/useCanvas';
+import useConfetti from '@hooks/useConfetti';
+
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
+import cn from '@utils/cn';
 
 import MonsterQueryFactory, { MonsterKeys } from '@api/monster/query/factory';
 import { GetMonsterResponse } from '@api/monster/types';
 
 import { MonsterCounterBox, StressLevelBadge } from '../_ui';
-import { FLIP_CARD_HEIGHT, FLIP_CARD_WIDTH } from '../constants';
+import { ConfettiMap } from '../constants';
 
 type SharedMonsterFlipCardProps = {
   clear?: boolean;
   monsterId: string;
   onComplete: () => void;
 };
+
+const SUB_FLIP_CARD_WIDTH = 302;
+const SUB_FLIP_CARD_HEIGHT = 450;
+
+const CANVAS_WIDTH = SUB_FLIP_CARD_WIDTH;
+const CANVAS_HEIGHT = SUB_FLIP_CARD_HEIGHT - 88;
 
 const ACTION_HELPER_TEXT = '화면을 연타하면 사연을 볼 수 있어요';
 const CLEAR_HELPER_TEXT = '숨겨진 사연이 열렸어요, 한번 더 탭하세요!';
@@ -49,7 +59,12 @@ export default function SharedMonsterFlipCard({
     ),
   });
 
-  const [flipped, setFlipped] = useState(false);
+  const canvasRef = useCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+
+  const { addConfetti, destroyCanvas } = useConfetti(canvasRef);
+
+  const [flipped, setFlipped] = useState(clear);
+
   const [totalCount, setTotalCount] = useState(
     clear ? monster.interactionCountPerEncouragement : 0,
   );
@@ -68,6 +83,8 @@ export default function SharedMonsterFlipCard({
   const handleClick: MouseEventHandler = (e) => {
     if (totalCount >= monster.interactionCountPerEncouragement) {
       e.preventDefault();
+
+      toast.remove();
       toggleCard();
     }
   };
@@ -93,26 +110,34 @@ export default function SharedMonsterFlipCard({
         id: 'complete',
         ariaProps,
       });
+
+      destroyCanvas();
     }
   });
 
+  useEffect(() => {
+    if (totalCount > 0 && !clear) addConfetti(ConfettiMap[monster.type]);
+  }, [totalCount]);
+
   return (
     <MonsterFlipCard
-      width={FLIP_CARD_WIDTH}
-      height={FLIP_CARD_HEIGHT}
+      width={SUB_FLIP_CARD_WIDTH}
+      height={SUB_FLIP_CARD_HEIGHT}
       color={BACKGROUND_COLOR}
       flipped={flipped}
       onClick={handleClick}
     >
-      <MonsterFlipCard.ActionArea className="overflow-hidden p-0">
+      <MonsterFlipCard.ActionArea>
         <BaseText
           variant="label-2"
           weight="semibold"
-          className="absolute left-0 right-0 z-[10] mx-auto w-max p-16 text-cool-neutral-22"
+          className="absolute left-0 right-0 mx-auto w-max p-16 text-cool-neutral-22"
         >
           {monster.ownerName}님의 퇴사몬
         </BaseText>
         <MonsterCounterBox
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
           items={ITEMS}
           type={monster.type}
           clear={clear}
@@ -125,6 +150,11 @@ export default function SharedMonsterFlipCard({
           endAt={monster.interactionCountPerEncouragement}
           onComplete={onComplete}
         />
+        {/* Effect */}
+        <canvas
+          ref={canvasRef}
+          className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
+        />
         <Toaster
           containerStyle={{
             position: 'absolute',
@@ -133,7 +163,7 @@ export default function SharedMonsterFlipCard({
         >
           {(t) => (
             <motion.div
-              className="h-max w-max rounded-circular bg-[#171719bd] px-[16px] py-[6px]"
+              className="flex h-max w-max items-center justify-center rounded-circular bg-[#171719bd] px-[16px] py-[9px]"
               initial={{
                 y: 20,
                 opacity: 0,
@@ -160,7 +190,7 @@ export default function SharedMonsterFlipCard({
       </MonsterFlipCard.ActionArea>
       <MonsterFlipCard.Content>
         <div className="flex items-center gap-8">
-          <StressLevelBadge level={monster.ratingRange} />
+          <StressLevelBadge level={monster.rating} />
           <BaseText
             overflow="truncate"
             component="span"
@@ -178,21 +208,20 @@ export default function SharedMonsterFlipCard({
         />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
-        <div
-          className="flex h-full w-full items-center justify-center"
-          role="none"
+        <BaseText
+          className={cn(
+            'm-auto max-h-full shrink',
+            'whitespace-pre-wrap text-center leading-relaxed',
+            'scroller overflow-y-scroll scrollbar-hide',
+          )}
+          component="p"
+          variant="body-2"
+          weight="regular"
+          color="strong"
+          wrap
         >
-          <BaseText
-            className="my-auto flex max-h-full overflow-y-auto text-center"
-            component="p"
-            variant="body-2"
-            weight="medium"
-            color="strong"
-            wrap
-          >
-            {monster.content}
-          </BaseText>
-        </div>
+          {monster.content}
+        </BaseText>
       </MonsterFlipCard.Back>
     </MonsterFlipCard>
   );

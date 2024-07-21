@@ -1,7 +1,5 @@
 import Button from '@components/common/Button';
 
-import cn from '@utils/cn';
-
 import { ExtractProps } from '@type/util';
 
 export default function ModalButton({
@@ -13,7 +11,7 @@ export default function ModalButton({
 }: ExtractProps<typeof Button>) {
   return (
     <Button
-      className={cn(className, 'font-normal')}
+      className={className}
       size="small"
       variant={variant}
       onClick={onClick}
