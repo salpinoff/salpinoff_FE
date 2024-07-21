@@ -43,8 +43,8 @@ export default function MonsterResultPage({
   const SHARE_URL = generateShareUrl(monsterId) ?? '';
 
   const handleDefer = () => {
+    toast.remove();
     router.push('/');
-    toast.dismiss();
   };
 
   const { openModal, closeModal } = useModal(() => (
