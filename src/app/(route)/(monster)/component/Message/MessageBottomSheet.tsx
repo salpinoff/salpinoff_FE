@@ -11,7 +11,6 @@ import AuthSuspense from '@components/common/Aync/AuthSuspense';
 import BottomSheet from '@components/common/BottomSheet';
 import BottomSheetContent from '@components/common/BottomSheet/BottomSheetContent';
 import BottomSheetHeader from '@components/common/BottomSheet/BottomSheetHeader';
-import Icon from '@components/common/data-display/Icon';
 import Dimmed from '@components/common/Modal/ModalDimmed';
 import BaseText from '@components/common/Text/BaseText';
 
@@ -25,6 +24,7 @@ import MonsterQueryFactory from '@api/monster/query/factory';
 import { Unpromise } from '@type/util';
 
 import { totalMessageAtom } from '@store/messageAtom';
+import RefreshSVG from 'public/icons/refresh.svg';
 
 import MessageList from './MessageList';
 
@@ -60,7 +60,7 @@ function MessageBottomSheet() {
       <BottomSheet className="z-0">
         <BottomSheetHeader
           id="bottom_sheet_header"
-          className="flex flex-none px-24 pt-9"
+          className="flex flex-none justify-center px-24 pt-9"
         >
           <div className="flex flex-1 gap-x-8">
             <BaseText
@@ -85,12 +85,15 @@ function MessageBottomSheet() {
             </BaseText>
           </div>
 
-          <button type="button" onClick={handleClick}>
+          <button
+            type="button"
+            onClick={handleClick}
+            className={cn('flex aspect-square items-center justify-center', {
+              'animate-spin': isFetching,
+            })}
+          >
             <span className="a11yHidden">새로고침</span>
-            <Icon
-              name="refresh"
-              className={cn({ 'animate-spin': isFetching })}
-            />
+            <RefreshSVG />
           </button>
         </BottomSheetHeader>
 
