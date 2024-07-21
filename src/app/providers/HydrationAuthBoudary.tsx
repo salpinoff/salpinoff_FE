@@ -17,7 +17,7 @@ async function HydrateWithAuth(props: Props) {
 
   await Promise.race([
     new Promise((resolve) => {
-      setTimeout(resolve, 300);
+      setTimeout(resolve, 500);
     }),
     getServerSession(header).then(({ data: { accessToken } }) => {
       setAuthHeader(accessToken);
