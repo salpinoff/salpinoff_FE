@@ -33,17 +33,12 @@ const setAuthHeader = (token: string) => {
 apiInstance.interceptors.request.use(async (request) => {
   const requestUrl = request.url || '';
 
-  const isWithOutUrl = WITHOUT_AUTH.some(
-    ({ regexp, method }) =>
-      regexp.test(requestUrl) &&
-      (method === 'all' || method === request.method),
-  );
+  const isWithOutUrl = WITHOUT_AUTH.some(({ regexp, method }) => {
+    const regResult = regexp.test(requestUrl);
+    const checkMethod = method === 'all' || request.method === method;
 
-  console.log(requestUrl, isWithOutUrl);
-
-  if (isWithOutUrl) {
-    delete request.headers.Authorization;
-  }
+    return regResult && checkMethod;
+  });
 
   if (!isWithOutUrl && !request.headers.Authorization) {
     const {

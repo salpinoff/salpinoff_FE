@@ -44,7 +44,7 @@ export const WITHOUT_AUTH = [
   },
   {
     regexp: new RegExp(`^${API_URLS.AUTH.API.GET_TOKEN.kakao}$`, 'g'),
-    method: 'all',
+    method: 'post',
   },
   { regexp: /^\/monsters\/\d+$/g, method: 'get' },
   { regexp: /^\/monsters\/\d+\/encouragement$/g, method: 'all' },
