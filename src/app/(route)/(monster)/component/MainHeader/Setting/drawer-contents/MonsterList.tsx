@@ -109,66 +109,65 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
             'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
           )}
         >
-          <div className="mx-auto flex-none snap-start pt-16">
-            <MonsterFlipCard
-              width={REF_FLIP_CARD_WIDTH}
-              height={REF_FLIP_CARD_HEIGHT}
-              flipped={flipped}
-              color={BACKGROUND_COLOR}
-              onClick={toggleCard}
-              onTouchMove={toggleCard}
-            >
-              <MonsterFlipCard.ActionArea>
-                <CharacterCanvas
-                  width={REF_FLIP_CARD_WIDTH}
-                  height={REF_FLIP_CARD_HEIGHT - 88}
-                  type={monster.type}
-                  status={monster.status}
-                  items={Object.values(REST_DECOS)}
-                  background={BACKGROUND_COLOR}
-                />
-              </MonsterFlipCard.ActionArea>
-              <MonsterFlipCard.Content>
-                <div className="flex items-center justify-between">
-                  <div className="pointer-event-none flex select-none items-center gap-8">
-                    <StressLevelBadge level={monster.ratingRange} />
-                    <BaseText
-                      overflow="truncate"
-                      component="span"
-                      variant="body-1"
-                      weight="semibold"
-                      color="neutral"
-                    >
-                      {monster.monsterName}
-                    </BaseText>
-                  </div>
-                </div>
-                <ProgressBar
-                  value={monster.currentInteractionCount}
-                  max={monster.interactionCount}
-                  label="percent"
-                />
-              </MonsterFlipCard.Content>
-              <MonsterFlipCard.Back>
-                <div
-                  className="flex h-full w-full items-center justify-center"
-                  role="none"
-                  onClick={() => setFlipped(true)}
-                >
+          <MonsterFlipCard
+            className="mx-auto flex-none snap-start scroll-m-4 pt-16"
+            width={REF_FLIP_CARD_WIDTH}
+            height={REF_FLIP_CARD_HEIGHT}
+            flipped={flipped}
+            color={BACKGROUND_COLOR}
+            onClick={toggleCard}
+            onTouchMove={toggleCard}
+          >
+            <MonsterFlipCard.ActionArea>
+              <CharacterCanvas
+                width={REF_FLIP_CARD_WIDTH}
+                height={REF_FLIP_CARD_HEIGHT - 88}
+                type={monster.type}
+                status={monster.status}
+                items={Object.values(REST_DECOS)}
+                background={BACKGROUND_COLOR}
+              />
+            </MonsterFlipCard.ActionArea>
+            <MonsterFlipCard.Content>
+              <div className="flex items-center justify-between">
+                <div className="pointer-event-none flex select-none items-center gap-8">
+                  <StressLevelBadge level={monster.ratingRange} />
                   <BaseText
-                    className="my-auto flex max-h-full overflow-y-auto text-center"
-                    component="p"
-                    variant="body-2"
-                    weight="medium"
-                    color="strong"
-                    wrap
+                    overflow="truncate"
+                    component="span"
+                    variant="body-1"
+                    weight="semibold"
+                    color="neutral"
                   >
-                    {monster.content}
+                    {monster.monsterName}
                   </BaseText>
                 </div>
-              </MonsterFlipCard.Back>
-            </MonsterFlipCard>
-          </div>
+              </div>
+              <ProgressBar
+                value={monster.currentInteractionCount}
+                max={monster.interactionCount}
+                label="percent"
+              />
+            </MonsterFlipCard.Content>
+            <MonsterFlipCard.Back>
+              <div
+                className="flex h-full w-full items-center justify-center"
+                role="none"
+                onClick={() => setFlipped(true)}
+              >
+                <BaseText
+                  className="my-auto flex max-h-full overflow-y-auto text-center"
+                  component="p"
+                  variant="body-2"
+                  weight="medium"
+                  color="strong"
+                  wrap
+                >
+                  {monster.content}
+                </BaseText>
+              </div>
+            </MonsterFlipCard.Back>
+          </MonsterFlipCard>
           <div
             className={cn(
               'flex min-h-full shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
