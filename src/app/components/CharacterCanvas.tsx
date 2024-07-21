@@ -98,6 +98,7 @@ export default function CharacterCanvas({
       ref={canvasRef}
       className={cn(
         'absolute bottom-0 left-0 right-0 top-0 h-full w-full',
+        type === 'mad' && ' -translate-y-[20px]',
         className,
       )}
       {...rest}

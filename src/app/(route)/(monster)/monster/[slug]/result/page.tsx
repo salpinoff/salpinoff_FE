@@ -95,7 +95,6 @@ export default function MonsterResultPage({
                   items={Object.values(REST_DECOS)}
                   className={cn(
                     'h-full w-full',
-                    data.type === 'mad' && ' -translate-y-[20px]',
                     data.type === 'sad' && ' -translate-y-[10px]',
                   )}
                 />
