@@ -27,6 +27,7 @@ import { totalMessageAtom } from '@store/messageAtom';
 import RefreshSVG from 'public/icons/refresh.svg';
 
 import MessageList from './MessageList';
+import MessageLoader from './MessageLoader';
 
 type RepMonster = Unpromise<ReturnType<typeof getRefMonster>>;
 
@@ -109,7 +110,7 @@ function MessageBottomSheet() {
             {() => {
               return (
                 <ErrorBoundary fallback={<>...error</>}>
-                  <AuthSuspense fallback={<>loading...</>}>
+                  <AuthSuspense fallback={<MessageLoader />}>
                     <MessageList />
                   </AuthSuspense>
                 </ErrorBoundary>
