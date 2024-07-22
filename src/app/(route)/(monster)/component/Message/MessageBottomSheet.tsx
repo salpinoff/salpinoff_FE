@@ -26,6 +26,7 @@ import { Unpromise } from '@type/util';
 import { totalMessageAtom } from '@store/messageAtom';
 import RefreshSVG from 'public/icons/refresh.svg';
 
+import MessageFallback from './MessageFallback';
 import MessageList from './MessageList';
 import MessageLoader from './MessageLoader';
 
@@ -109,7 +110,11 @@ function MessageBottomSheet() {
           <QueryErrorResetBoundary>
             {() => {
               return (
-                <ErrorBoundary fallback={<>...error</>}>
+                <ErrorBoundary
+                  fallback={
+                    <MessageFallback label="에러가 발생했어요" color="error" />
+                  }
+                >
                   <AuthSuspense fallback={<MessageLoader />}>
                     <MessageList />
                   </AuthSuspense>

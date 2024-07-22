@@ -18,7 +18,7 @@ import type { Unpromise } from '@type/util';
 import { totalMessageAtom } from '@store/messageAtom';
 
 import MessageConfirmModal from './MessageConfirmModal';
-import MessageEmpty from './MessageEmpty';
+import MessageFallback from './MessageFallback';
 import MessageItem from './MessageItem';
 
 type LastPage = {
@@ -81,7 +81,7 @@ function MessageList() {
 
   return (
     <>
-      {isEmpty && <MessageEmpty />}
+      {isEmpty && <MessageFallback />}
       {messageList.map((message) => {
         return (
           <MessageItem
