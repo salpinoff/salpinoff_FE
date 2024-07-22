@@ -7,6 +7,8 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 
+import Observer from '@components/common/Observer';
+
 import useModal from '@hooks/useModal';
 
 import { getNextMessageList } from '@api/message/list';
@@ -44,7 +46,8 @@ function MessageList() {
   } = MessageQueryFactory;
 
   const {
-    data: { messageList, uncheckedMessageCount, isEmpty },
+    data: { messageList, uncheckedMessageCount, isEmpty, isLast },
+    fetchNextPage,
   } = useSuspenseInfiniteQuery({
     retry: 1,
     staleTime: 0,
@@ -56,11 +59,12 @@ function MessageList() {
       return nextPage;
     },
     select: (pages) => ({
+      isEmpty: pages.pages[0].result.totalElements === 0,
+      isLast: pages.pages[pages.pages.length - 1].isLast,
       messageList: pages.pages
         .map(({ result }) => result.list)
         .flat()
         .sort((a, b) => Number(a.checked) - Number(b.checked)),
-      isEmpty: pages.pages[0].result.totalElements === 0,
       uncheckedMessageCount: pages.pages[0].result.uncheckedMessageCount,
     }),
   });
@@ -94,6 +98,14 @@ function MessageList() {
           />
         );
       })}
+
+      <Observer
+        onChange={(isIntersecting: boolean) => {
+          if (isIntersecting && !isLast) {
+            fetchNextPage();
+          }
+        }}
+      />
     </>
   );
 }
