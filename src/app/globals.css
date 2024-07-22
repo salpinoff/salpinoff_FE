@@ -112,3 +112,9 @@ body {
     }
   }
 }
+
+@layer components {
+  .bg-gradient {
+    @apply bg-gradient-to-b from-cool-neutral-5 to-[#253047];
+  }
+}
