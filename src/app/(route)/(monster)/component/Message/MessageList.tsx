@@ -7,6 +7,8 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 
+import Observer from '@components/common/Observer';
+
 import useModal from '@hooks/useModal';
 
 import { getNextMessageList } from '@api/message/list';
@@ -18,6 +20,7 @@ import type { Unpromise } from '@type/util';
 import { totalMessageAtom } from '@store/messageAtom';
 
 import MessageConfirmModal from './MessageConfirmModal';
+import MessageFallback from './MessageFallback';
 import MessageItem from './MessageItem';
 
 type LastPage = {
@@ -43,7 +46,8 @@ function MessageList() {
   } = MessageQueryFactory;
 
   const {
-    data: { messageList, uncheckedMessageCount },
+    data: { messageList, uncheckedMessageCount, isEmpty, isLast },
+    fetchNextPage,
   } = useSuspenseInfiniteQuery({
     retry: 1,
     staleTime: 0,
@@ -55,18 +59,15 @@ function MessageList() {
       return nextPage;
     },
     select: (pages) => ({
+      isEmpty: pages.pages[0].result.totalElements === 0,
+      isLast: pages.pages[pages.pages.length - 1].isLast,
       messageList: pages.pages
         .map(({ result }) => result.list)
         .flat()
         .sort((a, b) => Number(a.checked) - Number(b.checked)),
-      totalElements: pages.pages[0].result.totalElements,
       uncheckedMessageCount: pages.pages[0].result.uncheckedMessageCount,
     }),
   });
-
-  useEffect(() => {
-    setTotalElements(uncheckedMessageCount);
-  }, [uncheckedMessageCount]);
 
   const handleClick = (message: (typeof messageList)[number]) => {
     openModal(() => (
@@ -78,8 +79,13 @@ function MessageList() {
     ));
   };
 
+  useEffect(() => {
+    setTotalElements(uncheckedMessageCount);
+  }, [uncheckedMessageCount]);
+
   return (
     <>
+      {isEmpty && <MessageFallback />}
       {messageList.map((message) => {
         return (
           <MessageItem
@@ -92,6 +98,14 @@ function MessageList() {
           />
         );
       })}
+
+      <Observer
+        onChange={(isIntersecting: boolean) => {
+          if (isIntersecting && !isLast) {
+            fetchNextPage();
+          }
+        }}
+      />
     </>
   );
 }

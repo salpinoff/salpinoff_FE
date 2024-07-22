@@ -17,5 +17,5 @@ export type Response = {
 };
 
 export type Session = Response & {
-  status: 'authenticated' | 'unauthenticated';
+  status: 'authenticated' | 'unauthenticated' | 'expired';
 };

@@ -1,8 +1,6 @@
-import Image from 'next/image';
-
 import { ComponentPropsWithRef, ElementType } from 'react';
 
-import message from '@public/images/message.webp';
+import Icon from '@components/common/data-display/Icon';
 
 import cn from '@utils/cn';
 
@@ -35,13 +33,7 @@ function MessageItem<T extends ElementType>({
       )}
       {...restProps}
     >
-      <Image
-        src={message}
-        alt="메시지"
-        width={28}
-        height={28}
-        className="aspect-square w-[39%]"
-      />
+      <Icon name="message" className="w-[28px]" />
     </Component>
   );
 }

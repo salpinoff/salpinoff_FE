@@ -108,7 +108,7 @@ function MessageConfirmModal({
               'rounded-20',
               'h-[88px] w-[80px]',
               'border-2 bg-cool-neutral-17',
-              'flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center gap-[12.5%]',
+              'flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center gap-8',
               {
                 'border-red-60': !messageRead && emotion === 'DEPRESSION',
                 'border-orange-50': !messageRead && emotion === 'ANGER',
