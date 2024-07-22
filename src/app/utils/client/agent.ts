@@ -8,11 +8,11 @@ const MOBILE_REGEX = [
   /Windows Phone/i,
 ];
 
-const userAgnet =
+const userAgent =
   typeof window !== 'undefined' ? window.navigator.userAgent : '';
 
 const checkAgent = (regExpList: RegExp[]) =>
-  regExpList.some((regExp) => regExp.test(userAgnet));
+  regExpList.some((regExp) => regExp.test(userAgent));
 
 const isMobile = checkAgent(MOBILE_REGEX);
 const isDeskTop = !isMobile;

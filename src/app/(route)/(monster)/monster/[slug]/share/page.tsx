@@ -2,9 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useContext } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-
 import { useMutation } from '@tanstack/react-query';
 
 import { AxiosError } from 'axios';
@@ -23,80 +20,69 @@ import ExpiredModal from './components/ExpiredModal';
 import InteractionStep from './components/InteractionStep';
 import { ERROR_MESSAGE } from './constants/error';
 import { funnel } from './constants/funnel';
-import { GuestDispatchContext } from './context/guest.context';
+import EncouragementFormProvider from './context/form.context';
+import GuestProvider from './context/guest.context';
 
 type SharePages = (typeof funnel)[number];
 
 type ShareFunnelProps = React.PropsWithChildren<{ name: SharePages }>;
 
-export default function SharePage({ params }: { params: { slug: string } }) {
-  const { slug: monsterId } = params;
+type SharePagesProps = {
+  params: { slug: string };
+};
 
-  const { replace } = useRouter();
+export default function SharePage({ params: { slug } }: SharePagesProps) {
+  const { push } = useRouter();
+
+  const { openModal, closeModal } = useModal();
 
   const { Funnel, setStep } = useFunnel<SharePages, ShareFunnelProps>(
-    'interactions',
+    funnel[0],
   );
-
-  const methods = useForm({
-    mode: 'onChange',
-    defaultValues: {
-      sender: '',
-      content: '',
-    },
-    delayError: 3000,
-  });
-
-  const { openModal, closeModal } = useModal(() => (
-    <ExpiredModal closeModal={closeModal} />
-  ));
-
-  const { update } = useContext(GuestDispatchContext);
 
   const { mutate: send } = useMutation<
     unknown,
     AxiosError,
     SendEncouragementRequest
   >({
-    mutationFn: (data) => sendEncouragement(monsterId, data),
+    mutationFn: (data) => sendEncouragement(slug, data),
     onSuccess: () => setStep('done'),
     onError: ({ response }) => {
       if (response && response.status === 404) {
-        openModal();
+        openModal(() => <ExpiredModal closeModal={closeModal} />);
       }
     },
   });
 
-  if (!monsterId) throw new Error(ERROR_MESSAGE.NOT_FOUND);
-  if (!validate.monsterId(monsterId)) throw new Error(ERROR_MESSAGE.INVALID);
+  if (!slug) throw new Error(ERROR_MESSAGE.NOT_FOUND);
+  if (!validate.monsterId(slug)) throw new Error(ERROR_MESSAGE.INVALID);
 
   return (
-    <Funnel>
-      <Funnel.Step name="interactions">
-        <InteractionStep
-          onCompeleteInteraction={() => {
-            update({ clear: true });
-          }}
-          goNext={() => {
-            setStep('encouragement');
-          }}
-        />
-      </Funnel.Step>
-      <Funnel.Step name="encouragement">
-        <FormProvider {...methods}>
-          <EncouragementStep
-            goPrev={() => {
-              setStep('interactions');
-            }}
-            goNext={(data) => {
-              send(data);
-            }}
-          />
-        </FormProvider>
-      </Funnel.Step>
-      <Funnel.Step name="done">
-        <DoneStep goNext={() => replace('/signup')} />
-      </Funnel.Step>
-    </Funnel>
+    <GuestProvider>
+      <EncouragementFormProvider>
+        <Funnel>
+          <Funnel.Step name="interactions">
+            <InteractionStep
+              goNext={() => {
+                setStep('encouragement');
+              }}
+            />
+          </Funnel.Step>
+          <Funnel.Step name="encouragement">
+            <EncouragementStep
+              goPrev={() => {
+                setStep('done');
+              }}
+              goNext={(data) => {
+                send(data);
+              }}
+            />
+          </Funnel.Step>
+          <Funnel.Step name="done">
+            <DoneStep goNext={() => push('/signup')} />
+          </Funnel.Step>
+        </Funnel>
+      </EncouragementFormProvider>
+    </GuestProvider>
   );
 }

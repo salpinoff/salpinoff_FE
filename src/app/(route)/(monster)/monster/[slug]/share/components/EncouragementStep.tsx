@@ -1,55 +1,70 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { SubmitHandler, useFormContext, useFormState } from 'react-hook-form';
 
+import { motion } from 'framer-motion';
+
 import Button from '@components/common/Button';
-import BaseText from '@components/common/Text/BaseText';
 
-import stringToElement from '@utils/string-to-element';
-
-import { SendEncouragementRequest } from '@api/encouragement/types';
+import type { FormData } from '../context/form.context';
 
 import EncouragementMessageFormField from './forms/encouragement-message/EncouragementMessageFormField';
 import SenderFormField from './forms/sender/SenderFormField';
 
-type FieldValues = Omit<SendEncouragementRequest, 'never'>;
-
 type IncouragementStepProps = {
-  goPrev: (data: FieldValues) => void;
-  goNext: (data: FieldValues) => void;
+  goPrev: () => void;
+  goNext: (data: FormData) => void;
 };
 
 export default function EncouragementStep({
   goPrev,
   goNext,
 }: IncouragementStepProps) {
-  const { control, reset, getValues, handleSubmit } =
-    useFormContext<FieldValues>();
+  const { control, handleSubmit } = useFormContext<FormData>();
 
-  const { isValid, isSubmitting, isSubmitSuccessful } = useFormState({
+  const { isValid, isSubmitting } = useFormState({
     control,
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+  const handleBack = () => {
+    goPrev();
+  };
+
+  const onSubmit: SubmitHandler<FormData> = useCallback(
     (data) => goNext(data),
     [goNext],
   );
 
-  useEffect(() => {
-    if (isSubmitSuccessful) reset();
-  }, [isSubmitSuccessful, reset]);
+  const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } };
 
   return (
-    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] p-[20px] pt-[36px]">
-      <div className="max-w-dvw h-full w-[375px] w-full">
-        <BaseText
-          className="align-left mb-[40px]"
-          component="h3"
-          color="normal"
-          variant="heading-1"
-          weight="semibold"
+    <section className="flex h-full w-full flex-col justify-between p-[20px]">
+      <div className="h-full w-full">
+        <motion.h3
+          className="mb-[40px] mt-[36px]"
+          initial="hidden"
+          animate="visible"
+          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          variants={{ visible: { transition: { staggerChildren: 0.5 } } }}
         >
-          {stringToElement(['친구를 위한', '응원 메시지 작성하기'])}
-        </BaseText>
+          <motion.span
+            className="heading-1-semibold block text-cool-neutral-99"
+            variants={{
+              hidden: { opacity: 0, y: -10 },
+              visible,
+            }}
+          >
+            친구를 위한
+          </motion.span>
+          <motion.span
+            className="heading-1-semibold block text-cool-neutral-99"
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              visible,
+            }}
+          >
+            응원 메시지 작성하기
+          </motion.span>
+        </motion.h3>
         <form
           className="flex w-full flex-col gap-[40px]"
           onSubmit={handleSubmit(onSubmit)}
@@ -58,21 +73,23 @@ export default function EncouragementStep({
           <EncouragementMessageFormField />
         </form>
       </div>
-      <nav className="flex gap-8">
-        <Button variant="secondary" onClick={() => goPrev(getValues())}>
-          <BaseText variant="body-2" weight="medium">
-            뒤로가기
-          </BaseText>
+      <nav className="flex w-full gap-8">
+        <Button
+          className="grow font-medium"
+          variant="secondary"
+          onClick={handleBack}
+        >
+          뒤로가기
         </Button>
         <Button
+          className="grow font-semibold"
           type="submit"
           variant="primary"
+          loading={isSubmitting}
           disabled={!isValid || isSubmitting}
           onClick={handleSubmit(onSubmit)}
         >
-          <BaseText variant="body-2" weight="semibold">
-            전송하기
-          </BaseText>
+          전송하기
         </Button>
       </nav>
     </section>

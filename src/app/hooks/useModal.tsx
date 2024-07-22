@@ -6,7 +6,7 @@ import { unionBy } from 'lodash';
 
 import { modalAtom } from '@store/modalAtom';
 
-const useModal = (component: React.FC) => {
+const useModal = (component?: FC) => {
   const uid = useId();
   const modals = useAtomValue(modalAtom);
   const setModals = useSetAtom(modalAtom);
@@ -14,10 +14,17 @@ const useModal = (component: React.FC) => {
   const isOpen = modals.findIndex((modal) => modal.uid === uid) !== -1;
 
   const openModal = useCallback(
-    (newComponent?: FC) =>
+    (newComponent?: FC) => {
+      if (!component && !newComponent) {
+        throw new Error(
+          'Component must be provided either initially or when opening the modal',
+        );
+      }
+
       setModals((prev) =>
-        unionBy([...prev, { uid, element: newComponent || component }], 'uid'),
-      ),
+        unionBy([...prev, { uid, element: newComponent || component! }], 'uid'),
+      );
+    },
     [component, uid, setModals],
   );
 
