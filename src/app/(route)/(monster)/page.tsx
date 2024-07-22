@@ -18,10 +18,10 @@ async function Home() {
   ];
 
   return (
-    <section className="from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]">
+    <section className="bg-gradient h-full w-full pb-[163px]">
       <MainHeader />
       <HydrateWithAuth queries={messageQueries}>
-        <div className="flex h-[calc(100dvh-48px)] w-screen pb-[163px]">
+        <div className="flex h-[calc(100%-48px)] w-full">
           {/* [TODO] ErrorBoundary 개선 */}
           <ErrorBoundary fallback={<>error</>}>
             <RefMonsterFlipCard />
