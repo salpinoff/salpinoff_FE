@@ -1,24 +1,21 @@
+import { useRouter } from 'next/navigation';
+
+import { useEffect } from 'react';
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { setAuthHeader } from '@api/api.config';
 import { getSession, updateSession } from '@api/auth/base/session';
 import AuthFactory from '@api/auth/query';
+import { Session } from '@api/schema/token';
 
 const useAuth = (): {
-  status: 'loading' | 'authenticated' | 'unauthenticated' | 'error';
+  status: 'loading' | Session['status'] | 'error';
   accessToken: string;
   update: () => void;
 } => {
+  const router = useRouter();
   const queryClient = useQueryClient();
-
-  const { data: session, error } = useQuery({
-    queryKey: AuthFactory.token.queryKey,
-    queryFn: getSession,
-    retry: false,
-    staleTime: 1000 * 60 * 5, // 5분 동안 토큰이 신선하다고 간주
-    gcTime: 1000 * 60 * 10, // 10분 동안 캐시 유지
-    select: (data) => data.data,
-  });
 
   const { mutate: update } = useMutation({
     mutationKey: ['updateToken'],
@@ -29,9 +26,29 @@ const useAuth = (): {
         status: 'authenticated',
       });
     },
+    onError: () => {
+      // TODO. toast
+      console.log('세션이 만료 되었습니다.');
+      router.push('/signin');
+    },
+  });
+
+  const { data: session, error } = useQuery({
+    queryKey: AuthFactory.token.queryKey,
+    queryFn: getSession,
+    retry: false,
+    refetchOnWindowFocus: true,
+    refetchInterval: 1000 * 60 * 5,
+    select: (data) => data.data,
   });
 
   setAuthHeader(session?.accessToken || '');
+
+  useEffect(() => {
+    if (session && session.status === 'expired') {
+      update();
+    }
+  }, [session]);
 
   return {
     status: (error && 'error') || session?.status || 'loading',
