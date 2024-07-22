@@ -18,6 +18,7 @@ import type { Unpromise } from '@type/util';
 import { totalMessageAtom } from '@store/messageAtom';
 
 import MessageConfirmModal from './MessageConfirmModal';
+import MessageEmpty from './MessageEmpty';
 import MessageItem from './MessageItem';
 
 type LastPage = {
@@ -43,7 +44,7 @@ function MessageList() {
   } = MessageQueryFactory;
 
   const {
-    data: { messageList, uncheckedMessageCount },
+    data: { messageList, uncheckedMessageCount, isEmpty },
   } = useSuspenseInfiniteQuery({
     retry: 1,
     staleTime: 0,
@@ -59,14 +60,10 @@ function MessageList() {
         .map(({ result }) => result.list)
         .flat()
         .sort((a, b) => Number(a.checked) - Number(b.checked)),
-      totalElements: pages.pages[0].result.totalElements,
+      isEmpty: pages.pages[0].result.totalElements === 0,
       uncheckedMessageCount: pages.pages[0].result.uncheckedMessageCount,
     }),
   });
-
-  useEffect(() => {
-    setTotalElements(uncheckedMessageCount);
-  }, [uncheckedMessageCount]);
 
   const handleClick = (message: (typeof messageList)[number]) => {
     openModal(() => (
@@ -78,8 +75,13 @@ function MessageList() {
     ));
   };
 
+  useEffect(() => {
+    setTotalElements(uncheckedMessageCount);
+  }, [uncheckedMessageCount]);
+
   return (
     <>
+      {isEmpty && <MessageEmpty />}
       {messageList.map((message) => {
         return (
           <MessageItem

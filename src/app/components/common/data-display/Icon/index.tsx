@@ -8,6 +8,7 @@ import EditSVG from '@public/icons/edit.svg';
 import EllipsisSVG from '@public/icons/ellipsis.svg';
 import HamburgerSVG from '@public/icons/hamburger.svg';
 import InfoSVG from '@public/icons/info.svg';
+import MessageSVG from '@public/icons/message.svg';
 import RefreshSVG from '@public/icons/refresh.svg';
 import ShareSVG from '@public/icons/share.svg';
 import SpinSVG from '@public/icons/spin.svg';
@@ -24,6 +25,7 @@ export const IconMap = {
   refresh: RefreshSVG,
   share: ShareSVG,
   spin: SpinSVG,
+  message: MessageSVG,
 } as const;
 
 export const iconStyles = cva(
