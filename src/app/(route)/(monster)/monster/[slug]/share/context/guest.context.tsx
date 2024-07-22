@@ -3,49 +3,57 @@ import {
   PropsWithChildren,
   createContext,
   useCallback,
+  useContext,
   useMemo,
-  useReducer,
+  useState,
 } from 'react';
 
 type GuestState = {
   clear: boolean;
 };
 
-type GuestAction = { payload: Partial<GuestState> };
-
 const initialState: GuestState = {
   clear: false,
 };
 
-const reducer = (state: GuestState, action: GuestAction): GuestState => {
-  return { ...state, ...action.payload };
-};
-
 export const GuestContext = createContext<GuestState>(initialState);
 
-export const GuestDispatchContext = createContext({
-  update: (payload: Partial<GuestState>) => {},
-});
+type GuestUpdateContextType = {
+  update: (payload: Partial<GuestState>) => void;
+};
 
-export function GuestProvider({ children }: PropsWithChildren) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export const GuestUpdateContext = createContext<
+  GuestUpdateContextType | undefined
+>(undefined);
 
-  const update = useCallback(
-    (payload: Partial<GuestState>) => {
-      return dispatch({
-        payload,
-      });
-    },
-    [dispatch],
-  );
+export default function GuestProvider({ children }: PropsWithChildren) {
+  const [state, setState] = useState(initialState);
 
-  const memoizedValue = useMemo(() => ({ update }), [update]);
+  const update = useCallback((payload: Partial<GuestState>) => {
+    setState((prevState) => ({ ...prevState, ...payload }));
+  }, []);
+
+  const memoizedStateValue = useMemo(() => state, [state]);
+  const memoizedUpdateValue = useMemo(() => ({ update }), [update]);
 
   return (
-    <GuestContext.Provider value={state}>
-      <GuestDispatchContext.Provider value={memoizedValue}>
+    <GuestContext.Provider value={memoizedStateValue}>
+      <GuestUpdateContext.Provider value={memoizedUpdateValue}>
         {children}
-      </GuestDispatchContext.Provider>
+      </GuestUpdateContext.Provider>
     </GuestContext.Provider>
   );
 }
+
+export const useGuestContext = () => {
+  return useContext(GuestContext);
+};
+
+export const useGuestUpdate = () => {
+  const context = useContext(GuestUpdateContext);
+
+  if (!context) {
+    throw new Error('useGuestUpdate must be used within a GuestProvider');
+  }
+  return context.update;
+};
