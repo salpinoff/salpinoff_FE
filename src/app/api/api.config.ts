@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { getQueryClient } from '@utils/query/get-query-client';
 
-import { API_URLS, WITHOUT_AUTH } from './api.constants';
+import { API_URLS } from './api.constants';
 import AuthFactory from './auth/query';
 import { Session } from './schema/token';
 
@@ -33,14 +33,28 @@ const setAuthHeader = (token: string) => {
 apiInstance.interceptors.request.use(async (request) => {
   const requestUrl = request.url || '';
 
-  const isWithOutUrl = WITHOUT_AUTH.some(({ regexp, method }) => {
-    const regResult = regexp.test(requestUrl);
-    const checkMethod = method === 'all' || request.method === method;
+  // const isWithOutUrl = WITHOUT_AUTH.some(({ regexp, method }) => {
+  //   const regResult = regexp.test(requestUrl);
+  //   const checkMethod = method === 'all' || request.method === method;
 
-    return regResult && checkMethod;
-  });
+  //   return regResult && checkMethod;
+  // });
 
-  if (!isWithOutUrl && !request.headers.Authorization) {
+  const isWithOutAuthUrl =
+    API_URLS.AUTH.API.REFRESH_TOKEN.includes(requestUrl) ||
+    API_URLS.AUTH.API.GET_TOKEN.kakao.includes(requestUrl) ||
+    /^\/monsters\/\d+\/encouragement$/g.test(requestUrl) ||
+    (/^\/monsters\/\d+$/g.test(requestUrl) && request.method === 'get');
+
+  if (requestUrl === API_URLS.AUTH.API.GET_TOKEN.kakao) {
+    console.log(requestUrl, isWithOutAuthUrl);
+  }
+
+  if (isWithOutAuthUrl) {
+    setAuthHeader('');
+  }
+
+  if (!isWithOutAuthUrl && !request.headers.Authorization) {
     const {
       data: { accessToken },
     } = await baseInstance.get<Session>(API_URLS.AUTH.BASE.SESSION);
