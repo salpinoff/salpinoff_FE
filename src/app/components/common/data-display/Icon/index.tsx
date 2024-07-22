@@ -29,7 +29,12 @@ export const IconMap = {
 } as const;
 
 export const iconStyles = cva(
-  ['inline-flex', 'items-center', 'justify-center'],
+  [
+    'inline-flex',
+    'items-center',
+    'justify-center',
+    '[&>svg]:w-max [&>svg]:h-max',
+  ],
   {
     variants: {
       size: {
