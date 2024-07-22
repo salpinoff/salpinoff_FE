@@ -33,22 +33,11 @@ const setAuthHeader = (token: string) => {
 apiInstance.interceptors.request.use(async (request) => {
   const requestUrl = request.url || '';
 
-  // const isWithOutUrl = WITHOUT_AUTH.some(({ regexp, method }) => {
-  //   const regResult = regexp.test(requestUrl);
-  //   const checkMethod = method === 'all' || request.method === method;
-
-  //   return regResult && checkMethod;
-  // });
-
   const isWithOutAuthUrl =
     API_URLS.AUTH.API.REFRESH_TOKEN.includes(requestUrl) ||
     API_URLS.AUTH.API.GET_TOKEN.kakao.includes(requestUrl) ||
     /^\/monsters\/\d+\/encouragement$/g.test(requestUrl) ||
     (/^\/monsters\/\d+$/g.test(requestUrl) && request.method === 'get');
-
-  if (requestUrl === API_URLS.AUTH.API.GET_TOKEN.kakao) {
-    console.log(requestUrl, isWithOutAuthUrl);
-  }
 
   if (isWithOutAuthUrl) {
     setAuthHeader('');

@@ -12,8 +12,6 @@ type Props = {
 const requestUserToken = ({ code, provider }: Props) => {
   const path = API_URLS.AUTH.API.GET_TOKEN[provider];
 
-  console.log('request to get token', path);
-
   return apiInstance.post<TokenResponse>(path, { code });
 };
 
