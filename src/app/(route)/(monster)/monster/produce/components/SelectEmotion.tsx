@@ -29,6 +29,17 @@ const EMOTIONS = [
   },
 ];
 
+const DEFAULT_BG = {
+  [EMOTION.ANGER]: {
+    decorationType: DECORATION_TYPE.BACKGROUND_COLOR,
+    decorationValue: '#F450A6',
+  },
+  [EMOTION.DEPRESSION]: {
+    decorationType: DECORATION_TYPE.BACKGROUND_COLOR,
+    decorationValue: '#4485FD',
+  },
+};
+
 const gridStyles = cva('grid', {
   variants: {
     row: {
@@ -73,6 +84,11 @@ function SelectEmotion() {
   useEffect(() => {
     setBtnDisabled(!!errors.emotion || selectedId === '');
   }, [selectedId, errors]);
+
+  // 감정별 기본 배경 색상 지정
+  useEffect(() => {
+    if (selectedId) setValue('decorations', [DEFAULT_BG[selectedId]]);
+  }, [selectedId]);
 
   return (
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">
