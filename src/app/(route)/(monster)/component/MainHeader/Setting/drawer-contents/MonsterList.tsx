@@ -14,7 +14,6 @@ import Header from '@components/Header';
 import ProgressBar from '@components/ProgressBar';
 
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
-import useModal from '@hooks/useModal';
 
 import { Adapter } from '@utils/client/adapter';
 import transformMonster from '@utils/client/transform-monster';
@@ -43,6 +42,7 @@ type ExtractObjectTypes<T extends any[]> = {
 };
 
 type DetailDrawerProps = {
+  open: boolean;
   monster: ReturnType<
     typeof transformMonster<
       ExtractObjectTypes<GetMonsterListResponse['content']>[number]
@@ -57,7 +57,7 @@ type LastPage = {
   result: Unpromise<ReturnType<typeof getNextMessageList>>['result'];
 };
 
-function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
+function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
   const [flipped, setFlipped] = useState(false);
 
   const {
@@ -90,8 +90,8 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
   const toggleCard = () => setFlipped((prev) => !prev);
 
   return (
-    <Drawer open className="overflow-y-auto scrollbar-hide">
-      <div className="h-full w-full">
+    <Drawer open={open} className="overflow-y-auto scrollbar-hide">
+      <div className="flex h-full w-full flex-col gap-16">
         <Header className="grid grid-cols-6 gap-4">
           <Header.IconButton
             name="arrow-back"
@@ -110,7 +110,7 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
           )}
         >
           <MonsterFlipCard
-            className="mx-auto flex-none snap-start scroll-m-4 pt-16"
+            className="mx-auto mt-[5] flex-none snap-start scroll-m-4"
             width={REF_FLIP_CARD_WIDTH}
             height={REF_FLIP_CARD_HEIGHT}
             flipped={flipped}
@@ -263,7 +263,10 @@ export default function MonsterList() {
     },
   });
 
-  const { openModal, closeModal } = useModal(() => null);
+  const [open, setOpen] = useState(false);
+  const [openId, setOpenId] = useState(0);
+
+  // const { openModal, closeModal } = useModal(() => null);
 
   const { ref } = useIntersectionObserver({
     threshold: 0.5,
@@ -277,9 +280,8 @@ export default function MonsterList() {
   });
 
   const handleClick = (idx: number) => {
-    openModal(() => (
-      <DetailDrawer monster={pages[idx]} closeDrawer={closeModal} />
-    ));
+    setOpenId(idx);
+    setOpen(true);
   };
 
   return (
@@ -321,6 +323,13 @@ export default function MonsterList() {
               </SquareMonsterCard>
             );
           })}
+        {pages.length && (
+          <DetailDrawer
+            open={open}
+            monster={pages[openId]}
+            closeDrawer={() => setOpen(false)}
+          />
+        )}
 
         {pages.length === 0 && (
           <div className="flex h-full w-full flex-col items-center justify-center">
