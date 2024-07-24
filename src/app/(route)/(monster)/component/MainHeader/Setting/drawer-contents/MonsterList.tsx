@@ -194,13 +194,6 @@ function DetailDrawer({ monster, closeDrawer }: DetailDrawerProps) {
               </Badge>
             </div>
             <ul className="mx-auto flex w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
-              {messageList.length === 0 && (
-                <div className="flex h-full w-full flex-col items-center justify-center">
-                  <BaseText variant="body-2" color="alternative">
-                    아직 완료된 퇴사몬이 없어요
-                  </BaseText>
-                </div>
-              )}
               {messageList.map(({ messageId, sender, content }) => (
                 <li
                   className={cn(
