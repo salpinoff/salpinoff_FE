@@ -10,7 +10,7 @@ import Tooltip from '@components/common/Tooltip';
 
 import cn from '@utils/cn';
 
-import { EMOTION } from '@api/schema/monster';
+import { EMOTION, DECORATION_TYPE } from '@api/schema/monster';
 
 import type { UserInfo } from '../../../../(auth)/signup/context/context.type';
 
@@ -76,6 +76,7 @@ function SelectEmotion() {
   const { setBtnDisabled } = useMonsterLayout();
   const {
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<UserInfo>();
 
