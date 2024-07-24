@@ -29,24 +29,19 @@ export const IconMap = {
 } as const;
 
 export const iconStyles = cva(
-  [
-    'inline-flex',
-    'items-center',
-    'justify-center',
-    '[&>svg]:w-max [&>svg]:h-max',
-  ],
+  ['inline-flex', 'items-center', 'justify-center'],
   {
     variants: {
       size: {
-        12: ['w-12', 'h-12'],
-        16: ['w-16', 'h-16'],
-        20: ['w-20', 'h-20'],
-        24: ['w-24', 'h-24'],
-        32: ['w-32', 'h-32'],
-        40: ['w-40', 'h-40'],
-        44: ['w-44', 'h-44'],
-        48: ['w-48', 'h-48'],
-        64: ['w-64', 'h-64'],
+        12: ['w-12', 'h-12', '[&>svg]:w-12'],
+        16: ['w-16', 'h-16', '[&>svg]:w-16'],
+        20: ['w-20', 'h-20', '[&>svg]:w-20'],
+        24: ['w-24', 'h-24', '[&>svg]:w-24'],
+        32: ['w-32', 'h-32', '[&>svg]:w-32'],
+        40: ['w-40', 'h-40', '[&>svg]:w-40'],
+        44: ['w-44', 'h-44', '[&>svg]:w-44'],
+        48: ['w-48', 'h-48', '[&>svg]:w-48'],
+        64: ['w-64', 'h-64', '[&>svg]:w-64'],
       },
       stroke: {
         inherit: 'text-inherit',
