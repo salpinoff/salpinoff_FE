@@ -1,5 +1,4 @@
 import { ComponentProps, useId } from 'react';
-import { createPortal } from 'react-dom';
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
 
@@ -17,7 +16,7 @@ export default function Drawer({
 }: DrawerProps) {
   const uid = useId();
 
-  return createPortal(
+  return (
     <LazyMotion features={domAnimation}>
       {open && (
         <AnimatePresence mode="wait" onExitComplete={() => null}>
@@ -32,7 +31,7 @@ export default function Drawer({
               animate: {
                 opacity: 1,
                 transition: {
-                  duration: 0.3,
+                  duration: 0.2,
                 },
               },
               exit: {
@@ -50,18 +49,20 @@ export default function Drawer({
               animate={{
                 left: 0,
               }}
-              className={cn('fixed right-0 top-0 w-full bg-cool-neutral-5', {
-                'full-height': !isIOS,
-                'full-height-ios': isIOS,
-                className,
-              })}
+              className={cn(
+                'absolute right-0 top-0 z-[10] w-full bg-cool-neutral-5',
+                {
+                  'full-height': !isIOS,
+                  'full-height-ios': isIOS,
+                  className,
+                },
+              )}
             >
               {children}
             </m.aside>
           </m.div>
         </AnimatePresence>
       )}
-    </LazyMotion>,
-    document.body,
+    </LazyMotion>
   );
 }

@@ -1,10 +1,14 @@
+import { useRouter } from 'next/navigation';
+
 import Modal from '@components/common/feedback/Modal';
 
 type ExpiredModalProps = {
-  closeModal: () => void;
+  closeModal?: () => void;
 };
 
 export default function ExpiredModal({ closeModal }: ExpiredModalProps) {
+  const { replace } = useRouter();
+
   return (
     <Modal open>
       <Modal.Dimmed />
@@ -15,9 +19,12 @@ export default function ExpiredModal({ closeModal }: ExpiredModalProps) {
         <Modal.Button
           className="w-full"
           variant="secondary"
-          onClick={closeModal}
+          onClick={() => {
+            replace('/');
+            closeModal?.();
+          }}
         >
-          닫기
+          메인으로 이동
         </Modal.Button>
       </Modal.Content>
     </Modal>

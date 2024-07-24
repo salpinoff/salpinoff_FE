@@ -43,7 +43,7 @@ const TooltipLabel = forwardRef<HTMLButtonElement, Props>(
           {...restProps}
         >
           {label}
-          <Icon name={icons} ref={ref} />
+          <Icon name={icons} ref={ref} size={20} />
         </FormHelperText>
       </button>
     );

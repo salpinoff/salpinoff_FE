@@ -10,7 +10,7 @@ import Tooltip from '@components/common/Tooltip';
 
 import cn from '@utils/cn';
 
-import { EMOTION } from '@api/schema/monster';
+import { EMOTION, DECORATION_TYPE } from '@api/schema/monster';
 
 import type { UserInfo } from '../../../../(auth)/signup/context/context.type';
 
@@ -28,6 +28,17 @@ const EMOTIONS = [
     className: 'has-[:checked]:bg-[#086AFD] bg-[url("/images/depressed.png")]',
   },
 ];
+
+const DEFAULT_BG = {
+  [EMOTION.ANGER]: {
+    decorationType: DECORATION_TYPE.BACKGROUND_COLOR,
+    decorationValue: '#F450A6',
+  },
+  [EMOTION.DEPRESSION]: {
+    decorationType: DECORATION_TYPE.BACKGROUND_COLOR,
+    decorationValue: '#4485FD',
+  },
+};
 
 const gridStyles = cva('grid', {
   variants: {
@@ -65,6 +76,7 @@ function SelectEmotion() {
   const { setBtnDisabled } = useMonsterLayout();
   const {
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<UserInfo>();
 
@@ -73,6 +85,11 @@ function SelectEmotion() {
   useEffect(() => {
     setBtnDisabled(!!errors.emotion || selectedId === '');
   }, [selectedId, errors]);
+
+  // 감정별 기본 배경 색상 지정
+  useEffect(() => {
+    if (selectedId) setValue('decorations', [DEFAULT_BG[selectedId]]);
+  }, [selectedId]);
 
   return (
     <fieldset className="flex h-[calc(100%+95px)] w-full flex-col">

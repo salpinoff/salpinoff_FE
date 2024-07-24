@@ -4,14 +4,14 @@ import OutlineCard from '@components/cards/OutlineCard';
 
 import tokens from 'tokens/color/base.json';
 
-const CARD_WIDTH = 312;
-const CARD_HEIGHT = 400;
+const SUB_FLIP_CARD_WIDTH = 302;
+const SUB_FLIP_CARD_HEIGHT = 450;
 
 export default function SharedMonsterFlipCardSkeleton() {
   return (
     <OutlineCard
-      width={CARD_WIDTH}
-      height={CARD_HEIGHT}
+      width={SUB_FLIP_CARD_WIDTH}
+      height={SUB_FLIP_CARD_HEIGHT}
       color={tokens.color.base['cool-neutral'][22].value}
       className="flex h-full w-full flex-col justify-between overflow-visible rounded-[40px]"
     >
