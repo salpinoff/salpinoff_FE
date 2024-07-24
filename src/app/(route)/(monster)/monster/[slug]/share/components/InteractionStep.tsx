@@ -8,9 +8,8 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import Button from '@components/common/Button';
 import Header from '@components/Header';
 
-import SharedMonsterFlipCard from 'src/app/(route)/(monster)/component/cards/SharedMonsterFlipCard';
-import SharedMonsterFlipCardSkeleton from 'src/app/(route)/(monster)/component/cards/SharedMonsterFlipCard/Skeleton';
-
+import SharedMonsterFlipCard from '../../../../component/cards/SharedMonsterFlipCard';
+import SharedMonsterFlipCardSkeleton from '../../../../component/cards/SharedMonsterFlipCard/Skeleton';
 import { useGuestContext, useGuestUpdate } from '../context/guest.context';
 import Error from '../error';
 
@@ -35,8 +34,8 @@ export default function InteractionStep({
       </Header>
       <QueryErrorResetBoundary>
         {({ reset }) => (
-          <ErrorBoundary FallbackComponent={Error} onReset={reset}>
-            <Suspense fallback={<SharedMonsterFlipCardSkeleton />}>
+          <Suspense fallback={<SharedMonsterFlipCardSkeleton />}>
+            <ErrorBoundary FallbackComponent={Error} onReset={reset}>
               <SharedMonsterFlipCard
                 clear={clear}
                 monsterId={slug}
@@ -45,8 +44,8 @@ export default function InteractionStep({
                   onCompeleteInteraction?.();
                 }}
               />
-            </Suspense>
-          </ErrorBoundary>
+            </ErrorBoundary>
+          </Suspense>
         )}
       </QueryErrorResetBoundary>
       <nav className="flex w-full p-[20px]">

@@ -71,7 +71,7 @@ export default function SharePage({ params: { slug } }: SharePagesProps) {
           <Funnel.Step name="encouragement">
             <EncouragementStep
               goPrev={() => {
-                setStep('done');
+                setStep('interactions');
               }}
               goNext={(data) => {
                 send(data);
