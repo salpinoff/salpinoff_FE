@@ -24,7 +24,7 @@ function MessageItem<T extends ElementType>({
     <Component
       className={cn(
         'relative flex items-center justify-center',
-        'box-border aspect-[9/8] overflow-hidden rounded-[16px] bg-[#212225]',
+        'box-border aspect-[9/8] overflow-hidden rounded-[16px] bg-[#212225] text-cool-neutral-99',
         {
           "after:contents-[''] after:absolute after:h-full after:w-full after:bg-[#171719BD]":
             checked,
@@ -33,7 +33,7 @@ function MessageItem<T extends ElementType>({
       )}
       {...restProps}
     >
-      <Icon name="message" className="w-[28px]" />
+      <Icon name="message" size={28} />
     </Component>
   );
 }
