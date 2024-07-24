@@ -4,6 +4,8 @@ type BaseLayoutProps = PropsWithChildren;
 
 export default function BaseLayout({ children }: BaseLayoutProps) {
   return (
-    <main className="mx-auto h-dvh max-w-md grow touch-auto">{children}</main>
+    <main className="relative mx-auto h-dvh max-w-md grow touch-auto overflow-hidden">
+      {children}
+    </main>
   );
 }

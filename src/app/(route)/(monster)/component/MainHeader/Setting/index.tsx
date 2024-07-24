@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEventHandler, ReactElement } from 'react';
+import { MouseEventHandler, ReactElement, useState } from 'react';
 
 import Drawer from '@components/common/navigation/Drawer';
 import Menu from '@components/common/navigation/Menu';
@@ -15,33 +15,25 @@ import EditContent from 'src/app/(route)/profile/edit/components/EditForm';
 import MonsterList from './drawer-contents/MonsterList';
 
 type SettingProps = {
+  open?: boolean;
   close: () => void;
 };
 
-export default function Setting({ close }: SettingProps) {
+export default function Setting({ open = false, close }: SettingProps) {
   const { mutate: signOut, isPending } = useSignout({ callbackUrl: '/signin' });
+
+  const [subOpen, setSubOpen] = useState(false);
+  const [subContent, setSubContent] = useState<ReactElement>();
+  const [subContentLabel, setsubContentLabel] = useState('');
 
   const { openModal, closeModal } = useModal(() => null);
 
   const openByDrawer = (target: Element, content: ReactElement) => {
-    const ariaLabel = target.getAttribute('aria-label');
+    const label = target.getAttribute('data-label');
 
-    return openModal(() => (
-      <Drawer open>
-        <Header className="grid grid-cols-6 gap-4">
-          <Header.IconButton
-            name="arrow-back"
-            aria-label="뒤로가기"
-            className="col-span-1 col-start-1"
-            onClick={closeModal}
-          />
-          <Header.Title className="col-span-4 col-start-2 mx-auto">
-            {ariaLabel}
-          </Header.Title>
-        </Header>
-        {content}
-      </Drawer>
-    ));
+    setSubOpen(true);
+    setSubContent(content);
+    setsubContentLabel(label!);
   };
 
   const handleViewCollection: MouseEventHandler = (e) =>
@@ -68,7 +60,7 @@ export default function Setting({ close }: SettingProps) {
   };
 
   return (
-    <Drawer open>
+    <Drawer open={open} className="">
       <Header className="grid grid-cols-6 gap-4">
         <Header.IconButton
           name="arrow-back"
@@ -88,6 +80,7 @@ export default function Setting({ close }: SettingProps) {
             component="button"
             onClick={handleViewCollection}
             aria-label="퇴사몬 보관함"
+            data-label="퇴사몬 보관함"
           >
             퇴사몬 보관함
           </Menu.Item>
@@ -99,6 +92,7 @@ export default function Setting({ close }: SettingProps) {
             component="button"
             onClick={handleEditProfile}
             aria-label="프로필 수정"
+            data-label="프로필 수정"
           >
             프로필 수정
           </Menu.Item>
@@ -108,17 +102,34 @@ export default function Setting({ close }: SettingProps) {
             loading={isPending}
             onClick={handleSignout}
             aria-label="로그아웃"
+            data-label="로그아웃"
           >
             로그아웃
           </Menu.Item>
         </Menu>
 
         <Menu>
-          <Menu.Item component="a" href="/">
+          <Menu.Item component="a" href="/" data-label="제작정보">
             제작정보
           </Menu.Item>
         </Menu>
       </div>
+
+      {/* SubDrawer */}
+      <Drawer open={subOpen}>
+        <Header className="grid grid-cols-6 gap-4">
+          <Header.IconButton
+            name="arrow-back"
+            aria-label="뒤로가기"
+            className="col-span-1 col-start-1"
+            onClick={() => setSubOpen(false)}
+          />
+          <Header.Title className="col-span-4 col-start-2 mx-auto">
+            {subContentLabel}
+          </Header.Title>
+        </Header>
+        {subContent}
+      </Drawer>
     </Drawer>
   );
 }
