@@ -8,6 +8,7 @@ type ProgressBarProps = {
   max?: number;
   label?: 'none' | 'percent' | 'numeric';
   fractionDigits?: 0 | 1 | 2;
+  reverse?: boolean;
 };
 
 export default function ProgressBar({
@@ -16,8 +17,11 @@ export default function ProgressBar({
   max = 100,
   label = 'none',
   fractionDigits = 0,
+  reverse = false,
 }: ProgressBarProps) {
-  const percent = Math.min(Math.min(value / max) * 100, 100);
+  const percentage = reverse
+    ? ((max - value) / max) * 100
+    : (value / max) * 100;
 
   return (
     <div className="flex items-center gap-8 last:text-inherit">
@@ -29,13 +33,13 @@ export default function ProgressBar({
             aria-describedby="Progression"
             aria-valuemin={min}
             aria-valuemax={max}
-            aria-valuenow={percent}
+            aria-valuenow={percentage}
             className="h-full rounded-circular bg-current"
             initial={{
               width: 0,
             }}
             animate={{
-              width: `${percent}%`,
+              width: `${percentage}%`,
             }}
           />
         </LazyMotion>
@@ -47,8 +51,11 @@ export default function ProgressBar({
           weight="semibold"
           className="pointer-event-none w-2/12 select-none text-right"
         >
-          {label === 'percent' && `${percent.toFixed(fractionDigits)}%`}
-          {label === 'numeric' && `${value}/${max}`}
+          {label === 'percent' && `${percentage.toFixed(fractionDigits)}%`}
+          {label === 'numeric' &&
+            (reverse ? (max - value) / max : value / max).toFixed(
+              fractionDigits,
+            )}
         </BaseText>
       )}
     </div>

@@ -164,7 +164,12 @@ export default function SharedMonsterFlipCard({
             {monsterName}
           </BaseText>
         </div>
-        <ProgressBar value={totalCount} max={threshold} label="percent" />
+        <ProgressBar
+          value={totalCount}
+          max={threshold}
+          label="percent"
+          reverse={type === 'mad'}
+        />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
         <BaseText

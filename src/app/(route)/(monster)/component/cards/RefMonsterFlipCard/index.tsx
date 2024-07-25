@@ -219,6 +219,7 @@ export default function RefMonsterFlipCard() {
           value={totalCount}
           max={monster.interactionCount}
           label="percent"
+          reverse={monster.type === 'mad'}
         />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
