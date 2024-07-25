@@ -46,3 +46,6 @@ function SignIn() {
 }
 
 export default SignIn;
+
+export const fetchCache = 'no-store';
+export const revalidate = 0;
