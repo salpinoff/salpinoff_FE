@@ -83,6 +83,7 @@ function MonsterName() {
           id="story"
           fullWidth
           multiline
+          disabled
           className="bg-[#70737C]/12 h-28"
           error={!!errors.story}
           {...register('story', {
