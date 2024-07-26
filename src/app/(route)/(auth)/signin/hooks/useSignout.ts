@@ -12,6 +12,14 @@ const useSignout = ({ redirect, callbackUrl }: Props) => {
     mutationKey: ['auth', 'signout'],
     mutationFn: requestSignOut,
     onSuccess: () => {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent<{ type: 'signout' }>('signout', {
+            detail: { type: 'signout' },
+          }),
+        );
+      }
+
       if (callbackUrl) {
         const nextUrl = callbackUrl.startsWith('http')
           ? callbackUrl

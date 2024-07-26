@@ -1,39 +1,51 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Button from '@components/common/Button';
 import TextField from '@components/common/TextField';
 import FixedBottom from '@components/FixedBottom';
 
+import useAuth from '@hooks/api/useAuth';
+
+import { getSessionItem, setSessionItem } from '@utils/session-storage';
+
 import { modifyUserName } from '@api/auth/nickname';
 
 function EditContent() {
-  const { replace } = useRouter();
+  const { user } = useAuth();
 
   const {
     register,
+    setValue,
     handleSubmit,
-
     formState: {
       isSubmitting,
       errors: { name },
     },
   } = useForm<{ name: string }>({
     mode: 'all',
-    defaultValues: { name: '' },
   });
 
   const handlModify = handleSubmit(async ({ name: userName }) => {
     try {
       await modifyUserName(userName);
-      replace('/');
+
+      const userInfo = getSessionItem<{ name: string }>('userInfo');
+      setSessionItem('userInfo', { ...userInfo, name: userName });
+
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   });
+
+  useEffect(() => {
+    if (user) {
+      setValue('name', user.name);
+    }
+  }, [user]);
 
   return (
     <form
