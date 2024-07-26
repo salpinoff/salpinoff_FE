@@ -9,7 +9,7 @@ import {
   isValidElement,
 } from 'react';
 
-import useBottomSheet from '@hooks/useBottomSheet';
+import useBottomSheet from '@hooks/useBottomSheet/index';
 
 import cn from '@utils/cn';
 
@@ -53,7 +53,7 @@ function BottomSheet({
         'flex flex-col',
         'transition-transform',
         'rounded-t-24 bg-cool-neutral-7',
-        'fixed bottom-0 left-0 right-0 m-auto w-full max-w-[414px]',
+        'fixed bottom-0 left-0 right-0 m-auto w-full max-w-md',
         className,
       )}
       {...restProps}
