@@ -8,7 +8,7 @@ export type IconButtonProps = Omit<ButtonProps, 'size'> &
   Pick<IconProps, 'name' | 'size' | 'stroke'>;
 
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ children, className, name, size, stroke, ...rest }, ref) => {
+  ({ children, className, name, size = 24, stroke, ...rest }, ref) => {
     return (
       <Button
         ref={ref}
@@ -17,7 +17,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         className={className}
         {...rest}
       >
-        <Icon name={name} size={size} stroke={stroke} />
+        <Icon name={name} size={size} stroke={stroke} asChild />
         {children}
       </Button>
     );

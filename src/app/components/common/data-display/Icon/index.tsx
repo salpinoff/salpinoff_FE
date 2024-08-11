@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 
+import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
 
 import ArrowBackSVG from '@public/icons/arrow-back.svg';
@@ -80,23 +81,31 @@ export type IconProps<T extends React.ElementType = 'span'> =
     VariantProps<typeof iconStyles> & {
       component?: T;
       children?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
+      asChild?: boolean;
       name?: keyof typeof IconMap;
     };
 
 const Icon = forwardRef(
   <T extends React.ElementType = 'span'>(
-    { component, className, children, size, stroke, name }: IconProps<T>,
+    {
+      component,
+      className,
+      asChild,
+      children,
+      size,
+      stroke,
+      name,
+    }: IconProps<T>,
     ref: React.Ref<Element>,
   ) => {
-    const Component: React.ElementType = component || 'span';
+    const Component: React.ElementType = asChild ? Slot : component || 'span';
 
     return (
       <Component
         ref={ref}
         className={cn(iconStyles({ size, stroke }), className)}
       >
-        {name && IconMap[name]()}
-        {!name && children}
+        {name ? IconMap[name]() : children}
       </Component>
     );
   },
