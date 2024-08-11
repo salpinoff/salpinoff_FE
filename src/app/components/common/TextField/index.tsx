@@ -101,7 +101,7 @@ const TextField: TextFieldComponent = forwardRef(function TextField<
   return (
     <div className={inputBoxStyles({ fullWidth })}>
       {label && (
-        <FormLabel id={id} required={required}>
+        <FormLabel htmlFor={id} required={required}>
           {label}
         </FormLabel>
       )}

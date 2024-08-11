@@ -2,39 +2,29 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import cn from '@utils/cn';
 
-import { RequiredByKeys } from '@type/util';
-
-const labelStyle = cva(['label-1-regular'], {
+export const labelVariants = cva('label-1-regular', {
   variants: {
     required: {
-      true: [
-        'after:content-["*"]',
-        'after:text-[--color-text-accent-red]',
-        'after:pl-4',
-      ],
+      true: 'after:content-["*"] after:text-[--color-text-accent-red] after:pl-4',
     },
   },
 });
 
-export type FormLabelProps<T extends React.ElementType> = RequiredByKeys<
-  React.PropsWithChildren<VariantProps<typeof labelStyle>> &
-    React.ComponentPropsWithoutRef<T> & {
-      required?: boolean;
-    },
-  'id' | 'children'
->;
+export interface FormLabelProps
+  extends React.ComponentPropsWithoutRef<'label'>,
+    VariantProps<typeof labelVariants> {}
 
-export default function FormLabel<T extends React.ElementType = 'label'>({
-  id,
+export default function FormLabel({
   className,
   children,
+  htmlFor,
   required,
   ...rest
-}: FormLabelProps<T>) {
+}: FormLabelProps) {
   return (
     <label
-      htmlFor={id}
-      className={cn(labelStyle({ required }), className)}
+      htmlFor={htmlFor}
+      className={cn(labelVariants({ required }), className)}
       {...rest}
     >
       {children}
