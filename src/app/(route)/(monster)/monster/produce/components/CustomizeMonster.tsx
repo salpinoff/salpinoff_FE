@@ -13,7 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import { findIndex, xorBy, unionBy } from 'lodash';
 
 import CharacterCanvas from '@components/CharacterCanvas';
-import Tabs from '@components/common/navigation/Tabs';
+import Tabs from '@components/common/Tabs';
 import Text from '@components/common/Text';
 
 import useWithAuth from '@hooks/useWithAuth';
