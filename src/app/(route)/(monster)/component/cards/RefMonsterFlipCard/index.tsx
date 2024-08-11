@@ -17,8 +17,8 @@ import { AxiosError } from 'axios';
 
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Button from '@components/common/Button';
-import Toast from '@components/common/feedback/Toast';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
+import Toast from '@components/common/Toast';
 import ProgressBar from '@components/ProgressBar';
 
 import useCanvas from '@hooks/useCanvas';
@@ -195,7 +195,7 @@ export default function RefMonsterFlipCard() {
         <div className="flex items-center justify-between">
           <div className="pointer-event-none flex select-none items-center gap-8">
             <StressLevelBadge level={monster.rating} />
-            <BaseText
+            <Text
               overflow="truncate"
               component="span"
               variant="body-1"
@@ -203,7 +203,7 @@ export default function RefMonsterFlipCard() {
               color="neutral"
             >
               {monster.monsterName}
-            </BaseText>
+            </Text>
           </div>
           <ActionMenu
             monster={{
@@ -223,7 +223,7 @@ export default function RefMonsterFlipCard() {
         />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
-        <BaseText
+        <Text
           className={cn(
             'max-h-ful m-auto flex shrink',
             'whitespace-pre-wrap text-center leading-relaxed',
@@ -236,7 +236,7 @@ export default function RefMonsterFlipCard() {
           wrap
         >
           {monster.content}
-        </BaseText>
+        </Text>
         <Button
           variant="secondary"
           size="small"

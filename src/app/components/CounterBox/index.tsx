@@ -6,7 +6,7 @@ import { atomWithReset, useResetAtom } from 'jotai/utils';
 import { motion } from 'framer-motion';
 import { debounce } from 'lodash';
 
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import cn from '@utils/cn';
 
@@ -119,18 +119,18 @@ export default function CounterBox({
               },
             }}
           >
-            <BaseText
+            <Text
               component="span"
               variant="label-2"
               weight="medium"
               color="normal"
             >
               {helperText}
-            </BaseText>
+            </Text>
           </motion.div>
         )}
       </motion.div>
-      <BaseText
+      <Text
         variant="title-3"
         weight="bold"
         color="normal"
@@ -147,7 +147,7 @@ export default function CounterBox({
         }}
       >
         {count}
-      </BaseText>
+      </Text>
     </>
   );
 }

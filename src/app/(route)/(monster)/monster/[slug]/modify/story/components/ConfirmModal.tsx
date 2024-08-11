@@ -1,4 +1,4 @@
-import Modal from '@components/common/feedback/Modal';
+import Modal from '@components/common/Modal';
 
 type ConfirmModalProps = {
   onConfirm: () => void;

@@ -8,7 +8,7 @@ import { useForm, useWatch, Control } from 'react-hook-form';
 import { pick, isEqual } from 'lodash';
 
 import Button from '@components/common/Button';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 import TextField from '@components/common/TextField';
 
 import useModal from '@hooks/useModal';
@@ -99,7 +99,7 @@ export default function ModifyStoryPage({
 
   return (
     <>
-      <BaseText
+      <Text
         component="h3"
         variant="headline-1"
         weight="semibold"
@@ -107,7 +107,7 @@ export default function ModifyStoryPage({
         align="center"
       >
         내용 수정하기
-      </BaseText>
+      </Text>
       <form className="h-full w-full" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           multiline

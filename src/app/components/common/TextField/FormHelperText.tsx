@@ -2,14 +2,15 @@ import { cx } from 'class-variance-authority';
 
 import ErrorSVG from '@public/icons/error.svg';
 
-import Icon from '@components/common/data-display/Icon';
-import BaseText, { type BaseTextProps } from '@components/common/Text/BaseText';
+import Icon from '@components/common/Icon';
+import Text, { type TextProps } from '@components/common/Text';
 
 export type FormHelperTextProps<T extends React.ElementType = 'p'> =
-  React.PropsWithChildren<Pick<BaseTextProps<T>, 'color' | 'align'>> & {
-    error?: boolean;
-    component?: T;
-  } & React.ComponentPropsWithoutRef<T>;
+  React.ComponentPropsWithoutRef<T> &
+    Pick<TextProps<T>, 'color' | 'align'> & {
+      error?: boolean;
+      component?: T;
+    };
 
 export default function FormHelperText<T extends React.ElementType = 'p'>({
   children,
@@ -20,7 +21,7 @@ export default function FormHelperText<T extends React.ElementType = 'p'>({
   ...rest
 }: FormHelperTextProps<T>) {
   return (
-    <BaseText
+    <Text
       component={component || 'p'}
       className={cx('flex items-center gap-4', className)}
       variant="label-2"
@@ -35,6 +36,6 @@ export default function FormHelperText<T extends React.ElementType = 'p'>({
         </Icon>
       )}
       {children}
-    </BaseText>
+    </Text>
   );
 }

@@ -5,7 +5,7 @@ import RoundedTrapezoidSVG from '@public/icons/rounded-trapezoid.svg';
 import OutlineCard, {
   type OutlineCardProps,
 } from '@components/cards/OutlineCard';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import cn from '@utils/cn';
 
@@ -31,7 +31,7 @@ const SquareMonsterCard = forwardRef<HTMLDivElement, SquareMonsterCardProps>(
         {children}
         <div className="absolute bottom-0 text-cool-neutral-7">
           <RoundedTrapezoidSVG />
-          <BaseText
+          <Text
             className="absolute bottom-0 left-0 right-0 top-0 m-auto w-[60%] pb-4 pt-6 text-center"
             component="span"
             variant="label-2"
@@ -41,7 +41,7 @@ const SquareMonsterCard = forwardRef<HTMLDivElement, SquareMonsterCardProps>(
             maxRows={1}
           >
             {name && name}
-          </BaseText>
+          </Text>
         </div>
       </OutlineCard>
     );

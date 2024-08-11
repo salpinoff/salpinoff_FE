@@ -3,12 +3,12 @@ import { createPortal } from 'react-dom';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-import Dimmed from '@components/common/feedback/Dimmed';
+import Button from '@components/common/Button';
+import Dimmed from '@components/common/Dimmed';
+import withProps from '@components/common/HOC/withProps';
+import Text from '@components/common/Text';
 
-import ModalButton from './ModalButton';
 import ModalContent from './ModalContent';
-import ModalDescription from './ModalDescription';
-import ModalTitle from './ModalTitle';
 
 export default function Modal({
   open,
@@ -47,8 +47,22 @@ export default function Modal({
   );
 }
 
-Modal.Button = ModalButton;
-Modal.Content = ModalContent;
-Modal.Description = ModalDescription;
 Modal.Dimmed = Dimmed;
-Modal.Title = ModalTitle;
+Modal.Content = ModalContent;
+
+// HOC
+Modal.Description = withProps(Text, {
+  variant: 'label-1',
+  color: 'neutral',
+});
+
+Modal.Title = withProps(Text, {
+  component: 'h3',
+  variant: 'headline-1',
+  color: 'normal',
+  align: 'left',
+});
+
+Modal.Button = withProps(Button, {
+  size: 'small',
+});

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import Modal from '@components/common/feedback/Modal';
+import Modal from '@components/common/Modal';
 
 import ShareByLink from '@utils/client/share-by-link';
 import ShareViaKakao from '@utils/client/share-via-kakao';

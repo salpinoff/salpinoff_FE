@@ -1,5 +1,5 @@
 import Button from '@components/common/Button';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 import MonsterCreationModal from '@components/modals/MonsterCreationModal';
 
 import useModal from '@hooks/useModal';
@@ -20,9 +20,9 @@ export default function ClearedOverlay() {
       )}
     >
       <div className="mx-auto select-none rounded-circular bg-cool-neutral-15 px-[18px] py-[9px]">
-        <BaseText variant="label-2" weight="medium" className="text-[#E1FF28]">
+        <Text variant="label-2" weight="medium" className="text-[#E1FF28]">
           CLEAR!
-        </BaseText>
+        </Text>
       </div>
       <Button
         className="pointer-event-auto label-1-medium mx-auto w-full bg-[#17171985] text-cool-neutral-99"

@@ -2,8 +2,8 @@
 
 import { MouseEventHandler, ReactElement, useState } from 'react';
 
-import Drawer from '@components/common/navigation/Drawer';
-import Menu from '@components/common/navigation/Menu';
+import Drawer from '@components/common/Drawer';
+import Menu from '@components/common/Menu';
 import Header from '@components/Header';
 import SignoutConfirmModal from '@components/modals/SignoutConfirmModal';
 
