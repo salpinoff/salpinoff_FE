@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import BaseText from './BaseText';
+import Text from '.';
+
 import { FONT_TYPES, FONT_WEIGHTS } from './Text.constants';
 
 const meta = {
   title: 'Components/Common/Text',
-  component: BaseText,
+  component: Text,
   tags: ['autodocs'],
   argTypes: {
     component: {
@@ -68,7 +69,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof BaseText>;
+} satisfies Meta<typeof Text>;
 
 export default meta;
 

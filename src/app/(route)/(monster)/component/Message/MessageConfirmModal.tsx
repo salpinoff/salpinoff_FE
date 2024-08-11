@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import Button from '@components/common/Button';
 import Modal from '@components/common/feedback/Modal';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import useOutsideClick from '@hooks/useOutsideClick';
 
@@ -84,11 +84,11 @@ function MessageConfirmModal({
             'gap-[10px] bg-[#70737C47] px-24 pb-32 pt-[42px] text-white',
           )}
         >
-          <BaseText component="h2" variant="heading-1" weight="semibold">
+          <Text component="h2" variant="heading-1" weight="semibold">
             {sender}님의 메시지
-          </BaseText>
+          </Text>
 
-          <BaseText
+          <Text
             variant="body-1"
             weight="regular"
             className={cn(
@@ -101,7 +101,7 @@ function MessageConfirmModal({
             <span className="my-auto inline-block whitespace-pre-wrap">
               {content}
             </span>
-          </BaseText>
+          </Text>
 
           <div
             className={cn(
@@ -126,7 +126,7 @@ function MessageConfirmModal({
               )}
             </div>
 
-            <BaseText
+            <Text
               weight="semibold"
               variant="caption-1"
               className={cn({
@@ -136,7 +136,7 @@ function MessageConfirmModal({
               })}
             >
               에너지 {energyPerInteraction}
-            </BaseText>
+            </Text>
           </div>
         </section>
 
@@ -145,12 +145,9 @@ function MessageConfirmModal({
           onTouchEnd={handleClick}
           variant={messageRead ? 'secondary' : 'primary'}
         >
-          <BaseText
-            variant="body-2"
-            weight={messageRead ? 'medium' : 'semibold'}
-          >
+          <Text variant="body-2" weight={messageRead ? 'medium' : 'semibold'}>
             {messageRead ? '닫기' : '에너지 적용하기'}
-          </BaseText>
+          </Text>
         </Button>
       </Modal.Content>
     </Modal>

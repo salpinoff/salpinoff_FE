@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import cn from '@utils/cn';
 
@@ -16,14 +16,9 @@ export default function Toast({ className, children, ...rest }: ToastProps) {
       )}
       {...rest}
     >
-      <BaseText
-        component="span"
-        variant="label-2"
-        weight="medium"
-        color="normal"
-      >
+      <Text component="span" variant="label-2" weight="medium" color="normal">
         {children}
-      </BaseText>
+      </Text>
     </div>
   );
 }

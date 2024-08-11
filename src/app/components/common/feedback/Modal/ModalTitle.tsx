@@ -1,6 +1,6 @@
-import BaseText, { BaseTextProps } from '@components/common/Text/BaseText';
+import Text, { TextProps } from '@components/common/Text';
 
-type ModalTitleProps = BaseTextProps<'h3'>;
+type ModalTitleProps = TextProps<'h3'>;
 
 export default function ModalTitle({
   children,
@@ -9,7 +9,7 @@ export default function ModalTitle({
   ...restProps
 }: ModalTitleProps) {
   return (
-    <BaseText
+    <Text
       className={className}
       align={align}
       component="h3"
@@ -18,6 +18,6 @@ export default function ModalTitle({
       {...restProps}
     >
       {children}
-    </BaseText>
+    </Text>
   );
 }

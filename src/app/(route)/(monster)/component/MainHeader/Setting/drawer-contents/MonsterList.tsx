@@ -9,7 +9,7 @@ import CharacterCanvas from '@components/CharacterCanvas';
 import AuthSuspense from '@components/common/Aync/AuthSuspense';
 import Badge from '@components/common/data-display/Badge';
 import Drawer from '@components/common/navigation/Drawer';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 import Header from '@components/Header';
 import ProgressBar from '@components/ProgressBar';
 
@@ -132,7 +132,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
               <div className="flex items-center justify-between">
                 <div className="pointer-event-none flex select-none items-center gap-8">
                   <StressLevelBadge level={monster.rating} />
-                  <BaseText
+                  <Text
                     overflow="truncate"
                     component="span"
                     variant="body-1"
@@ -140,7 +140,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                     color="neutral"
                   >
                     {monster.monsterName}
-                  </BaseText>
+                  </Text>
                 </div>
               </div>
               <ProgressBar
@@ -155,7 +155,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                 role="none"
                 onClick={() => setFlipped(true)}
               >
-                <BaseText
+                <Text
                   className="my-auto flex max-h-full overflow-y-auto text-center"
                   component="p"
                   variant="body-2"
@@ -164,7 +164,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                   wrap
                 >
                   {monster.content}
-                </BaseText>
+                </Text>
               </div>
             </MonsterFlipCard.Back>
           </MonsterFlipCard>
@@ -183,14 +183,14 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                 showZero
                 className="flex justify-center text-center text-inherit"
               >
-                <BaseText
+                <Text
                   component="h3"
                   variant="headline-2"
                   weight="semibold"
                   color="normal"
                 >
                   받은 메세지
-                </BaseText>
+                </Text>
               </Badge>
             </div>
             <ul className="mx-auto flex w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
@@ -205,15 +205,15 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                   id={`message_${messageId}`}
                   key={messageId}
                 >
-                  <BaseText
+                  <Text
                     component="p"
                     variant="label-1"
                     color="normal"
                     className="leading-relaxed"
                   >
                     {content}
-                  </BaseText>
-                  <BaseText
+                  </Text>
+                  <Text
                     className="mt-12 block w-full"
                     component="span"
                     variant="label-2"
@@ -222,7 +222,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                     align="right"
                   >
                     From.{sender}
-                  </BaseText>
+                  </Text>
                 </li>
               ))}
             </ul>
@@ -341,9 +341,9 @@ export default function MonsterList() {
               className="opacity-30 grayscale"
             />
 
-            <BaseText variant="body-2" color="alternative">
+            <Text variant="body-2" color="alternative">
               아직 완료된 퇴사몬이 없어요
-            </BaseText>
+            </Text>
           </div>
         )}
       </div>

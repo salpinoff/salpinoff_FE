@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 
 import Button from '@components/common/Button';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import ExpiredModal from './components/ExpiredModal';
 
@@ -23,9 +23,9 @@ export default function Error({ error, resetErrorBoundary }: FallbackProps) {
 
   return (
     <div>
-      <BaseText variant="heading-2" component="h2" color="strong">
+      <Text variant="heading-2" component="h2" color="strong">
         문제가 발생했어요!
-      </BaseText>
+      </Text>
       <Button onClick={resetErrorBoundary}>Try again</Button>
     </div>
   );

@@ -12,7 +12,7 @@ import BottomSheet from '@components/common/BottomSheet';
 import BottomSheetContent from '@components/common/BottomSheet/BottomSheetContent';
 import BottomSheetHeader from '@components/common/BottomSheet/BottomSheetHeader';
 import Dimmed from '@components/common/feedback/Dimmed';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import cn from '@utils/cn';
 import { getQueryClient } from '@utils/query/get-query-client';
@@ -65,15 +65,15 @@ function MessageBottomSheet() {
           className="flex flex-none justify-center px-24 pt-9"
         >
           <div className="flex flex-1 gap-x-8">
-            <BaseText
+            <Text
               component="h2"
               variant="headline-1"
               weight="semibold"
               color="normal"
             >
               받은 응원 메시지
-            </BaseText>
-            <BaseText
+            </Text>
+            <Text
               component="span"
               variant="label-1"
               weight="semibold"
@@ -84,7 +84,7 @@ function MessageBottomSheet() {
               )}
             >
               {totalCount ?? '?'}
-            </BaseText>
+            </Text>
           </div>
 
           <button

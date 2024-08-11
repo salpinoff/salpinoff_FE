@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 
 import withProps from '@components/common/HOC/withProps';
 import IconButton, { IconButtonProps } from '@components/common/IconButton';
-import BaseText, { BaseTextProps } from '@components/common/Text/BaseText';
+import Text, { TextProps } from '@components/common/Text';
 import Logo from '@components/Logo';
 
 import cn from '@utils/cn';
@@ -27,7 +27,7 @@ export default function Header({ className, children, ...rest }: HeaderProps) {
 
 Header.Logo = Logo;
 
-Header.Title = withProps<HTMLHeadingElement, BaseTextProps<'h3'>>(BaseText, {
+Header.Title = withProps<HTMLHeadingElement, TextProps<'h3'>>(Text, {
   component: 'h3',
   variant: 'heading-1',
   weight: 'semibold',

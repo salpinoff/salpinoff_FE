@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import CharacterCanvas from '@components/CharacterCanvas';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 import TextField from '@components/common/TextField';
 
 import stringToElement from '@utils/string-to-element';
@@ -34,7 +34,7 @@ function MonsterName() {
   return (
     <>
       <div className="flex flex-col items-center gap-8">
-        <BaseText
+        <Text
           variant="label-2"
           color="strong"
           className="relative w-max rounded-[16px] bg-cool-neutral-17 px-[20px] py-[16px] text-center shadow-3"
@@ -54,7 +54,7 @@ function MonsterName() {
               margin: 'auto',
             }}
           />
-        </BaseText>
+        </Text>
         <div className="relative mx-auto flex h-[120px] w-[120px] items-center justify-center overflow-hidden">
           <CharacterCanvas
             width={300}

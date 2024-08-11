@@ -14,7 +14,7 @@ import { findIndex, xorBy, unionBy } from 'lodash';
 
 import CharacterCanvas from '@components/CharacterCanvas';
 import Tabs from '@components/common/navigation/Tabs';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import useWithAuth from '@hooks/useWithAuth';
 
@@ -141,7 +141,7 @@ function CustomizeMonster() {
 
   return (
     <section className="text-center">
-      <BaseText
+      <Text
         component="h3"
         variant="headline-1"
         weight="semibold"
@@ -149,7 +149,7 @@ function CustomizeMonster() {
         className="mb-[37px]"
       >
         이제 퇴사몬을 꾸며주세요!
-      </BaseText>
+      </Text>
       <CharacterCanvas
         className="relative mx-auto mb-[32px] h-[260px] w-[260px] overflow-hidden rounded-[36px] shadow-5"
         width={520}

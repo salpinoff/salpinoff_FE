@@ -6,7 +6,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 import ProgressBar from '@components/ProgressBar';
 
 import useCanvas from '@hooks/useCanvas';
@@ -116,13 +116,13 @@ export default function SharedMonsterFlipCard({
       onClick={handleClick}
     >
       <MonsterFlipCard.ActionArea>
-        <BaseText
+        <Text
           variant="label-2"
           weight="semibold"
           className="absolute left-0 right-0 mx-auto w-max p-16 text-cool-neutral-22"
         >
           {ownerName}님의 퇴사몬
-        </BaseText>
+        </Text>
         <MonsterCounterBox
           width={CANVAS_WIDTH}
           height={CANVAS_HEIGHT}
@@ -146,15 +146,15 @@ export default function SharedMonsterFlipCard({
       </MonsterFlipCard.ActionArea>
       <MonsterFlipCard.Content>
         <div className="flex items-center gap-8">
-          <BaseText
+          <Text
             className="flex rounded-6 bg-[#70737c47] px-8 py-4"
             component="span"
             variant="caption-2"
             color="neutral"
           >
             스트레스 {rating}
-          </BaseText>
-          <BaseText
+          </Text>
+          <Text
             overflow="truncate"
             component="span"
             variant="body-1"
@@ -162,7 +162,7 @@ export default function SharedMonsterFlipCard({
             color="neutral"
           >
             {monsterName}
-          </BaseText>
+          </Text>
         </div>
         <ProgressBar
           value={totalCount}
@@ -172,7 +172,7 @@ export default function SharedMonsterFlipCard({
         />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
-        <BaseText
+        <Text
           className={cn(
             'm-auto max-h-full shrink',
             'whitespace-pre-wrap text-center leading-relaxed',
@@ -185,7 +185,7 @@ export default function SharedMonsterFlipCard({
           wrap
         >
           {content}
-        </BaseText>
+        </Text>
       </MonsterFlipCard.Back>
     </MonsterFlipCard>
   );

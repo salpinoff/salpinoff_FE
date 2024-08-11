@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import toast, { Toaster, resolveValue } from 'react-hot-toast';
 
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import useOutsideClick from '@hooks/useOutsideClick';
 
@@ -35,14 +35,14 @@ export default function HelperToast() {
             'flex h-max w-max items-center justify-center rounded-circular bg-[#171719bd] px-[16px] py-[9px]',
           )}
         >
-          <BaseText
+          <Text
             component="span"
             variant="label-2"
             weight="medium"
             color="normal"
           >
             {resolveValue(t.message, t)}
-          </BaseText>
+          </Text>
         </div>
       )}
     </Toaster>
