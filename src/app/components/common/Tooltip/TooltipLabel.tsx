@@ -1,5 +1,5 @@
 import {
-  ComponentPropsWithRef,
+  ComponentPropsWithoutRef,
   MouseEventHandler,
   forwardRef,
   useContext,
@@ -11,7 +11,7 @@ import { tooltipContext } from './TooltipProvider';
 import FormHelperText from '../TextField/FormHelperText';
 
 type Props = Omit<
-  ComponentPropsWithRef<'label' & typeof FormHelperText>,
+  ComponentPropsWithoutRef<'label' & typeof FormHelperText>,
   'children'
 > & { icons?: IconProps['name'] };
 

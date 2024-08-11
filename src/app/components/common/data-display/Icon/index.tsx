@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 
 import ArrowBackSVG from '@public/icons/arrow-back.svg';
+import CloseSVG from '@public/icons/close.svg';
 import DownloadSVG from '@public/icons/download.svg';
 import EditSVG from '@public/icons/edit.svg';
 import EllipsisSVG from '@public/icons/ellipsis.svg';
@@ -26,6 +27,7 @@ export const IconMap = {
   share: ShareSVG,
   spin: SpinSVG,
   message: MessageSVG,
+  close: CloseSVG,
 } as const;
 
 export const iconStyles = cva(
