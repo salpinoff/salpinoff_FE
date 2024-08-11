@@ -9,9 +9,9 @@ import EditSVG from '@public/icons/edit.svg';
 import ShareSVG from '@public/icons/share.svg';
 
 import { type CharacterCanvasProps } from '@components/CharacterCanvas';
-import IconButton from '@components/common/Button/IconButton';
-import Separator from '@components/common/data-display/Separator';
+import IconButton from '@components/common/IconButton';
 import DropdownMenu from '@components/common/navigation/DropdownMenu';
+import Separator from '@components/common/Separator';
 import SaveMonsterImageModal from '@components/modals/SaveMonsterImageModal';
 import ShareModal from '@components/modals/ShareModal';
 

@@ -31,7 +31,7 @@ export const IconMap = {
   close: CloseSVG,
 } as const;
 
-export const iconStyles = cva(
+export const iconVariants = cva(
   ['inline-flex', 'items-center', 'justify-center'],
   {
     variants: {
@@ -78,7 +78,7 @@ export const iconStyles = cva(
 
 export type IconProps<T extends React.ElementType = 'span'> =
   React.ComponentPropsWithoutRef<T> &
-    VariantProps<typeof iconStyles> & {
+    VariantProps<typeof iconVariants> & {
       component?: T;
       children?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
       asChild?: boolean;
@@ -103,7 +103,7 @@ const Icon = forwardRef(
     return (
       <Component
         ref={ref}
-        className={cn(iconStyles({ size, stroke }), className)}
+        className={cn(iconVariants({ size, stroke }), className)}
       >
         {name ? IconMap[name]() : children}
       </Component>

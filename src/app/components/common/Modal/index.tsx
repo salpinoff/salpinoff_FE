@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import Button from '@components/common/Button';
-import Dimmed from '@components/common/feedback/Dimmed';
+import Dimmed from '@components/common/Dimmed';
 import withProps from '@components/common/HOC/withProps';
 import Text from '@components/common/Text';
 

@@ -1,4 +1,4 @@
-import Modal from '@components/common/feedback/Modal';
+import Modal from '@components/common/Modal';
 import Text from '@components/common/Text';
 
 type SignoutConfirmModalProps = {

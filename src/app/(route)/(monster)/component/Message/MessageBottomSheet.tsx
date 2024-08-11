@@ -11,7 +11,7 @@ import AuthSuspense from '@components/common/Aync/AuthSuspense';
 import BottomSheet from '@components/common/BottomSheet';
 import BottomSheetContent from '@components/common/BottomSheet/BottomSheetContent';
 import BottomSheetHeader from '@components/common/BottomSheet/BottomSheetHeader';
-import Dimmed from '@components/common/feedback/Dimmed';
+import Dimmed from '@components/common/Dimmed';
 import Text from '@components/common/Text';
 
 import cn from '@utils/cn';

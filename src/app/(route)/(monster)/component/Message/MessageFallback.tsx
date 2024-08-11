@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 
-import Icon from '@components/common/data-display/Icon';
+import Icon from '@components/common/Icon';
 import Text from '@components/common/Text';
 
 import cn from '@utils/cn';

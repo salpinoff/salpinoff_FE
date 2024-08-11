@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, ElementType } from 'react';
 
-import Icon from '@components/common/data-display/Icon';
+import Icon from '@components/common/Icon';
 
 import cn from '@utils/cn';
 

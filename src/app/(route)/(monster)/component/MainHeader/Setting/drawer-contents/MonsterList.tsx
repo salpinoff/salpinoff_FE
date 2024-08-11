@@ -7,7 +7,7 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import CharacterCanvas from '@components/CharacterCanvas';
 import AuthSuspense from '@components/common/Aync/AuthSuspense';
-import Badge from '@components/common/data-display/Badge';
+import Badge from '@components/common/Badge';
 import Drawer from '@components/common/navigation/Drawer';
 import Text from '@components/common/Text';
 import Header from '@components/Header';

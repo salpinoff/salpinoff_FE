@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon, { IconProps } from '@components/common/data-display/Icon';
+import Icon, { IconProps } from '@components/common/Icon';
 
 import Button, { ButtonProps } from '../Button';
 

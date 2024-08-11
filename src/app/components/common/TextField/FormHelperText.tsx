@@ -2,7 +2,7 @@ import { cx } from 'class-variance-authority';
 
 import ErrorSVG from '@public/icons/error.svg';
 
-import Icon from '@components/common/data-display/Icon';
+import Icon from '@components/common/Icon';
 import Text, { type TextProps } from '@components/common/Text';
 
 export type FormHelperTextProps<T extends React.ElementType = 'p'> =

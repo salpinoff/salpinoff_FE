@@ -17,8 +17,8 @@ import { AxiosError } from 'axios';
 
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Button from '@components/common/Button';
-import Toast from '@components/common/feedback/Toast';
 import Text from '@components/common/Text';
+import Toast from '@components/common/Toast';
 import ProgressBar from '@components/ProgressBar';
 
 import useCanvas from '@hooks/useCanvas';
