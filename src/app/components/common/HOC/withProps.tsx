@@ -5,11 +5,8 @@ export default function withProps<T, P>(
   addedProps: Partial<P>,
   displayName?: string,
 ) {
-  const WithPropsComponent = React.forwardRef<
-    T,
-    Omit<P, keyof typeof addedProps>
-  >((props, ref) => {
-    return <Component ref={ref} {...(addedProps as P)} {...(props as P)} />;
+  const WithPropsComponent = React.forwardRef<T, P>((props, ref) => {
+    return <Component ref={ref} {...addedProps} {...props} />;
   });
 
   WithPropsComponent.displayName =

@@ -34,7 +34,7 @@ export const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ComponentPropsWithRef<'button'>,
+  extends React.ComponentPropsWithoutRef<'button'>,
     VariantProps<typeof buttonVariants> {
   loading?: boolean;
   asChild?: boolean;
