@@ -91,14 +91,13 @@ const textStyles = cva('', {
   },
 });
 
-export type BaseTextProps<T extends React.ElementType> = VariantProps<
-  typeof textStyles
-> &
-  React.ComponentPropsWithoutRef<T> & {
-    component?: T;
-  };
+export type TextProps<T extends React.ElementType> =
+  React.ComponentPropsWithoutRef<T> &
+    VariantProps<typeof textStyles> & {
+      component?: T;
+    };
 
-export default function BaseText<T extends React.ElementType = 'p'>({
+export default function Text<T extends React.ElementType = 'p'>({
   component,
   children,
   className,
@@ -111,7 +110,7 @@ export default function BaseText<T extends React.ElementType = 'p'>({
   overflow,
   wrap,
   ...rest
-}: React.PropsWithChildren<BaseTextProps<T>>) {
+}: TextProps<T>) {
   const Component: React.ElementType = component || 'p';
 
   return (

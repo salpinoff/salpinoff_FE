@@ -1,6 +1,6 @@
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 type ProgressBarProps = {
   value: number;
@@ -45,7 +45,7 @@ export default function ProgressBar({
         </LazyMotion>
       </div>
       {label !== 'none' && (
-        <BaseText
+        <Text
           component="span"
           variant="label-1"
           weight="semibold"
@@ -56,7 +56,7 @@ export default function ProgressBar({
             (reverse ? (max - value) / max : value / max).toFixed(
               fractionDigits,
             )}
-        </BaseText>
+        </Text>
       )}
     </div>
   );

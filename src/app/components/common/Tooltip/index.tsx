@@ -15,7 +15,7 @@ import useOutsideClick from '@hooks/useOutsideClick';
 
 import { TooltipLabel } from './TooltipLabel';
 import { Context, TooltipPropvider } from './TooltipProvider';
-import { TooltipContent } from './TootlpContent';
+import { TooltipContent } from './TootipContent';
 
 type LabelProps = ComponentProps<typeof TooltipLabel>;
 type ContentProps = ComponentProps<typeof TooltipContent>;

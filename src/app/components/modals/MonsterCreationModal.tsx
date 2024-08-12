@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 
-import Modal from '@components/common/feedback/Modal';
+import Modal from '@components/common/Modal';
 
 type MonsterCreationModalProps = {
   onClose: () => void;

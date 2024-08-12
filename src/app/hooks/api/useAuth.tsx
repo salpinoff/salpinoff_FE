@@ -4,16 +4,21 @@ import { useEffect } from 'react';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import useUserInfo from '@hooks/useUserInfo';
+
 import { setAuthHeader } from '@api/api.config';
 import { getSession, updateSession } from '@api/auth/base/session';
 import AuthFactory from '@api/auth/query';
 import { Session } from '@api/schema/token';
 
-const useAuth = (): {
+type Return = {
   status: 'loading' | Session['status'] | 'error';
   accessToken: string;
+  user: ReturnType<typeof useUserInfo>;
   update: () => void;
-} => {
+};
+
+const useAuth = (): Return => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -42,6 +47,8 @@ const useAuth = (): {
     select: (data) => data.data,
   });
 
+  const user = useUserInfo(session?.accessToken || '');
+
   setAuthHeader(session?.accessToken || '');
 
   useEffect(() => {
@@ -53,6 +60,7 @@ const useAuth = (): {
   return {
     status: (error && 'error') || session?.status || 'loading',
     accessToken: session?.accessToken || '',
+    user,
     update,
   };
 };

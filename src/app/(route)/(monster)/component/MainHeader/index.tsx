@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { useState } from 'react';
 
 import Header from '@components/Header';
@@ -14,11 +16,9 @@ export default function MainHeader() {
   return (
     <>
       <Header className="grid grid-cols-6 gap-4">
-        <Header.LinkLogo
-          size={24}
-          href="/"
-          className="col-span-4 col-start-2"
-        />
+        <Link className="col-span-4 col-start-2" href="/" passHref>
+          <Header.Logo size={24} />
+        </Link>
         <Header.IconButton
           className="col-span-1 ml-auto"
           name="hamburger"

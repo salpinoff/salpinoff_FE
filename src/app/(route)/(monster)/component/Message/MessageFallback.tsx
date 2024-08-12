@@ -1,11 +1,11 @@
 import { ComponentProps } from 'react';
 
-import Icon from '@components/common/data-display/Icon';
-import BaseText from '@components/common/Text/BaseText';
+import Icon from '@components/common/Icon';
+import Text from '@components/common/Text';
 
 import cn from '@utils/cn';
 
-interface Props extends ComponentProps<typeof BaseText> {
+interface Props extends ComponentProps<typeof Text> {
   label?: string;
   className?: string;
 }
@@ -25,14 +25,9 @@ function MessageFallback({
       )}
     >
       <Icon name="message" size={24} className="w-24" />
-      <BaseText
-        variant="label-1"
-        weight="regular"
-        color="assistive"
-        {...restProps}
-      >
+      <Text variant="label-1" weight="regular" color="assistive" {...restProps}>
         {label}
-      </BaseText>
+      </Text>
     </div>
   );
 }

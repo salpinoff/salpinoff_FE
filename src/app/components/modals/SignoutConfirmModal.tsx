@@ -1,5 +1,5 @@
-import Modal from '@components/common/feedback/Modal';
-import BaseText from '@components/common/Text/BaseText';
+import Modal from '@components/common/Modal';
+import Text from '@components/common/Text';
 
 type SignoutConfirmModalProps = {
   onCancel: () => void;
@@ -21,20 +21,20 @@ export default function SignoutConfirmModal({
           <Modal.Button
             variant="secondary"
             onClick={onCancel}
-            aria-label="닫기"
+            aria-label="취소"
           >
-            <BaseText variant="label-1" weight="medium">
+            <Text variant="label-1" weight="medium">
               취소
-            </BaseText>
+            </Text>
           </Modal.Button>
           <Modal.Button
             onClick={onSignout}
             aria-label="로그아웃"
             className="bg-red-60"
           >
-            <BaseText variant="label-1" weight="semibold">
+            <Text variant="label-1" weight="semibold">
               로그아웃
-            </BaseText>
+            </Text>
           </Modal.Button>
         </div>
       </Modal.Content>

@@ -4,7 +4,7 @@ type SeparatorProps = {
   orientation?: 'vertical' | 'horizontal';
 };
 
-const separatorStyle = cva('bg-white/5', {
+const separatorVariants = cva('bg-white/5', {
   variants: {
     orientation: {
       vertical: 'mx-1 w-px h-full',
@@ -16,5 +16,5 @@ const separatorStyle = cva('bg-white/5', {
 export default function Separator({
   orientation = 'horizontal',
 }: SeparatorProps) {
-  return <div className={separatorStyle({ orientation })} />;
+  return <div className={separatorVariants({ orientation })} />;
 }

@@ -3,7 +3,7 @@ import { useState, type MouseEvent, type MouseEventHandler } from 'react';
 import { motion } from 'framer-motion';
 
 import Button from '@components/common/Button';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 import FixedBottom from '@components/FixedBottom';
 
 import cn from '@utils/cn';
@@ -67,14 +67,14 @@ function MonsterLayout({
             visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
           }}
         >
-          <BaseText
+          <Text
             component="span"
             weight="semibold"
             variant="heading-1"
             color="strong"
           >
             {title && stringToElement(title)}
-          </BaseText>
+          </Text>
         </motion.p>
 
         <MonsterLayoutProvider value={{ setBtnDisabled, registerCallback }}>
@@ -89,9 +89,9 @@ function MonsterLayout({
           variant="secondary"
           onMouseDown={goPrev}
         >
-          <BaseText variant="body-2" weight="medium">
+          <Text variant="body-2" weight="medium">
             {buttonLabels[0]}
-          </BaseText>
+          </Text>
         </Button>
         <Button
           className="w-full flex-1"
@@ -99,9 +99,9 @@ function MonsterLayout({
           disabled={disabled}
           onMouseDown={handleNext}
         >
-          <BaseText variant="body-2" weight="semibold">
+          <Text variant="body-2" weight="semibold">
             {buttonLabels[buttonLabels.length - 1]}
-          </BaseText>
+          </Text>
         </Button>
       </FixedBottom>
     </>

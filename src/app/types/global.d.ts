@@ -1,6 +1,9 @@
 export {};
 
 declare global {
+  interface WindowEventMap {
+    signout: CustomEvent<{ detail: { type: 'signout' } }>;
+  }
   interface Window {
     /* [Kakao JavaScript SDK Reference](https://developers.kakao.com/sdk/reference/js/release/Kakao.html) */
     Kakao?: {

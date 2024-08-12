@@ -1,7 +1,7 @@
 import React, { ComponentProps, forwardRef, useContext } from 'react';
 
 import Button from '@components/common/Button';
-import BaseText from '@components/common/Text/BaseText';
+import Text from '@components/common/Text';
 
 import { DropdownMenuContext } from './DropdownMenuProvider';
 
@@ -26,7 +26,7 @@ const DropdownMenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
         }}
         {...rest}
       >
-        <BaseText
+        <Text
           className="pointer-events-none flex w-max select-none items-center justify-between gap-8"
           component="span"
           color="normal"
@@ -34,7 +34,7 @@ const DropdownMenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
           weight="medium"
         >
           {children}
-        </BaseText>
+        </Text>
       </Button>
     );
   },

@@ -5,7 +5,7 @@ import cn from '@utils/cn';
 const ModalContent = forwardRef<
   HTMLDivElement,
   React.HTMLProps<HTMLDivElement>
->(function ModalContent({ children, className }, ref) {
+>(({ children, className }, ref) => {
   return (
     <div
       ref={ref}
@@ -19,5 +19,7 @@ const ModalContent = forwardRef<
     </div>
   );
 });
+
+ModalContent.displayName = 'ModalContent';
 
 export default ModalContent;
