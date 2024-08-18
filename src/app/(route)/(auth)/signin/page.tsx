@@ -23,7 +23,7 @@ function SignIn() {
   return (
     <div
       className={cn(
-        'flex h-dvh w-dvw flex-1 flex-col justify-end p-20',
+        'flex h-full w-full flex-1 flex-col justify-end p-20',
         'bg-[length:245px_430px] bg-center bg-no-repeat	',
         backgroundColor,
       )}

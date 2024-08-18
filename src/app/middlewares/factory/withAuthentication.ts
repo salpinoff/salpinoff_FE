@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import {
   type NextFetchEvent,
   type NextMiddleware,
@@ -26,11 +27,18 @@ function withAuthentification(middleware: NextMiddleware) {
 
     const accessToken = request.cookies.get(tokenPrefix('accessToken'));
     const isLogin = Boolean(accessToken && accessToken.value);
+    const isInit = cookies().has('gbmon-init');
 
     if (isWithoutAuthUrl) {
-      return isLogin
-        ? NextResponse.redirect(`${process.env.NEXT_PUBLIC_DOMAIN_NAME}/`)
-        : NextResponse.next();
+      if (isLogin) {
+        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_DOMAIN_NAME}/`);
+      }
+
+      return isInit
+        ? NextResponse.next()
+        : NextResponse.redirect(
+            `${process.env.NEXT_PUBLIC_DOMAIN_NAME}/onboarding`,
+          );
     }
 
     return isLogin

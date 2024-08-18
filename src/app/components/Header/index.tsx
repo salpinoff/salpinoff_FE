@@ -37,6 +37,6 @@ Header.Title = withProps<HTMLHeadingElement, TextProps<'h3'>>(Text, {
 Header.IconButton = withProps<ExtractRef<typeof IconButton>, IconButtonProps>(
   IconButton,
   {
-    size: 24,
+    size: 18,
   },
 );

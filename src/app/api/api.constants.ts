@@ -4,6 +4,7 @@ const MONSTER_BASE = '/monsters';
 const MEMBER_BASE = '/members';
 
 export const API_URLS = {
+  INIT: `${API_BASE}/init`,
   AUTH: {
     BASE: {
       CSRF: `${AUTH_BASE}/csrf`,
