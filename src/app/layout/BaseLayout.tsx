@@ -10,7 +10,7 @@ type BaseLayoutProps = PropsWithChildren;
 export default function BaseLayout({ children }: BaseLayoutProps) {
   return (
     <main className="m-auto flex max-w-[1076px]">
-      <div className="hidden grow select-none flex-col pb-8 lg:flex">
+      <div className="hidden grow select-none flex-col lg:flex">
         <div className="flex grow flex-col justify-center">
           <Image
             className="mb-[48px] rounded-20"
@@ -40,7 +40,11 @@ export default function BaseLayout({ children }: BaseLayoutProps) {
           </Text>
         </div>
       </div>
-      <div className="relative mx-auto mx-auto h-dvh w-full max-w-md grow touch-auto overflow-hidden">
+      <div
+        role="main"
+        id="root-container"
+        className="relative mx-auto mx-auto h-dvh w-full max-w-md grow touch-auto overflow-hidden"
+      >
         {children}
       </div>
     </main>

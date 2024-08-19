@@ -115,7 +115,7 @@ function OnBoardingPage() {
           </Funnel>
         </motion.div>
       </AnimatePresence>
-      <nav className="flex w-full gap-8 p-[20px]">
+      <nav className="z-10 flex w-full gap-8 p-[20px]">
         <Button
           className={cn('grow font-medium', {
             hidden: getIdx(step) === 0,

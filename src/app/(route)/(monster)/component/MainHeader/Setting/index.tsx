@@ -12,6 +12,7 @@ import useModal from '@hooks/useModal';
 import useSignout from 'src/app/(route)/(auth)/signin/hooks/useSignout';
 import EditContent from 'src/app/(route)/profile/edit/components/EditForm';
 
+import AboutUs from './drawer-contents/AboutUs';
 import MonsterList from './drawer-contents/MonsterList';
 
 type SettingProps = {
@@ -40,12 +41,7 @@ export default function Setting({ open = false, close }: SettingProps) {
     openByDrawer(e.currentTarget, <MonsterList />);
 
   const handleEditProfile: MouseEventHandler = (e) =>
-    openByDrawer(
-      e.currentTarget,
-      <div className="p-20">
-        <EditContent />
-      </div>,
-    );
+    openByDrawer(e.currentTarget, <EditContent />);
 
   const handleSignout = () => {
     openModal(() => (
@@ -57,6 +53,10 @@ export default function Setting({ open = false, close }: SettingProps) {
         }}
       />
     ));
+  };
+
+  const handleAboutUs: MouseEventHandler = (e) => {
+    openByDrawer(e.currentTarget, <AboutUs />);
   };
 
   return (
@@ -109,7 +109,13 @@ export default function Setting({ open = false, close }: SettingProps) {
         </Menu>
 
         <Menu>
-          <Menu.Item component="a" href="/" data-label="제작정보">
+          <Menu.Item
+            type="button"
+            component="button"
+            aria-label="제작정보"
+            data-label="제작정보"
+            onClick={handleAboutUs}
+          >
             제작정보
           </Menu.Item>
         </Menu>
@@ -128,7 +134,9 @@ export default function Setting({ open = false, close }: SettingProps) {
             {subContentLabel}
           </Header.Title>
         </Header>
-        {subContent}
+        <div className="h-[calc(100%-49px)] overflow-hidden p-20">
+          {subContent}
+        </div>
       </Drawer>
     </Drawer>
   );
