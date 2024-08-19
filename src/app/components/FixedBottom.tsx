@@ -11,7 +11,10 @@ interface Props extends ComponentPropsWithoutRef<'div'> {
 function FixedBottom({ children, className, bound, ...rest }: Props) {
   return (
     <div style={{ paddingBottom: `${bound || 0}px` }}>
-      <div className={cn('fixed bottom-0 left-0 w-full', className)} {...rest}>
+      <div
+        className={cn('absolute bottom-0 left-0 w-full', className)}
+        {...rest}
+      >
         {children}
       </div>
     </div>

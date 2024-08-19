@@ -105,8 +105,13 @@ export default function MonsterResultPage({
               <Button size="medium" onClick={() => openModal()}>
                 바로 공유하기
               </Button>
-              <Button size="medium" variant="ghost" onClick={handleDefer}>
-                다음에 할래요
+              <Button
+                className="font-normal"
+                size="medium"
+                variant="ghost"
+                onClick={handleDefer}
+              >
+                메인으로 이동하기
               </Button>
             </footer>
             <Toaster

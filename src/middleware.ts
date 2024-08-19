@@ -22,6 +22,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - monster/\\S+/share (share page)
      */
-    '/((?!api|_next/static|_next/image|image|favicon.ico|monster/\\S+/share).*)',
+    '/((?!api|_next/static|_next/image|image|favicon.ico|monster/\\S+/share|onboarding).*)',
   ],
 };
