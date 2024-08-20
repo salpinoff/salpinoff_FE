@@ -6,7 +6,7 @@ import LogoSVG from '@public/icons/logo.svg';
 
 import cn from '@utils/cn';
 
-const logoVariants = cva('m-auto', {
+const logoVariants = cva('m-auto text-white', {
   variants: {
     size: {
       24: 'w-[60px] h-[18px]',

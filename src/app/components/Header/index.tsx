@@ -15,7 +15,7 @@ export default function Header({ className, children, ...rest }: HeaderProps) {
   return (
     <header
       className={cn(
-        'flex min-h-[48px] w-full items-center justify-between px-20 py-[12px]',
+        'flex max-h-[49px] min-h-[49px] w-full select-none items-center justify-between px-20 py-12',
         className,
       )}
       {...rest}
@@ -29,7 +29,7 @@ Header.Logo = Logo;
 
 Header.Title = withProps<HTMLHeadingElement, TextProps<'h3'>>(Text, {
   component: 'h3',
-  variant: 'heading-1',
+  variant: 'headline-1',
   weight: 'semibold',
   color: 'normal',
 });
