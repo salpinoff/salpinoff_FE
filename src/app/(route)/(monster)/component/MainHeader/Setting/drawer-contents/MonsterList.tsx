@@ -32,7 +32,7 @@ import { StressLevelBadge } from 'src/app/(route)/(monster)/component/cards/_ui'
 
 import SquareMonsterCard from '../../../cards/SquareMonsterCard';
 
-const PER_SIZE = 10;
+const PER_SIZE = 4;
 
 const REF_FLIP_CARD_WIDTH = 302;
 const REF_FLIP_CARD_HEIGHT = 390;
