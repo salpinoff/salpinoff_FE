@@ -91,7 +91,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
   const toggleCard = () => setFlipped((prev) => !prev);
 
   return (
-    <Drawer open={open} className="fixed">
+    <Drawer open={open}>
       <div className="flex h-full w-full flex-col">
         <Header className="grid grid-cols-6 gap-4">
           <Header.IconButton
@@ -300,7 +300,11 @@ export default function MonsterList() {
 
   return (
     <AuthSuspense fallback={<>...Loading</>}>
-      <div className={cn('mx-auto flex h-full w-max flex-col gap-32 p-[5px]')}>
+      <div
+        className={cn('mx-auto flex h-full w-max flex-col gap-32 p-[5px]', {
+          'overflow-hidden': open,
+        })}
+      >
         {pages.length &&
           pages.map((data, idx) => {
             const { monsterId, monsterName, type, decorations } = data;
