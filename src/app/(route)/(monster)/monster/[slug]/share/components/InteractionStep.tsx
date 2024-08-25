@@ -56,7 +56,7 @@ export default function InteractionStep({
           onClick={goNext}
           disabled={!clear}
         >
-          응원메세지 작성하기
+          응원 메시지 작성하기
         </Button>
       </nav>
     </section>
