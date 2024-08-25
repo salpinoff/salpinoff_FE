@@ -45,11 +45,7 @@ export default function BaseLayout({ children }: BaseLayoutProps) {
           id="root-container"
           className={cn(
             'relative m-auto box-content h-full w-full',
-            // lg
-            '!h-[970px] !w-[448px] overflow-hidden rounded-32 border-[10px] border-cool-neutral-17'
-              .split(' ')
-              .map((c) => `lg:${c}`)
-              .join(' '),
+            'lg:!h-[970px] lg:!w-[448px] lg:overflow-hidden lg:rounded-32 lg:border-[10px] lg:border-cool-neutral-17',
           )}
         >
           {children}

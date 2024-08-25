@@ -39,6 +39,7 @@ const inputStyles = cva(
     'body-2-regular',
     'bg-transparent',
     'outline-none focus:border-transparent',
+    'placeholder:text-cool-neutral-80A',
   ],
   {
     variants: {
