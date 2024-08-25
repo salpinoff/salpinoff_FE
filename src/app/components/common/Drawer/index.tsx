@@ -54,8 +54,8 @@ export default function Drawer({
                 {
                   'full-height': !isIOS,
                   'full-height-ios': isIOS,
-                  className,
                 },
+                className,
               )}
             >
               {children}
