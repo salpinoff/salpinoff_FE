@@ -61,11 +61,11 @@ function MemberCard({ name, role }: MemberCardProps) {
 
 export default function AboutUs() {
   return (
-    <div className="flex h-full max-h-full w-full flex-col p-20">
+    <div className="flex h-full max-h-full w-full flex-col">
       <LazyMotion features={domAnimation}>
         <AnimatePresence>
           <m.div
-            className="my-auto my-auto w-full"
+            className="my-auto my-auto w-full -translate-y-[20px]"
             variants={container}
             initial="hidden"
             animate="visible"
