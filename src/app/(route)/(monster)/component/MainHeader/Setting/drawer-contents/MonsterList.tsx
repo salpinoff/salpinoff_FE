@@ -9,6 +9,7 @@ import CharacterCanvas from '@components/CharacterCanvas';
 import AuthSuspense from '@components/common/Aync/AuthSuspense';
 import Badge from '@components/common/Badge';
 import Drawer from '@components/common/Drawer';
+import Icon from '@components/common/Icon';
 import Text from '@components/common/Text';
 import Header from '@components/Header';
 import ProgressBar from '@components/ProgressBar';
@@ -170,7 +171,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
           </MonsterFlipCard>
           <div
             className={cn(
-              'flex min-h-full shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
+              'flex shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
               'snap-start',
             )}
           >
@@ -193,7 +194,20 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                 </Text>
               </Badge>
             </div>
-            <ul className="mx-auto flex w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
+            <ul className="mx-auto flex h-full w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
+              {messageList.length === 0 && (
+                <Text align="center" color="assistive" className="m-auto">
+                  <Icon size={24} name="message" className="mb-8" />
+                  <Text
+                    className="block"
+                    component="span"
+                    variant="label-1"
+                    color="assistive"
+                  >
+                    메시지가 없어요
+                  </Text>
+                </Text>
+              )}
               {messageList.map(({ messageId, sender, content }) => (
                 <li
                   className={cn(
