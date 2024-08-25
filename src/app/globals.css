@@ -32,8 +32,8 @@ body {
 
 /* ios - svg width/height 100% 대응*/
 svg {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 
 @layer utilities {
