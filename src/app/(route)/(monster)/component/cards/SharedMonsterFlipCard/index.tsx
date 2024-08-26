@@ -1,5 +1,4 @@
 import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -28,6 +27,8 @@ type SharedMonsterFlipCardProps = {
   clear?: boolean;
   monsterId: string;
   onComplete: () => void;
+  onFlipped?: () => void;
+  onLoad?: () => void;
 };
 
 const SUB_FLIP_CARD_WIDTH = 302;
@@ -36,25 +37,12 @@ const SUB_FLIP_CARD_HEIGHT = 450;
 const CANVAS_WIDTH = SUB_FLIP_CARD_WIDTH;
 const CANVAS_HEIGHT = SUB_FLIP_CARD_HEIGHT - 88;
 
-const TOAST = [
-  {
-    message: '화면을 연타하면 사연을 볼 수 있어요',
-    opts: {
-      id: 'init-toast',
-    },
-  },
-  {
-    message: '숨겨진 사연이 열렸어요, 한번 더 탭하세요!',
-    opts: {
-      id: 'clear-toast',
-    },
-  },
-];
-
 export default function SharedMonsterFlipCard({
   clear = false,
   monsterId,
+  onLoad,
   onComplete,
+  onFlipped,
 }: SharedMonsterFlipCardProps) {
   const {
     data: {
@@ -87,7 +75,7 @@ export default function SharedMonsterFlipCard({
 
   const { addConfetti } = useConfetti(canvasRef);
 
-  const [flipped, setFlipped] = useState(clear);
+  const [flipped, setFlipped] = useState(false);
   const [totalCount, setTotalCount] = useState(clear ? threshold : 0);
 
   const { BACKGROUND_COLOR, ...restDecos } = decorations;
@@ -97,15 +85,13 @@ export default function SharedMonsterFlipCard({
   const handleClick: MouseEventHandler = (e) => {
     if (totalCount === threshold) {
       e.preventDefault();
-
       setFlipped((prev) => !prev);
     }
   };
 
   useEffect(() => {
-    const { message, opts } = TOAST[+clear];
-    toast(message, opts);
-  }, [clear]);
+    onLoad?.();
+  }, [onLoad]);
 
   return (
     <MonsterFlipCard
@@ -113,6 +99,7 @@ export default function SharedMonsterFlipCard({
       height={SUB_FLIP_CARD_HEIGHT}
       color={BACKGROUND_COLOR}
       flipped={flipped}
+      onFlipped={onFlipped}
       onClick={handleClick}
     >
       <MonsterFlipCard.ActionArea>

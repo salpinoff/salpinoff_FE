@@ -122,8 +122,8 @@ export default function Setting({ open = false, close }: SettingProps) {
       </div>
 
       {/* SubDrawer */}
-      <Drawer open={subOpen}>
-        <Header className="grid grid-cols-6 gap-4">
+      <Drawer open={subOpen} className="h-full overflow-y-auto scrollbar-hide">
+        <Header className="sticky top-0 z-10 grid grid-cols-6 gap-4 backdrop-blur-xl">
           <Header.IconButton
             name="arrow-back"
             aria-label="뒤로가기"
@@ -134,9 +134,7 @@ export default function Setting({ open = false, close }: SettingProps) {
             {subContentLabel}
           </Header.Title>
         </Header>
-        <div className="h-[calc(100%-49px)] overflow-hidden p-20">
-          {subContent}
-        </div>
+        <div className="h-[calc(100%-49px)] p-20">{subContent}</div>
       </Drawer>
     </Drawer>
   );

@@ -78,7 +78,7 @@ export default function MonsterResultPage({
   const { BACKGROUND_COLOR, ...REST_DECOS } = data.decorations;
 
   return (
-    <div className="mx-auto flex h-dvh w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
+    <div className="mx-auto flex h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
       <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
         {status === 'success' && fetchStatus === 'idle' && (
           <>

@@ -52,7 +52,7 @@ function MonsterLayout({
     <>
       <div
         className={cn(
-          'flex w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
+          'flex h-full w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
           className,
         )}
       >
