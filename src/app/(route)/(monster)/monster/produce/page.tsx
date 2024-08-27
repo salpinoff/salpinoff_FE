@@ -1,6 +1,7 @@
 'use client';
 
 import DotsPagination from '@components/DotsPagination';
+import ScreenView from '@components/logging/ScreenView';
 
 import useFunnel from '@hooks/useFunnel';
 
@@ -39,7 +40,9 @@ function MonsterProducePage() {
             control={['다음으로']}
             goNext={() => setStep('stress')}
           >
-            <SelectEmotion />
+            <ScreenView name="make_1">
+              <SelectEmotion />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -50,7 +53,9 @@ function MonsterProducePage() {
             goPrev={() => setStep('emotion')}
             goNext={() => setStep('story')}
           >
-            <SelectStress />
+            <ScreenView name="make_2">
+              <SelectStress />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -61,7 +66,9 @@ function MonsterProducePage() {
             goPrev={() => setStep('stress')}
             goNext={() => setStep('monstername')}
           >
-            <WriteStory />
+            <ScreenView name="make_3">
+              <WriteStory />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -72,7 +79,9 @@ function MonsterProducePage() {
             goPrev={() => setStep('story')}
             goNext={() => setStep('monsterstyle')}
           >
-            <MonsterName />
+            <ScreenView name="make_4">
+              <MonsterName />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -83,7 +92,9 @@ function MonsterProducePage() {
             goPrev={() => setStep('monstername')}
             goNext={() => {}}
           >
-            <CustomizeMonster />
+            <ScreenView name="make_5">
+              <CustomizeMonster />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
       </Funnel>

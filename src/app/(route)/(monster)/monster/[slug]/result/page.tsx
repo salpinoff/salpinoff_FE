@@ -9,6 +9,7 @@ import { LayoutGroup } from 'framer-motion';
 import CharacterCanvas from '@components/CharacterCanvas';
 import Button from '@components/common/Button';
 import Toast from '@components/common/Toast';
+import ScreenView from '@components/logging/ScreenView';
 
 import useModal from '@hooks/useModal';
 
@@ -78,51 +79,54 @@ export default function MonsterResultPage({
   const { BACKGROUND_COLOR, ...REST_DECOS } = data.decorations;
 
   return (
-    <div className="mx-auto flex h-dvh w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
-      <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
-        {status === 'success' && fetchStatus === 'idle' && (
-          <>
-            <LayoutGroup>
-              <GuideMessage />
-              <AnimatedSpreadCard
-                name={data.monsterName}
-                // [TODO] BACKGROUND_COLOR 필수 여부 확인 필요
-                color={BACKGROUND_COLOR ?? ''}
+    // [TODO] : 회원 상태에 따라 screenview name 변경
+    <ScreenView name="...">
+      <div className="mx-auto flex h-dvh w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
+        <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
+          {status === 'success' && fetchStatus === 'idle' && (
+            <>
+              <LayoutGroup>
+                <GuideMessage />
+                <AnimatedSpreadCard
+                  name={data.monsterName}
+                  // [TODO] BACKGROUND_COLOR 필수 여부 확인 필요
+                  color={BACKGROUND_COLOR ?? ''}
+                >
+                  <CharacterCanvas
+                    width={560}
+                    height={560}
+                    type={data.type}
+                    items={Object.values(REST_DECOS)}
+                    className={cn(
+                      'h-full w-full',
+                      data.type === 'sad' && ' -translate-y-[10px]',
+                    )}
+                  />
+                </AnimatedSpreadCard>
+              </LayoutGroup>
+              <footer className="flex flex-col">
+                <Button size="medium" onClick={() => openModal()}>
+                  바로 공유하기
+                </Button>
+                <Button size="medium" variant="ghost" onClick={handleDefer}>
+                  다음에 할래요
+                </Button>
+              </footer>
+              <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+                containerClassName="toast-container"
+                containerStyle={{
+                  bottom: 20,
+                }}
               >
-                <CharacterCanvas
-                  width={560}
-                  height={560}
-                  type={data.type}
-                  items={Object.values(REST_DECOS)}
-                  className={cn(
-                    'h-full w-full',
-                    data.type === 'sad' && ' -translate-y-[10px]',
-                  )}
-                />
-              </AnimatedSpreadCard>
-            </LayoutGroup>
-            <footer className="flex flex-col">
-              <Button size="medium" onClick={() => openModal()}>
-                바로 공유하기
-              </Button>
-              <Button size="medium" variant="ghost" onClick={handleDefer}>
-                다음에 할래요
-              </Button>
-            </footer>
-            <Toaster
-              position="bottom-center"
-              reverseOrder={false}
-              containerClassName="toast-container"
-              containerStyle={{
-                bottom: 20,
-              }}
-            >
-              {(t) => <Toast>{resolveValue(t.message, t)}</Toast>}
-            </Toaster>
-          </>
-        )}
-        {isError && <>error</>}
+                {(t) => <Toast>{resolveValue(t.message, t)}</Toast>}
+              </Toaster>
+            </>
+          )}
+          {isError && <>error</>}
+        </div>
       </div>
-    </div>
+    </ScreenView>
   );
 }

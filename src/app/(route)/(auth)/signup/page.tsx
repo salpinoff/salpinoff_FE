@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import DotsPagination from '@components/DotsPagination';
+import ScreenView from '@components/logging/ScreenView';
 
 import useFunnel from '@hooks/useFunnel';
 
@@ -71,7 +72,9 @@ function SignUp() {
             goNext={() => setStep('emotion')}
             control={['퇴사몬 만들기']}
           >
-            <MakeNickName />
+            <ScreenView name="signup_1">
+              <MakeNickName />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -82,7 +85,9 @@ function SignUp() {
             goPrev={() => setStep('nickname')}
             goNext={() => setStep('stress')}
           >
-            <SelectEmotion />
+            <ScreenView name="signup_2">
+              <SelectEmotion />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -93,7 +98,9 @@ function SignUp() {
             goPrev={() => setStep('emotion')}
             goNext={() => setStep('story')}
           >
-            <SelectStress />
+            <ScreenView name="signup_3">
+              <SelectStress />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -104,7 +111,9 @@ function SignUp() {
             goPrev={() => setStep('stress')}
             goNext={() => setStep('monstername')}
           >
-            <WriteStory />
+            <ScreenView name="signup_4">
+              <WriteStory />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -115,7 +124,9 @@ function SignUp() {
             goPrev={() => setStep('story')}
             goNext={() => setStep('monsterstyle')}
           >
-            <MonsterName />
+            <ScreenView name="signup_5">
+              <MonsterName />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
 
@@ -126,7 +137,9 @@ function SignUp() {
             goPrev={() => setStep('monstername')}
             goNext={() => {}}
           >
-            <CustomizeMonster />
+            <ScreenView name="signup_6">
+              <CustomizeMonster />
+            </ScreenView>
           </MonsterLayout>
         </Funnel.Step>
       </Funnel>
