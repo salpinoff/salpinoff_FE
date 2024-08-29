@@ -78,6 +78,7 @@ export default function Setting({ open = false, close }: SettingProps) {
         <div className="p-20">
           <Menu>
             <Menu.Item
+              id="btn_archive"
               type="button"
               component="button"
               onClick={handleViewCollection}
@@ -90,6 +91,7 @@ export default function Setting({ open = false, close }: SettingProps) {
 
           <Menu className="my-16">
             <Menu.Item
+              id="btn_profile"
               type="button"
               component="button"
               onClick={handleEditProfile}
@@ -99,6 +101,7 @@ export default function Setting({ open = false, close }: SettingProps) {
               프로필 수정
             </Menu.Item>
             <Menu.Item
+              id="btn_logout"
               type="button"
               component="button"
               loading={isPending}
@@ -111,7 +114,12 @@ export default function Setting({ open = false, close }: SettingProps) {
           </Menu>
 
           <Menu>
-            <Menu.Item component="a" href="/" data-label="제작정보">
+            <Menu.Item
+              id="btn_teaminfo"
+              component="a"
+              href="/"
+              data-label="제작정보"
+            >
               제작정보
             </Menu.Item>
           </Menu>

@@ -50,6 +50,7 @@ export default function InteractionStep({
       </QueryErrorResetBoundary>
       <nav className="flex w-full p-[20px]">
         <Button
+          id="btn_writemessage"
           className="w-full"
           size="large"
           variant="primary"

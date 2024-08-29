@@ -69,6 +69,7 @@ export default function DoneStep({ goNext }: DoneStepProps) {
         }}
       >
         <Button
+          id="btn_subgoservice"
           className="w-full grow"
           variant="primary"
           size="large"
