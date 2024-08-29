@@ -47,7 +47,7 @@ const useAuth = (): Return => {
     select: (data) => data.data,
   });
 
-  const user = useUserInfo(session?.accessToken || '');
+  const user = useUserInfo(session);
 
   setAuthHeader(session?.accessToken || '');
 

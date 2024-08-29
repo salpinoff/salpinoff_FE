@@ -18,4 +18,8 @@ export type Response = {
 
 export type Session = Response & {
   status: 'authenticated' | 'unauthenticated' | 'expired';
+  userInfo: {
+    memberId?: number;
+    username?: string;
+  };
 };
