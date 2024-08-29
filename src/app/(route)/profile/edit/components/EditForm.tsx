@@ -61,7 +61,7 @@ function EditContent() {
         {...register('name', { minLength: 2, maxLength: 6, required: true })}
       />
 
-      <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 p-5">
+      <FixedBottom className="left-1/2 flex -translate-x-1/2 touch-none gap-8 p-5">
         <Button
           type="submit"
           size="medium"

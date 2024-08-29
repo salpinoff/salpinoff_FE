@@ -9,6 +9,7 @@ import CharacterCanvas from '@components/CharacterCanvas';
 import AuthSuspense from '@components/common/Aync/AuthSuspense';
 import Badge from '@components/common/Badge';
 import Drawer from '@components/common/Drawer';
+import Icon from '@components/common/Icon';
 import Text from '@components/common/Text';
 import Header from '@components/Header';
 import ScreenView from '@components/Logging/ScreenView';
@@ -32,7 +33,7 @@ import { StressLevelBadge } from 'src/app/(route)/(monster)/component/cards/_ui'
 
 import SquareMonsterCard from '../../../cards/SquareMonsterCard';
 
-const PER_SIZE = 10;
+const PER_SIZE = 4;
 
 const REF_FLIP_CARD_WIDTH = 302;
 const REF_FLIP_CARD_HEIGHT = 390;
@@ -91,8 +92,8 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
   const toggleCard = () => setFlipped((prev) => !prev);
 
   return (
-    <Drawer open={open} className="overflow-y-auto scrollbar-hide">
-      <div className="flex h-full w-full flex-col gap-16">
+    <Drawer open={open}>
+      <div className="flex h-full w-full flex-col">
         <Header className="grid grid-cols-6 gap-4">
           <Header.IconButton
             name="arrow-back"
@@ -171,7 +172,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
           </MonsterFlipCard>
           <div
             className={cn(
-              'flex min-h-full shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
+              'flex shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
               'snap-start',
             )}
           >
@@ -194,7 +195,20 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
                 </Text>
               </Badge>
             </div>
-            <ul className="mx-auto flex w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
+            <ul className="mx-auto flex h-full w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
+              {messageList.length === 0 && (
+                <Text align="center" color="assistive" className="m-auto">
+                  <Icon size={24} name="message" className="mb-8" />
+                  <Text
+                    className="block"
+                    component="span"
+                    variant="label-1"
+                    color="assistive"
+                  >
+                    메시지가 없어요
+                  </Text>
+                </Text>
+              )}
               {messageList.map(({ messageId, sender, content }) => (
                 <li
                   className={cn(
@@ -289,10 +303,9 @@ export default function MonsterList() {
     <ScreenView name="hamburger_monster" disabled={!open}>
       <AuthSuspense fallback={<>...Loading</>}>
         <div
-          className={cn(
-            'mx-auto flex h-[calc(100vh-48px)] max-h-full w-max flex-col gap-32 p-20',
-            'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
-          )}
+          className={cn('mx-auto flex h-full w-max flex-col gap-32 p-[5px]', {
+            'overflow-hidden': open,
+          })}
         >
           {pages.length &&
             pages.map((data, idx) => {

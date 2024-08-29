@@ -52,7 +52,7 @@ function MonsterLayout({
     <>
       <div
         className={cn(
-          'flex w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
+          'flex h-full w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
           className,
         )}
       >
@@ -82,7 +82,7 @@ function MonsterLayout({
         </MonsterLayoutProvider>
       </div>
 
-      <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 p-5">
+      <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 py-5">
         <Button
           className={cn('flex-1', { hidden: control?.length === 1 })}
           size="medium"

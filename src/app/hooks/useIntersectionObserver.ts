@@ -41,8 +41,6 @@ const useIntersectionObserver = ({
 
     if (!('IntersectionObserver' in window)) return;
 
-    let unobserve: (() => void) | undefined;
-
     const observer = new IntersectionObserver(
       (entries: IntersectionObserverEntry[]): void => {
         const thresholds = Array.isArray(observer.thresholds)
@@ -62,9 +60,8 @@ const useIntersectionObserver = ({
             callbackRef.current(isIntersecting, entry);
           }
 
-          if (isIntersecting && freezeOnceVisible && unobserve) {
-            unobserve();
-            unobserve = undefined;
+          if (isIntersecting && freezeOnceVisible) {
+            observer.unobserve(ref);
           }
         });
       },
@@ -77,7 +74,7 @@ const useIntersectionObserver = ({
     return () => {
       observer.disconnect();
     };
-  }, [ref, threshold, root, rootMargin, frozen, freezeOnceVisible]);
+  }, [ref, threshold, root, rootMargin, freezeOnceVisible]);
 
   useEffect(() => {
     if (

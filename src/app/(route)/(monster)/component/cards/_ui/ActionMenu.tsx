@@ -78,6 +78,7 @@ export default function ActionMenu({ monster }: ActionMenuProps) {
             'inline-flex h-32 w-32 items-center justify-center rounded-circular p-0 text-cool-neutral-40',
             'data-[open]:bg-[#5050501f]',
           )}
+          size={20}
           name="ellipsis"
         />
       </DropdownMenu.Trigger>

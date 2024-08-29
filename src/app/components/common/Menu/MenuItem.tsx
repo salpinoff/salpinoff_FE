@@ -26,6 +26,7 @@ export default function MenuItem({
   return (
     <Component
       className={cn(
+        'select-none',
         'bg-[#70737C1F]',
         'w-full px-24 py-20',
         'flex items-center justify-between',

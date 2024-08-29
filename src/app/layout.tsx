@@ -12,6 +12,8 @@ import { Pretendard } from '@utils/fonts';
 import '../../build/css/_variables.css';
 import './globals.css';
 
+import BaseLayout from './layout/BaseLayout';
+
 export const viewport: Viewport = {
   width: 'device-width',
   userScalable: false,
@@ -43,7 +45,7 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <Provider>
-            {children}
+            <BaseLayout>{children}</BaseLayout>
             <ModalProvider />
           </Provider>
         </QueryProvider>

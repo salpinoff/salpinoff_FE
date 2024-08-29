@@ -79,9 +79,8 @@ export default function MonsterResultPage({
   const { BACKGROUND_COLOR, ...REST_DECOS } = data.decorations;
 
   return (
-    // [TODO] : 회원 상태에 따라 screenview name 변경
     <ScreenView name="...">
-      <div className="mx-auto flex h-dvh w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
+      <div className="mx-auto flex h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
         <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
           {status === 'success' && fetchStatus === 'idle' && (
             <>
@@ -108,8 +107,13 @@ export default function MonsterResultPage({
                 <Button size="medium" onClick={() => openModal()}>
                   바로 공유하기
                 </Button>
-                <Button size="medium" variant="ghost" onClick={handleDefer}>
-                  다음에 할래요
+                <Button
+                  className="font-normal"
+                  size="medium"
+                  variant="ghost"
+                  onClick={handleDefer}
+                >
+                  메인으로 이동하기
                 </Button>
               </footer>
               <Toaster

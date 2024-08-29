@@ -1,21 +1,27 @@
+import { ComponentPropsWithoutRef } from 'react';
+
 import { VariantProps, cva } from 'class-variance-authority';
 
 import LogoSVG from '@public/icons/logo.svg';
 
-const logoVariants = cva('m-auto', {
+import cn from '@utils/cn';
+
+const logoVariants = cva('m-auto text-white', {
   variants: {
     size: {
-      24: 'w-[60px] h-[24px]',
-      32: 'w-[80px] h-[32px]',
+      24: 'w-[60px] h-[18px]',
+      32: 'w-[80px] h-[25px]',
     },
   },
 });
 
-type HeaderLogoProps = VariantProps<typeof logoVariants>;
+interface HeaderLogoProps
+  extends ComponentPropsWithoutRef<'div'>,
+    VariantProps<typeof logoVariants> {}
 
-export default function Logo({ size }: HeaderLogoProps) {
+export default function Logo({ className, size, ...rest }: HeaderLogoProps) {
   return (
-    <div className={logoVariants({ size })}>
+    <div className={cn(logoVariants({ size }), className)} {...rest}>
       <LogoSVG />
     </div>
   );

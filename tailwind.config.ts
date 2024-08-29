@@ -37,6 +37,14 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       keyframes: {
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
         'fade-in-up': {
           '0%': {
             opacity: '0',
@@ -59,6 +67,7 @@ const config: Config = {
         },
       },
       animation: {
+        'fade-in': 'fade-in 300ms ease-in-out 1',
         enter: 'fade-in-up 300ms ease-in-out 1',
         leave: 'fade-in-down 300ms ease-in forwards',
       },

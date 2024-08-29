@@ -30,6 +30,12 @@ body {
   background: black;
 }
 
+/* ios - svg width/height 100% 대응*/
+svg {
+  width: inherit;
+  height: inherit;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

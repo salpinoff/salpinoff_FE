@@ -50,7 +50,12 @@ export default function SaveMonsterImageModal({
       <Modal.Content className="gap-32 py-32">
         <Modal.Title align="center">이미지를 저장할까요?</Modal.Title>
         <div className="aspect-square w-full overflow-hidden rounded-32 shadow-5">
-          <div ref={targetRef}>
+          <div
+            ref={targetRef}
+            style={{
+              background,
+            }}
+          >
             <CharacterCanvas
               className="relative"
               width={1200}

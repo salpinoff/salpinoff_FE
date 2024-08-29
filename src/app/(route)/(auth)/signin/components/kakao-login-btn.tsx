@@ -31,7 +31,9 @@ function KakaoLoginBtn({ className }: Props) {
         className,
       )}
     >
-      <KakaoSVG width={18} height={17} />
+      <div>
+        <KakaoSVG width={18} height={17} />
+      </div>
       <div className="w-full">카카오톡 로그인</div>
     </Button>
   );

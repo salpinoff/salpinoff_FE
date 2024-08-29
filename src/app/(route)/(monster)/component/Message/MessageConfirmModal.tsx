@@ -32,6 +32,8 @@ function MessageConfirmModal({
   message: { content, sender, checked, messageId },
 }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const queryClient = getQueryClient();
 
   const [messageRead, setMessageRead] = useState(checked);
@@ -64,13 +66,18 @@ function MessageConfirmModal({
     (data?.interactionCountPerEncouragement || 0) *
     (emotion === 'ANGER' ? -1 : 1);
 
-  const handleClick: TouchEventHandler = async () => {
+  const handleClick = async () => {
     const method = messageRead ? closeModal : confirm;
 
     method();
   };
 
-  useOutsideClick(modalRef, () => closeModal(), 'mousedown');
+  const handleTouchEnd: TouchEventHandler = async (e) => {
+    e.preventDefault();
+    handleClick();
+  };
+
+  useOutsideClick([modalRef, buttonRef], () => closeModal(), 'mousedown');
 
   return (
     <Modal open>
@@ -141,8 +148,10 @@ function MessageConfirmModal({
         </section>
 
         <Button
+          ref={buttonRef}
           size="medium"
-          onTouchEnd={handleClick}
+          onClick={handleClick}
+          onTouchEnd={handleTouchEnd}
           variant={messageRead ? 'secondary' : 'primary'}
         >
           <Text variant="body-2" weight={messageRead ? 'medium' : 'semibold'}>

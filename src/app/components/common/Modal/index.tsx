@@ -10,12 +10,12 @@ import Text from '@components/common/Text';
 
 import ModalContent from './ModalContent';
 
-export default function Modal({
-  open,
-  children,
-}: PropsWithChildren<{
+type ModalProps = PropsWithChildren<{
   open?: boolean;
-}>) {
+  container?: Parameters<typeof createPortal>[1];
+}>;
+
+export default function Modal({ open, container, children }: ModalProps) {
   return createPortal(
     <AnimatePresence mode="wait" onExitComplete={() => null}>
       {open && (
@@ -43,7 +43,7 @@ export default function Modal({
         </motion.div>
       )}
     </AnimatePresence>,
-    document.body,
+    container ?? document.getElementById('root-container') ?? document.body,
   );
 }
 

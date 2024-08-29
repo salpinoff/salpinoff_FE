@@ -13,6 +13,7 @@ import useModal from '@hooks/useModal';
 import useSignout from 'src/app/(route)/(auth)/signin/hooks/useSignout';
 import EditContent from 'src/app/(route)/profile/edit/components/EditForm';
 
+import AboutUs from './drawer-contents/AboutUs';
 import MonsterList from './drawer-contents/MonsterList';
 
 type SettingProps = {
@@ -25,28 +26,19 @@ export default function Setting({ open = false, close }: SettingProps) {
 
   const [subOpen, setSubOpen] = useState(false);
   const [subContent, setSubContent] = useState<ReactElement>();
-  const [subContentLabel, setsubContentLabel] = useState('');
 
   const { openModal, closeModal } = useModal(() => null);
 
   const openByDrawer = (target: Element, content: ReactElement) => {
-    const label = target.getAttribute('data-label');
-
     setSubOpen(true);
     setSubContent(content);
-    setsubContentLabel(label!);
   };
 
   const handleViewCollection: MouseEventHandler = (e) =>
     openByDrawer(e.currentTarget, <MonsterList />);
 
   const handleEditProfile: MouseEventHandler = (e) =>
-    openByDrawer(
-      e.currentTarget,
-      <div className="p-20">
-        <EditContent />
-      </div>,
-    );
+    openByDrawer(e.currentTarget, <EditContent />);
 
   const handleSignout = () => {
     openModal(() => (
@@ -58,6 +50,10 @@ export default function Setting({ open = false, close }: SettingProps) {
         }}
       />
     ));
+  };
+
+  const handleAboutUs: MouseEventHandler = (e) => {
+    openByDrawer(e.currentTarget, <AboutUs />);
   };
 
   return (
@@ -116,9 +112,11 @@ export default function Setting({ open = false, close }: SettingProps) {
           <Menu>
             <Menu.Item
               id="btn_teaminfo"
-              component="a"
-              href="/"
+              type="button"
+              component="button"
+              aria-label="제작정보"
               data-label="제작정보"
+              onClick={handleAboutUs}
             >
               제작정보
             </Menu.Item>
@@ -126,19 +124,22 @@ export default function Setting({ open = false, close }: SettingProps) {
         </div>
 
         {/* SubDrawer */}
-        <Drawer open={subOpen}>
-          <Header className="grid grid-cols-6 gap-4">
+        <Drawer
+          open={subOpen}
+          className="h-full overflow-y-auto scrollbar-hide"
+        >
+          <Header className="sticky top-0 z-10 grid grid-cols-6 gap-4 backdrop-blur-xl">
             <Header.IconButton
               name="arrow-back"
               aria-label="뒤로가기"
               className="col-span-1 col-start-1"
-              onClick={() => setSubOpen(false)}
+              onClick={close}
             />
             <Header.Title className="col-span-4 col-start-2 mx-auto">
-              {subContentLabel}
+              설정
             </Header.Title>
           </Header>
-          {subContent}
+          <div className="h-[calc(100%-49px)] p-20">{subContent}</div>
         </Drawer>
       </Drawer>
     </ScreenView>
