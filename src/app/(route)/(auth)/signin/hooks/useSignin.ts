@@ -1,5 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { setLocalItem } from '@utils/local-storage';
+
 import requestSignIn from '@api/auth/base/signin';
 
 import { Providers } from '@type/auth';
@@ -12,6 +14,8 @@ const useSignIn = (provider: Providers) => {
     mutationFn: () => requestSignIn({ provider }),
     onSuccess: ({ data: { url } }) => {
       window.location.href = url;
+
+      setLocalItem('loginDate', new Date().toISOString());
     },
     onError: (error: AxiosError<{ errorMessage: string }>) => {
       const errorMessage =
