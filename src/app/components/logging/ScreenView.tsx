@@ -2,18 +2,20 @@
 
 import { PropsWithChildren, useEffect } from 'react';
 
-import { sendGAEvent } from '@next/third-parties/google';
+import { sendGTMEvent } from '@next/third-parties/google';
 
-type Props = PropsWithChildren<{ name: string }>;
+type Props = PropsWithChildren<{ name: string; disabled?: boolean }>;
 
-function ScreenView({ name, children }: Props) {
+function ScreenView({ name, children, disabled = false }: Props) {
   useEffect(() => {
-    sendGAEvent({
+    if (disabled) return;
+
+    sendGTMEvent({
       event: 'view_screen',
       screenViewAt: new Date().toISOString(),
       screenName: name,
     });
-  }, []);
+  }, [disabled, name]);
 
   return children;
 }

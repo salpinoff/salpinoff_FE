@@ -1,7 +1,7 @@
 'use client';
 
 import DotsPagination from '@components/DotsPagination';
-import ScreenView from '@components/logging/ScreenView';
+import ScreenView from '@components/Logging/ScreenView';
 
 import useFunnel from '@hooks/useFunnel';
 

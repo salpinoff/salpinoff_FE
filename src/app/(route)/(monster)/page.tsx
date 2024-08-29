@@ -2,7 +2,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import HydrateWithAuth from '@providers/HydrationAuthBoudary';
 
-import ScreenView from '@components/logging/ScreenView';
+import ScreenView from '@components/Logging/ScreenView';
 
 import { getRefMonster } from '@api/monster';
 import MonsterQueryFactory from '@api/monster/query/factory';

@@ -9,7 +9,7 @@ import { LayoutGroup } from 'framer-motion';
 import CharacterCanvas from '@components/CharacterCanvas';
 import Button from '@components/common/Button';
 import Toast from '@components/common/Toast';
-import ScreenView from '@components/logging/ScreenView';
+import ScreenView from '@components/Logging/ScreenView';
 
 import useModal from '@hooks/useModal';
 
