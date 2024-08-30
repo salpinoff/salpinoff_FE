@@ -5,7 +5,7 @@ import { MouseEventHandler, ReactElement, useState } from 'react';
 import Drawer from '@components/common/Drawer';
 import Menu from '@components/common/Menu';
 import Header from '@components/Header';
-import ScreenView from '@components/Logging/ScreenView';
+import ScreenView from '@components/logging/ScreenView';
 import SignoutConfirmModal from '@components/modals/SignoutConfirmModal';
 
 import useModal from '@hooks/useModal';

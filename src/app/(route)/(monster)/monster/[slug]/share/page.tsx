@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { AxiosError } from 'axios';
 
-import ScreenView from '@components/Logging/ScreenView';
+import ScreenView from '@components/logging/ScreenView';
 
 import useFunnel from '@hooks/useFunnel';
 import useModal from '@hooks/useModal';

@@ -6,7 +6,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Text from '@components/common/Text';
-import ScreenView from '@components/Logging/ScreenView';
+import ScreenView from '@components/logging/ScreenView';
 import ProgressBar from '@components/ProgressBar';
 
 import useCanvas from '@hooks/useCanvas';

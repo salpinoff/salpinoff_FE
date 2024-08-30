@@ -12,7 +12,7 @@ import Drawer from '@components/common/Drawer';
 import Icon from '@components/common/Icon';
 import Text from '@components/common/Text';
 import Header from '@components/Header';
-import ScreenView from '@components/Logging/ScreenView';
+import ScreenView from '@components/logging/ScreenView';
 import ProgressBar from '@components/ProgressBar';
 
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
