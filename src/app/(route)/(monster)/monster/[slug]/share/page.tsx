@@ -6,6 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import { AxiosError } from 'axios';
 
+import ScreenView from '@components/Logging/ScreenView';
+
 import useFunnel from '@hooks/useFunnel';
 import useModal from '@hooks/useModal';
 
@@ -69,17 +71,21 @@ export default function SharePage({ params: { slug } }: SharePagesProps) {
             />
           </Funnel.Step>
           <Funnel.Step name="encouragement">
-            <EncouragementStep
-              goPrev={() => {
-                setStep('interactions');
-              }}
-              goNext={(data) => {
-                send(data);
-              }}
-            />
+            <ScreenView name="sub_write">
+              <EncouragementStep
+                goPrev={() => {
+                  setStep('interactions');
+                }}
+                goNext={(data) => {
+                  send(data);
+                }}
+              />
+            </ScreenView>
           </Funnel.Step>
           <Funnel.Step name="done">
-            <DoneStep goNext={() => push('/signup')} />
+            <ScreenView name="sub_share">
+              <DoneStep goNext={() => push('/signup')} />
+            </ScreenView>
           </Funnel.Step>
         </Funnel>
       </EncouragementFormProvider>

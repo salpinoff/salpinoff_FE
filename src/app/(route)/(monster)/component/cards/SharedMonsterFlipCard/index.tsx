@@ -6,6 +6,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 import MonsterFlipCard from '@components/cards/MonsterFlipCard';
 import Text from '@components/common/Text';
+import ScreenView from '@components/Logging/ScreenView';
 import ProgressBar from '@components/ProgressBar';
 
 import useCanvas from '@hooks/useCanvas';
@@ -103,33 +104,35 @@ export default function SharedMonsterFlipCard({
       onClick={handleClick}
     >
       <MonsterFlipCard.ActionArea>
-        <Text
-          variant="label-2"
-          weight="semibold"
-          className="absolute left-0 right-0 mx-auto w-max p-16 text-cool-neutral-22"
-        >
-          {ownerName}님의 퇴사몬
-        </Text>
-        <MonsterCounterBox
-          width={CANVAS_WIDTH}
-          height={CANVAS_HEIGHT}
-          items={ITEMS}
-          type={type}
-          clear={clear}
-          startAt={totalCount}
-          onCount={(count) => {
-            setTotalCount((prev) => Math.min(prev + count, interactionCount));
-            addConfetti(ConfettiMap[type]);
-          }}
-          endAt={threshold}
-          onComplete={onComplete}
-        />
-        {/* Effect */}
-        <canvas
-          ref={canvasRef}
-          className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
-        />
-        <HelperToast />
+        <ScreenView name="sub_start" disabled={!clear}>
+          <Text
+            variant="label-2"
+            weight="semibold"
+            className="absolute left-0 right-0 mx-auto w-max p-16 text-cool-neutral-22"
+          >
+            {ownerName}님의 퇴사몬
+          </Text>
+          <MonsterCounterBox
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
+            items={ITEMS}
+            type={type}
+            clear={clear}
+            startAt={totalCount}
+            onCount={(count) => {
+              setTotalCount((prev) => Math.min(prev + count, interactionCount));
+              addConfetti(ConfettiMap[type]);
+            }}
+            endAt={threshold}
+            onComplete={onComplete}
+          />
+          {/* Effect */}
+          <canvas
+            ref={canvasRef}
+            className="pointer-events-none absolute left-0 top-0 h-full w-full select-none"
+          />
+          <HelperToast />
+        </ScreenView>
       </MonsterFlipCard.ActionArea>
       <MonsterFlipCard.Content>
         <div className="flex items-center gap-8">
@@ -159,20 +162,22 @@ export default function SharedMonsterFlipCard({
         />
       </MonsterFlipCard.Content>
       <MonsterFlipCard.Back>
-        <Text
-          className={cn(
-            'm-auto max-h-full shrink',
-            'whitespace-pre-wrap text-center leading-relaxed',
-            'scroller overflow-y-scroll scrollbar-hide',
-          )}
-          component="p"
-          variant="body-2"
-          weight="regular"
-          color="strong"
-          wrap
-        >
-          {content}
-        </Text>
+        <ScreenView name="sub_clear_flip">
+          <Text
+            className={cn(
+              'm-auto max-h-full shrink',
+              'whitespace-pre-wrap text-center leading-relaxed',
+              'scroller overflow-y-scroll scrollbar-hide',
+            )}
+            component="p"
+            variant="body-2"
+            weight="regular"
+            color="strong"
+            wrap
+          >
+            {content}
+          </Text>
+        </ScreenView>
       </MonsterFlipCard.Back>
     </MonsterFlipCard>
   );

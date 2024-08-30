@@ -51,7 +51,11 @@ const authHandler = ({ request, params, secret }: Props) => {
           const respone = NextResponse.redirect(nextUrl, { status: 302 });
 
           return deleteCookie(
-            [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
+            [
+              tokenPrefix('accessToken'),
+              tokenPrefix('refreshToken'),
+              'userInfo',
+            ],
             respone,
           );
         }
@@ -104,7 +108,11 @@ const authHandler = ({ request, params, secret }: Props) => {
               : NextResponse.json(error, { status: 400 });
 
             return deleteCookie(
-              [tokenPrefix('accessToken'), tokenPrefix('refreshToken')],
+              [
+                tokenPrefix('accessToken'),
+                tokenPrefix('refreshToken'),
+                'userInfo',
+              ],
               response,
             );
           }
@@ -144,10 +152,8 @@ const authHandler = ({ request, params, secret }: Props) => {
           }
         }
         case 'session': {
-          const { [tokenPrefix('accessToken')]: accessToken } = getCookie(
-            [tokenPrefix('accessToken')],
-            request,
-          );
+          const { [tokenPrefix('accessToken')]: accessToken, userInfo } =
+            getCookie([tokenPrefix('accessToken'), 'userInfo'], request);
 
           return NextResponse.json({
             status:
@@ -157,6 +163,7 @@ const authHandler = ({ request, params, secret }: Props) => {
                   : 'expried')) ||
               'unauthenticated',
             accessToken: decrypt(accessToken || '', secret),
+            userInfo: (userInfo && JSON.parse(decrypt(userInfo, secret))) || {},
           });
         }
         case 'csrf': {

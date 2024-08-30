@@ -89,6 +89,7 @@ function MessageList() {
       {messageList.map((message) => {
         return (
           <MessageItem
+            id="btn_message"
             key={message.messageId}
             checked={message.checked}
             component="button"

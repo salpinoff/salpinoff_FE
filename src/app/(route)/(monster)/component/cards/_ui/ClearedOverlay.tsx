@@ -25,6 +25,7 @@ export default function ClearedOverlay() {
         </Text>
       </div>
       <Button
+        id="btn_newmonster"
         className="pointer-event-auto label-1-medium mx-auto w-full bg-[#17171985] text-cool-neutral-99"
         size="small"
         variant="secondary"

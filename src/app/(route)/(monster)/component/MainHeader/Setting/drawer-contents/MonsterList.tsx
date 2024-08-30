@@ -12,6 +12,7 @@ import Drawer from '@components/common/Drawer';
 import Icon from '@components/common/Icon';
 import Text from '@components/common/Text';
 import Header from '@components/Header';
+import ScreenView from '@components/Logging/ScreenView';
 import ProgressBar from '@components/ProgressBar';
 
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
@@ -299,67 +300,69 @@ export default function MonsterList() {
   };
 
   return (
-    <AuthSuspense fallback={<>...Loading</>}>
-      <div
-        className={cn('mx-auto flex h-full w-max flex-col gap-32 p-[5px]', {
-          'overflow-hidden': open,
-        })}
-      >
-        {pages.length &&
-          pages.map((data, idx) => {
-            const { monsterId, monsterName, type, decorations } = data;
-            const { BACKGROUND_COLOR, ...REST_DECOS } = decorations;
-
-            return (
-              <SquareMonsterCard
-                {...(idx === pages.length - 1 ? { ref } : {})}
-                key={monsterId + monsterName}
-                name={monsterName}
-                color={BACKGROUND_COLOR}
-                className={cn(
-                  'relative h-[240px] min-h-[240px] w-[240px]',
-                  'snap-center snap-normal',
-                )}
-                onClick={() => handleClick(idx)}
-              >
-                <CharacterCanvas
-                  width={480}
-                  height={480}
-                  type={type}
-                  items={Object.values(REST_DECOS)}
-                  className={cn(
-                    'h-full w-full',
-                    type === 'mad' && ' -translate-y-[20px]',
-                    type === 'sad' && ' -translate-y-[10px]',
-                  )}
-                />
-              </SquareMonsterCard>
-            );
+    <ScreenView name="hamburger_monster" disabled={!open}>
+      <AuthSuspense fallback={<>...Loading</>}>
+        <div
+          className={cn('mx-auto flex h-full w-max flex-col gap-32 p-[5px]', {
+            'overflow-hidden': open,
           })}
-        {pages.length && (
-          <DetailDrawer
-            open={open}
-            monster={pages[openId]}
-            closeDrawer={() => setOpen(false)}
-          />
-        )}
+        >
+          {pages.length &&
+            pages.map((data, idx) => {
+              const { monsterId, monsterName, type, decorations } = data;
+              const { BACKGROUND_COLOR, ...REST_DECOS } = decorations;
 
-        {pages.length === 0 && (
-          <div className="flex h-full w-full flex-col items-center justify-center">
-            <Image
-              width={200}
-              height={200}
-              src="/images/monsters/sad_before0000.png"
-              alt="슬픈 캐릭터"
-              className="opacity-30 grayscale"
+              return (
+                <SquareMonsterCard
+                  {...(idx === pages.length - 1 ? { ref } : {})}
+                  key={monsterId + monsterName}
+                  name={monsterName}
+                  color={BACKGROUND_COLOR}
+                  className={cn(
+                    'relative h-[240px] min-h-[240px] w-[240px]',
+                    'snap-center snap-normal',
+                  )}
+                  onClick={() => handleClick(idx)}
+                >
+                  <CharacterCanvas
+                    width={480}
+                    height={480}
+                    type={type}
+                    items={Object.values(REST_DECOS)}
+                    className={cn(
+                      'h-full w-full',
+                      type === 'mad' && ' -translate-y-[20px]',
+                      type === 'sad' && ' -translate-y-[10px]',
+                    )}
+                  />
+                </SquareMonsterCard>
+              );
+            })}
+          {pages.length && (
+            <DetailDrawer
+              open={open}
+              monster={pages[openId]}
+              closeDrawer={() => setOpen(false)}
             />
+          )}
 
-            <Text variant="body-2" color="alternative">
-              아직 완료된 퇴사몬이 없어요
-            </Text>
-          </div>
-        )}
-      </div>
-    </AuthSuspense>
+          {pages.length === 0 && (
+            <div className="flex h-full w-full flex-col items-center justify-center">
+              <Image
+                width={200}
+                height={200}
+                src="/images/monsters/sad_before0000.png"
+                alt="슬픈 캐릭터"
+                className="opacity-30 grayscale"
+              />
+
+              <Text variant="body-2" color="alternative">
+                아직 완료된 퇴사몬이 없어요
+              </Text>
+            </div>
+          )}
+        </div>
+      </AuthSuspense>
+    </ScreenView>
   );
 }

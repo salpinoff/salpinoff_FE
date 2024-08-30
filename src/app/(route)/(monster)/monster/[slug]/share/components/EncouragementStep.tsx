@@ -75,6 +75,7 @@ export default function EncouragementStep({
       </div>
       <nav className="flex w-full gap-8">
         <Button
+          id="btn_sub_write_back"
           className="grow font-medium"
           variant="secondary"
           onClick={handleBack}
@@ -82,6 +83,7 @@ export default function EncouragementStep({
           뒤로가기
         </Button>
         <Button
+          id="btn_sub_write_submit"
           className="grow font-semibold"
           type="submit"
           variant="primary"

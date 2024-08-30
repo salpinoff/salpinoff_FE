@@ -84,6 +84,7 @@ export default function InteractionStep({
       <nav className="relative flex w-full p-[20px]">
         {open && <EncouragementTooltip />}
         <Button
+          id="btn_writemessage"
           className="w-full"
           size="large"
           variant="primary"

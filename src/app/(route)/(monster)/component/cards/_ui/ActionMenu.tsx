@@ -83,17 +83,17 @@ export default function ActionMenu({ monster }: ActionMenuProps) {
         />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-max rounded-12 bg-[#212225] p-4 text-cool-neutral-99 shadow-2">
-        <DropdownMenu.Item onSelect={handleSave}>
+        <DropdownMenu.Item id="btn_download" onSelect={handleSave}>
           저장하기
           <DownloadSVG />
         </DropdownMenu.Item>
         <Separator />
-        <DropdownMenu.Item onSelect={handleShare}>
+        <DropdownMenu.Item id="btn_share" onSelect={handleShare}>
           공유하기
           <ShareSVG />
         </DropdownMenu.Item>
         <Separator />
-        <DropdownMenu.Item onSelect={handleModify}>
+        <DropdownMenu.Item id="btn_modify" onSelect={handleModify}>
           수정하기
           <EditSVG />
         </DropdownMenu.Item>

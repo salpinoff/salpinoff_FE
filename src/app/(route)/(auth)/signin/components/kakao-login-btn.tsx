@@ -19,6 +19,7 @@ function KakaoLoginBtn({ className }: Props) {
 
   return (
     <Button
+      id="btn_login_kakao"
       size="medium"
       type="button"
       loading={isPending}

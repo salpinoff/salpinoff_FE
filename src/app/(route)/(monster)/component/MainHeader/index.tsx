@@ -20,6 +20,7 @@ export default function MainHeader() {
           <Header.Logo size={24} />
         </Link>
         <Header.IconButton
+          id="btn_hamburger"
           className="col-span-1 ml-auto"
           name="hamburger"
           onClick={toggleDrawer(true)}
