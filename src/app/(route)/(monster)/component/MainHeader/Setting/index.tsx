@@ -26,12 +26,16 @@ export default function Setting({ open = false, close }: SettingProps) {
 
   const [subOpen, setSubOpen] = useState(false);
   const [subContent, setSubContent] = useState<ReactElement>();
+  const [subContentLabel, setsubContentLabel] = useState('');
 
   const { openModal, closeModal } = useModal(() => null);
 
   const openByDrawer = (target: Element, content: ReactElement) => {
+    const label = target.getAttribute('data-label');
+
     setSubOpen(true);
     setSubContent(content);
+    setsubContentLabel(label!);
   };
 
   const handleViewCollection: MouseEventHandler = (e) =>
@@ -133,10 +137,10 @@ export default function Setting({ open = false, close }: SettingProps) {
               name="arrow-back"
               aria-label="뒤로가기"
               className="col-span-1 col-start-1"
-              onClick={close}
+              onClick={() => setSubOpen(false)}
             />
             <Header.Title className="col-span-4 col-start-2 mx-auto">
-              설정
+              {subContentLabel}
             </Header.Title>
           </Header>
           <div className="h-[calc(100%-49px)] p-20">{subContent}</div>
