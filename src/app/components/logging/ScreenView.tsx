@@ -19,9 +19,9 @@ function ScreenView({ name, children, disabled = false }: Props) {
   const { user, status } = useAuth();
 
   const { data: totalElements } = useQuery({
-    queryKey: MonsterQueryFactory.list.queryKey,
-    queryFn: () => getMonsterList({ page: 1, size: 10 }),
     enabled: status === 'authenticated',
+    queryKey: [MonsterQueryFactory.list.queryKey, 'screen-view'],
+    queryFn: () => getMonsterList({ page: 1, size: 10 }),
     select: (data) => data.data.totalElements,
   });
 
@@ -35,11 +35,8 @@ function ScreenView({ name, children, disabled = false }: Props) {
 
   useEffect(() => {
     if (disabled) return;
-    if (
-      status === 'loading' ||
-      (status === 'authenticated' && (!totalElements || !user))
-    )
-      return;
+    if (status === 'loading') return;
+    if (status === 'authenticated' && (!totalElements || !user)) return;
 
     const userProperties = {
       userId: user?.id,
