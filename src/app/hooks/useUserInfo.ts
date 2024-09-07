@@ -11,6 +11,7 @@ import { Session } from '@api/schema/token';
 type User = {
   id: number;
   name: string;
+  joinDate: string;
 };
 
 const useUserInfo = (session: Session | undefined) => {
@@ -20,15 +21,23 @@ const useUserInfo = (session: Session | undefined) => {
     if (!session || session.status === 'unauthenticated') return;
 
     const {
-      userInfo: { username, memberId },
+      userInfo: { username, memberId, createdAt },
     } = session;
 
     if (!getSessionItem('userInfo')) {
-      setSessionItem('userInfo', { name: username, id: memberId });
+      setSessionItem('userInfo', {
+        name: username,
+        id: memberId,
+        joinDate: createdAt,
+      });
     }
 
     const userInfo = getSessionItem<User>('userInfo');
-    setUser({ name: userInfo?.name || '', id: userInfo?.id || 0 });
+    setUser({
+      name: userInfo?.name || '',
+      id: userInfo?.id || 0,
+      joinDate: userInfo?.joinDate || '',
+    });
   }, [session]);
 
   useEffect(() => {

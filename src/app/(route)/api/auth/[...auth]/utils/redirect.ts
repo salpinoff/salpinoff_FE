@@ -7,7 +7,14 @@ import { encrypt } from './crypto';
 import tokenPrefix from './token-prefix';
 
 const redirectResponse = (
-  { code, username, accessToken, refreshToken, memberId }: TokenResponse,
+  {
+    code,
+    username,
+    accessToken,
+    refreshToken,
+    memberId,
+    createdAt,
+  }: TokenResponse,
   secret: string,
 ) => {
   const destinationUrl =
@@ -34,7 +41,10 @@ const redirectResponse = (
       },
       {
         key: 'userInfo',
-        value: encrypt(JSON.stringify({ memberId, username }), secret),
+        value: encrypt(
+          JSON.stringify({ memberId, username, createdAt }),
+          secret,
+        ),
         proteced: true,
       },
     ],
