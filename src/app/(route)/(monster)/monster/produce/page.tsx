@@ -1,5 +1,9 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
+
+import { useEffect } from 'react';
+
 import DotsPagination from '@components/DotsPagination';
 import ScreenView from '@components/logging/ScreenView';
 
@@ -23,6 +27,29 @@ function MonsterProducePage() {
   const { Funnel, step, setStep } = useFunnel<ProducePage, ProducePageProps>(
     'emotion',
   );
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('step', step);
+    window.history.pushState(null, '', `?${params.toString()}`);
+  }, [step, searchParams]);
+
+  useEffect(() => {
+    const handleBeforePopState = () => {
+      const { search } = document.location;
+      const prev = new URLSearchParams(search)?.get('step');
+
+      if (prev) {
+        setStep(prev as ProducePage);
+      }
+    };
+
+    window.addEventListener('popstate', handleBeforePopState);
+    return () => window.removeEventListener('popstate', handleBeforePopState);
+  }, [setStep]);
 
   return (
     <MonsterInfoProvider>
