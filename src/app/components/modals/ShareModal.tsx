@@ -48,6 +48,7 @@ export default function ShareModal({
         </Modal.Description>
         <div className="flex gap-8">
           <Modal.Button
+            id="btn_copy_link"
             variant="secondary"
             onClick={handleShareByLinkButton}
             aria-label="공유 링크 복사 버튼"
@@ -55,6 +56,7 @@ export default function ShareModal({
             링크 복사
           </Modal.Button>
           <Modal.Button
+            id="btn_kakkao_share"
             variant="primary"
             onClick={handleShareViaKakaoButton}
             aria-label="카카오톡 공유 보내기 버튼"

@@ -90,6 +90,7 @@ function Tooltip({ open = false, label, content, children, className }: Props) {
     <TooltipPropvider value={value} className={className}>
       {cloneElement(labelChild, {
         ref: refs.setReference,
+        id: 'btn_tooltip',
         ...labelChild.props,
       })}
 
