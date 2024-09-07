@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 
+import { Suspense } from 'react';
+
 import { Provider } from 'jotai';
 
 import ModalProvider from '@providers/modal-provider';
 import QueryProvider from '@providers/QueryProvider';
 
+import PreviousUrl from '@components/PreviousUrl';
 import Scripts from '@components/Scripts';
 
 import { Pretendard } from '@utils/fonts';
@@ -49,6 +52,10 @@ export default function RootLayout({
             <ModalProvider />
           </Provider>
         </QueryProvider>
+
+        <Suspense fallback={null}>
+          <PreviousUrl />
+        </Suspense>
       </body>
       <Scripts />
     </html>
