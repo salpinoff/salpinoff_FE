@@ -46,6 +46,10 @@ export default function ActionMenu({ monster }: ActionMenuProps) {
           closeModal();
           toast('이미지가 저장되었어요!');
         }}
+        onSaveFailed={(message) => {
+          closeModal();
+          if (message) toast(message);
+        }}
       />
     ));
   };

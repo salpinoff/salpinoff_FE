@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { useState } from 'react';
+import { TouchEventHandler, useState } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { findIndex } from 'lodash';
@@ -36,6 +36,7 @@ function OnBoardingPage() {
 
   const [dir, setDir] = useState(1);
   const [exit, setExit] = useState(false);
+  const [prevPageX, setPrevPageX] = useState<number | null>(null);
 
   const orderItem = funnel.map(({ name: id }) => ({ id }));
 
@@ -62,14 +63,27 @@ function OnBoardingPage() {
     goIdx(getIdx(step) + 1);
   };
 
+  const handleTouchMove: TouchEventHandler = (event) => {
+    event.preventDefault();
+
+    const touch = event.touches[0]!;
+
+    if (!prevPageX) {
+      setPrevPageX(touch.pageX);
+    } else if (prevPageX > touch.pageX) {
+      // 시작하기 스와이프 X
+      if (getIdx(step) !== funnel.length - 1) {
+        goNext();
+      }
+    } else {
+      goPrev();
+    }
+  };
+
+  const handleTouchEnd = () => setPrevPageX(null);
+
   return (
     <section className="flex h-full w-full select-none flex-col bg-cool-neutral-5">
-      <DotsPagination
-        activeId={step}
-        className="my-[28px] ml-auto w-full flex-none px-20"
-        orderItems={orderItem}
-        dir={dir ? 'forward' : 'backward'}
-      />
       <AnimatePresence
         mode="wait"
         initial={false}
@@ -77,45 +91,50 @@ function OnBoardingPage() {
       >
         <motion.div
           key={`${step}_container`}
-          className="h-full w-full flex-initial"
+          className="flex h-full w-full grow flex-col items-center justify-center"
           initial={{ x: dir * 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -dir * 20, opacity: 0 }}
           transition={{ duration: 0.2 }}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           <Funnel>
-            {funnel.map(
-              ({ name, title, image: { src, alt, width, height } }) => (
-                <Funnel.Step key={name} name={name}>
-                  <Text
-                    className="whitespace-pre-line"
-                    component="h3"
-                    variant="headline-2"
-                    weight="semibold"
-                    align="center"
-                    color="normal"
-                    wrap
-                  >
-                    {title}
-                  </Text>
-                  <div className="relative flex h-full w-full items-center justify-center px-[56px]">
-                    <div className="absolute flex w-auto flex-1 justify-center">
-                      <Image
-                        className="w-full min-w-max"
-                        src={src}
-                        alt={alt}
-                        width={width}
-                        height={height}
-                      />
-                    </div>
-                  </div>
-                </Funnel.Step>
-              ),
-            )}
+            {funnel.map(({ name, title, image: { src, alt } }) => (
+              <Funnel.Step key={name} name={name}>
+                <Text
+                  className="mt-[55px] whitespace-pre-line leading-[1.6]"
+                  component="h3"
+                  variant="headline-1"
+                  weight="semibold"
+                  align="center"
+                  color="normal"
+                  wrap
+                >
+                  {title}
+                </Text>
+                <div className="relative mb-12 mt-16 h-[52.5%] w-full">
+                  <Image
+                    className="mx-auto object-contain"
+                    src={src}
+                    alt={alt}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    fill
+                    priority
+                  />
+                </div>
+              </Funnel.Step>
+            ))}
           </Funnel>
         </motion.div>
       </AnimatePresence>
-      <nav className="z-10 flex w-full gap-8 p-[20px]">
+      <DotsPagination
+        activeId={step}
+        className="mb-[45px] justify-center"
+        orderItems={orderItem}
+        dir={dir ? 'forward' : 'backward'}
+      />
+      <nav className="z-10 flex w-full gap-8 p-[20px] pt-0">
         <Button
           className={cn('grow font-medium', {
             hidden: getIdx(step) === 0,

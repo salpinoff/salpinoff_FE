@@ -12,12 +12,14 @@ type SaveMonsterImageModalProps = {
   monster: CharacterCanvasProps;
   onClose: () => void;
   onSave?: () => void;
+  onSaveFailed?: (message?: string) => void;
 };
 
 export default function SaveMonsterImageModal({
   monster: { type, status, items, background },
   onClose,
   onSave,
+  onSaveFailed,
 }: SaveMonsterImageModalProps) {
   const targetRef = useRef<HTMLDivElement>(null);
 
@@ -32,15 +34,46 @@ export default function SaveMonsterImageModal({
         scale: 5,
       });
 
-      canvas.toBlob((blob) => {
-        if (blob !== null) {
-          saveAs(blob, 'result.png');
-        }
-      });
+      canvas.toBlob(
+        async (blob) => {
+          if (blob !== null) {
+            const file = new File([blob], 'image.png', { type: 'image/png' });
+            const files = [file];
+
+            if (!navigator.canShare) {
+              saveAs(blob, 'image.png');
+              onSave?.();
+              return;
+            }
+
+            if (navigator.canShare({ files })) {
+              try {
+                await navigator.share({
+                  title: 'Images',
+                  files,
+                });
+                onSave?.();
+              } catch (error) {
+                if (
+                  error instanceof DOMException &&
+                  error.name === 'AbortError'
+                ) {
+                  onSaveFailed?.();
+                  return;
+                }
+
+                console.error(`The file could not be shared: ${error}`);
+                onSaveFailed?.('이미지 저장에 실패했어요.');
+              }
+            }
+          }
+        },
+        'image/png',
+        0.95,
+      );
     } catch (error) {
       console.error('Error converting div to image:', error);
-    } finally {
-      onSave?.();
+      onSaveFailed?.('이미지 변환에 실패했어요.');
     }
   };
 
