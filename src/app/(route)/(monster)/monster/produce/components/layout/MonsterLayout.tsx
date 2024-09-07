@@ -84,6 +84,7 @@ function MonsterLayout({
 
       <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 py-5">
         <Button
+          id="btn_back"
           className={cn('flex-1', { hidden: control?.length === 1 })}
           size="medium"
           variant="secondary"
@@ -94,6 +95,7 @@ function MonsterLayout({
           </Text>
         </Button>
         <Button
+          id="btn_next"
           className="w-full flex-1"
           size="medium"
           disabled={disabled}

@@ -17,6 +17,7 @@ import { Adapter } from '@utils/client/adapter';
 import generateShareUrl from '@utils/client/generate-share-url';
 import transformMonster from '@utils/client/transform-monster';
 import cn from '@utils/cn';
+import { getSessionItem } from '@utils/session-storage';
 
 import { useMonster } from '@api/monster/query/hooks';
 
@@ -77,9 +78,12 @@ export default function MonsterResultPage({
   }
 
   const { BACKGROUND_COLOR, ...REST_DECOS } = data.decorations;
+  const prevUrl = getSessionItem<string>('prevUrl') || '';
 
   return (
-    <ScreenView name="...">
+    <ScreenView
+      name={prevUrl.includes('/monster/produce') ? 'signup_7' : 'make_6'}
+    >
       <div className="mx-auto flex h-full w-full items-center justify-center bg-gradient-to-b from-cool-neutral-5 to-[#253047]">
         <div className="flex h-[573px] max-h-dvh flex-col items-center justify-between py-[20px]">
           {status === 'success' && fetchStatus === 'idle' && (
@@ -104,10 +108,15 @@ export default function MonsterResultPage({
                 </AnimatedSpreadCard>
               </LayoutGroup>
               <footer className="flex flex-col">
-                <Button size="medium" onClick={() => openModal()}>
+                <Button
+                  id="btn_share"
+                  size="medium"
+                  onClick={() => openModal()}
+                >
                   바로 공유하기
                 </Button>
                 <Button
+                  id="btn_gomain"
                   className="font-normal"
                   size="medium"
                   variant="ghost"
