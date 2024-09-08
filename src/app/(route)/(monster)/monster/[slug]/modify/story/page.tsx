@@ -98,7 +98,7 @@ export default function ModifyStoryPage({
   }, [monster, reset]);
 
   return (
-    <>
+    <section className="flex h-full w-full flex-col items-center justify-between gap-[28px] p-20">
       <Text
         component="h3"
         variant="headline-1"
@@ -108,7 +108,7 @@ export default function ModifyStoryPage({
       >
         내용 수정하기
       </Text>
-      <form className="h-full w-full" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-full grow" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           multiline
           fullWidth
@@ -121,7 +121,7 @@ export default function ModifyStoryPage({
           })}
         />
       </form>
-      <nav className="flex gap-8">
+      <nav className="flex w-full gap-8">
         <Button variant="secondary" size="medium" onClick={() => openModal()}>
           나가기
         </Button>
@@ -133,6 +133,6 @@ export default function ModifyStoryPage({
           수정완료
         </Button>
       </nav>
-    </>
+    </section>
   );
 }
