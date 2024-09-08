@@ -1,7 +1,5 @@
 import { cx } from 'class-variance-authority';
 
-import ErrorSVG from '@public/icons/error.svg';
-
 import Icon from '@components/common/Icon';
 import Text, { type TextProps } from '@components/common/Text';
 
@@ -30,11 +28,7 @@ export default function FormHelperText<T extends React.ElementType = 'p'>({
       {...(error ? { color: 'error' } : { color: 'alternative' })}
       {...rest}
     >
-      {error && (
-        <Icon size={20}>
-          <ErrorSVG width={14} height={14} />
-        </Icon>
-      )}
+      {error && <Icon name="error" size={14} />}
       {children}
     </Text>
   );

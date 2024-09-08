@@ -1,34 +1,47 @@
-import { cloneElement, forwardRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 
 import { cva, VariantProps } from 'class-variance-authority';
 
 import cn from '@utils/cn';
 
-const badgeBoxStyles = cva('', {
-  variants: {
-    variant: {
-      dot: ['relative', 'w-max'],
-      standard: [],
-      string: [],
-    },
-  },
-  compoundVariants: [
-    {
-      variant: ['standard', 'string'],
-      className: ['flex', 'gap-8', 'items-center'],
-    },
+const badgeBoxStyles = cva(
+  [
+    'flex',
+    'items-center',
+    'justify-center',
+    'aspect-square',
+    'rounded-circular',
+    'text-center',
   ],
-  defaultVariants: {
-    variant: 'string',
+  {
+    variants: {
+      variant: {
+        dot: ['relative', 'w-max'],
+        standard: [],
+        string: [],
+      },
+      color: {
+        primary: ['bg-[--color-brand-primary-base]', 'text-black'],
+        alternative: ['bg-cool-neutral-7'],
+        inverse: ['bg-[--color-text-inverse]', 'text-black'],
+      },
+    },
+    compoundVariants: [
+      {
+        variant: ['standard', 'string'],
+        className: ['flex', 'gap-8', 'items-center'],
+      },
+    ],
+    defaultVariants: {
+      variant: 'string',
+    },
   },
-});
+);
 
 export const badgeStyles = cva('truncate', {
   variants: {
     variant: {
       dot: [
-        'max-w-8',
-        'h-8',
         'absolute',
         'right-0',
         'top-0',
@@ -49,6 +62,7 @@ export const badgeStyles = cva('truncate', {
     },
     color: {
       primary: ['bg-[--color-brand-primary-base]', 'text-black'],
+      alternative: ['bg-cool-neutral-7'],
       inverse: ['bg-[--color-text-inverse]', 'text-black'],
     },
     size: {
@@ -83,7 +97,6 @@ export type BadgeProps<T extends React.ElementType = 'span'> =
   React.ComponentPropsWithRef<T> &
     VariantProps<typeof badgeStyles> & {
       component?: T;
-      children?: [ReactNode, ...(readonly ReactNode[])];
       max?: number;
       count: number;
       showZero?: boolean;
@@ -113,12 +126,10 @@ const Badge = forwardRef(
     return (
       <Component
         ref={ref}
-        className={cn(badgeBoxStyles({ variant }), className)}
+        className={cn(badgeBoxStyles({ variant, color }), className)}
         {...rest}
       >
-        {cloneElement(children, {
-          className: 'shrink-0',
-        })}
+        {children}
         <span className={badgeStyles({ variant, color })}>
           {variant !== 'dot' && (count > max ? `${max}+` : count)}
         </span>

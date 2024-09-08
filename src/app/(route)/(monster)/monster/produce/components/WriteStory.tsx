@@ -50,9 +50,11 @@ function WriteStory() {
     },
   } = useFormContext<UserInfo>();
 
+  const storyValue = useWatch({ control, name: 'story' });
+
   useEffect(() => {
-    setBtnDisabled(!!story);
-  }, [story]);
+    setBtnDisabled(!storyValue || !!story);
+  }, [storyValue]);
 
   return (
     <TextField

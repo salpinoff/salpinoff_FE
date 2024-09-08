@@ -8,6 +8,7 @@ import CloseSVG from '@public/icons/close.svg';
 import DownloadSVG from '@public/icons/download.svg';
 import EditSVG from '@public/icons/edit.svg';
 import EllipsisSVG from '@public/icons/ellipsis.svg';
+import ErrorSVG from '@public/icons/error.svg';
 import HamburgerSVG from '@public/icons/hamburger.svg';
 import InfoSVG from '@public/icons/info.svg';
 import MessageSVG from '@public/icons/message.svg';
@@ -21,6 +22,7 @@ export const IconMap = {
   'arrow-back': ArrowBackSVG,
   download: DownloadSVG,
   edit: EditSVG,
+  error: ErrorSVG,
   ellipsis: EllipsisSVG,
   hamburger: HamburgerSVG,
   information: InfoSVG,
@@ -37,6 +39,7 @@ export const iconVariants = cva(
     variants: {
       size: {
         12: ['w-12', 'h-12', '[&>svg]:w-12'],
+        14: ['w-[14px]', 'h-[14px]', '[&>svg]:w-[14px'],
         16: ['w-16', 'h-16', '[&>svg]:w-16'],
         18: ['w-18', 'h-18', '[&>svg]:w-18'],
         20: ['w-20', 'h-20', '[&>svg]:w-20'],
@@ -86,7 +89,7 @@ export type IconProps<T extends React.ElementType = 'span'> =
       name?: keyof typeof IconMap;
     };
 
-const Icon = forwardRef(
+const Icon = forwardRef<HTMLElement, IconProps>(
   <T extends React.ElementType = 'span'>(
     {
       component,

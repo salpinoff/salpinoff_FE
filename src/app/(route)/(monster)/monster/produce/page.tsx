@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import DotsPagination from '@components/DotsPagination';
 import ScreenView from '@components/logging/ScreenView';
@@ -29,6 +29,13 @@ function MonsterProducePage() {
   );
 
   const searchParams = useSearchParams();
+
+  const [dir, setDir] = useState(1);
+
+  const setStepAndDirection = (nextStep: typeof step, nextDir: 1 | -1 = 1) => {
+    setDir(nextDir);
+    setStep(nextStep);
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
@@ -57,6 +64,7 @@ function MonsterProducePage() {
         activeId={step}
         className="absolute right-0 ml-auto mt-[28px] w-full px-20"
         orderItems={funnel.map((id) => ({ id }))}
+        dir={Math.sign(dir) ? 'forward' : 'backward'}
       />
 
       <Funnel>
@@ -65,7 +73,7 @@ function MonsterProducePage() {
           <MonsterLayout
             title={title.emotion}
             control={['다음으로']}
-            goNext={() => setStep('stress')}
+            goNext={() => setStepAndDirection('stress')}
           >
             <ScreenView name="make_1">
               <SelectEmotion />
@@ -77,8 +85,8 @@ function MonsterProducePage() {
         <Funnel.Step name="stress">
           <MonsterLayout
             title={title.stress}
-            goPrev={() => setStep('emotion')}
-            goNext={() => setStep('story')}
+            goPrev={() => setStepAndDirection('emotion', -1)}
+            goNext={() => setStepAndDirection('story')}
           >
             <ScreenView name="make_2">
               <SelectStress />
@@ -90,8 +98,8 @@ function MonsterProducePage() {
         <Funnel.Step name="story">
           <MonsterLayout
             title={title.story}
-            goPrev={() => setStep('stress')}
-            goNext={() => setStep('monstername')}
+            goPrev={() => setStepAndDirection('stress', -1)}
+            goNext={() => setStepAndDirection('monstername')}
           >
             <ScreenView name="make_3">
               <WriteStory />
@@ -102,9 +110,9 @@ function MonsterProducePage() {
         {/* 몬스터 닉네임 설정 */}
         <Funnel.Step name="monstername">
           <MonsterLayout
-            className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
-            goPrev={() => setStep('story')}
-            goNext={() => setStep('monsterstyle')}
+            className="bg-gradient"
+            goPrev={() => setStepAndDirection('story', -1)}
+            goNext={() => setStepAndDirection('monsterstyle')}
           >
             <ScreenView name="make_4">
               <MonsterName />
@@ -115,8 +123,8 @@ function MonsterProducePage() {
         {/* 몬스터 스타일 설정 */}
         <Funnel.Step name="monsterstyle">
           <MonsterLayout
-            className=" from-29% to-78% bg-gradient-to-b from-[#0F0F10] to-[#253047]"
-            goPrev={() => setStep('monstername')}
+            className="bg-gradient"
+            goPrev={() => setStepAndDirection('monstername', -1)}
             goNext={() => {}}
           >
             <ScreenView name="make_5">

@@ -1,10 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { match } from 'ts-pattern';
 
+import AnimatedNumber from '@components/AnimatedNumber';
+import Badge from '@components/common/Badge';
+import Text from '@components/common/Text';
 import FormHelperText from '@components/common/TextField/FormHelperText';
 import Tooltip from '@components/common/Tooltip';
 import Slider from '@components/Slider';
@@ -40,22 +43,33 @@ const helperText = (stress: number): string => {
 };
 
 function SelectStress() {
-  const { min, max, step } = slider;
   const { setBtnDisabled } = useMonsterLayout();
-  const { control, getValues } = useFormContext<UserInfo>();
+
+  const {
+    control,
+    getValues,
+    formState: { dirtyFields },
+  } = useFormContext<UserInfo>();
+
+  const [open, setOpen] = useState(false);
 
   const stress = useWatch({ control, name: 'stress' });
 
+  // 선택 이후 앞/뒤로가기 시 툴팁 미노출
   useEffect(() => {
-    setBtnDisabled(false);
+    if (!dirtyFields.stress) setOpen(true);
   }, []);
 
+  useEffect(() => {
+    setBtnDisabled(!dirtyFields.stress);
+  }, [stress]);
+
   return (
-    <div className="h-[calc(100%+95px)]">
+    <div className="flex h-full flex-col">
       <Tooltip
-        open
+        open={open}
         label="스트레스 정도"
-        content={`스트레스가 높을수록 퇴사몬을 \n 클리어하기 위해 더 많은 탭이 필요해요`}
+        content={`스트레스가 높을수록 퇴사몬을 \n클리어하기 위해 더 많은 탭이 필요해요`}
         className="mb-[26px]"
       >
         <Tooltip.Label className="flex-none" />
@@ -68,22 +82,26 @@ function SelectStress() {
         render={({ field: { onChange } }) => {
           return (
             <Slider
-              step={step}
               displayInterval
-              defaultValue={getValues('stress')}
+              value={getValues('stress')}
               onChange={onChange}
-              className="mb-48"
-              min={min}
-              max={max}
+              {...slider}
             />
           );
         }}
       />
-
-      <span className="m-auto flex h-[180px] w-[180px] flex-col items-center justify-center rounded-circular bg-[var(--color-base-cool-neutral-7)]">
-        <span className="display-1-bold text-white">{stress}</span>
-        <FormHelperText>{helperText(stress)}</FormHelperText>
-      </span>
+      {/* 스트레스 수치 텍스트 라벨 */}
+      <Badge
+        component="div"
+        variant="dot"
+        color="alternative"
+        className="m-auto h-[180px] w-[180px] flex-col"
+      >
+        <Text component="div" variant="display-1" weight="bold" color="strong">
+          <AnimatedNumber animateToNumber={stress} />
+        </Text>
+        <FormHelperText component="span">{helperText(stress)}</FormHelperText>
+      </Badge>
     </div>
   );
 }
