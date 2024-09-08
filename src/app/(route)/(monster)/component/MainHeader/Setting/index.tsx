@@ -151,7 +151,7 @@ export default function Setting({ open = false, close }: SettingProps) {
               {subContentLabel}
             </Header.Title>
           </Header>
-          <div className="p-20">{subContent}</div>
+          <div className="grow p-20">{subContent}</div>
         </Drawer>
       </Drawer>
     </ScreenView>

@@ -52,7 +52,7 @@ function AnimatedNumber({ className, animateToNumber }: AnimatedNumberProps) {
         <div className={cn('flex overflow-hidden', className)}>
           {animateToNumbersArr.map((n, index) => (
             <div
-              key={`an_${n}`}
+              key={`${animateToNumber}-${index.toString()}`}
               style={{ height: numberHeight, width: numberWidth }}
             >
               {NUMBERS.map((number) => {
