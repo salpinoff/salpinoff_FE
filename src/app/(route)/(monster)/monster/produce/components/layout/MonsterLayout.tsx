@@ -1,10 +1,9 @@
 import { useState, type MouseEvent, type MouseEventHandler } from 'react';
 
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 
 import Button from '@components/common/Button';
 import Text from '@components/common/Text';
-import FixedBottom from '@components/FixedBottom';
 
 import cn from '@utils/cn';
 import stringToElement from '@utils/string-to-element';
@@ -33,6 +32,7 @@ function MonsterLayout({
   const [callback, setCallback] = useState<Callback>(() => {
     return (e: MouseEvent) => {
       goNext(e);
+      setBtnDisabled(true);
     };
   });
 
@@ -49,15 +49,15 @@ function MonsterLayout({
   const buttonLabels = control || ['이전으로', '다음으로'];
 
   return (
-    <>
-      <div
-        className={cn(
-          'flex h-full w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
-          className,
-        )}
-      >
-        <motion.p
-          className={cn('touch-auto', 'pb-32', {
+    <div
+      className={cn(
+        'flex h-full w-full flex-1 flex-col justify-between bg-black p-20 pt-[58px]',
+        className,
+      )}
+    >
+      <LazyMotion features={domAnimation}>
+        <m.p
+          className={cn('touch-auto select-none', 'pb-32', {
             hidden: !title,
           })}
           initial="hidden"
@@ -75,14 +75,13 @@ function MonsterLayout({
           >
             {title && stringToElement(title)}
           </Text>
-        </motion.p>
+        </m.p>
+      </LazyMotion>
 
-        <MonsterLayoutProvider value={{ setBtnDisabled, registerCallback }}>
-          {children}
-        </MonsterLayoutProvider>
-      </div>
-
-      <FixedBottom className="left-1/2 flex max-w-[375px] -translate-x-1/2 touch-none gap-8 py-5">
+      <MonsterLayoutProvider value={{ setBtnDisabled, registerCallback }}>
+        {children}
+      </MonsterLayoutProvider>
+      <nav className="left-1/2 flex max-w-[375px] touch-none gap-8">
         <Button
           className={cn('flex-1', { hidden: control?.length === 1 })}
           size="medium"
@@ -103,8 +102,8 @@ function MonsterLayout({
             {buttonLabels[buttonLabels.length - 1]}
           </Text>
         </Button>
-      </FixedBottom>
-    </>
+      </nav>
+    </div>
   );
 }
 
