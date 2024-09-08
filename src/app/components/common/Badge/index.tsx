@@ -23,7 +23,7 @@ const badgeBoxStyles = cva(
       color: {
         primary: ['bg-[--color-brand-primary-base]', 'text-black'],
         alternative: ['bg-cool-neutral-7'],
-        inverse: ['bg-[--color-text-inverse]', 'text-black'],
+        inverse: '',
       },
     },
     compoundVariants: [

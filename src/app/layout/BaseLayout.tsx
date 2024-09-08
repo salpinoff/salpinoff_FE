@@ -2,18 +2,19 @@ import Image from 'next/image';
 
 import { PropsWithChildren } from 'react';
 
+import GradientLogoSVG from '@public/icons/gradient-logo.svg';
+import OsBarTopNavigationSVG from '@public/os-bar-top-navigation.svg';
+
 import Text from '@components/common/Text';
 
 import cn from '@utils/cn';
-
-import GradientLogoSVG from 'public/icons/gradient-logo.svg';
 
 type BaseLayoutProps = PropsWithChildren;
 
 export default function BaseLayout({ children }: BaseLayoutProps) {
   return (
     <main className="flex">
-      <div className="hidden w-[600px] select-none flex-col bg-gradient-to-b from-[#E6057B] to-[#F450A6] px-[140px] lg:flex">
+      <div className="hidden w-[40%] min-w-max flex-none select-none flex-col bg-gradient-to-b from-[#E6057B] to-[#F450A6] px-[140px] lg:flex">
         <div className="flex grow flex-col items-center justify-center">
           <Image
             className="mb-[32px] rounded-[21px]"
@@ -44,11 +45,19 @@ export default function BaseLayout({ children }: BaseLayoutProps) {
           role="main"
           id="root-container"
           className={cn(
-            'relative m-auto box-content h-full w-full',
-            'lg:!h-[812px] lg:!w-[375px] lg:overflow-hidden lg:rounded-32 lg:border-[10px] lg:border-cool-neutral-17',
+            'relative m-auto box-content flex h-full w-full flex-col',
+            'lg:aspect-[9/19.5] lg:overflow-hidden lg:rounded-32 lg:border-[10px] lg:border-cool-neutral-17',
+            'lg:h-max lg:max-h-full lg:w-[330px]',
+            'lg:aspect-[9/19.5] 2xl:w-[390px]',
           )}
         >
-          {children}
+          {/* 웹 헤더 상단 기본 여백  */}
+          <div className="hidden h-[44px] w-full bg-cool-neutral-5 lg:flex">
+            <OsBarTopNavigationSVG className="w-full" />
+          </div>
+          <div className="lg:h-[calc(100% - 44px)] relative h-full w-full">
+            {children}
+          </div>
         </div>
       </div>
     </main>
