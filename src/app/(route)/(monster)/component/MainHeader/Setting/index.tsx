@@ -115,6 +115,14 @@ export default function Setting({ open = false, close }: SettingProps) {
 
           <Menu>
             <Menu.Item
+              component="a"
+              href="https://forms.gle/FvEn1puxba5YgHE16"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              문의/요청
+            </Menu.Item>
+            <Menu.Item
               id="btn_teaminfo"
               type="button"
               component="button"
