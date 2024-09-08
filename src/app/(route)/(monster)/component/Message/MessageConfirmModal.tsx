@@ -82,13 +82,13 @@ function MessageConfirmModal({
   return (
     <Modal open>
       <Modal.Dimmed blur />
-      <Modal.Content className="max-h-dvh w-[calc(100vw-64px)] max-w-md items-center bg-transparent p-0">
+      <Modal.Content className="max-h-full w-[calc(100%-64px)] items-center bg-transparent p-0">
         <section
           ref={modalRef}
           className={cn(
             'flex flex-col items-center justify-between',
-            'aspect-[312/430] w-full rounded-32',
-            'gap-[10px] bg-[#70737C47] px-24 pb-32 pt-[42px] text-white',
+            'aspect-[1/1.38] w-full rounded-32',
+            'gap-[10px] bg-[#70737C47] px-24 pb-32 pt-[42px] text-white backdrop-blur-lg',
           )}
         >
           <Text component="h2" variant="heading-1" weight="semibold">

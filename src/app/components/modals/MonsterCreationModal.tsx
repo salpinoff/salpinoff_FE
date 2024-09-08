@@ -21,7 +21,7 @@ export default function MonsterCreationModal({
 
   return (
     <Modal open>
-      <Modal.Dimmed />
+      <Modal.Dimmed darken />
       <Modal.Content>
         <Modal.Title>새로운 퇴사몬을 만들까요?</Modal.Title>
         <Modal.Description>

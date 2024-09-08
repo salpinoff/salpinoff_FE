@@ -11,7 +11,7 @@ export default function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <Modal open>
-      <Modal.Dimmed />
+      <Modal.Dimmed darken />
       <Modal.Content className="gap-16">
         <Modal.Title align="left">수정하기를 그만두시겠어요?</Modal.Title>
         <Modal.Description>

@@ -79,7 +79,7 @@ export default function SaveMonsterImageModal({
 
   return (
     <Modal open>
-      <Modal.Dimmed />
+      <Modal.Dimmed darken />
       <Modal.Content className="gap-32 py-32">
         <Modal.Title align="center">이미지를 저장할까요?</Modal.Title>
         <div className="aspect-square w-full overflow-hidden rounded-32 shadow-5">
