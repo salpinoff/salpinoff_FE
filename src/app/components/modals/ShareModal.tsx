@@ -37,7 +37,7 @@ export default function ShareModal({
 
   return (
     <Modal open>
-      <Modal.Dimmed />
+      <Modal.Dimmed darken />
       <Modal.Content ref={modalRef}>
         <Modal.Title>나의 퇴사몬을 공유할까요?</Modal.Title>
         <Modal.Description>

@@ -45,6 +45,18 @@ const config: Config = {
             opacity: '1',
           },
         },
+        'fade-out': {
+          '0%': {
+            opacity: '1',
+          },
+          '98%': {
+            opacity: '0.5',
+          },
+          '100%': {
+            display: 'none',
+            opacity: '0',
+          },
+        },
         'fade-in-up': {
           '0%': {
             opacity: '0',
@@ -68,6 +80,7 @@ const config: Config = {
       },
       animation: {
         'fade-in': 'fade-in 300ms ease-in-out 1',
+        'fade-out': 'fade-out 300ms ease-in-out 1 normal forwards',
         enter: 'fade-in-up 300ms ease-in-out 1',
         leave: 'fade-in-down 300ms ease-in forwards',
       },

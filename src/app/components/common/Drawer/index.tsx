@@ -2,7 +2,7 @@ import { ComponentProps, useId } from 'react';
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
 
-import { isIOS } from '@utils/client/agent';
+// import { isIOS } from '@utils/client/agent';
 import cn from '@utils/cn';
 
 type DrawerProps = ComponentProps<'aside'> & {
@@ -50,11 +50,11 @@ export default function Drawer({
                 left: 0,
               }}
               className={cn(
-                'absolute right-0 top-0 z-[10] w-full bg-cool-neutral-5',
-                {
-                  'full-height': !isIOS,
-                  'full-height-ios': isIOS,
-                },
+                'absolute right-0 top-0 z-[10] h-full w-full bg-cool-neutral-5',
+                // {
+                //   'full-height': !isIOS,
+                //   'full-height-ios': isIOS,
+                // },
                 className,
               )}
             >

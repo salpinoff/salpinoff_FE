@@ -121,6 +121,6 @@ svg {
 
 @layer components {
   .bg-gradient {
-    @apply bg-gradient-to-b from-cool-neutral-5 to-[#253047];
+    @apply bg-gradient-to-b from-10% from-cool-neutral-5 to-[#253047];
   }
 }

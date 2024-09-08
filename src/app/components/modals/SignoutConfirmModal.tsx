@@ -12,7 +12,7 @@ export default function SignoutConfirmModal({
 }: SignoutConfirmModalProps) {
   return (
     <Modal open>
-      <Modal.Dimmed />
+      <Modal.Dimmed darken />
       <Modal.Content>
         <Modal.Title align="center" className="py-20" weight="semibold">
           정말 로그아웃 하시겠어요?

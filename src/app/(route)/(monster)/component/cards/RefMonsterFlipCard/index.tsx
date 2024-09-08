@@ -153,6 +153,7 @@ export default function RefMonsterFlipCard() {
       onMouseUp={handleMouseUp}
     >
       <MonsterFlipCard.ActionArea
+        className="aspect-square min-w-max"
         style={{
           pointerEvents: prevPageX ? 'unset' : 'auto',
         }}
