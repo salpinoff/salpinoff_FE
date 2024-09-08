@@ -107,14 +107,14 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
         </Header>
         <section
           className={cn(
-            'flex h-[calc(100vh-48px)] w-full flex-none flex-col gap-16',
+            'flex w-full grow flex-col gap-16',
             'snap-y snap-mandatory overflow-y-auto scrollbar-hide',
           )}
         >
           <MonsterFlipCard
-            className="mx-auto mt-[5] flex-none snap-start scroll-m-4"
-            width={REF_FLIP_CARD_WIDTH}
-            height={REF_FLIP_CARD_HEIGHT}
+            className="mx-auto mt-8 aspect-[39/50] w-[calc(100%-64px)] flex-none snap-start scroll-m-4"
+            // width={REF_FLIP_CARD_WIDTH}
+            // height={REF_FLIP_CARD_HEIGHT}
             flipped={flipped}
             color={BACKGROUND_COLOR}
             onClick={toggleCard}
@@ -176,24 +176,24 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
               'snap-start',
             )}
           >
-            <div>
+            <div className="flex items-center">
+              <Text
+                component="h3"
+                variant="headline-2"
+                weight="semibold"
+                color="normal"
+              >
+                받은 메세지
+              </Text>
               <Badge
+                component="span"
                 variant="string"
                 color="inverse"
                 count={messageList.length}
                 max={999}
                 showZero
-                className="flex justify-center text-center text-inherit"
-              >
-                <Text
-                  component="h3"
-                  variant="headline-2"
-                  weight="semibold"
-                  color="normal"
-                >
-                  받은 메세지
-                </Text>
-              </Badge>
+                className="flex w-max justify-center text-center text-inherit"
+              />
             </div>
             <ul className="mx-auto flex h-full w-full max-w-[312px] flex-initial flex-col gap-y-[16px]">
               {messageList.length === 0 && (
@@ -304,7 +304,7 @@ export default function MonsterList() {
       <AuthSuspense fallback={<>...Loading</>}>
         <div
           className={cn('mx-auto flex h-full w-max flex-col gap-32 p-[5px]', {
-            'overflow-hidden': open,
+            'animate-fade-out overflow-hidden': open,
           })}
         >
           {pages.length &&
@@ -338,13 +338,6 @@ export default function MonsterList() {
                 </SquareMonsterCard>
               );
             })}
-          {pages.length && (
-            <DetailDrawer
-              open={open}
-              monster={pages[openId]}
-              closeDrawer={() => setOpen(false)}
-            />
-          )}
 
           {pages.length === 0 && (
             <div className="flex h-full w-full flex-col items-center justify-center">
@@ -362,6 +355,13 @@ export default function MonsterList() {
             </div>
           )}
         </div>
+        {pages.length && (
+          <DetailDrawer
+            open={open}
+            monster={pages[openId]}
+            closeDrawer={() => setOpen(false)}
+          />
+        )}
       </AuthSuspense>
     </ScreenView>
   );
