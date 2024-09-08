@@ -93,7 +93,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
 
   return (
     <Drawer open={open}>
-      <div className="flex h-full w-full flex-col">
+      <div className="flex h-full w-full flex-col overscroll-none">
         <Header className="grid grid-cols-6 gap-4">
           <Header.IconButton
             name="arrow-back"
@@ -172,7 +172,7 @@ function DetailDrawer({ open, monster, closeDrawer }: DetailDrawerProps) {
           </MonsterFlipCard>
           <div
             className={cn(
-              'flex shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
+              'flex h-full shrink-0 grow flex-col gap-20 bg-cool-neutral-7 px-[32px] py-[20px]',
               'snap-start',
             )}
           >
@@ -304,7 +304,7 @@ export default function MonsterList() {
       <AuthSuspense fallback={<>...Loading</>}>
         <div
           className={cn('mx-auto flex h-full w-max flex-col gap-32 p-[5px]', {
-            'animate-fade-out overflow-hidden': open,
+            'animate-fade-out overflow-hidden overscroll-none': open,
           })}
         >
           {pages.length &&
