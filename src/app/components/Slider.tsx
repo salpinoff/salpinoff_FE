@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, ComponentPropsWithRef, useState } from 'react';
+import { ComponentPropsWithRef } from 'react';
 
 import cn from '@utils/cn';
 
@@ -10,7 +10,7 @@ interface Props extends ComponentPropsWithRef<'input'> {
   max: number;
   min: number;
   step: number;
-  defaultValue?: number;
+  value: number;
   color?: string;
   displayInterval?: boolean;
 }
@@ -22,19 +22,10 @@ function Slider({
   color,
   onChange,
   className,
-  defaultValue = 0,
+  value,
   displayInterval = false,
   ...restProps
 }: Props) {
-  const [value, setValue] = useState(defaultValue || min);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { target } = e;
-    setValue(Number(target.value));
-
-    onChange?.(e);
-  };
-
   const calculateBackground = () => {
     const percentage = ((value - min) / (max - min)) * 100;
     return `linear-gradient(90deg, ${color || 'var(--color-brand-primary-base)'} ${percentage}%, #70737C38 ${percentage}%)`;
@@ -53,7 +44,7 @@ function Slider({
           max={max}
           type="range"
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
           style={{ background: calculateBackground() }}
           className={cn(
             'absolute top-0 h-12 w-full translate-y-1/2 appearance-none rounded-circular outline-none',
