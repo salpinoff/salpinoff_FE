@@ -40,6 +40,7 @@ function ScreenView({ name, children, disabled = false }: Props) {
 
     const userProperties = {
       userId: user?.id,
+      userJoinDate: user?.joinDate,
       numOfMonsters: totalElements || -1,
       lastLoginDate: ensureLoginDate(),
     };

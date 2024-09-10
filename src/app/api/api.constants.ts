@@ -19,7 +19,7 @@ export const API_URLS = {
       REFRESH_TOKEN: `${MEMBER_BASE}/token/refresh`,
       USER_NICKNAME: `${MEMBER_BASE}/my`,
       GET_TOKEN: {
-        kakao: `${MEMBER_BASE}/login/kakao`,
+        kakao: `${MEMBER_BASE}/login/kakao/test`,
       },
     },
   },
