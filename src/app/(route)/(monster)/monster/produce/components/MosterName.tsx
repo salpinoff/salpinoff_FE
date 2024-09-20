@@ -96,9 +96,10 @@ function MonsterName() {
           helperText="2~6자로 입력해주세요"
           error={!!monsterNameError}
           {...register('monsterName', {
-            required: true,
-            minLength: 2,
-            maxLength: 6,
+            validate: (value) => {
+              const trimmed = value.trim();
+              return trimmed.length >= 2 && trimmed.length <= 6;
+            },
           })}
         />
 
