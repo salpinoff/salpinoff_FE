@@ -1,0 +1,63 @@
+{
+  "color": {
+    "border": {
+      "input": {
+        "value": "#70737C52"
+      },
+      "inverse": {
+        "value": "{color.base.common.100.value}"
+      },
+      "brand": {
+        "value": "{color.brand.primary.base.value}"
+      },
+      "danger": {
+        "value": "{color.base.red.60.value}"
+      },
+      "warning": {
+        "value": "{color.base.orange.60.value}"
+      },
+      "info": {
+        "value": "{color.base.blue.60.value}"
+      },
+      "success": {
+        "value": "{color.base.green.60.value}"
+      },
+      "accent": {
+        "red": {
+          "value": "{color.base.red.70.value}"
+        },
+        "red-orange": {
+          "value": "{color.base.red-orange.70.value}"
+        },
+        "orange": {
+          "value": "{color.base.orange.70.value}"
+        },
+        "green": {
+          "value": "{color.base.green.70.value}"
+        },
+        "lime": {
+          "value": "{color.base.lime.70.value}"
+        },
+        "cyan": {
+          "value": "{color.base.cyan.70.value}"
+        },
+        "light-blue": {
+          "value": "{color.base.light-blue.70.value}"
+        },
+        "blue": {
+          "value": "{color.base.blue.70.value}"
+        },
+        "violet": {
+          "value": "{color.base.violet.70.value}"
+        },
+        "pink": {
+          "value": "{color.base.pink.70.value}"
+        },
+        "gray": {
+          "value": "#70737C52",
+          "type": "color"
+        }
+      }
+    }
+  }
+}

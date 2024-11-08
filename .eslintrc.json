@@ -15,7 +15,7 @@
     "node": true,
     "es6": true
   },
-  "ignorePatterns": ["node_modules/"],
+  "ignorePatterns": ["node_modules/", "build/"],
   "extends": [
     "airbnb",
     "airbnb-typescript",
@@ -24,11 +24,20 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:import/recommended",
-    "prettier"
+    "prettier",
+    "plugin:storybook/recommended"
   ],
   "rules": {
+    "react/button-has-type": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
+    "react/require-default-props": "off",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".ts", ".tsx"]
+      }
+    ],
     "no-unused-vars": "off",
     "no-useless-catch": "off",
     "unused-imports/no-unused-imports": "error",
@@ -39,6 +48,14 @@
         "varsIgnorePattern": "^_",
         "args": "after-used",
         "argsIgnorePattern": "^_"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": false
       }
     ],
     "import/order": [
@@ -65,7 +82,52 @@
             "position": "before"
           },
           {
+            "pattern": "{jotai*,jotai*/**}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@tanstack/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@providers/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@public/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
             "pattern": "@components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@hooks/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@utils/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@constant/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@api/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@type/**",
             "group": "internal",
             "position": "before"
           },
@@ -81,6 +143,7 @@
           "caseInsensitive": true
         }
       }
-    ]
+    ],
+    "import/prefer-default-export": "off"
   }
 }

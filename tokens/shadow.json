@@ -1,0 +1,32 @@
+{
+    "shadow": {
+      "0": {
+        "value": "0px 0px 0px 0px #00000000",
+        "type": "boxShadow"
+      },
+      "1": {
+        "value": "0px 1px 3px -1px #00000029",
+        "type": "boxShadow"
+      },
+      "2": {
+        "value": "0px 3px 4px -2px #00000029",
+        "type": "boxShadow"
+      },
+      "3": {
+        "value": "0px 8px 24px -4px #0000001F",
+        "type": "boxShadow"
+      },
+      "4": {
+        "value": "0px 18px 28px -8px #00000014",
+        "type": "boxShadow"
+      },
+      "5": {
+        "value": "4px 16px 40px -8px #0000001A",
+        "type": "boxShadow"
+      },
+      "6": {
+        "value": "6px 32px 48px -8px #0000001A",
+        "type": "boxShadow"
+      }
+    }
+}
