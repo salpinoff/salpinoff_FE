@@ -3,6 +3,7 @@ export interface TokenResponse {
   accessToken: string;
   refreshToken: string;
   username: string;
+  createdAt: string;
   /**
    * @description
    * 100 닉네임 설정 false & 몬스터 생성 false
@@ -21,5 +22,6 @@ export type Session = Response & {
   userInfo: {
     memberId?: number;
     username?: string;
+    createdAt?: string;
   };
 };
