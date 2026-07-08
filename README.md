@@ -171,3 +171,19 @@ _‘퇴사하고 싶다’_
         </td>
     </tr>
 </table>
+
+## 🧪 데모 모드 (Mock)
+
+백엔드 서버와 도메인이 만료되어, 실서버 없이 프론트엔드만 데모하기 위한 mock 모드가 있습니다.
+`NEXT_PUBLIC_USE_MOCK=true` 이면 모든 API 응답을 `src/mocks/` 픽스처로 대체하고, 자동 로그인된
+데모 유저로 동작합니다.
+
+```
+NEXT_PUBLIC_USE_MOCK=true
+NEXT_PUBLIC_DOMAIN_NAME=<배포 URL>
+NEXT_PUBLIC_API_DOMAIN_NAME=https://mock.invalid   # 실제로 호출되지 않음
+AUTH_SECRET=<아무 32자 이상 문자열>
+```
+
+실서버 재연결은 `NEXT_PUBLIC_USE_MOCK` 를 끄고 `NEXT_PUBLIC_API_DOMAIN_NAME` 를 실제 서버로
+지정하면 됩니다 (코드 변경 없음).

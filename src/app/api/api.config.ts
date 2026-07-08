@@ -2,6 +2,9 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { getQueryClient } from '@utils/query/get-query-client';
 
+import mockAdapter from 'src/mocks/adapter';
+import { USE_MOCK } from 'src/mocks/config';
+
 import { API_URLS } from './api.constants';
 import AuthFactory from './auth/query';
 import { Session } from './schema/token';
@@ -14,6 +17,8 @@ const createInstance = (baseURL: string) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    // Demo mode: answer every request from fixtures instead of the (expired) backend.
+    ...(USE_MOCK ? { adapter: mockAdapter } : {}),
   });
 };
 
