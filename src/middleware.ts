@@ -1,7 +1,10 @@
+import { type NextMiddleware, NextResponse } from 'next/server';
+
 import chain from './app/middlewares/chain';
 import withAuthentification from './app/middlewares/factory/withAuthentication';
 import withMonsterHandler from './app/middlewares/factory/withMonsterHandler';
 import withSignUpHandle from './app/middlewares/factory/withSignUpHandle';
+import { USE_MOCK } from './mocks/config';
 
 const middlewares = [
   withAuthentification,
@@ -9,7 +12,14 @@ const middlewares = [
   withMonsterHandler,
 ];
 
-export default chain(middlewares);
+// Demo mode: the auth/monster middlewares all hit the (expired) backend to
+// refresh tokens and gate routes. Skip the whole chain so every page renders as
+// the signed-in demo user. Reconnect by unsetting NEXT_PUBLIC_USE_MOCK.
+const middleware: NextMiddleware = USE_MOCK
+  ? () => NextResponse.next()
+  : chain(middlewares);
+
+export default middleware;
 
 export const config = {
   matcher: [
